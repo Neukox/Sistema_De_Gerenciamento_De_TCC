@@ -1,5 +1,5 @@
+---
 
-````
 # 🎓 Sistema de Gerenciamento de TCC
 
 Bem-vindo(a)! Este projeto foi cuidadosamente desenvolvido para simplificar e otimizar o processo de acompanhamento e avaliação de Trabalhos de Conclusão de Curso. A missão é facilitar a jornada de alunos, orientadores e bancas, promovendo organização, transparência e eficiência.
