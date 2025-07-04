@@ -36,6 +36,9 @@ export function extrairToken(req: Request, res: Response, next: NextFunction)  {
         res.status(500).json({ error: 'Erro interno do servidor.' });
     }
 
+    //Visualizando token
+    console.log('Token extraído:', req.token);
+
    
 
 }

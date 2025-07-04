@@ -1,52 +1,91 @@
-//Algoritmo de login
-
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import prisma from '../../../prisma/PrismaClient/prisma';
+import { getJwtConfig } from '../ConfigJwt/config';
 
-export async function Login(req: Request, res: Response, next: NextFunction) {
-    //Desestruturando os dados do corpo da requisição.
-    const {email, password} = req.body;
+export async function Login(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const { email, password } = req.body;
 
-    //Verificando todos se todos os campos foram preenchidos.
+    // Validação dos campos obrigatórios
     if (!email || !password) {
-        res.status(400).json({message: 'Todos os campos são obrigatórios.'});
-        return;
+      res.status(400).json({ 
+        message: 'Todos os campos são obrigatórios.',
+        success: false 
+      });
+      return;
     }
 
-    //Verificando se o email existe no banco de dados.
-    const emailExistente = await prisma.usuario.findMany({
-        where: {
-            email: email
-        }
+    // Validação básica do formato do email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      res.status(400).json({ 
+        message: 'Formato de email inválido.',
+        success: false 
+      });
+      return;
+    }
+
+    // Busca o usuário no banco de dados
+    const usuario = await prisma.usuario.findUnique({
+      where: { email: email.toLowerCase() },
     });
 
-    //Se email nao existir, retorna erro.
-    if (emailExistente.length === 0) {
-        res.status(400).json({message: 'Email não encontrado.'});
-        return;
+    if (!usuario) {
+      res.status(401).json({ 
+        message: 'Credenciais inválidas.',
+        success: false 
+      });
+      return;
     }
 
-    //Verificando se a senha está correta.
-    const usuario = emailExistente[0];
+    // Verifica a senha
     const senhaCorreta = await bcrypt.compare(password, usuario.senha);
-
-    //Se a senha estiver incorreta, retorna erro.
     if (!senhaCorreta) {
-        res.status(400).json({message: 'Senha incorreta.'});
-        return;
+      res.status(401).json({ 
+        message: 'Credenciais inválidas.',
+        success: false 
+      });
+      return;
     }
 
-    //Estando tudo certo, retorna usuario logado.
+    // Obtém a configuração JWT
+    const jwtConfig = getJwtConfig();
+
+    // Geração do token JWT
+    const payload = {
+      id: usuario.id,
+      role: usuario.role,
+      tipo: usuario.tipo,
+      email: usuario.email,
+    };
+    
+    const token = jwt.sign(
+      payload,
+      jwtConfig.secret as string,
+      { expiresIn: jwtConfig.expiresIn }
+    );
+
+    // Resposta de sucesso
     res.status(200).json({
-        message: 'Usuário logado com sucesso.',
-        usuario: {
-            id: usuario.id,
-            nome: usuario.nome,
-            sobrenome: usuario.sobrenome,
-            email: usuario.email,
-            tipo: usuario.tipo,
-            role: usuario.role
-        }
+      message: 'Login realizado com sucesso.',
+      success: true,
+      token,
+      usuario: {
+        id: usuario.id,
+        nome: usuario.nome,
+        sobrenome: usuario.sobrenome,
+        email: usuario.email,
+        tipo: usuario.tipo,
+        role: usuario.role,
+      },
     });
+  } catch (error) {
+    console.error('Erro no processo de login:', error);
+    res.status(500).json({ 
+      message: 'Erro interno do servidor.',
+      success: false 
+    });
+  }
 }
