@@ -21,6 +21,7 @@ model Usuario {
   email        String    @unique
   senha        String
   tipo         String
+  role         String
   criado_em    DateTime  @default(now())
   atualizado_em DateTime @updatedAt
 
