@@ -6,6 +6,8 @@ type InputProps = {
     className?: string;
     autocomplete?: string;
     minLength?: number;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 function Input({type, id, placeholder, autocomplete, minLength} : InputProps) {
