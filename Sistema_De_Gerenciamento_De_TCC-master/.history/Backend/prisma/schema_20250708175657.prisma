@@ -108,6 +108,24 @@ model Atividade {
   arquivo_url  String?
   concluido_em DateTime?
 
-  tccId         Int
-  tcc           TCC      @relation(fields: [tccId], references: [id])
+  fk_TCC_id     Int
+
+  TCC           TCC             @relation(fields: [fk_TCC_id], references: [id])
+  Comentarios   Comentario[]
+}
+
+model Comentario {
+  id                Int          @id @default(autoincrement())
+  topico            String
+  texto             String
+  data_criacao      DateTime     @default(now())
+  ultima_atualizacao DateTime    @updatedAt
+
+  fk_TCC_id         Int
+  fk_Usuario_id     Int
+  fk_Atividades_id  Int?
+
+  TCC               TCC          @relation(fields: [fk_TCC_id], references: [id])
+  Usuario           Usuario      @relation(fields: [fk_Usuario_id], references: [id])
+  Atividade         Atividade?   @relation(fields: [fk_Atividades_id], references: [id])
 }
