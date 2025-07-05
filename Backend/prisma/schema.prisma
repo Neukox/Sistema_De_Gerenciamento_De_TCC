@@ -22,7 +22,10 @@ enum TipoUsuario {
 enum PapelBanca {
   ORIENTADOR
   COORIENTADOR
+<<<<<<< HEAD
   MEMBRO
+=======
+>>>>>>> 071d99f (Atualizando o esquema do Prisma)
 }
 
 enum StatusTCC {
@@ -33,6 +36,7 @@ enum StatusTCC {
   CONCLUIDO
 }
 
+<<<<<<< HEAD
 enum StatusAtividade {
   PENDENTE
   CONCLUIDA
@@ -67,6 +71,10 @@ model AreaConhecimento {
 
   tccs TCC[]
 }
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 071d99f (Atualizando o esquema do Prisma)
 
 model Usuario {
   id            Int         @id @default(autoincrement())
@@ -133,6 +141,85 @@ model Banca {
   Professor_id Int
   papel        PapelBanca
 
+<<<<<<< HEAD
+=======
+  tcc       TCC       @relation(fields: [tccId], references: [id])
+  professor Professor @relation(fields: [professorId], references: [id])
+>>>>>>> 1a921ee2d30067305bbb31c1a612f5391164170c
+=======
+enum StatusAtividade {
+  PENDENTE
+  CONCLUIDA
+}
+
+model AreaConhecimento {
+  id        Int      @id @default(autoincrement())
+  nome      String   @unique
+  descricao String?
+  criado_em DateTime @default(now())
+
+  tccs TCC[]
+}
+
+model Usuario {
+  id            Int         @id @default(autoincrement())
+  nome_completo String
+  email         String      @unique
+  senha         String
+  tipo          TipoUsuario
+  criado_em     DateTime    @default(now())
+  atualizado_em DateTime    @updatedAt
+
+  Aluno       Aluno?
+  Professor   Professor?
+  Comentarios Comentario[]
+}
+
+model Aluno {
+  Usuario_id Int    @id
+  curso      String
+
+  Usuario Usuario @relation(fields: [Usuario_id], references: [id])
+  TCCs    TCC[]
+}
+
+model Professor {
+  Usuario_id      Int     @id
+  area_atuacao    String
+  disponibilidade Boolean
+
+  Usuario Usuario @relation(fields: [Usuario_id], references: [id])
+  Bancas  Banca[]
+}
+
+model TCC {
+  id                    Int       @id @default(autoincrement())
+  titulo                String
+  tema                  String
+  resumo                String
+  data_inicio           DateTime?
+  data_prevista_entrega DateTime?
+  criado_em             DateTime  @default(now())
+  ultima_atualizacao    DateTime  @updatedAt
+  status_atual          StatusTCC
+  finalizado_em         DateTime?
+
+  Aluno_id Int
+  AreaConhecimento_id Int?
+
+  Aluno       Aluno        @relation(fields: [Aluno_id], references: [Usuario_id])
+  Bancas      Banca[]
+  Atividades  Atividade[]
+  Comentarios Comentario[]
+  AreaConhecimento AreaConhecimento? @relation(fields: [AreaConhecimento_id], references: [id])
+}
+
+model Banca {
+  TCC_id       Int
+  Professor_id Int
+  papel        PapelBanca
+
+>>>>>>> 071d99f (Atualizando o esquema do Prisma)
   TCC       TCC       @relation(fields: [TCC_id], references: [id])
   Professor Professor @relation(fields: [Professor_id], references: [Usuario_id])
 
@@ -152,11 +239,21 @@ model Atividade {
 
   TCC         TCC          @relation(fields: [TCC_id], references: [id])
   Comentarios Comentario[]
+<<<<<<< HEAD
 }
 
 model Comentario {
   id                 Int              @id @default(autoincrement())
   topico             TopicoComentario
+=======
+>>>>>>> 9c923d7 (Atualizando o esquema do Prisma)
+}
+
+model Comentario {
+  id                 Int      @id @default(autoincrement())
+<<<<<<< HEAD
+  texto              String
+>>>>>>> 071d99f (Atualizando o esquema do Prisma)
   titulo             String
   texto              String
   data_criacao       DateTime         @default(now())
@@ -170,3 +267,54 @@ model Comentario {
   Usuario   Usuario    @relation(fields: [Usuario_id], references: [id])
   Atividade Atividade? @relation(fields: [Atividades_id], references: [id])
 }
+<<<<<<< HEAD
+=======
+
+model Atividade {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  descricao     String
+  status        String
+  data_entrega  DateTime
+  concluido_em  DateTime
+  arquivo_url   String
+  feedback      String?
+
+  tccId         Int
+  tcc           TCC      @relation(fields: [tccId], references: [id])
+}
+=======
+  tccId Int
+  tcc   TCC @relation(fields: [tccId], references: [id])
+}
+
+model Atividade {
+  id           Int      @id @default(autoincrement())
+  nome         String
+  descricao    String
+  status       String
+  data_entrega DateTime
+  concluido_em DateTime
+  arquivo_url  String
+  feedback     String?
+
+  tccId Int
+  tcc   TCC @relation(fields: [tccId], references: [id])
+}
+>>>>>>> 1a921ee2d30067305bbb31c1a612f5391164170c
+=======
+  topico             String
+  texto              String
+  data_criacao       DateTime @default(now())
+  ultima_atualizacao DateTime @updatedAt
+
+  TCC_id        Int
+  Usuario_id    Int
+  Atividades_id Int?
+
+  TCC       TCC        @relation(fields: [TCC_id], references: [id])
+  Usuario   Usuario    @relation(fields: [Usuario_id], references: [id])
+  Atividade Atividade? @relation(fields: [Atividades_id], references: [id])
+}
+>>>>>>> 9c923d7 (Atualizando o esquema do Prisma)
+>>>>>>> 071d99f (Atualizando o esquema do Prisma)
