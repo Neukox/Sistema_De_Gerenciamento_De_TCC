@@ -13,6 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TipoUsuario {
+  ADMIN
+  ALUNO
+  PROFESSOR
+}
+
+enum PapelBanca {
+  ORIENTADOR
+  COORIENTADOR
+}
+
 enum StatusTCC {
   PLANEJAMENTO
   DESENVOLVIMENTO
@@ -31,8 +42,19 @@ model Usuario {
   criado_em     DateTime @default(now())
   atualizado_em DateTime @updatedAt
 
-  aluno     Aluno?
-  professor Professor?
+model Usuario {
+  id             Int             @id @default(autoincrement())
+  nome           String
+  sobrenome      String
+  email          String          @unique
+  senha          String
+  tipo           TipoUsuario
+  criado_em      DateTime        @default(now())
+  atualizado_em  DateTime        @updatedAt
+
+  Aluno          Aluno?
+  Professor      Professor?
+  Comentarios    Comentario[]
 }
 
 model Aluno {
@@ -44,14 +66,12 @@ model Aluno {
 }
 
 model Professor {
-  id              Int     @id
-  area_atuacao    String
+  fk_Usuario_id  Int             @id
+  area_atuacao   String
   disponibilidade Boolean
-  usuario         Usuario @relation(fields: [id], references: [id])
 
-  orientacoes   TCC[]   @relation("OrientadorRelation")
-  coorientacoes TCC[]   @relation("CoorientadorRelation")
-  bancas        Banca[]
+  Usuario        Usuario         @relation(fields: [fk_Usuario_id], references: [id])
+  Bancas         Banca[]
 }
 
 model TCC {
@@ -62,52 +82,52 @@ model TCC {
   criado_em          DateTime @default(now())
   ultima_atualizacao DateTime @updatedAt
 
-  status_atual StatusTCC @default(PLANEJAMENTO)
+  FK_Aluno_fk_Usuario_id Int
 
-  alunoId        Int  @unique
-  orientadorId   Int?
-  coorientadorId Int?
-
-  aluno        Aluno      @relation(fields: [alunoId], references: [id])
-  orientador   Professor? @relation("OrientadorRelation", fields: [orientadorId], references: [id])
-  coorientador Professor? @relation("CoorientadorRelation", fields: [coorientadorId], references: [id])
-
-  bancas      Banca[]
-  comentarios Comentario[]
-  atividades  Atividade[]
+  Aluno               Aluno           @relation(fields: [FK_Aluno_fk_Usuario_id], references: [fk_Usuario_id])
+  Bancas              Banca[]
+  Atividades          Atividade[]
+  Comentarios         Comentario[]
 }
 
 model Banca {
-  id          String @id
-  papel       String
-  tccId       Int
-  professorId Int
+  fk_TCC_id                  Int
+  fk_Professor_fk_Usuario_id Int
+  papel                      PapelBanca
 
-  tcc       TCC       @relation(fields: [tccId], references: [id])
-  professor Professor @relation(fields: [professorId], references: [id])
-}
+  TCC                        TCC       @relation(fields: [fk_TCC_id], references: [id])
+  Professor                  Professor @relation(fields: [fk_Professor_fk_Usuario_id], references: [fk_Usuario_id])
 
-model Comentario {
-  id                 Int      @id @default(autoincrement())
-  texto              String
-  titulo             String
-  data_criacao       DateTime @default(now())
-  ultima_atualizacao DateTime @updatedAt
-
-  tccId Int
-  tcc   TCC @relation(fields: [tccId], references: [id])
+  @@id([fk_TCC_id, fk_Professor_fk_Usuario_id])
 }
 
 model Atividade {
-  id           Int      @id @default(autoincrement())
-  nome         String
-  descricao    String
-  status       String
-  data_entrega DateTime
-  concluido_em DateTime
-  arquivo_url  String
-  feedback     String?
+  id            Int             @id @default(autoincrement())
+  nome          String
+  descricao     String
+  status        StatusAtividade
+  data_entrega  DateTime
+  arquivo_url   String?
+  concluido_em  DateTime?
 
-  tccId Int
-  tcc   TCC @relation(fields: [tccId], references: [id])
+  fk_TCC_id     Int
+
+  TCC           TCC             @relation(fields: [fk_TCC_id], references: [id])
+  Comentarios   Comentario[]
+}
+
+model Comentario {
+  id                Int          @id @default(autoincrement())
+  topico            String
+  texto             String
+  data_criacao      DateTime     @default(now())
+  ultima_atualizacao DateTime    @updatedAt
+
+  fk_TCC_id         Int
+  fk_Usuario_id     Int
+  fk_Atividades_id  Int?
+
+  TCC               TCC          @relation(fields: [fk_TCC_id], references: [id])
+  Usuario           Usuario      @relation(fields: [fk_Usuario_id], references: [id])
+  Atividade         Atividade?   @relation(fields: [fk_Atividades_id], references: [id])
 }
