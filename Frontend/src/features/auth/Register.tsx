@@ -78,7 +78,7 @@ function Register() {
 
   return (
   <div className="min-h-screen w-full overflow-x-hidden flex justify-center items-center bg-[#F3C50D]">
-    <div className="bg-[#fffbef] w-full  max-w-[500px]  rounded-lg shadow-lg flex flex-col mt-5 pt-1 p-5 mx-4 mb-5">
+    <div className="bg-[#FDF2BF] w-full  max-w-[500px]  rounded-lg shadow-lg flex flex-col mt-5 pt-1 p-5 mx-4 mb-5">
       {/* Logo and Title Section */}
       <div className='flex flex-row items-center justify-center'>
        <img src={logo} alt="Logo" className="w-16 h-24 mr-2" /> <span className='text-black text-3xl font-bold '> FocoTCC</span>
