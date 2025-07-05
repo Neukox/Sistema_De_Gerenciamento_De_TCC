@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import prisma from '../../../prisma/PrismaClient/prisma';
 import { getJwtConfig } from '../ConfigJwt/config';
 

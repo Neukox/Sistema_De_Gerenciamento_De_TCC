@@ -1,9 +1,17 @@
-// Esse arquivo "diz" ao TypeScript que estamos adicionando a propriedade `token` no objeto Request
-import { Request } from 'express';
+// Esse arquivo "diz" ao TypeScript que estamos adicionando propriedades no objeto Request
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    token?: string;
-    Role?: Role;
+declare global {
+  namespace Express {
+    interface Request {
+      token?: string;
+      user?: {
+        id: number;
+        role: string;
+        tipo: string;
+        email: string;
+      };
+    }
   }
 }
+
+export {};

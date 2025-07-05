@@ -1,18 +1,13 @@
 import { Router } from 'express';
-import { Registro } from '../Registro/registro';
-import { Login } from '../Login/login';
+import routesPublic from './routesPublic/routes';
+import routesPrivate from './routesPrivate/routes';
 
 const routes = Router();
 
-// Rota de teste (opcional)
-routes.get('/', (req, res) => {
-  res.send('API de Autenticação funcionando!');
-});
+// Usando as rotas públicas (sem autenticação)
+routes.use('/', routesPublic);
 
-// Rota de registro
-routes.post('/register', Registro);
-
-// Rota de login
-routes.post('/login', Login);
+// Usando as rotas privadas (com autenticação)
+routes.use('/', routesPrivate);
 
 export default routes;
