@@ -1,5 +1,6 @@
 import { Router } from "express";
 import authRoutes from "./authRoutes";
+<<<<<<< HEAD
 import alunosRoutes from "./alunosRoutes";
 import professorRoutes from "./professorRoutes";
 import TCCRoutes from "./TCCRoutes";
@@ -8,6 +9,8 @@ import atividadesRoutes from "./atividadesRoutes";
 import anotacaoRoutes from "./anotacaoRoutes";
 import progressRoutes from "./progressRoutes";
 import reunioesRoutes from "./reunioesRoutes";
+=======
+>>>>>>> 6bcdba5 (Adicionando rotas de autenticação e centralizando as rotas da API)
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -15,6 +18,7 @@ import reunioesRoutes from "./reunioesRoutes";
 const routes = Router();
 
 // Usando as rotas de autenticação
+<<<<<<< HEAD
 routes.use("/auth", authRoutes);
 // Usando as rotas de alunos
 routes.use("/alunos", alunosRoutes);
@@ -35,3 +39,9 @@ routes.use("/reunioes", reunioesRoutes);
 
 // Exporta as rotas
 export default routes;
+=======
+routes.use("/", authRoutes);
+
+// Exporta as rotas
+export default routes;
+>>>>>>> 6bcdba5 (Adicionando rotas de autenticação e centralizando as rotas da API)
