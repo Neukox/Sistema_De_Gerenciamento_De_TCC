@@ -6,8 +6,9 @@ declare global {
       token?: string;
       user?: {
         id: number;
+        name: string;
+        surname: string;
         role: string;
-        tipo: string;
         email: string;
       };
     }

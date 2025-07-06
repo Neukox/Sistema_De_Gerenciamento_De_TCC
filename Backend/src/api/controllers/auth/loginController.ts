@@ -35,7 +35,7 @@ export default async function loginController(
     usuario: {
       id: user.id,
       nome: user.name,
-      nomeInicial: user.nameInitials,
+      sobrenome: user.surname,
       email: user.email,
       role: user.role,
     },

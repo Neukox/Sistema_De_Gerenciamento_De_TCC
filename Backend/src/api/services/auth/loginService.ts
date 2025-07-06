@@ -1,5 +1,5 @@
 import { ResponseError } from "../../helpers/ResponseError";
-import { findUserByEmail } from "../../repositories/usuarioRepository";
+import { findUserByEmail } from "../../repositories/usuario/usuarioRepository";
 import { generateJwtToken } from "../../utils/jwt";
 import { AuthPayload, ILoginService } from "./contracts";
 import bcrypt from "bcryptjs";
@@ -31,8 +31,8 @@ export default async function loginService(
   // Geração do token JWT
   const payload = {
     id: usuario.id,
-    name: usuario.nome + " " + usuario.sobrenome,
-    nameInitials: usuario.nome[0] + usuario.sobrenome[0],
+    name: usuario.nome,
+    surname: usuario.sobrenome,
     role: usuario.tipo,
     email: usuario.email,
   };
