@@ -4,12 +4,38 @@ import prisma from '../../../prisma/PrismaClient/prisma';
 
 
 export async function  Registro(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const {name, email, password, sobrenome} = req.body;
+    const {nome, sobrenome, email, senha, tipo, curso, area_atuacao, disponibilidade} = req.body;
 
     //Verificando se todos os campos foram preenchidos
-    if (!name || !email || !password) {
+    if (!nome || !sobrenome || !email || !senha || !tipo) {
         res.status(400).json({
-            message: 'Todos os campos são obrigatórios.',
+            message: 'Os campos nome, sobrenome, email, senha e tipo são obrigatórios.',
+            success: false
+        });
+        return;
+    }
+
+    // Validação do tipo de usuário
+    if (!['aluno', 'professor'].includes(tipo)) {
+        res.status(400).json({
+            message: 'Tipo deve ser "aluno" ou "professor".',
+            success: false
+        });
+        return;
+    }
+
+    // Validação específica por tipo
+    if (tipo === 'aluno' && !curso) {
+        res.status(400).json({
+            message: 'Campo "curso" é obrigatório para alunos.',
+            success: false
+        });
+        return;
+    }
+
+    if (tipo === 'professor' && (!area_atuacao || disponibilidade === undefined)) {
+        res.status(400).json({
+            message: 'Campos "area_atuacao" e "disponibilidade" são obrigatórios para professores.',
             success: false
         });
         return;
@@ -43,31 +69,56 @@ export async function  Registro(req: Request, res: Response, next: NextFunction)
         }
 
         //Criptografando a senha
-        const senhaCriptografada = await bcrypt.hash(password, 10);
-        //Criando usuario no banco de dados.
+        const senhaCriptografada = await bcrypt.hash(senha, 10);
+        
+        // Usando transação para criar usuário e registro específico
+        const resultado = await prisma.$transaction(async (tx) => {
+            // Criando usuario no banco de dados.
+            const usuario = await tx.usuario.create({
+                data: {
+                    nome,
+                    sobrenome,
+                    email: email.toLowerCase(),
+                    senha: senhaCriptografada,
+                    tipo,
+                    role: 'user' // Definindo o role como 'user' por padrão
+                }
+            });
 
-        const usuario = await prisma.usuario.create({
-            data: {
-                nome: name,
-                sobrenome: sobrenome,
-                email: email.toLowerCase(),
-                senha: senhaCriptografada,
-                tipo: 'usuario', // Definindo o tipo como 'usuario' por padrão
-                role: 'user' // Definindo o role como 'user' por padrão
+            // Criar registro específico baseado no tipo
+            if (tipo === 'aluno') {
+                await tx.aluno.create({
+                    data: {
+                        id: usuario.id,
+                        curso
+                    }
+                });
+            } else if (tipo === 'professor') {
+                await tx.professor.create({
+                    data: {
+                        id: usuario.id,
+                        area_atuacao,
+                        disponibilidade: disponibilidade === true || disponibilidade === 'true'
+                    }
+                });
             }
-        })
+
+            return usuario;
+        });
 
         //Retornando usuario criado.
         res.status(201).json({
-            message: 'Usuário criado com sucesso.',
+            message: `${tipo.charAt(0).toUpperCase() + tipo.slice(1)} criado com sucesso.`,
             success: true,
             usuario: {
-                id: usuario.id,
-                nome: usuario.nome,
-                sobrenome: usuario.sobrenome,
-                email: usuario.email,
-                tipo: usuario.tipo,
-                role: usuario.role
+                id: resultado.id,
+                nome: resultado.nome,
+                sobrenome: resultado.sobrenome,
+                email: resultado.email,
+                tipo: resultado.tipo,
+                role: resultado.role,
+                ...(tipo === 'aluno' ? { curso } : {}),
+                ...(tipo === 'professor' ? { area_atuacao, disponibilidade } : {})
             }
         });
     } catch (error) {
@@ -75,7 +126,8 @@ export async function  Registro(req: Request, res: Response, next: NextFunction)
         console.error('Erro ao criar usuário:', error);
         res.status(500).json({
             message: 'Erro interno do servidor.',
-            success: false
+            success: false,
+            error: process.env.NODE_ENV === 'development' ? error : undefined
         });
     }
    

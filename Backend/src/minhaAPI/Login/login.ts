@@ -7,11 +7,14 @@ import { getJwtConfig } from '../ConfigJwt/config';
 export async function Login(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const { email, password } = req.body;
+    
+    // Log para debug - remover em produção
+    console.log('Dados recebidos no login:', { email, password, body: req.body });
 
     // Validação dos campos obrigatórios
     if (!email || !password) {
       res.status(400).json({ 
-        message: 'Todos os campos são obrigatórios.',
+        message: 'Os campos email e password são obrigatórios.',
         success: false 
       });
       return;

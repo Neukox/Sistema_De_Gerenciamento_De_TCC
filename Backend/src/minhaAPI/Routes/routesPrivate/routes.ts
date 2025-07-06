@@ -1,5 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { autorizacao } from '../../Middlewares/JWT/autorizacao';
+import { cadastrarTCC } from '../../CadastrarTCC/cadastrar';
+import { listarTCCs, buscarTCCPorId } from '../../ListarTCCs/listar';
+import { listarAlunos, listarProfessores, listarProfessoresDisponiveis } from '../../ListarUsuarios/listar';
+import { buscarProfessoresPorNome } from '../../BuscarProfessores/buscar';
 
 // Interface para estender o Request com a propriedade user
 interface AuthenticatedRequest extends Request {
@@ -73,5 +77,18 @@ routesPrivate.get('/perfil', autorizacao, (req: AuthenticatedRequest, res: Respo
     }
   });
 });
+
+// Rota para cadastrar TCC - qualquer usuário autenticado pode cadastrar
+routesPrivate.post('/cadastrar-tcc', autorizacao, cadastrarTCC);
+
+// Rotas para listar TCCs
+routesPrivate.get('/tccs', autorizacao, listarTCCs);
+routesPrivate.get('/tccs/:id', autorizacao, buscarTCCPorId);
+
+// Rotas para listar usuários (úteis para formulários)
+routesPrivate.get('/alunos', autorizacao, listarAlunos);
+routesPrivate.get('/professores', autorizacao, listarProfessores);
+routesPrivate.get('/professores/disponiveis', autorizacao, listarProfessoresDisponiveis);
+routesPrivate.get('/professores/buscar', autorizacao, buscarProfessoresPorNome);
 
 export default routesPrivate;
