@@ -19,27 +19,16 @@ export async function buscarProfessoresPorNome(req: Request, res: Response): Pro
             where: {
                 disponibilidade: true,
                 usuario: {
-                    OR: [
-                        {
-                            nome: {
-                                contains: nome,
-                                mode: 'insensitive'
-                            }
-                        },
-                        {
-                            sobrenome: {
-                                contains: nome,
-                                mode: 'insensitive'
-                            }
-                        }
-                    ]
+                    nomeCompleto: {
+                        contains: nome,
+                        mode: 'insensitive'
+                    }
                 }
             },
             include: {
                 usuario: {
                     select: {
-                        nome: true,
-                        sobrenome: true,
+                        nomeCompleto: true,
                         email: true
                     }
                 },
@@ -58,7 +47,7 @@ export async function buscarProfessoresPorNome(req: Request, res: Response): Pro
             },
             orderBy: {
                 usuario: {
-                    nome: 'asc'
+                    nomeCompleto: 'asc'
                 }
             }
         });
@@ -68,7 +57,7 @@ export async function buscarProfessoresPorNome(req: Request, res: Response): Pro
             success: true,
             professores: professores.map(prof => ({
                 id: prof.id,
-                nomeCompleto: `${prof.usuario.nome} ${prof.usuario.sobrenome}`,
+                nomeCompleto: prof.usuario.nomeCompleto,
                 email: prof.usuario.email,
                 area_atuacao: prof.area_atuacao,
                 totalOrientacoes: prof.orientacoes.length,

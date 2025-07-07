@@ -2,7 +2,7 @@
 
 ## Autenticação e Cadastro
 
-### 1. Registrar um novo aluno
+### 1. Registrar um novo usuário
 
 ```http
 POST /api/public/registrar

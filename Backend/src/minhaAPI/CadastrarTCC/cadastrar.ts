@@ -16,7 +16,7 @@ interface AuthenticatedRequest extends Request {
 export async function cadastrarTCC(req: AuthenticatedRequest, res: Response): Promise<void> {
     try {
         //Desestruturando os dados do corpo da requisição.
-        const { titulo, tema, curso, orientador, coorientador, resumo, dataInicio, dataConclusao, statusAtual } = req.body;
+        const { titulo, tema, curso, orientador, coorientador, resumo, dataInicio, dataConclusao, statusAtual, areaConhecimentoId } = req.body;
 
         //Verificando se todos os campos obrigatórios foram preenchidos.
         if (!titulo || !tema || !curso || !resumo || !dataInicio || !dataConclusao || !statusAtual) {
@@ -35,6 +35,21 @@ export async function cadastrarTCC(req: AuthenticatedRequest, res: Response): Pr
                 success: false
             });
             return;
+        }
+
+        // Validar área de conhecimento se fornecida
+        if (areaConhecimentoId) {
+            const areaConhecimento = await prisma.areaConhecimento.findUnique({
+                where: { id: parseInt(areaConhecimentoId) }
+            });
+
+            if (!areaConhecimento) {
+                res.status(400).json({
+                    message: 'Área de conhecimento não encontrada.',
+                    success: false
+                });
+                return;
+            }
         }
 
         // Validação e conversão das datas
@@ -86,15 +101,6 @@ export async function cadastrarTCC(req: AuthenticatedRequest, res: Response): Pr
             return;
         }
 
-        // Verificar se o curso do aluno bate com o curso informado
-        if (aluno.curso !== curso) {
-            res.status(400).json({
-                message: `Curso informado (${curso}) não confere com o curso do aluno (${aluno.curso}).`,
-                success: false
-            });
-            return;
-        }
-
         // Verificar se o aluno já possui um TCC
         const tccExistente = await prisma.tCC.findUnique({
             where: { alunoId: aluno.id }
@@ -138,15 +144,15 @@ export async function cadastrarTCC(req: AuthenticatedRequest, res: Response): Pr
                 orientador_nome: orientador && orientador.trim() ? orientador.trim() : null,
                 coorientador_nome: coorientador && coorientador.trim() ? coorientador.trim() : null,
                 orientadorId,
-                coorientadorId
+                coorientadorId,
+                areaConhecimentoId: areaConhecimentoId ? parseInt(areaConhecimentoId) : null
             },
             include: {
                 aluno: {
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
@@ -156,8 +162,7 @@ export async function cadastrarTCC(req: AuthenticatedRequest, res: Response): Pr
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
@@ -167,11 +172,16 @@ export async function cadastrarTCC(req: AuthenticatedRequest, res: Response): Pr
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
+                    }
+                },
+                areaConhecimento: {
+                    select: {
+                        id: true,
+                        nome: true
                     }
                 }
             }

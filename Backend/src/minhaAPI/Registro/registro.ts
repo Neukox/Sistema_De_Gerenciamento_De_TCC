@@ -4,38 +4,30 @@ import prisma from '../../../prisma/PrismaClient/prisma';
 
 
 export async function  Registro(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const {nome, sobrenome, email, senha, tipo, curso, area_atuacao, disponibilidade} = req.body;
+    const {nomeCompleto, instituicao, email, confirmEmail, senha, confirmSenha} = req.body;
 
     //Verificando se todos os campos foram preenchidos
-    if (!nome || !sobrenome || !email || !senha || !tipo) {
+    if (!nomeCompleto || !instituicao || !email || !confirmEmail || !senha || !confirmSenha) {
         res.status(400).json({
-            message: 'Os campos nome, sobrenome, email, senha e tipo são obrigatórios.',
+            message: 'Todos os campos são obrigatórios: nomeCompleto, instituicao, email, confirmEmail, senha, confirmSenha.',
             success: false
         });
         return;
     }
 
-    // Validação do tipo de usuário
-    if (!['aluno', 'professor'].includes(tipo)) {
+    // Validação se os emails coincidem
+    if (email !== confirmEmail) {
         res.status(400).json({
-            message: 'Tipo deve ser "aluno" ou "professor".',
+            message: 'Email e confirmação de email devem ser iguais.',
             success: false
         });
         return;
     }
 
-    // Validação específica por tipo
-    if (tipo === 'aluno' && !curso) {
+    // Validação se as senhas coincidem
+    if (senha !== confirmSenha) {
         res.status(400).json({
-            message: 'Campo "curso" é obrigatório para alunos.',
-            success: false
-        });
-        return;
-    }
-
-    if (tipo === 'professor' && (!area_atuacao || disponibilidade === undefined)) {
-        res.status(400).json({
-            message: 'Campos "area_atuacao" e "disponibilidade" são obrigatórios para professores.',
+            message: 'Senha e confirmação de senha devem ser iguais.',
             success: false
         });
         return;
@@ -47,6 +39,15 @@ export async function  Registro(req: Request, res: Response, next: NextFunction)
         res.status(400).json({ 
             message: 'Formato de email inválido.',
             success: false 
+        });
+        return;
+    }
+
+    // Validação do tamanho da senha
+    if (senha.length < 6) {
+        res.status(400).json({
+            message: 'A senha deve ter pelo menos 6 caracteres.',
+            success: false
         });
         return;
     }
@@ -71,54 +72,36 @@ export async function  Registro(req: Request, res: Response, next: NextFunction)
         //Criptografando a senha
         const senhaCriptografada = await bcrypt.hash(senha, 10);
         
-        // Usando transação para criar usuário e registro específico
-        const resultado = await prisma.$transaction(async (tx) => {
-            // Criando usuario no banco de dados.
-            const usuario = await tx.usuario.create({
-                data: {
-                    nome,
-                    sobrenome,
-                    email: email.toLowerCase(),
-                    senha: senhaCriptografada,
-                    tipo,
-                    role: 'user' // Definindo o role como 'user' por padrão
-                }
-            });
-
-            // Criar registro específico baseado no tipo
-            if (tipo === 'aluno') {
-                await tx.aluno.create({
-                    data: {
-                        id: usuario.id,
-                        curso
-                    }
-                });
-            } else if (tipo === 'professor') {
-                await tx.professor.create({
-                    data: {
-                        id: usuario.id,
-                        area_atuacao,
-                        disponibilidade: disponibilidade === true || disponibilidade === 'true'
-                    }
-                });
+        // Criando usuario no banco de dados.
+        const usuario = await prisma.usuario.create({
+            data: {
+                nomeCompleto: nomeCompleto.trim(),
+                email: email.toLowerCase(),
+                senha: senhaCriptografada,
+                tipo: 'aluno', // Por padrão, todos são alunos
+                role: 'user' // Definindo o role como 'user' por padrão
             }
+        });
 
-            return usuario;
+        // Criar registro de aluno automaticamente
+        await prisma.aluno.create({
+            data: {
+                id: usuario.id,
+                instituicao: instituicao
+            }
         });
 
         //Retornando usuario criado.
         res.status(201).json({
-            message: `${tipo.charAt(0).toUpperCase() + tipo.slice(1)} criado com sucesso.`,
+            message: 'Usuário criado com sucesso.',
             success: true,
             usuario: {
-                id: resultado.id,
-                nome: resultado.nome,
-                sobrenome: resultado.sobrenome,
-                email: resultado.email,
-                tipo: resultado.tipo,
-                role: resultado.role,
-                ...(tipo === 'aluno' ? { curso } : {}),
-                ...(tipo === 'professor' ? { area_atuacao, disponibilidade } : {})
+                id: usuario.id,
+                nomeCompleto: usuario.nomeCompleto,
+                email: usuario.email,
+                instituicao,
+                tipo: usuario.tipo,
+                role: usuario.role
             }
         });
     } catch (error) {

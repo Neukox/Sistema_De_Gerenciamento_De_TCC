@@ -11,8 +11,7 @@ export async function listarTCCs(req: Request, res: Response): Promise<void> {
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
@@ -22,8 +21,7 @@ export async function listarTCCs(req: Request, res: Response): Promise<void> {
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
@@ -33,8 +31,7 @@ export async function listarTCCs(req: Request, res: Response): Promise<void> {
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
@@ -82,8 +79,7 @@ export async function buscarTCCPorId(req: Request, res: Response): Promise<void>
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
@@ -93,8 +89,7 @@ export async function buscarTCCPorId(req: Request, res: Response): Promise<void>
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }
@@ -104,8 +99,7 @@ export async function buscarTCCPorId(req: Request, res: Response): Promise<void>
                     include: {
                         usuario: {
                             select: {
-                                nome: true,
-                                sobrenome: true,
+                                nomeCompleto: true,
                                 email: true
                             }
                         }

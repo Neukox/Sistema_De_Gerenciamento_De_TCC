@@ -6,15 +6,18 @@ import { getJwtConfig } from '../ConfigJwt/config';
 
 export async function Login(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { email, password } = req.body;
+    const { email, senha, password } = req.body;
+    
+    // Aceitar tanto senha quanto password para compatibilidade
+    const senhaParaVerificar = senha || password;
     
     // Log para debug - remover em produção
-    console.log('Dados recebidos no login:', { email, password, body: req.body });
+    console.log('Dados recebidos no login:', { email, senha, password, senhaParaVerificar, body: req.body });
 
     // Validação dos campos obrigatórios
-    if (!email || !password) {
+    if (!email || !senhaParaVerificar) {
       res.status(400).json({ 
-        message: 'Os campos email e password são obrigatórios.',
+        message: 'Os campos email e senha são obrigatórios.',
         success: false 
       });
       return;
@@ -44,7 +47,7 @@ export async function Login(req: Request, res: Response, next: NextFunction): Pr
     }
 
     // Verifica a senha
-    const senhaCorreta = await bcrypt.compare(password, usuario.senha);
+    const senhaCorreta = await bcrypt.compare(senhaParaVerificar, usuario.senha);
     if (!senhaCorreta) {
       res.status(401).json({ 
         message: 'Credenciais inválidas.',
@@ -77,8 +80,7 @@ export async function Login(req: Request, res: Response, next: NextFunction): Pr
       token,
       usuario: {
         id: usuario.id,
-        nome: usuario.nome,
-        sobrenome: usuario.sobrenome,
+        nomeCompleto: usuario.nomeCompleto,
         email: usuario.email,
         tipo: usuario.tipo,
         role: usuario.role,

@@ -9,8 +9,7 @@ export async function listarAlunos(req: Request, res: Response): Promise<void> {
             include: {
                 usuario: {
                     select: {
-                        nome: true,
-                        sobrenome: true,
+                        nomeCompleto: true,
                         email: true
                     }
                 },
@@ -23,7 +22,7 @@ export async function listarAlunos(req: Request, res: Response): Promise<void> {
             },
             orderBy: {
                 usuario: {
-                    nome: 'asc'
+                    nomeCompleto: 'asc'
                 }
             }
         });
@@ -51,8 +50,7 @@ export async function listarProfessores(req: Request, res: Response): Promise<vo
             include: {
                 usuario: {
                     select: {
-                        nome: true,
-                        sobrenome: true,
+                        nomeCompleto: true,
                         email: true
                     }
                 },
@@ -71,7 +69,7 @@ export async function listarProfessores(req: Request, res: Response): Promise<vo
             },
             orderBy: {
                 usuario: {
-                    nome: 'asc'
+                    nomeCompleto: 'asc'
                 }
             }
         });
@@ -102,8 +100,7 @@ export async function listarProfessoresDisponiveis(req: Request, res: Response):
             include: {
                 usuario: {
                     select: {
-                        nome: true,
-                        sobrenome: true,
+                        nomeCompleto: true,
                         email: true
                     }
                 },
@@ -122,7 +119,7 @@ export async function listarProfessoresDisponiveis(req: Request, res: Response):
             },
             orderBy: {
                 usuario: {
-                    nome: 'asc'
+                    nomeCompleto: 'asc'
                 }
             }
         });
