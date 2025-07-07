@@ -6,9 +6,12 @@ import { getAllAlunosService } from "../../services/aluno/getAllService";
  * @param {Request} req - Requisição HTTP
  * @param {Response} res - Resposta HTTP
  */
-export async function getAllAlunosController(req: Request, res: Response) {
+export default async function getAllAlunosController(
+  req: Request,
+  res: Response
+): Promise<void> {
   const alunos = await getAllAlunosService();
-  return res.status(200).json({
+  res.status(200).json({
     message: "Alunos encontrados com sucesso.",
     success: true,
     alunos: alunos,
