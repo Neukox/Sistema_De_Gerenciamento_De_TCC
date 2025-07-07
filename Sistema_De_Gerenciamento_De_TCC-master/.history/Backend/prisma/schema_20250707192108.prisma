@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusTCC {
+  PLANEJAMENTO
+  DESENVOLVIMENTO
+  REVISAO
+  FINALIZACAO
+  CONCLUIDO
+}
+
+
+model Usuario {
+  id            Int        @id @default(autoincrement())
+  nome          String
+  sobrenome     String
+  nomeCompleto  String
+  email         String     @unique
+  senha         String
+  tipo          String
+  role          String
+  criado_em     DateTime   @default(now())
+  atualizado_em DateTime   @updatedAt
+
+  aluno         Aluno?
+  professor     Professor?
+}
+
+model Aluno {
+  id          Int     @id
+  curso       String?
+  instituicao String?
+  usuario     Usuario @relation(fields: [id], references: [id])
+  tcc         TCC?
+}
+
+model Professor {
+  id               Int        @id
+  area_atuacao     String
+  disponibilidade  Boolean
+  usuario          Usuario    @relation(fields: [id], references: [id])
+
+  orientacoes      TCC[]      @relation("OrientadorRelation")
+  coorientacoes    TCC[]      @relation("CoorientadorRelation")
+  bancas           Banca[]
+}
+
+model TCC {
+  id                  Int           @id @default(autoincrement())
+  titulo              String
+  tema                String
+  resumo              String
+  criado_em           DateTime      @default(now())
+  ultima_atualizacao  DateTime      @updatedAt
+
+  status_atual        StatusTCC     @default(PLANEJAMENTO)
+
+  alunoId             Int           @unique
+  orientadorId        Int?
+  coorientadorId      Int?
+
+  aluno               Aluno         @relation(fields: [alunoId], references: [id])
+  orientador          Professor?    @relation("OrientadorRelation", fields: [orientadorId], references: [id])
+  coorientador        Professor?    @relation("CoorientadorRelation", fields: [coorientadorId], references: [id])
+
+  bancas              Banca[]
+  comentarios         Comentario[]
+  atividades          Atividade[]
+}
+
+model Banca {
+  id           String    @id
+  papel        String
+  tccId        Int
+  professorId  Int
+
+  tcc          TCC        @relation(fields: [tccId], references: [id])
+  professor    Professor  @relation(fields: [professorId], references: [id])
+}
+
+model Comentario {
+  id                 Int      @id @default(autoincrement())
+  texto              String
+  titulo             String
+  data_criacao       DateTime @default(now())
+  ultima_atualizacao DateTime @updatedAt
+
+  tccId              Int
+  tcc                TCC      @relation(fields: [tccId], references: [id])
+}
+
+model Atividade {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  descricao     String
+  status        String
+  data_entrega  DateTime
+  concluido_em  DateTime
+  arquivo_url   String
+  feedback      String?
+
+  tccId         Int
+  tcc           TCC      @relation(fields: [tccId], references: [id])
+}
