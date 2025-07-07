@@ -4,12 +4,30 @@ import prisma from '../../../prisma/PrismaClient/prisma';
 
 
 export async function  Registro(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const {name, email, password, sobrenome} = req.body;
+    const {nomeCompleto, instituicao, email, confirmEmail, senha, confirmSenha} = req.body;
 
     //Verificando se todos os campos foram preenchidos
-    if (!name || !email || !password) {
+    if (!nomeCompleto || !instituicao || !email || !confirmEmail || !senha || !confirmSenha) {
         res.status(400).json({
-            message: 'Todos os campos são obrigatórios.',
+            message: 'Todos os campos são obrigatórios: nomeCompleto, instituicao, email, confirmEmail, senha, confirmSenha.',
+            success: false
+        });
+        return;
+    }
+
+    // Validação se os emails coincidem
+    if (email !== confirmEmail) {
+        res.status(400).json({
+            message: 'Email e confirmação de email devem ser iguais.',
+            success: false
+        });
+        return;
+    }
+
+    // Validação se as senhas coincidem
+    if (senha !== confirmSenha) {
+        res.status(400).json({
+            message: 'Senha e confirmação de senha devem ser iguais.',
             success: false
         });
         return;
@@ -21,6 +39,15 @@ export async function  Registro(req: Request, res: Response, next: NextFunction)
         res.status(400).json({ 
             message: 'Formato de email inválido.',
             success: false 
+        });
+        return;
+    }
+
+    // Validação do tamanho da senha
+    if (senha.length < 6) {
+        res.status(400).json({
+            message: 'A senha deve ter pelo menos 6 caracteres.',
+            success: false
         });
         return;
     }
@@ -43,19 +70,26 @@ export async function  Registro(req: Request, res: Response, next: NextFunction)
         }
 
         //Criptografando a senha
-        const senhaCriptografada = await bcrypt.hash(password, 10);
-        //Criando usuario no banco de dados.
-
+        const senhaCriptografada = await bcrypt.hash(senha, 10);
+        
+        // Criando usuario no banco de dados.
         const usuario = await prisma.usuario.create({
             data: {
-                nome: name,
-                sobrenome: sobrenome,
+                nomeCompleto: nomeCompleto.trim(),
                 email: email.toLowerCase(),
                 senha: senhaCriptografada,
-                tipo: 'usuario', // Definindo o tipo como 'usuario' por padrão
+                tipo: 'aluno', // Por padrão, todos são alunos
                 role: 'user' // Definindo o role como 'user' por padrão
             }
-        })
+        });
+
+        // Criar registro de aluno automaticamente
+        await prisma.aluno.create({
+            data: {
+                id: usuario.id,
+                instituicao: instituicao
+            }
+        });
 
         //Retornando usuario criado.
         res.status(201).json({
@@ -63,9 +97,9 @@ export async function  Registro(req: Request, res: Response, next: NextFunction)
             success: true,
             usuario: {
                 id: usuario.id,
-                nome: usuario.nome,
-                sobrenome: usuario.sobrenome,
+                nomeCompleto: usuario.nomeCompleto,
                 email: usuario.email,
+                instituicao,
                 tipo: usuario.tipo,
                 role: usuario.role
             }
