@@ -1,15 +1,12 @@
 import { Request, Response } from "express";
-<<<<<<< HEAD
 import registerUser from "../../services/auth/registerService";
-=======
-import registerService from "../../services/auth/registerService";
->>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
 import { validateEmail } from "../../validators/email";
 
 export default async function registerController(
   req: Request,
   res: Response
 ): Promise<void> {
+<<<<<<< HEAD
 <<<<<<< HEAD
   try {
     console.log("Register controller called with body:", req.body);
@@ -81,9 +78,12 @@ export default async function registerController(
   }
 =======
   const { nome, sobrenome, email, senha, tipo, curso, area_atuacao } = req.body;
+=======
+  const { nome_completo, email, senha, tipo, curso, area_atuacao } = req.body;
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
 
   // Validações básicas
-  if (!nome || !sobrenome || !email || !senha) {
+  if (!nome_completo || !email || !senha || !tipo) {
     res
       .status(400)
       .json({ message: "Todos os campos são obrigatórios.", success: false });
@@ -105,8 +105,7 @@ export default async function registerController(
 
   // Chama o serviço de registro
   const { token, user } = await registerService({
-    name: nome,
-    surname: sobrenome,
+    nome_completo,
     email,
     password: senha,
     type: tipo.toUpperCase(), // Converte o tipo para maiúsculas
@@ -121,8 +120,7 @@ export default async function registerController(
     token,
     usuario: {
       id: user.id,
-      nome: user.name,
-      sobrenome: user.surname,
+      nome_completo: user.nome_completo,
       email: user.email,
       role: user.role,
     },

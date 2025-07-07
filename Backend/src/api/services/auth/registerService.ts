@@ -2,12 +2,17 @@ import { AuthPayload, IRegisterService } from "./contracts";
 import { findUserByEmail } from "../../repositories/usuario/usuarioRepository";
 import { createUser } from "../../repositories/usuario/usuarioRepository";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { createAluno } from "../../repositories/aluno/alunoRepository";
 import { createProfessor } from "../../repositories/professor/professorRepository";
 =======
 import { createAluno } from "../../repositories/alunoRepository";
 import { createProfessor } from "../../repositories/professorRepository";
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+import { createAluno } from "../../repositories/aluno/alunoRepository";
+import { createProfessor } from "../../repositories/professor/professorRepository";
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
 import bycrypt from "bcryptjs";
 import { ResponseError } from "../../helpers/ResponseError";
 import { generateJwtToken } from "../../utils/jwt";
@@ -46,11 +51,15 @@ export default async function registerUser(
       // Cria o registro de aluno
       createdUser = await createUser({
 <<<<<<< HEAD
+<<<<<<< HEAD
         fullName: params.nome_completo,
 =======
         name: params.name,
         surname: params.surname,
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+        fullName: params.nome_completo,
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
         email: params.email.toLowerCase(),
         password: hashedPassword,
         type: params.type,
@@ -65,10 +74,14 @@ export default async function registerUser(
 
       await createAluno({
 <<<<<<< HEAD
+<<<<<<< HEAD
         Usuario_id: createdUser.id,
 =======
         fk_Usuario_id: createdUser.id,
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+        Usuario_id: createdUser.id,
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
         curso: params.course,
       });
       break;
@@ -83,10 +96,14 @@ export default async function registerUser(
       // Cria o registro de professor
       createdUser = await createUser({
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
         fullName: params.nome_completo,
         email: params.email.toLowerCase(), 
         password: hashedPassword,
         type: params.type,
+<<<<<<< HEAD
 =======
         name: params.name,
         surname: params.surname,
@@ -94,6 +111,8 @@ export default async function registerUser(
         password: hashedPassword, // A senha deve ser criptografada antes de ser salva
         type: params.type, // 'ALUNO', 'PROFESSOR' ou 'ADMIN'
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
       });
 
       if (!createdUser) {
@@ -105,21 +124,29 @@ export default async function registerUser(
 
       await createProfessor({
 <<<<<<< HEAD
+<<<<<<< HEAD
         Usuario_id: createdUser.id,
 =======
         fk_Usuario_id: createdUser.id,
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+        Usuario_id: createdUser.id,
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
         area_atuacao: params.areaOfExpertise,
       });
       break;
     case "ADMIN":
       createdUser = await createUser({
 <<<<<<< HEAD
+<<<<<<< HEAD
         fullName: params.nome_completo,
 =======
         name: params.name,
         surname: params.surname,
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+        fullName: params.nome_completo,
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
         email: params.email.toLowerCase(),
         password: hashedPassword,
         type: params.type,
@@ -140,11 +167,15 @@ export default async function registerUser(
   const payload = {
     id: createdUser.id,
 <<<<<<< HEAD
+<<<<<<< HEAD
     nome_completo: createdUser.nome_completo,
 =======
     name: createdUser.nome,
     surname: createdUser.sobrenome,
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+    nome_completo: createdUser.nome_completo,
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
     role: createdUser.tipo,
     email: createdUser.email,
   };
@@ -158,11 +189,15 @@ export default async function registerUser(
     user: {
       id: createdUser.id,
 <<<<<<< HEAD
+<<<<<<< HEAD
       nome_completo: createdUser.nome_completo,
 =======
       name: createdUser.nome,
       surname: createdUser.sobrenome,
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+      nome_completo: createdUser.nome_completo,
+>>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
       role: createdUser.tipo,
       email: createdUser.email,
     },
