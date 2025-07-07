@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authRoutes from "./authRoutes";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import alunosRoutes from "./alunosRoutes";
 import professorRoutes from "./professorRoutes";
 import TCCRoutes from "./TCCRoutes";
@@ -11,6 +12,9 @@ import progressRoutes from "./progressRoutes";
 import reunioesRoutes from "./reunioesRoutes";
 =======
 >>>>>>> 6bcdba5 (Adicionando rotas de autenticação e centralizando as rotas da API)
+=======
+import alunosRoutes from "./alunosRoutes";
+>>>>>>> ca23945 (Adicionando controlador para buscar todos os alunos e configurando rotas para gerenciamento de alunos)
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -39,8 +43,9 @@ routes.use("/reunioes", reunioesRoutes);
 
 // Exporta as rotas
 export default routes;
-=======
 routes.use("/", authRoutes);
+// Usando as rotas de alunos
+routes.use("/alunos", alunosRoutes);
 
 // Exporta as rotas
 export default routes;
