@@ -31,8 +31,7 @@ export default async function loginService(
   // Geração do token JWT
   const payload = {
     id: usuario.id,
-    name: usuario.nome,
-    surname: usuario.sobrenome,
+    nome_completo: usuario.nome_completo,
     role: usuario.tipo,
     email: usuario.email,
   };

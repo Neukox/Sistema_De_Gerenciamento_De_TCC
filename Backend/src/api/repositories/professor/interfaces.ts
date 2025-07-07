@@ -1,7 +1,6 @@
 export interface IGetAllProfessores {
   id: number;
-  nome: string;
-  sobrenome: string;
+  nome_completo: string;
   email: string;
   area_atuacao: string;
   disponibilidade: boolean;

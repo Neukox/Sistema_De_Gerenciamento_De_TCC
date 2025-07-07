@@ -23,11 +23,10 @@ export async function findUserByEmail(email: string): Promise<Usuario> {
 export async function createUser(data: ICreateUser): Promise<Usuario | null> {
   const usuario = await prisma.usuario.create({
     data: {
-      nome: data.name,
-      sobrenome: data.surname,
+      nome_completo: data.fullName,
       email: data.email.toLowerCase(),
-      senha: data.password, // A senha deve ser criptografada antes de ser salva
-      tipo: data.type, // 'ALUNO', 'PROFESSOR' ou 'ADMINISTRADOR'
+      senha: data.password,
+      tipo: data.type,
     },
   });
 

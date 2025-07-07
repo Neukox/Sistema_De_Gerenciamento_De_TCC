@@ -2,13 +2,7 @@ import { Request } from "express";
 
 export interface DecodedUser {
   id: number;
-  name: string;
-  surname: string;
+  nome_completo: string; // Nome completo do usuário
   role: string;
   email: string;
-}
-
-export interface AuthenticatedRequest extends Request {
-  user?: DecodedUser;
-  token?: string;
 }

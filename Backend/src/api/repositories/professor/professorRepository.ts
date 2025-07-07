@@ -4,15 +4,15 @@ import { GetAllProfessoresParams, IGetAllProfessores } from "./interfaces";
 
 /**
  * Função para criar um professor no banco de dados
- * @param {Pick<Professor, "fk_Usuario_id" | "area_atuacao">} data - Dados do professor a ser criado
+ * @param {Pick<Professor, "Usuario_id" | "area_atuacao">} data - Dados do professor a ser criado
  * @returns {Promise<Professor | null>} Retorna o professor criado ou null se não for possível criar
  */
 export async function createProfessor(
-  data: Pick<Professor, "fk_Usuario_id" | "area_atuacao">
+  data: Pick<Professor, "Usuario_id" | "area_atuacao">
 ): Promise<Professor | null> {
   const professor = await prisma.professor.create({
     data: {
-      fk_Usuario_id: data.fk_Usuario_id,
+      Usuario_id: data.Usuario_id,
       area_atuacao: data.area_atuacao,
       disponibilidade: true, // Definindo disponibilidade como true por padrão
     },
@@ -36,7 +36,7 @@ export async function findAllProfessores(
       }),
       ...(params.nome && {
         Usuario: {
-          nome: {
+          nome_completo: {
             contains: params.nome,
             mode: "insensitive", // Ignora maiúsculas/minúsculas
           },
@@ -46,8 +46,7 @@ export async function findAllProfessores(
     include: {
       Usuario: {
         select: {
-          nome: true,
-          sobrenome: true,
+          nome_completo: true,
           email: true,
         },
       },
@@ -55,9 +54,8 @@ export async function findAllProfessores(
   });
 
   return professores.map((professor) => ({
-    id: professor.fk_Usuario_id,
-    nome: professor.Usuario.nome,
-    sobrenome: professor.Usuario.sobrenome,
+    id: professor.Usuario_id,
+    nome_completo: professor.Usuario.nome_completo,
     email: professor.Usuario.email,
     area_atuacao: professor.area_atuacao,
     disponibilidade: professor.disponibilidade,

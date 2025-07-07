@@ -11,18 +11,16 @@ export async function findAllAlunos(): Promise<GetAlunos[]> {
     include: {
       Usuario: {
         select: {
-          nome: true,
-          sobrenome: true,
           email: true,
+          nome_completo: true,
         },
       },
     },
   });
 
   return alunos.map((aluno) => ({
-    id: aluno.fk_Usuario_id,
-    nome: aluno.Usuario.nome,
-    sobrenome: aluno.Usuario.sobrenome,
+    id: aluno.Usuario_id,
+    nome_completo: aluno.Usuario.nome_completo,
     email: aluno.Usuario.email,
     curso: aluno.curso,
   }));
@@ -36,7 +34,7 @@ export async function findAllAlunos(): Promise<GetAlunos[]> {
 export async function createAluno(data: Aluno): Promise<Aluno | null> {
   const aluno = await prisma.aluno.create({
     data: {
-      fk_Usuario_id: data.fk_Usuario_id,
+      Usuario_id: data.Usuario_id,
       curso: data.curso,
     },
   });

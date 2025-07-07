@@ -9,21 +9,19 @@ export interface ILoginService {
 }
 
 export interface IRegisterService {
-  name: string;
-  surname: string;
-  email: string;
+  nome_completo: string;
+  email: string; 
   password: string;
-  type: $Enums.TipoUsuario; // 'ALUNO', 'PROFESSOR' ou 'ADMINISTRADOR'
-  course?: string; // Opcional, apenas para ALUNO
-  areaOfExpertise?: string; // Opcional, apenas para PROFESSOR
+  type: $Enums.TipoUsuario;
+  course?: string;
+  areaOfExpertise?: string;
 }
 
 export interface AuthPayload {
   token: string;
   user: {
     id: number;
-    name: string;
-    surname: string;
+    nome_completo: string;
     role: string;
     email: string;
   };

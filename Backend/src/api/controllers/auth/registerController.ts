@@ -6,10 +6,10 @@ export default async function registerController(
   req: Request,
   res: Response
 ): Promise<void> {
-  const { nome, sobrenome, email, senha, tipo, curso, area_atuacao } = req.body;
+  const { nome_completo, email, senha, tipo, curso, area_atuacao } = req.body;
 
   // Validações básicas
-  if (!nome || !sobrenome || !email || !senha) {
+  if (!nome_completo || !email || !senha || !tipo) {
     res
       .status(400)
       .json({ message: "Todos os campos são obrigatórios.", success: false });
@@ -31,8 +31,7 @@ export default async function registerController(
 
   // Chama o serviço de registro
   const { token, user } = await registerService({
-    name: nome,
-    surname: sobrenome,
+    nome_completo,
     email,
     password: senha,
     type: tipo.toUpperCase(), // Converte o tipo para maiúsculas
@@ -47,8 +46,7 @@ export default async function registerController(
     token,
     usuario: {
       id: user.id,
-      nome: user.name,
-      sobrenome: user.surname,
+      nome_completo: user.nome_completo,
       email: user.email,
       role: user.role,
     },
