@@ -1,12 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyJwtToken } from "../utils/jwt";
-import { AuthenticatedRequest, DecodedUser } from "../types/auth";
+import { DecodedUser } from "../types/auth";
+
+interface RequestWithUser extends Request {
+  user?: DecodedUser;
+}
 
 /**
  * Middleware de autorização para verificar o token JWT no header Authorization.
  */
 export default function authorization(
-  req: AuthenticatedRequest,
+  req: RequestWithUser,
   res: Response,
   next: NextFunction
 ): void {
