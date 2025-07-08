@@ -1,4 +1,4 @@
-import { TCC, PapelBanca } from "@prisma/client";
+import { PapelBanca } from "@prisma/client";
 import prisma from "../../config/prisma";
 import { GetTCCQuery, ICreateTCC } from "./interfaces";
 import { CreateTCCPayload } from "./interfaces";
@@ -212,6 +212,47 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
           email: tcc.Coorientador.Usuario.email,
         }
       : "Não definido",
+  }));
+}
+
+/**
+ * Buscar todos os TCCs do banco de dados.
+ * @returns Lista de TCCs.
+ */
+
+export async function findAllTCCs(): Promise<GetTCCQuery[]> {
+  const tccs = await prisma.tCC.findMany({
+    include: {
+      Aluno: {
+        select: {
+          curso: true,
+          Usuario: {
+            select: {
+              id: true,
+              nome_completo: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return tccs.map((tcc) => ({
+    id: tcc.id,
+    titulo: tcc.titulo,
+    tema: tcc.tema,
+    resumo: tcc.resumo,
+    dataInicio: tcc.data_inicio,
+    dataConclusao: tcc.data_prevista_entrega,
+    statusAtual: tcc.status_atual,
+    criado_em: tcc.criado_em,
+    atualizado_em: tcc.ultima_atualizacao,
+    finalizado_em: tcc.finalizado_em || null,
+    aluno: {
+      id: tcc.Aluno.Usuario.id,
+      nome: tcc.Aluno.Usuario.nome_completo,
+      curso: tcc.Aluno.curso,
+    },
   }));
 }
 
