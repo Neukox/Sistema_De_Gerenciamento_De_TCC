@@ -2,29 +2,25 @@ type InputProps = {
     type: string;
     id: string;
     placeholder: string;
+    name?: string;
     required?: boolean;
     className?: string;
-    autocomplete?: string;
+    autoComplete?: string;
     minLength?: number;
-    value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function Input({type, id, placeholder, autocomplete, minLength, value, onChange} : InputProps) {
+function Input({type, id, placeholder, autoComplete, minLength, name} : InputProps) {
    
     return (
       <div className="flex flex-col mt-3 mb-2 shadow-lg  ">
-        <input 
-          className="p-2 focus:outline-none focus:opacity-80 rounded-lg border border-solid border-gray-400 bg-[#f9fafc] font-normal " 
-          type={type}
-          id={id}
-          placeholder={placeholder}
-          autoComplete={autocomplete}
-          minLength={minLength}
-          required={true}
-          value={value}
-          onChange={onChange}
-         />
+        <input className="p-2 focus:outline-none focus:opacity-60 rounded-lg border border-solid border-gray-400 bg-[#e6e9ee] font-normal " type={type}
+        id={id}
+        placeholder={placeholder}
+        autoComplete={autoComplete}
+        minLength={minLength}
+        required={true}
+        name={name}
+        />
       </div>
   
     );

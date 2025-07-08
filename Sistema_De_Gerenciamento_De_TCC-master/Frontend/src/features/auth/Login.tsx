@@ -1,56 +1,49 @@
-import React, { useState } from 'react';
 import '../../index.css';
 import logo from '../../assets/logo.png';
 import Input from '../../Components/Input';  
 import Button from '../../Components/Button';
-import {Link} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useTogglePassword} from '../../hooks/useTogglepassword';
-import { fetchLogin } from './fetchLoginAPI';
+import { useNavigate  } from 'react-router-dom';  
+import { useEffect } from 'react';
 
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [erro, setErro] = useState("");
-  const [carregando, setCarregando] = useState(false);
+ 
+  useEffect(() => {
+      document.title = 'FocoTCC - Login';
+    }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCarregando(true);
-    setErro("");
+    navigate('/maindashboard');
+   /* const form = e.currentTarget;
+    const formData = new FormData(form);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    
+    if (email && password.length > 6) {
+       alert('Login realizado com sucesso!'); // Exibe um alerta de sucesso
+       // Redireciona para o Dashboard após o login
 
-    try {
-      const resposta = await fetchLogin(email, senha);
-
-      if (resposta.token) {
-        localStorage.setItem("token", resposta.token);
-        localStorage.setItem("usuario", JSON.stringify(resposta.usuario));
-        setErro("");
-        // Redirecionar para o dashboard
-        window.location.href = "/dashboard";
-      } else {
-        setErro("Token não recebido do servidor.");
-      }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErro(error.message);
-      } else {
-        setErro("Erro no login");
-      }
-    } finally {
-      setCarregando(false);
-    }
-  };
-
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.'); // Exibe um alerta de erro
+    } if (password.length < 6) {
+      alert('A senha deve ter pelo menos 6 caracteres.'); // Exibe um alerta de erro
+    }*/
+   
+   }
 
   const{ mostrarSenha, toggleSenha } = useTogglePassword();
-  // const [mostrarSenha, setMostrarSenha] = useState(false);
-
+  
   return (
   <div className="h-screen w-screen flex justify-center items-center bg-[#F3C50D]">
-    <div className="bg-[#FDF2BF] w-[90%]  max-w-[400px] md:max-w-[500px] lg:max-w-[600px] rounded-lg shadow-lg flex flex-col mt-1 p-1 px-4">
-      {/* Logo and Title Section */}
+    <div className="bg-[#fffbef] w-[90%]  max-w-[400px] md:max-w-[500px] lg:max-w-[600px] rounded-lg shadow-lg flex flex-col mt-1 p-1 px-4">
+      
+       {/* Logo and Title Section */}
       <div className='flex flex-row items-center justify-center'>
        <img src={logo} alt="Logo" className="w-16 h-24 mr-2" /> <span className='text-black text-3xl font-bold '> FocoTCC</span>
       </div>
@@ -61,57 +54,37 @@ function Login() {
          <h2 className=' text-lg font-sans '>insira suas credenciais para acessar o sistema</h2>
        </div>
       {/* Input Fields Section */}
-      <form onSubmit={handleSubmit} className="flex flex-col mt-3 fpont-sans font-semibold">
-        
-        {erro && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {erro}
-          </div>
-        )}
+      <form className="flex flex-col mt-3 fpont-sans font-semibold " onSubmit={handleLogin} noValidate>
         
         <label htmlFor="email">Email</label>
-        <Input 
-          type="email" 
-          id="email" 
-          placeholder="Digite seu email" 
-          autocomplete="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <Input type="email" 
+        id="email" 
+        placeholder="Digite seu email" 
+        autoComplete="email"
+        name='email'
+        required/>
        
         <label htmlFor="password">Senha</label> 
         
         <div className='relative  items-center mb-2'>
-          <Input 
-            type={mostrarSenha ? "text" : "password"} 
-            id="password" 
-            placeholder="Digite sua senha"
-            autocomplete="current-password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required 
-          />
+        <Input type={mostrarSenha ? "text" : "password"} 
+        id="password" 
+        placeholder="Digite sua senha"
+        autoComplete="current-password"
+        name='password'
+        required />
 
-          {/* Eyesoff/ON*/}
-          <span className='absolute right-3 top-5 mt-1 mb-2 cursor-pointer' onClick={toggleSenha}>
-            {mostrarSenha ? <EyeOff size={20} /> : <Eye size={20}/>} 
+        {/* Eyesoff/ON*/}
+        <span className='absolute right-3 top-5 mt-1 mb-2 cursor-pointer' onClick={toggleSenha}>
+          {mostrarSenha ? <EyeOff size={20} /> : <Eye size={20}/>} 
           </span>
-        </div>
+          </div>
           
         <Link to= "/"  className='flex items-center justify-center text-blue-900 font-semibold hover:opacity-45'>Esqueci a senha</Link>
         
         {/* Button Section */}
        <div className="flex mx-auto items-center justify-center mt-4 ">
-        <Button 
-          type="submit" 
-          bgColor="bg-[#0F2C67]" 
-          width="w-72" 
-          height='h-11'
-          disabled={carregando}
-        >
-          {carregando ? "Entrando..." : "Entrar"}
-        </Button>
+        <Button type="submit" bgColor="bg-[#0F2C67]" width="w-72" height='h-11'>Entrar</Button>
        </div>
 
         {/* Link to Register Section */}

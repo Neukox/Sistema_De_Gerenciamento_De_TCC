@@ -17,11 +17,27 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const prisma_1 = __importDefault(require("../../../prisma/PrismaClient/prisma"));
 function Registro(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { nomeCompleto, email, password } = req.body;
+        const { nomeCompleto, instituicao, email, confirmEmail, senha, confirmSenha } = req.body;
         //Verificando se todos os campos foram preenchidos
-        if (!nomeCompleto || !email || !password) {
+        if (!nomeCompleto || !instituicao || !email || !confirmEmail || !senha || !confirmSenha) {
             res.status(400).json({
-                message: 'Todos os campos são obrigatórios.',
+                message: 'Por favor, preencha todos os campos obrigatórios para continuar.',
+                success: false
+            });
+            return;
+        }
+        // Validação se os emails coincidem
+        if (email !== confirmEmail) {
+            res.status(400).json({
+                message: 'Os emails informados não coincidem. Verifique e tente novamente.',
+                success: false
+            });
+            return;
+        }
+        // Validação se as senhas coincidem
+        if (senha !== confirmSenha) {
+            res.status(400).json({
+                message: 'As senhas informadas não coincidem. Verifique e tente novamente.',
                 success: false
             });
             return;
@@ -30,7 +46,15 @@ function Registro(req, res, next) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             res.status(400).json({
-                message: 'Formato de email inválido.',
+                message: 'Por favor, informe um email válido.',
+                success: false
+            });
+            return;
+        }
+        // Validação do tamanho da senha
+        if (senha.length < 6) {
+            res.status(400).json({
+                message: 'A senha deve ter pelo menos 6 caracteres.',
                 success: false
             });
             return;
@@ -45,31 +69,40 @@ function Registro(req, res, next) {
             //Validando se já existe no banco.
             if (usuarioExistente) {
                 res.status(400).json({
-                    message: 'Usuário já existe, informe um email diferente.',
+                    message: 'Este email já está sendo usado. Tente fazer login ou use outro email.',
                     success: false
                 });
                 return;
             }
             //Criptografando a senha
-            const senhaCriptografada = yield bcryptjs_1.default.hash(password, 10);
-            //Criando usuario no banco de dados.
+            const senhaCriptografada = yield bcryptjs_1.default.hash(senha, 10);
+            // Criando usuario no banco de dados.
             const usuario = yield prisma_1.default.usuario.create({
                 data: {
-                    nomeCompleto: nomeCompleto,
+                    nomeCompleto: nomeCompleto.trim(),
                     email: email.toLowerCase(),
                     senha: senhaCriptografada,
-                    tipo: 'usuario', // Definindo o tipo como 'usuario' por padrão
+                    tipo: 'aluno', // Por padrão, todos são alunos
                     role: 'user' // Definindo o role como 'user' por padrão
+                }
+            });
+            // Criar registro de aluno automaticamente
+            yield prisma_1.default.aluno.create({
+                data: {
+                    id: usuario.id,
+                    curso: '', // Campo vazio por enquanto, será preenchido no cadastro do TCC
+                    instituicao: instituicao.trim()
                 }
             });
             //Retornando usuario criado.
             res.status(201).json({
-                message: 'Usuário criado com sucesso.',
+                message: 'Conta criada com sucesso! Você será redirecionado para fazer login.',
                 success: true,
                 usuario: {
                     id: usuario.id,
                     nomeCompleto: usuario.nomeCompleto,
                     email: usuario.email,
+                    instituicao,
                     tipo: usuario.tipo,
                     role: usuario.role
                 }
@@ -79,8 +112,9 @@ function Registro(req, res, next) {
             //Se acontecer algum erro, retorna o erro.
             console.error('Erro ao criar usuário:', error);
             res.status(500).json({
-                message: 'Erro interno do servidor.',
-                success: false
+                message: 'Ops! Algo deu errado. Tente novamente em alguns minutos.',
+                success: false,
+                error: process.env.NODE_ENV === 'development' ? error : undefined
             });
         }
     });

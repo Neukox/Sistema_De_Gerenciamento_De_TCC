@@ -8,11 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listarAreasConhecimento = listarAreasConhecimento;
 exports.buscarAreaPorId = buscarAreaPorId;
-const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma_1 = __importDefault(require("../../../prisma/PrismaClient/prisma"));
 /**
  * Lista todas as áreas de conhecimento disponíveis
  * @param req Request
@@ -21,15 +23,18 @@ const prisma = new client_1.PrismaClient();
 function listarAreasConhecimento(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            // Buscar todas as áreas de conhecimento ordenadas por nome
-            const areas = yield prisma.areaConhecimento.findMany({
+            // Buscar todas as áreas de conhecimento ordenadas por código
+            const areas = yield prisma_1.default.areaConhecimento.findMany({
                 select: {
                     id: true,
-                    nome: true
+                    codigo: true,
+                    nome: true,
+                    nivel: true
                 },
-                orderBy: {
-                    nome: 'asc'
-                }
+                orderBy: [
+                    { nivel: 'asc' },
+                    { codigo: 'asc' }
+                ]
             });
             // Verificar se encontrou áreas
             if (areas.length === 0) {
@@ -55,9 +60,6 @@ function listarAreasConhecimento(req, res, next) {
                 error: process.env.NODE_ENV === 'development' ? error : undefined
             });
         }
-        finally {
-            yield prisma.$disconnect();
-        }
     });
 }
 /**
@@ -79,13 +81,15 @@ function buscarAreaPorId(req, res, next) {
                 return;
             }
             // Buscar a área específica
-            const area = yield prisma.areaConhecimento.findUnique({
+            const area = yield prisma_1.default.areaConhecimento.findUnique({
                 where: {
                     id: areaId
                 },
                 select: {
                     id: true,
+                    codigo: true,
                     nome: true,
+                    nivel: true,
                     _count: {
                         select: {
                             tccs: true // Contar quantos TCCs estão nesta área
@@ -105,7 +109,9 @@ function buscarAreaPorId(req, res, next) {
                 message: 'Área de conhecimento encontrada',
                 data: {
                     id: area.id,
+                    codigo: area.codigo,
                     nome: area.nome,
+                    nivel: area.nivel,
                     quantidadeTccs: area._count.tccs
                 }
             });
@@ -117,9 +123,6 @@ function buscarAreaPorId(req, res, next) {
                 message: 'Erro interno do servidor ao buscar área de conhecimento',
                 error: process.env.NODE_ENV === 'development' ? error : undefined
             });
-        }
-        finally {
-            yield prisma.$disconnect();
         }
     });
 }
