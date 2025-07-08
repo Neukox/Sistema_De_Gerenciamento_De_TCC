@@ -1,4 +1,3 @@
-import { PapelBanca } from "@prisma/client";
 import prisma from "../../config/prisma";
 import { GetTCCQuery, ICreateTCC } from "./interfaces";
 import { CreateTCCPayload } from "./interfaces";
@@ -14,50 +13,61 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
       titulo: data.titulo,
       tema: data.tema,
       resumo: data.resumo,
-      data_inicio: data.dataInicio,
-      data_prevista_entrega: data.dataConclusao,
+      dataInicio: data.dataInicio,
+      dataConclusao: data.dataConclusao,
       status_atual: data.statusAtual,
       Aluno: {
         connect: { Usuario_id: data.alunoId },
       },
-      Bancas: {
-        create: [
-          {
-            Professor_id: data.orientadorId,
-            papel: PapelBanca.ORIENTADOR,
-          },
-          ...(data.coorientadorId
-            ? [
-                {
-                  Professor_id: data.coorientadorId,
-                  papel: PapelBanca.COORIENTADOR,
-                },
-              ]
-            : []),
-        ],
+      AreaConhecimento: {
+        connect: { id: data.areaConhecimentoId },
       },
+      Orientador: {
+        connect: { Usuario_id: data.orientadorId },
+      },
+      Coorientador: data.coorientadorId
+        ? { connect: { Usuario_id: data.coorientadorId } }
+        : undefined,
     },
     include: {
       Aluno: {
         select: {
+          Usuario_id: true,
           curso: true,
           Usuario: {
             select: {
               nome_completo: true,
+              email: true,
             },
           },
         },
       },
-      Bancas: {
-        include: {
-          Professor: {
+      AreaConhecimento: {
+        select: {
+          id: true,
+          nome: true,
+        },
+      },
+      Orientador: {
+        select: {
+          Usuario_id: true,
+          area_atuacao: true,
+          Usuario: {
             select: {
-              Usuario_id: true,
-              Usuario: {
-                select: {
-                  nome_completo: true,
-                },
-              },
+              nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      Coorientador: {
+        select: {
+          Usuario_id: true,
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              nome_completo: true,
+              email: true,
             },
           },
         },
@@ -66,20 +76,39 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
   });
 
   return {
+    id: tcc.id,
     titulo: tcc.titulo,
     tema: tcc.tema,
     curso: tcc.Aluno.curso,
     resumo: tcc.resumo,
-    dataInicio: tcc.data_inicio,
-    dataConclusao: tcc.data_prevista_entrega,
+    dataInicio: tcc.dataInicio,
+    dataConclusao: tcc.dataConclusao,
     statusAtual: tcc.status_atual,
-    aluno: tcc.Aluno.Usuario.nome_completo,
-    orientador:
-      tcc.Bancas.find((banca) => banca.papel === PapelBanca.ORIENTADOR)
-        ?.Professor.Usuario.nome_completo || "Não definido",
-    coorientador:
-      tcc.Bancas.find((banca) => banca.papel === PapelBanca.COORIENTADOR)
-        ?.Professor.Usuario.nome_completo || "Não definido",
+    criado_em: tcc.criado_em,
+    aluno: {
+      id: tcc.Aluno.Usuario_id,
+      nome: tcc.Aluno.Usuario.nome_completo,
+      curso: tcc.Aluno.curso,
+      email: tcc.Aluno.Usuario.email,
+    },
+    areaConhecimento: {
+      id: tcc.AreaConhecimento?.id,
+      nome: tcc.AreaConhecimento?.nome,
+    },
+    orientador: {
+      id: tcc.Orientador.Usuario_id,
+      nome: tcc.Orientador.Usuario.nome_completo,
+      area_atuacao: tcc.Orientador.area_atuacao,
+      email: tcc.Orientador.Usuario.email,
+    },
+    coorientador: tcc.Coorientador
+      ? {
+          id: tcc.Coorientador.Usuario_id,
+          nome: tcc.Coorientador.Usuario.nome_completo,
+          area_atuacao: tcc.Coorientador.area_atuacao,
+          email: tcc.Coorientador.Usuario.email,
+        }
+      : "Não definido",
   };
 }
 
@@ -97,6 +126,37 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
             select: {
               id: true,
               nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      AreaConhecimento: {
+        select: {
+          id: true,
+          nome: true,
+        },
+      },
+      Orientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              id: true,
+              nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      Coorientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              id: true,
+              nome_completo: true,
+              email: true,
             },
           },
         },
@@ -109,8 +169,8 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
     titulo: tcc.titulo,
     tema: tcc.tema,
     resumo: tcc.resumo,
-    dataInicio: tcc.data_inicio,
-    dataConclusao: tcc.data_prevista_entrega,
+    dataInicio: tcc.dataInicio,
+    dataConclusao: tcc.dataConclusao,
     statusAtual: tcc.status_atual,
     criado_em: tcc.criado_em,
     atualizado_em: tcc.ultima_atualizacao,
@@ -119,7 +179,26 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
       id: tcc.Aluno.Usuario.id,
       nome: tcc.Aluno.Usuario.nome_completo,
       curso: tcc.Aluno.curso,
+      email: tcc.Aluno.Usuario.email,
     },
+    areaConhecimento: {
+      id: tcc.AreaConhecimento?.id,
+      nome: tcc.AreaConhecimento?.nome,
+    },
+    orientador: {
+      id: tcc.Orientador.Usuario.id,
+      nome: tcc.Orientador.Usuario.nome_completo,
+      area_atuacao: tcc.Orientador.area_atuacao,
+      email: tcc.Orientador.Usuario.email,
+    },
+    coorientador: tcc.Coorientador
+      ? {
+          id: tcc.Coorientador.Usuario.id,
+          nome: tcc.Coorientador.Usuario.nome_completo,
+          area_atuacao: tcc.Coorientador.area_atuacao,
+          email: tcc.Coorientador.Usuario.email,
+        }
+      : "Não definido",
   }));
 }
 
@@ -128,7 +207,9 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
  * @param id - ID do TCC a ser buscado.
  * @returns O TCC encontrado ou null se não existir.
  */
-export async function findTCCByAlunoId(id: number): Promise<GetTCCQuery | null> {
+export async function findTCCByAlunoId(
+  id: number
+): Promise<GetTCCQuery | null> {
   const tcc = await prisma.tCC.findFirst({
     where: {
       Aluno: {
@@ -138,11 +219,42 @@ export async function findTCCByAlunoId(id: number): Promise<GetTCCQuery | null> 
     include: {
       Aluno: {
         select: {
+          Usuario_id: true,
           curso: true,
           Usuario: {
             select: {
-              id: true,
               nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      AreaConhecimento: {
+        select: {
+          id: true,
+          nome: true,
+        },
+      },
+      Orientador: {
+        select: {
+          Usuario_id: true,
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      Coorientador: {
+        select: {
+          Usuario_id: true,
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              nome_completo: true,
+              email: true,
             },
           },
         },
@@ -150,7 +262,7 @@ export async function findTCCByAlunoId(id: number): Promise<GetTCCQuery | null> 
     },
   });
 
-  if(!tcc) {
+  if (!tcc) {
     return null;
   }
 
@@ -159,17 +271,32 @@ export async function findTCCByAlunoId(id: number): Promise<GetTCCQuery | null> 
     titulo: tcc.titulo,
     tema: tcc.tema,
     resumo: tcc.resumo,
-    dataInicio: tcc.data_inicio,
-    dataConclusao: tcc.data_prevista_entrega,
+    dataInicio: tcc.dataInicio,
+    dataConclusao: tcc.dataConclusao,
     statusAtual: tcc.status_atual,
     criado_em: tcc.criado_em,
     atualizado_em: tcc.ultima_atualizacao,
     finalizado_em: tcc.finalizado_em || null,
     aluno: {
-      id: tcc.Aluno.Usuario.id,
+      id: tcc.Aluno.Usuario_id,
       nome: tcc.Aluno.Usuario.nome_completo,
       curso: tcc.Aluno.curso,
+      email: tcc.Aluno.Usuario.email,
     },
+    orientador: {
+      id: tcc.Orientador.Usuario_id,
+      nome: tcc.Orientador.Usuario.nome_completo,
+      area_atuacao: tcc.Orientador.area_atuacao,
+      email: tcc.Orientador.Usuario.email,
+    },
+    coorientador: tcc.Coorientador
+      ? {
+          id: tcc.Coorientador.Usuario_id,
+          nome: tcc.Coorientador.Usuario.nome_completo,
+          area_atuacao: tcc.Coorientador.area_atuacao,
+          email: tcc.Coorientador.Usuario.email,
+        }
+      : "Não definido",
   };
 }
 
@@ -191,6 +318,37 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
             select: {
               id: true,
               nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      AreaConhecimento: {
+        select: {
+          id: true,
+          nome: true,
+        },
+      },
+      Orientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              id: true,
+              nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      Coorientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              id: true,
+              nome_completo: true,
+              email: true,
             },
           },
         },
@@ -207,8 +365,8 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
     titulo: tcc.titulo,
     tema: tcc.tema,
     resumo: tcc.resumo,
-    dataInicio: tcc.data_inicio,
-    dataConclusao: tcc.data_prevista_entrega,
+    dataInicio: tcc.dataInicio,
+    dataConclusao: tcc.dataConclusao,
     statusAtual: tcc.status_atual,
     criado_em: tcc.criado_em,
     atualizado_em: tcc.ultima_atualizacao,
@@ -217,6 +375,25 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
       id: tcc.Aluno.Usuario.id,
       nome: tcc.Aluno.Usuario.nome_completo,
       curso: tcc.Aluno.curso,
+      email: tcc.Aluno.Usuario.email,
     },
+    areaConhecimento: {
+      id: tcc.AreaConhecimento?.id,
+      nome: tcc.AreaConhecimento?.nome,
+    },
+    orientador: {
+      id: tcc.Orientador.Usuario.id,
+      nome: tcc.Orientador.Usuario.nome_completo,
+      area_atuacao: tcc.Orientador.area_atuacao,
+      email: tcc.Orientador.Usuario.email,
+    },
+    coorientador: tcc.Coorientador
+      ? {
+          id: tcc.Coorientador.Usuario.id,
+          nome: tcc.Coorientador.Usuario.nome_completo,
+          area_atuacao: tcc.Coorientador.area_atuacao,
+          email: tcc.Coorientador.Usuario.email,
+        }
+      : "Não definido",
   };
 }

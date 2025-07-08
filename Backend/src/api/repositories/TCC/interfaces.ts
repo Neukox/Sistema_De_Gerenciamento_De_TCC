@@ -15,23 +15,43 @@ export interface GetTCCQuery {
     id: number;
     nome: string;
     curso: string;
+    email: string;
   };
+  areaConhecimento?: {
+    id?: number;
+    nome?: string;
+  };
+  orientador: {
+    id: number;
+    nome: string;
+    area_atuacao: string;
+    email: string;
+  };
+  coorientador?:
+    | {
+        id: number;
+        nome: string;
+        area_atuacao: string;
+        email: string;
+      }
+    | "Não definido";
 }
 
 export interface ICreateTCC {
   titulo: string;
   tema: string;
-  curso: string;
   resumo: string;
   dataInicio?: Date;
   dataConclusao?: Date;
   statusAtual: $Enums.StatusTCC;
   alunoId: number;
+  areaConhecimentoId: number;
   orientadorId: number;
   coorientadorId?: number; // Opcional, pode ser nulo se não houver coorientador
 }
 
 export interface CreateTCCPayload {
+  id: number;
   titulo: string;
   tema: string;
   curso: string;
@@ -39,7 +59,29 @@ export interface CreateTCCPayload {
   dataInicio: Date | null;
   dataConclusao: Date | null;
   statusAtual: $Enums.StatusTCC;
-  aluno: string;
-  orientador: string;
-  coorientador?: string; // Opcional, pode ser nulo se não houver coorientador
+  criado_em: Date;
+  aluno: {
+    id: number;
+    nome: string;
+    curso: string;
+    email: string;
+  };
+  areaConhecimento: {
+    id?: number;
+    nome?: string;
+  };
+  orientador: {
+    id: number;
+    nome: string;
+    area_atuacao: string;
+    email: string;
+  };
+  coorientador?:
+    | {
+        id: number;
+        nome: string;
+        area_atuacao: string;
+        email: string;
+      }
+    | "Não definido";
 }

@@ -2,7 +2,7 @@ import { ICreateTCC } from "../../repositories/TCC/interfaces";
 import createTCCService from "../../services/TCC/CreateService";
 import { Request, Response } from "express";
 import { RequestWithUser } from "../../types/auth";
-import { ICreateTCCService } from "api/services/TCC/contracts";
+import { ICreateTCCService } from "../../services/TCC/contracts";
 
 export default async function createTCCController(
   req: RequestWithUser,

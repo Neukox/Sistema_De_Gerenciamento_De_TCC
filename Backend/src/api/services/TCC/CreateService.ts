@@ -7,6 +7,7 @@ import prisma from "../../config/prisma";
 import { CreateTCCPayload } from "../../repositories/TCC/interfaces";
 import { ICreateTCCService } from "./contracts";
 import { findProfessorByUsuarioId } from "../../repositories/professor/professorRepository";
+import { createBanca } from "../../repositories/banca/bancaRepository";
 
 export default async function createTCCService(
   data: ICreateTCCService
@@ -83,15 +84,23 @@ export default async function createTCCService(
   const tcc = await createTCC({
     titulo: data.titulo,
     tema: data.tema,
-    curso: data.curso,
     resumo: data.resumo,
     dataInicio: dataInicioDate,
     dataConclusao: dataConclusaoDate,
     statusAtual: data.statusAtual,
     alunoId: data.alunoId,
+    areaConhecimentoId: data.areaConhecimentoId, // ID da área de conhecimento
     orientadorId: data.orientadorId,
-    coorientadorId: data.coorientadorId ?? undefined, // Pode ser undefined se não houver coorientador
+    coorientadorId: data.coorientadorId, // Opcional, pode ser nulo se não houver coorientador
   });
+
+  // Criação da banca
+  await createBanca(tcc.id, data.orientadorId, "ORIENTADOR");
+
+  // Se houver coorientador, cria a banca para ele também
+  if (data.coorientadorId) {
+    await createBanca(tcc.id, data.coorientadorId, "COORIENTADOR");
+  }
 
   return tcc;
 }

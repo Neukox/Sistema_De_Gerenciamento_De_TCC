@@ -1,21 +1,20 @@
-import { $Enums } from "@prisma/client";
-import { MembroBanca } from "api/repositories/banca/interfaces";
-import { GetTCCQuery } from "api/repositories/TCC/interfaces";
+import { $Enums, TCC } from "@prisma/client";
 
 export interface ICreateTCCService {
   titulo: string;
   tema: string;
-  curso: string;
   resumo: string;
   dataInicio?: string;
   dataConclusao?: string;
   statusAtual: $Enums.StatusTCC;
   alunoId: number;
+  areaConhecimentoId: number;
   orientadorId: number;
   coorientadorId?: number;
 }
 
 export interface CreateTCCServicePayload {
+  id: number;
   titulo: string;
   tema: string;
   curso: string;
@@ -23,12 +22,28 @@ export interface CreateTCCServicePayload {
   dataInicio: Date;
   dataConclusao: Date;
   statusAtual: string;
-  aluno: string;
-  orientador: string;
-  coorientador?: string; // Opcional, pode ser nulo se não houver coorientador
-}
-
-export interface GetOneTCC extends GetTCCQuery {
-  orientador: MembroBanca;
-  coorientador: MembroBanca | "Não definido"; // Pode ser um objeto MembroBanca ou uma string "Não definido
+  criado_em: Date;
+  aluno: {
+    id: number;
+    nome: string;
+    curso: string;
+  };
+  areaConhecimento: {
+    id: number;
+    nome: string;
+  };
+  orientador: {
+    id: number;
+    nome: string;
+    area_atuacao: string;
+    email: string;
+  };
+  coorientador?:
+    | {
+        id: number;
+        nome: string;
+        area_atuacao: string;
+        email: string;
+      }
+    | "Não definido";
 }
