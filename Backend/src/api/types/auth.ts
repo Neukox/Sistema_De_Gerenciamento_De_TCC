@@ -6,3 +6,8 @@ export interface DecodedUser {
   role: string;
   email: string;
 }
+
+export interface RequestWithUser extends Request {
+  user?: DecodedUser; // O usuário decodificado do token JWT
+  token?: string; // O token JWT, se necessário
+}
