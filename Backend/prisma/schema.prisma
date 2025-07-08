@@ -22,6 +22,7 @@ enum TipoUsuario {
 enum PapelBanca {
   ORIENTADOR
   COORIENTADOR
+  MEMBRO
 }
 
 enum StatusTCC {
@@ -37,11 +38,32 @@ enum StatusAtividade {
   CONCLUIDA
 }
 
+enum TopicoComentario {
+  GERAL
+  ORIENTACAO
+  ATIVIDADE
+  BANCA
+  OUTRO
+}
+
+enum CategoriasAreasConhecimento {
+  CIENCIAS_HUMANAS
+  CIENCIAS_EXATAS
+  CIENCIAS_BIOLOGICAS
+  ENGENHARIAS
+  CIENCIAS_SOCIAIS
+  CIENCIAS_AGRARIAS
+  LINGUISTICA
+  TECNOLOGIA
+  ARTES
+  SAUDE
+  OUTROS
+}
+
 model AreaConhecimento {
-  id        Int      @id @default(autoincrement())
-  nome      String   @unique
-  descricao String?
-  criado_em DateTime @default(now())
+  id        Int                         @id @default(autoincrement())
+  categoria CategoriasAreasConhecimento
+  nome      String                      @unique
 
   tccs TCC[]
 }
@@ -73,29 +95,36 @@ model Professor {
   area_atuacao    String
   disponibilidade Boolean
 
+  Orientacoes   TCC[] @relation("Orientacoes")
+  Coorientacoes TCC[] @relation("Coorientacoes")
+
   Usuario Usuario @relation(fields: [Usuario_id], references: [id])
   Bancas  Banca[]
 }
 
 model TCC {
-  id                    Int       @id @default(autoincrement())
-  titulo                String
-  tema                  String
-  resumo                String
-  data_inicio           DateTime?
-  data_prevista_entrega DateTime?
-  criado_em             DateTime  @default(now())
-  ultima_atualizacao    DateTime  @updatedAt
-  status_atual          StatusTCC
-  finalizado_em         DateTime?
+  id                 Int       @id @default(autoincrement())
+  titulo             String
+  tema               String
+  resumo             String
+  dataInicio         DateTime?
+  dataConclusao      DateTime?
+  criado_em          DateTime  @default(now())
+  ultima_atualizacao DateTime  @updatedAt
+  status_atual       StatusTCC @default(PLANEJAMENTO)
+  finalizado_em      DateTime?
 
-  Aluno_id Int
+  Aluno_id            Int
+  Orientador_id       Int
+  Coorientador_id     Int?
   AreaConhecimento_id Int?
 
-  Aluno       Aluno        @relation(fields: [Aluno_id], references: [Usuario_id])
-  Bancas      Banca[]
-  Atividades  Atividade[]
-  Comentarios Comentario[]
+  Aluno            Aluno             @relation(fields: [Aluno_id], references: [Usuario_id])
+  Bancas           Banca[]
+  Orientador       Professor         @relation("Orientacoes", fields: [Orientador_id], references: [Usuario_id])
+  Coorientador     Professor?        @relation("Coorientacoes", fields: [Coorientador_id], references: [Usuario_id])
+  Atividades       Atividade[]
+  Comentarios      Comentario[]
   AreaConhecimento AreaConhecimento? @relation(fields: [AreaConhecimento_id], references: [id])
 }
 
@@ -126,11 +155,12 @@ model Atividade {
 }
 
 model Comentario {
-  id                 Int      @id @default(autoincrement())
-  topico             String
+  id                 Int              @id @default(autoincrement())
+  topico             TopicoComentario
+  titulo             String
   texto              String
-  data_criacao       DateTime @default(now())
-  ultima_atualizacao DateTime @updatedAt
+  data_criacao       DateTime         @default(now())
+  ultima_atualizacao DateTime         @updatedAt
 
   TCC_id        Int
   Usuario_id    Int
