@@ -219,7 +219,6 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
  * Buscar todos os TCCs do banco de dados.
  * @returns Lista de TCCs.
  */
-
 export async function findAllTCCs(): Promise<GetTCCQuery[]> {
   const tccs = await prisma.tCC.findMany({
     include: {
