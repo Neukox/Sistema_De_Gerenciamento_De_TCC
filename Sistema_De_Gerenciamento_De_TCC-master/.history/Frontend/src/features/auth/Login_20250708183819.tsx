@@ -49,6 +49,28 @@ function Login() {
     }
   };
 
+  const navigate = useNavigate();
+
+   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate('/maindashboard');
+   /* const form = e.currentTarget;
+    const formData = new FormData(form);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    
+    if (email && password.length > 6) {
+       alert('Login realizado com sucesso!'); // Exibe um alerta de sucesso
+       // Redireciona para o Dashboard após o login
+
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.'); // Exibe um alerta de erro
+    } if (password.length < 6) {
+      alert('A senha deve ter pelo menos 6 caracteres.'); // Exibe um alerta de erro
+    }*/
+   
+   }
+
   const{ mostrarSenha, toggleSenha } = useTogglePassword();
   
   return (
