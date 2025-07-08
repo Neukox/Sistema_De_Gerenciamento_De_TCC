@@ -5,6 +5,7 @@ import authRoutes from "./authRoutes";
 import alunosRoutes from "./alunosRoutes";
 import professorRoutes from "./professorRoutes";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import TCCRoutes from "./TCCRoutes";
 import areaConhecimentoRoutes from "./areaConhecimentoRoutes";
 import atividadesRoutes from "./atividadesRoutes";
@@ -18,6 +19,9 @@ import alunosRoutes from "./alunosRoutes";
 >>>>>>> ca23945 (Adicionando controlador para buscar todos os alunos e configurando rotas para gerenciamento de alunos)
 =======
 >>>>>>> aecce26 (Adicionando rotas para gerenciamento de professores)
+=======
+import TCCRoutes from "./TCCRoutes";
+>>>>>>> 89cd345 (Adiciona rotas para TCCs)
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -51,6 +55,8 @@ routes.use("/", authRoutes);
 routes.use("/alunos", alunosRoutes);
 // Usando as rotas de professores
 routes.use("/professores", professorRoutes);
+// Usando as rotas de TCC
+routes.use("/tccs", TCCRoutes);
 
 // Exporta as rotas
 export default routes;
