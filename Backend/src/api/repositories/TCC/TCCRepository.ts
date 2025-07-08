@@ -1,3 +1,4 @@
+import { TCC, PapelBanca } from "@prisma/client";
 import prisma from "../../config/prisma";
 import { GetTCCQuery, ICreateTCC } from "./interfaces";
 import { CreateTCCPayload } from "./interfaces";
@@ -13,8 +14,8 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
       titulo: data.titulo,
       tema: data.tema,
       resumo: data.resumo,
-      dataInicio: data.dataInicio,
-      dataConclusao: data.dataConclusao,
+      data_inicio: data.dataInicio,
+      data_prevista_entrega: data.dataConclusao,
       status_atual: data.statusAtual,
       Aluno: {
         connect: { Usuario_id: data.alunoId },
