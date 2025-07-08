@@ -95,5 +95,13 @@ export default async function createTCCService(
     coorientadorId: coorientador?.Usuario_id,
   });
 
+  // Criação da banca
+  await createBanca(tcc.id, data.orientadorId, "ORIENTADOR");
+
+  // Se houver coorientador, cria a banca para ele também
+  if (data.coorientadorId) {
+    await createBanca(tcc.id, data.coorientadorId, "COORIENTADOR");
+  }
+
   return tcc;
 }

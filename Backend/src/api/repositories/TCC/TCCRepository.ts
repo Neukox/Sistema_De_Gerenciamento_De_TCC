@@ -1,4 +1,3 @@
-import { PapelBanca } from "@prisma/client";
 import prisma from "../../config/prisma";
 import { GetTCCQuery, ICreateTCC } from "./interfaces";
 import { CreateTCCPayload } from "./interfaces";
@@ -14,8 +13,8 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
       titulo: data.titulo,
       tema: data.tema,
       resumo: data.resumo,
-      data_inicio: data.dataInicio,
-      data_prevista_entrega: data.dataConclusao,
+      dataInicio: data.dataInicio,
+      dataConclusao: data.dataConclusao,
       status_atual: data.statusAtual,
       Aluno: {
         connect: { Usuario_id: data.alunoId },
@@ -44,6 +43,12 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
           email: true,
         },
       },
+      Orientador: {
+        connect: { Usuario_id: data.orientadorId },
+      },
+      Coorientador: data.coorientadorId
+        ? { connect: { Usuario_id: data.coorientadorId } }
+        : undefined,
     },
   });
 
@@ -132,6 +137,7 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
     include: {
       Aluno: {
         select: {
+          Usuario_id: true,
           curso: true,
           Usuario: {
             select: {
@@ -229,6 +235,37 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
             select: {
               id: true,
               nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      AreaConhecimento: {
+        select: {
+          id: true,
+          nome: true,
+        },
+      },
+      Orientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              id: true,
+              nome_completo: true,
+              email: true,
+            },
+          },
+        },
+      },
+      Coorientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              id: true,
+              nome_completo: true,
+              email: true,
             },
           },
         },
@@ -241,8 +278,8 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
     titulo: tcc.titulo,
     tema: tcc.tema,
     resumo: tcc.resumo,
-    dataInicio: tcc.data_inicio,
-    dataConclusao: tcc.data_prevista_entrega,
+    dataInicio: tcc.dataInicio,
+    dataConclusao: tcc.dataConclusao,
     statusAtual: tcc.status_atual,
     criado_em: tcc.criado_em,
     atualizado_em: tcc.ultima_atualizacao,
@@ -251,7 +288,26 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
       id: tcc.Aluno.Usuario.id,
       nome: tcc.Aluno.Usuario.nome_completo,
       curso: tcc.Aluno.curso,
+      email: tcc.Aluno.Usuario.email,
     },
+    areaConhecimento: {
+      id: tcc.AreaConhecimento?.id,
+      nome: tcc.AreaConhecimento?.nome,
+    },
+    orientador: {
+      id: tcc.Orientador.Usuario.id,
+      nome: tcc.Orientador.Usuario.nome_completo,
+      area_atuacao: tcc.Orientador.area_atuacao,
+      email: tcc.Orientador.Usuario.email,
+    },
+    coorientador: tcc.Coorientador
+      ? {
+          id: tcc.Coorientador.Usuario.id,
+          nome: tcc.Coorientador.Usuario.nome_completo,
+          area_atuacao: tcc.Coorientador.area_atuacao,
+          email: tcc.Coorientador.Usuario.email,
+        }
+      : "Não definido",
   }));
 }
 
