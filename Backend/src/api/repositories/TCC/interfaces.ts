@@ -1,5 +1,23 @@
 import { $Enums } from "@prisma/client";
 
+export interface GetTCCQuery {
+  id: number;
+  titulo: string;
+  tema: string;
+  resumo: string;
+  dataInicio: Date | null;
+  dataConclusao: Date | null;
+  statusAtual: $Enums.StatusTCC;
+  criado_em: Date;
+  atualizado_em: Date;
+  finalizado_em?: Date | null;
+  aluno: {
+    id: number;
+    nome: string;
+    curso: string;
+  };
+}
+
 export interface ICreateTCC {
   titulo: string;
   tema: string;
