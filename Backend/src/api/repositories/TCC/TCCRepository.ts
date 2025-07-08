@@ -8,7 +8,6 @@ import { CreateTCCPayload } from "./interfaces";
  * @param data - Dados do TCC a ser criado.
  * @returns O TCC criado.
  */
-
 export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
   const tcc = await prisma.tCC.create({
     data: {
@@ -88,7 +87,6 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
  * Buscar todos os TCCs do banco de dados.
  * @returns Lista de TCCs.
  */
-
 export async function findAllTCCs(): Promise<GetTCCQuery[]> {
   const tccs = await prisma.tCC.findMany({
     include: {
@@ -175,6 +173,11 @@ export async function findTCCByAlunoId(id: number): Promise<GetTCCQuery | null> 
   };
 }
 
+/**
+ * Busca um TCC pelo ID.
+ * @param id - ID do TCC a ser buscado.
+ * @returns O TCC encontrado ou null se não existir.
+ */
 export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
   const tcc = await prisma.tCC.findUnique({
     where: {
