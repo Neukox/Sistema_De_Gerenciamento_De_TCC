@@ -1,26 +1,26 @@
 import { $Enums } from "@prisma/client";
 
-export interface ICreateTCC {
+export interface ICreateTCCService {
   titulo: string;
   tema: string;
   curso: string;
   resumo: string;
-  dataInicio?: Date;
-  dataConclusao?: Date;
+  dataInicio?: string;
+  dataConclusao?: string;
   statusAtual: $Enums.StatusTCC;
   alunoId: number;
   orientadorId: number;
-  coorientadorId?: number; // Opcional, pode ser nulo se não houver coorientador
+  coorientadorId?: number;
 }
 
-export interface CreateTCCPayload {
+export interface CreateTCCServicePayload {
   titulo: string;
   tema: string;
   curso: string;
   resumo: string;
-  dataInicio: Date | null;
-  dataConclusao: Date | null;
-  statusAtual: $Enums.StatusTCC;
+  dataInicio: Date;
+  dataConclusao: Date;
+  statusAtual: string;
   aluno: string;
   orientador: string;
   coorientador?: string; // Opcional, pode ser nulo se não houver coorientador

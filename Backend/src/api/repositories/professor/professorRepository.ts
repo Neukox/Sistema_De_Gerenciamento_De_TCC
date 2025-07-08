@@ -61,3 +61,20 @@ export async function findAllProfessores(
     disponibilidade: professor.disponibilidade,
   }));
 }
+
+/**
+ * Função para buscar um professor pelo ID do usuário
+ * @param {number} usuarioId - ID do usuário do professor
+ * @returns {Promise<Professor | null>} Retorna o professor encontrado ou null se não existir
+ */
+export async function findProfessorByUsuarioId(
+  usuarioId: number
+): Promise<Professor | null> {
+  const professor = await prisma.professor.findUnique({
+    where: {
+      Usuario_id: usuarioId,
+    },
+  });
+
+  return professor;
+}
