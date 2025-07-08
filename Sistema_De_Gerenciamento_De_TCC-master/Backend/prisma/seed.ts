@@ -188,22 +188,36 @@ async function main() {
   
   for (const nome of areasConhecimento) {
     try {
-      await prisma.areaConhecimento.create({
-        data: { nome }
+      // Verificar se a área já existe antes de tentar criar
+      const existingArea = await prisma.areaConhecimento.findUnique({
+        where: { nome }
       })
-      adicionadas++
-      console.log(`✅ Adicionada: ${nome}`)
+      
+      if (existingArea) {
+        ignoradas++
+        console.log(`⚪ Já existe: ${nome}`)
+      } else {
+        await prisma.areaConhecimento.create({
+          data: { nome }
+        })
+        adicionadas++
+        console.log(`✅ Adicionada: ${nome}`)
+      }
     } catch (error) {
-      // Área já existe (constraint unique)
+      // Em caso de erro (ex: conflito de constraint)
       ignoradas++
-      console.log(`⚪ Já existe: ${nome}`)
+      console.log(`❌ Erro ao adicionar: ${nome}`)
+      console.error(error)
     }
   }
   
   console.log('\n📊 Resumo:')
   console.log(`✅ Áreas adicionadas: ${adicionadas}`)
   console.log(`⚪ Áreas já existentes: ${ignoradas}`)
-  console.log(`📚 Total de áreas: ${adicionadas + existingAreas}`)
+  
+  // Contar total atual
+  const totalAreas = await prisma.areaConhecimento.count()
+  console.log(`📚 Total de áreas no banco: ${totalAreas}`)
   console.log('\n🎉 Seed concluído com sucesso!')
 }
 

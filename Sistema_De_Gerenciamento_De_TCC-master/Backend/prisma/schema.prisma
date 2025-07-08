@@ -64,13 +64,15 @@ model TCC {
 
   status_atual StatusTCC @default(PLANEJAMENTO)
 
-  alunoId        Int  @unique
-  orientadorId   Int?
-  coorientadorId Int?
+  alunoId            Int  @unique
+  orientadorId       Int?
+  coorientadorId     Int?
+  areaConhecimentoId Int?
 
-  aluno        Aluno      @relation(fields: [alunoId], references: [id])
-  orientador   Professor? @relation("OrientadorRelation", fields: [orientadorId], references: [id])
-  coorientador Professor? @relation("CoorientadorRelation", fields: [coorientadorId], references: [id])
+  aluno            Aluno             @relation(fields: [alunoId], references: [id])
+  orientador       Professor?        @relation("OrientadorRelation", fields: [orientadorId], references: [id])
+  coorientador     Professor?        @relation("CoorientadorRelation", fields: [coorientadorId], references: [id])
+  areaConhecimento AreaConhecimento? @relation(fields: [areaConhecimentoId], references: [id])
 
   bancas      Banca[]
   comentarios Comentario[]
@@ -110,4 +112,11 @@ model Atividade {
 
   tccId Int
   tcc   TCC @relation(fields: [tccId], references: [id])
+}
+
+model AreaConhecimento {
+  id   Int    @id @default(autoincrement())
+  nome String @unique
+
+  tccs TCC[]
 }
