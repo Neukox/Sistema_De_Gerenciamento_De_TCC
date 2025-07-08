@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
+import { RequestWithUser } from "../types/auth";
 
 /**
  * Middleware para verificar se o usuário tem uma das roles permitidas.
@@ -6,7 +7,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
  * @returns {Function} Middleware que verifica a role do usuário.
  */
 export default function allowRoles(roles: string[]) : RequestHandler {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: RequestWithUser, res: Response, next: NextFunction): void => {
     // obtem o papel do usuário da requisição
     const userRole = req.user?.role;
 
