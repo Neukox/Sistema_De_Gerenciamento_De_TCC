@@ -1,13 +1,12 @@
 type InputProps = {
-    type: string;
-    id: string;
-    placeholder: string;
-    required?: boolean;
-    className?: string;
-    autocomplete?: string;
-    minLength?: number;
-    value?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: string;
+  id: string;
+  placeholder: string;
+  name?: string;
+  required?: boolean;
+  className?: string;
+  autoComplete?: string;
+  minLength?: number;
 };
 
 function Input({type, id, placeholder, autocomplete, minLength} : InputProps) {
@@ -27,4 +26,4 @@ function Input({type, id, placeholder, autocomplete, minLength} : InputProps) {
 
 }
 
-export default Input; 
+export default Input;
