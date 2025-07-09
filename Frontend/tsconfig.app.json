@@ -23,5 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "../Sistema_De_Gerenciamento_De_TCC-master/Frontend/src/Components/Button.tsx"]
+  "include": [
+    "src"
+  ]
 }
