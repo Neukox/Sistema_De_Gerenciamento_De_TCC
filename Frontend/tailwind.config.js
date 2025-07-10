@@ -5,7 +5,7 @@ export default {
       colors: {
         primary: "#0F2C67", // Azul escuro
         secondary: "#F3C50D", // Amarelo
-        neutral: "#F4E185", // Âmbar
+        neutral: "#fffbef", // Âmbar
       },
       fontFamily: {
         OpenSans: ["Open Sans", "sans-serif"],

@@ -1,16 +1,15 @@
-import '../../../index.css';
-import logo from '../../../assets/logo.png';
-
-import { useEffect, useState } from 'react';
+import logo from '@/assets/logo.png';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated, logout, getUserData } from '../fetchLoginAPI';
 
 
 // Custom hooks
-
-import { useCronograma } from '../../../hooks/useCronograma';
-import { useStatusTheme } from '../../../hooks/useStatusTheme';
-import { useTCCData } from '../../../hooks/useTCCData';
+import { InfosTCC } from '../../hooks/InfosTCC';
+import { useGeneralProgress } from '../../hooks/GeneralProgess';
+import { useCompletedMarks } from '../../hooks/CompletedMarks';
+import { usePendingTasks } from '../../hooks/PendingTasks';
+import { useLateTasks } from '../../hooks/LateTasks';
 
 // React icons
 import { IoPersonOutline, IoBookOutline, IoCalendarClearOutline, IoLogOutOutline } from "react-icons/io5";
