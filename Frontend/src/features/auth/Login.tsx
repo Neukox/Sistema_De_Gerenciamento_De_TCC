@@ -1,10 +1,6 @@
-import "../../index.css";
 import logo from "../../assets/logo.png";
-import Input from "../../components/ui/form/Input";
-import Button from "../../components/ui/Button";
+import { Input, Button, Label, InputPassword } from "@/components/ui/form";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
-import { useTogglePassword } from "../../hooks/useTogglepassword";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -55,8 +51,6 @@ function Login() {
     setIsLoading(false);
   };
 
-  const { mostrarSenha, toggleSenha } = useTogglePassword();
-
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-[#F3C50D]">
       <div className="bg-[#fffbef] w-[90%]  max-w-[400px] md:max-w-[500px] lg:max-w-[600px] rounded-lg shadow-lg flex flex-col mt-1 p-1 px-4">
@@ -75,39 +69,29 @@ function Login() {
         </div>
         {/* Input Fields Section */}
         <form
-          className="flex flex-col mt-3 fpont-sans font-semibold "
+          className="flex flex-col gap-4 mt-3 fpont-sans font-semibold "
           onSubmit={handleLogin}
           noValidate
         >
-          <label htmlFor="email">Email</label>
-          <Input
-            type="email"
-            id="email"
-            placeholder="Digite seu email"
-            autoComplete="email"
-            name="email"
-            required
-          />
-
-          <label htmlFor="password">Senha</label>
-
-          <div className="relative  items-center mb-2">
+          <div className="w-full">
+            <Label htmlFor="email">Email</Label>
             <Input
-              type={mostrarSenha ? "text" : "password"}
-              id="password"
-              placeholder="Digite sua senha"
-              autoComplete="current-password"
-              name="password"
+              type="email"
+              id="email"
+              placeholder="Digite seu email"
+              autoComplete="email"
+              name="email"
               required
             />
+          </div>
 
-            {/* Eyesoff/ON*/}
-            <span
-              className="absolute right-3 top-5 mt-1 mb-2 cursor-pointer"
-              onClick={toggleSenha}
-            >
-              {mostrarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
-            </span>
+          <div className="w-full">
+            <Label htmlFor="password">Senha</Label>
+            <InputPassword
+              className="w-full"
+              id="password"
+              placeholder="Digite sua senha"
+            />
           </div>
 
           <Link
