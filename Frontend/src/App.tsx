@@ -1,8 +1,8 @@
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
-import Register from "./features/auth/register/Register";
 import MainDashboard from "./features/Dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
 
 export default function App() {
   return (

@@ -1,59 +1,29 @@
-import logo from "@/assets/logo.png";
-import Input from "../../../components/ui/form/Input";
-import Button from "../../../components/ui/Button";
-import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useTogglePassword } from "../../../hooks/useTogglepassword";
 import { useEffect } from "react";
+import { Button, Input, InputPassword, Label } from "@/components/ui/form";
 
 function Register() {
   useEffect(() => {
     document.title = "FocoTCC - Registro";
   }, []);
 
-  const { mostrarSenha, toggleSenha } = useTogglePassword();
-  // const [mostrarSenha, setMostrarSenha] = useState(false);
-
   return (
-    <div className="min-h-screen w-full overflow-x-hidden flex justify-center items-center bg-[#F3C50D]">
-      <div className="bg-[#fffbef] w-full  max-w-[500px]  rounded-lg shadow-lg flex flex-col mt-5 pt-1 p-5 mx-4 mb-5">
-        {/* Logo and Title Section */}
-        <div className="flex flex-row items-center justify-center">
-          <img src={logo} alt="Logo" className="w-16 h-24 mr-2" />{" "}
-          <span className="text-black text-3xl font-bold "> FocoTCC</span>
-        </div>
-
-        {/* informativo */}
-        <div className="flex flex-col items-center justify-center text-black ">
-          <h1 className=" text-3xl font-bold mb-2">Cadastro</h1>
-          <h2 className=" text-lg font-sans ">
-            Crie sua conta para acessar o sistema
-          </h2>
-        </div>
-        {/* Input Fields Section */}
-        <form className="flex flex-col mt-2 text-black font-sans font-semibold">
-          {/* Name Input */}
-          <label htmlFor="Nome">Nome completo</label>
+    <>
+      {/* Input Fields Section */}
+      <form className="flex flex-col gap-4 font-sans font-semibold">
+        <div className="flex-1">
+          <Label htmlFor="Nome">Nome Completo</Label>
           <Input
             type="text"
             id="Nome"
             placeholder="Digite seu nome completo"
             autoComplete="name"
             required
+            className="w-full"
           />
+        </div>
 
-          {/* Institution Input */}
-          <label htmlFor="institution">Instituição</label>
-          <Input
-            type="text"
-            id="institution"
-            placeholder="Digite sua instituição"
-            autoComplete="institution"
-            required
-          />
-
-          {/* Email and Confirm Email*/}
-          <label htmlFor="confirmEmail">Email</label>
+        <div className="flex-1">
+          <Label htmlFor="email">Email</Label>
           <Input
             type="email"
             id="email"
@@ -61,83 +31,56 @@ function Register() {
             autoComplete="email"
             name="email"
             required
+            className="w-full"
           />
+        </div>
 
-          <label htmlFor="email">Cofirmar Email</label>
+        <div className="flex-1">
+          <Label htmlFor="cpf">Curso</Label>
           <Input
-            type="email"
-            id="confirmEmail"
-            placeholder="Confirme seu email"
-            autoComplete="email"
-            name="confirmEmail"
+            type="text"
+            id="curso"
+            placeholder="Digite seu CPF"
+            autoComplete="cpf"
+            name="curso"
             required
+            className="w-full"
           />
+        </div>
 
-          {/* Passwords and confirm Password with Eyesoff/ON**/}
-          <label htmlFor="password">Senha</label>
+        <div className="flex-1">
+          <Label htmlFor="senha">Senha</Label>
+          <InputPassword
+            id="senha"
+            placeholder="Digite sua senha"
+            autoComplete="new-password"
+            name="senha"
+            minLength={6}
+            required
+            className="w-full"
+          />
+        </div>
 
-          <div className="relative  items-center mb-2">
-            <Input
-              type={mostrarSenha ? "text" : "password"}
-              id="password"
-              placeholder="Digite sua senha"
-              autoComplete="current-password"
-              minLength={6}
-              required
-              name="password"
-            />
+        <div className="flex-1">
+          <Label htmlFor="confirmarSenha">Confirmar Senha</Label>
+          <InputPassword
+            id="confirmarSenha"
+            placeholder="Confirme sua senha"
+            autoComplete="new-password"
+            name="confirmarSenha"
+            minLength={6}
+            required
+            className="w-full"
+          />
+        </div>
 
-            <span
-              className="absolute right-3 top-5 mt-1 mb-2 cursor-pointer"
-              onClick={toggleSenha}
-            >
-              {mostrarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
-            </span>
-          </div>
+        <Input type="hidden" name="role" value="aluno" className="hidden" />
 
-          <label htmlFor="confirmPass">Confirme sua Senha</label>
-
-          <div className="relative  items-center mb-2">
-            <Input
-              type={mostrarSenha ? "text" : "password"}
-              id="confirmPass"
-              placeholder="Digite sua senha"
-              autoComplete="current-password"
-              name="confirmPass"
-              minLength={6}
-              required
-            />
-
-            <span
-              className="absolute right-3 top-5 mt-1 mb-2 cursor-pointer"
-              onClick={toggleSenha}
-            >
-              {mostrarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
-            </span>
-          </div>
-
-          {/* Button Section */}
-          <div className="flex mx-auto items-center justify-center mt-4 ">
-            <Button type="submit" variant="primary" className="w-80">
-              Criar Conta
-            </Button>
-          </div>
-
-          {/* Link to Register Section */}
-          <div className="flex flex-col items-center justify-center mt-3">
-            <span className="flex flex-wrap flex-col font-semibold ">
-              Já tem uma conta?
-            </span>
-            <Link
-              to="/login"
-              className="text-blue-900 font-bold hover:opacity-45"
-            >
-              Faça Login
-            </Link>
-          </div>
-        </form>
-      </div>
-    </div>
+        <Button type="submit" variant="primary" className="flex-1 mt-3">
+          Criar Conta
+        </Button>
+      </form>
+    </>
   );
 }
 
