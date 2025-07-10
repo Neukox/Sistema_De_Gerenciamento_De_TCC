@@ -1,7 +1,7 @@
 import '../../index.css'
 import logo from '../../assets/logo.png';
-import Input from '../../Components/Input';  
-import Button from '../../Components/Button';
+import Input from '../../components/ui/form/Input';  
+import Button from '../../components/ui/Button';
 import { Eye, EyeOff } from 'lucide-react';
 import {Link, useNavigate} from 'react-router-dom';
 import { useTogglePassword} from '../../hooks/useTogglepassword';
