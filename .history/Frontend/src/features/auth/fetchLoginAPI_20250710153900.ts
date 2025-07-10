@@ -32,20 +32,11 @@ export const fetchLogin = async (loginData: LoginData): Promise<LoginResponse> =
       body: JSON.stringify(loginData),
     });
 
-    // Verifica se a resposta não é OK antes de tentar fazer parse
-    if (!response.ok) {
-      // Tenta fazer parse do JSON para pegar a mensagem de erro
-      try {
-        const errorData = await response.json();
-        throw new Error(errorData.message || `Erro ${response.status}: ${response.statusText}`);
-      } catch {
-        // Se não conseguir fazer parse, usa uma mensagem genérica
-        throw new Error(`Erro ${response.status}: ${response.statusText}`);
-      }
-    }
-
-    // Tenta fazer parse da resposta de sucesso
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Erro ao fazer login');
+    }
 
     // Salva o token no localStorage para uso posterior
     if (data.token) {
@@ -55,11 +46,6 @@ export const fetchLogin = async (loginData: LoginData): Promise<LoginResponse> =
 
     return data;
   } catch (error) {
-    // Verifica se é um erro de rede (backend não está rodando)
-    if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error('Erro de conexão: Verifique se o servidor está rodando');
-    }
-    
     if (error instanceof Error) {
       throw new Error(error.message);
     }

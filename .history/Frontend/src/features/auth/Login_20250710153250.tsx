@@ -11,8 +11,6 @@ import { fetchLogin, type LoginData } from './fetchLoginAPI';
 
 
 function Login() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>('');
  
   useEffect(() => {
       document.title = 'FocoTCC - Login';
@@ -20,44 +18,24 @@ function Login() {
 
   const navigate = useNavigate();
 
-   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    const form = e.currentTarget;
+    navigate('/maindashboard');
+   /* const form = e.currentTarget;
     const formData = new FormData(form);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
     
-    // Validações básicas
-    if (!email || !password) {
-      setError('Por favor, preencha todos os campos.');
-      setIsLoading(false);
-      return;
-    }
+    if (email && password.length > 6) {
+       alert('Login realizado com sucesso!'); // Exibe um alerta de sucesso
+       // Redireciona para o Dashboard após o login
 
-    if (password.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres.');
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const loginData: LoginData = { email, password };
-      const response = await fetchLogin(loginData);
-      
-      if (response.success) {
-        // Login bem-sucedido, redireciona para o dashboard
-        navigate('/maindashboard');
-      }
-    } catch (error) {
-      // Trata erros de login
-      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao fazer login';
-      setError(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
+    } else {
+      alert('Por favor, preencha todos os campos corretamente.'); // Exibe um alerta de erro
+    } if (password.length < 6) {
+      alert('A senha deve ter pelo menos 6 caracteres.'); // Exibe um alerta de erro
+    }*/
+   
    }
 
   const{ mostrarSenha, toggleSenha } = useTogglePassword();
@@ -79,13 +57,6 @@ function Login() {
       {/* Input Fields Section */}
       <form className="flex flex-col mt-3 fpont-sans font-semibold " onSubmit={handleLogin} noValidate>
         
-        {/* Exibição de erro */}
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
-
         <label htmlFor="email">Email</label>
         <Input type="email" 
         id="email" 
@@ -114,15 +85,7 @@ function Login() {
         
         {/* Button Section */}
        <div className="flex mx-auto items-center justify-center mt-4 ">
-        <Button 
-          type="submit" 
-          bgColor="bg-[#0F2C67]" 
-          width="w-72" 
-          height='h-11'
-          disabled={isLoading}
-        >
-          {isLoading ? 'Entrando...' : 'Entrar'}
-        </Button>
+        <Button type="submit" bgColor="bg-[#0F2C67]" width="w-72" height='h-11'>Entrar</Button>
        </div>
 
         {/* Link to Register Section */}

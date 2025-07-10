@@ -37,7 +37,7 @@ export default async function registerController(
 
     // Chama o serviço de registro
     console.log("Calling register service");
-    const { token, user } = await registerUser({
+    const { token, user } = await registerService({
       nome_completo,
       email,
       password: senha,

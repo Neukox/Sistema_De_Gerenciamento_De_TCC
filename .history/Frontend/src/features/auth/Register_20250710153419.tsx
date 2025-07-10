@@ -228,15 +228,7 @@ function Register() {
         
         {/* Button Section */}
        <div className="flex mx-auto items-center justify-center mt-4 ">
-        <Button 
-          type="submit" 
-          bgColor="bg-[#0F2C67]" 
-          width="w-72" 
-          height='h-11'
-          disabled={isLoading}
-        >
-          {isLoading ? 'Criando conta...' : 'Criar Conta'}
-        </Button>
+        <Button type="submit" bgColor="bg-[#0F2C67]" width="w-72" height='h-11'>Criar Conta</Button>
        </div>
 
        {/* Link to Register Section */}

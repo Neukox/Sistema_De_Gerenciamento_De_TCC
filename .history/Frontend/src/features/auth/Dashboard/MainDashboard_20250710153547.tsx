@@ -104,7 +104,7 @@ function MainDashboard() {
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
-            {tccData?.progress || progress}%
+            {progress}%
           </span>
           <span className="text-2xl text-[#9ea09d]">{description}</span>
         </div>

@@ -79,13 +79,6 @@ function Login() {
       {/* Input Fields Section */}
       <form className="flex flex-col mt-3 fpont-sans font-semibold " onSubmit={handleLogin} noValidate>
         
-        {/* Exibição de erro */}
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
-
         <label htmlFor="email">Email</label>
         <Input type="email" 
         id="email" 
@@ -114,15 +107,7 @@ function Login() {
         
         {/* Button Section */}
        <div className="flex mx-auto items-center justify-center mt-4 ">
-        <Button 
-          type="submit" 
-          bgColor="bg-[#0F2C67]" 
-          width="w-72" 
-          height='h-11'
-          disabled={isLoading}
-        >
-          {isLoading ? 'Entrando...' : 'Entrar'}
-        </Button>
+        <Button type="submit" bgColor="bg-[#0F2C67]" width="w-72" height='h-11'>Entrar</Button>
        </div>
 
         {/* Link to Register Section */}

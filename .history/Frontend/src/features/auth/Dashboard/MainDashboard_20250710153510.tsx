@@ -21,18 +21,10 @@ import { LuTarget } from "react-icons/lu";
 import { GrTask } from "react-icons/gr";
 
 function MainDashboard() {
-  const navigate = useNavigate();
-
   // Set page title on mount
   useEffect(() => {
     document.title = 'FocoTCC - Dashboard';
-    
-    // Verifica se o usuário está autenticado
-    if (!isAuthenticated()) {
-      navigate('/login');
-      return;
-    }
-  }, [navigate]);
+  }, []);
 
   // Retrieve data from custom hooks
   const { title, aluno, curso, orientador, coorientador } = InfosTCC();
@@ -40,60 +32,26 @@ function MainDashboard() {
   const { checked, total, descriptionM } = useCompletedMarks();
   const { pending, descriptionP } = usePendingTasks();
   const { late, descriptionL } = useLateTasks();
-  const { tccData, loading } = useTCCData();
-
-  // Função para fazer logout
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
-  // Dados do usuário logado
-  const userData = getUserData();
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-[#F3C50D]">
-        <div className="text-2xl font-bold">Carregando...</div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col items-center bg-[#F3C50D] h-screen overflow-x-hidden w-screen pt-6">
       {/* Header and project info */}
       <div className="w-[85%] h-[40%] bg-[#fffbef] flex flex-col rounded-lg shadow-lg p-6 pt-1">
-        <div className="flex justify-between items-center">
-          <div className="flex justify-center items-center">
-            <img src={logo} alt="Logo" className="w-[60px] h-24" />
-            <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
-          </div>
-          
-          {/* User info and logout */}
-          <div className="flex items-center gap-4">
-            <span className="text-lg font-medium">
-              Olá, {userData?.nome_completo || 'Usuário'}
-            </span>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
-            >
-              <IoLogOutOutline size={20} />
-              Sair
-            </button>
-          </div>
+        <div className="flex justify-center items-center">
+          <img src={logo} alt="Logo" className="w-[60px] h-24" />
+          <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
         </div>
 
         <div className="flex flex-col items-start gap-2 mt-4">
-          <h1 className="text-4xl font-sans font-bold">{tccData?.title || title}</h1>
+          <h1 className="text-4xl font-sans font-bold">{title}</h1>
           <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
-            <IoPersonOutline /> Aluno: {tccData?.aluno || aluno} • {tccData?.curso || curso}
+            <IoPersonOutline /> Aluno: {aluno} • {curso}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <IoBookOutline /> Orientador: {tccData?.orientador || orientador}
+            <IoBookOutline /> Orientador: {orientador}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <FaUserFriends /> Coorientador: {tccData?.coorientador || coorientador}
+            <FaUserFriends /> Coorientador: {coorientador}
           </h2>
         </div>
       </div>
@@ -104,7 +62,7 @@ function MainDashboard() {
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
-            {tccData?.progress || progress}%
+            {progress}%
           </span>
           <span className="text-2xl text-[#9ea09d]">{description}</span>
         </div>

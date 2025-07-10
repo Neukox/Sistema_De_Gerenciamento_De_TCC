@@ -109,70 +109,26 @@ function Register() {
          <h2 className=' text-lg font-sans '>Crie sua conta para acessar o sistema</h2>
        </div>
       {/* Input Fields Section */}
-      <form className="flex flex-col mt-2 text-black font-sans font-semibold" onSubmit={handleRegister}>
+      <form className="flex flex-col mt-2 text-black font-sans font-semibold">
         
-        {/* Exibição de erro */}
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
-
-        {/* User Type Selection */}
-        <label htmlFor="userType">Tipo de usuário</label>
-        <select 
-          id="userType" 
-          value={userType} 
-          onChange={(e) => setUserType(e.target.value as 'ALUNO' | 'PROFESSOR')}
-          className="mb-4 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        >
-          <option value="ALUNO">Aluno</option>
-          <option value="PROFESSOR">Professor</option>
-        </select>
-
         {/* Name Input */}
-        <label htmlFor="nome">Nome completo</label>
+        <label htmlFor="Nome">Nome completo</label>
         <Input type="text" 
-        id="nome" 
+        id="Nome" 
         placeholder="Digite seu nome completo"  
         autoComplete="name"
-        name="nome"
         required/>
 
         {/* Institution Input */}
-        <label htmlFor="instituicao">Instituição</label>
+        <label htmlFor="institution">Instituição</label>
         <Input type="text" 
-        id="instituicao" 
+        id="institution" 
         placeholder="Digite sua instituição"
-        autoComplete="organization" 
-        name="instituicao"
+        autoComplete="institution" 
         required/>
 
-        {/* Course Input - apenas para alunos */}
-        {userType === 'ALUNO' && (
-          <>
-            <label htmlFor="curso">Curso</label>
-            <Input type="text" 
-            id="curso" 
-            placeholder="Digite seu curso"
-            name="curso"/>
-          </>
-        )}
-
-        {/* Area of expertise - apenas para professores */}
-        {userType === 'PROFESSOR' && (
-          <>
-            <label htmlFor="area_atuacao">Área de Atuação</label>
-            <Input type="text" 
-            id="area_atuacao" 
-            placeholder="Digite sua área de atuação"
-            name="area_atuacao"/>
-          </>
-        )}
-
         {/* Email and Confirm Email*/}
-        <label htmlFor="email">Email</label>
+        <label htmlFor="confirmEmail">Email</label>
         <Input type="email" 
         id="email" 
         placeholder="Digite seu email" 
@@ -180,7 +136,7 @@ function Register() {
         name='email'
         required/>
 
-        <label htmlFor="confirmEmail">Confirmar Email</label>
+        <label htmlFor="email">Cofirmar Email</label>
         <Input type="email" 
         id="confirmEmail" 
         placeholder="Confirme seu email"
@@ -228,15 +184,7 @@ function Register() {
         
         {/* Button Section */}
        <div className="flex mx-auto items-center justify-center mt-4 ">
-        <Button 
-          type="submit" 
-          bgColor="bg-[#0F2C67]" 
-          width="w-72" 
-          height='h-11'
-          disabled={isLoading}
-        >
-          {isLoading ? 'Criando conta...' : 'Criar Conta'}
-        </Button>
+        <Button type="submit" bgColor="bg-[#0F2C67]" width="w-72" height='h-11'>Criar Conta</Button>
        </div>
 
        {/* Link to Register Section */}

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import registerUser from "../../services/auth/registerService";
+import registerService from "../../services/auth/registerService";
 import { validateEmail } from "../../validators/email";
 
 export default async function registerController(
@@ -37,7 +37,7 @@ export default async function registerController(
 
     // Chama o serviço de registro
     console.log("Calling register service");
-    const { token, user } = await registerUser({
+    const { token, user } = await registerService({
       nome_completo,
       email,
       password: senha,
