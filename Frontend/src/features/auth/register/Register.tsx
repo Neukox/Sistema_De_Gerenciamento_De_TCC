@@ -1,25 +1,51 @@
-import { useEffect } from "react";
-import { Button, Input, InputPassword, Label } from "@/components/ui/form";
+import {
+  Button,
+  FormError,
+  Input,
+  InputPassword,
+  Label,
+} from "@/components/ui/form";
+import useRegister from "./fetchRegisterAPI";
+import { useRegisterForm, type RegisterFormData } from "./register-hook-form";
 
 function Register() {
-  useEffect(() => {
-    document.title = "FocoTCC - Registro";
-  }, []);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useRegisterForm();
+
+  const { registerUser } = useRegister();
+
+  const onHandleRegister = async (data: RegisterFormData) => {
+    await registerUser({
+      nome_completo: data.nome_completo,
+      email: data.email,
+      curso: data.curso,
+      senha: data.senha,
+      tipo: data.tipo,
+    });
+  };
 
   return (
     <>
       {/* Input Fields Section */}
-      <form className="flex flex-col gap-4 font-sans font-semibold">
+      <form
+        className="flex flex-col gap-4 font-sans font-semibold"
+        onSubmit={handleSubmit(onHandleRegister)}
+      >
         <div className="flex-1">
           <Label htmlFor="Nome">Nome Completo</Label>
           <Input
             type="text"
             id="Nome"
             placeholder="Digite seu nome completo"
-            autoComplete="name"
-            required
             className="w-full"
+            {...register("nome_completo")}
           />
+          {errors.nome_completo && (
+            <FormError>{errors.nome_completo.message}</FormError>
+          )}
         </div>
 
         <div className="flex-1">
@@ -28,11 +54,10 @@ function Register() {
             type="email"
             id="email"
             placeholder="Digite seu email"
-            autoComplete="email"
-            name="email"
-            required
             className="w-full"
+            {...register("email")}
           />
+          {errors.email && <FormError>{errors.email.message}</FormError>}
         </div>
 
         <div className="flex-1">
@@ -40,12 +65,11 @@ function Register() {
           <Input
             type="text"
             id="curso"
-            placeholder="Digite seu CPF"
-            autoComplete="cpf"
-            name="curso"
-            required
+            placeholder="Digite seu Curso"
             className="w-full"
+            {...register("curso")}
           />
+          {errors.curso && <FormError>{errors.curso.message}</FormError>}
         </div>
 
         <div className="flex-1">
@@ -53,12 +77,10 @@ function Register() {
           <InputPassword
             id="senha"
             placeholder="Digite sua senha"
-            autoComplete="new-password"
-            name="senha"
-            minLength={6}
-            required
             className="w-full"
+            {...register("senha")}
           />
+          {errors.senha && <FormError>{errors.senha.message}</FormError>}
         </div>
 
         <div className="flex-1">
@@ -66,17 +88,23 @@ function Register() {
           <InputPassword
             id="confirmarSenha"
             placeholder="Confirme sua senha"
-            autoComplete="new-password"
-            name="confirmarSenha"
-            minLength={6}
-            required
             className="w-full"
+            {...register("confirmar_senha")}
           />
+          {errors.confirmar_senha && (
+            <FormError>{errors.confirmar_senha.message}</FormError>
+          )}
         </div>
 
-        <Input type="hidden" name="role" value="aluno" className="hidden" />
+        <Input
+          type="hidden"
+          value="aluno"
+          className="hidden"
+          {...register("tipo")}
+        />
 
         <Button type="submit" variant="primary" className="flex-1 mt-3">
+          {isSubmitting ? <span className="animate-spin"></span> : null}
           Criar Conta
         </Button>
       </form>
