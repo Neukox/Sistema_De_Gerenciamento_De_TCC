@@ -1,7 +1,6 @@
 import React from "react";
 import { cn } from "@/utils/cn"; // Ajuste o caminho conforme necessário
 
-
 type Variants = {
   default: string;
   primary: string;
