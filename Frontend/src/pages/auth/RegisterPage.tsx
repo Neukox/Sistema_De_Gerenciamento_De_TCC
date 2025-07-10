@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import AuthContainer from "@/features/auth/container/AuthContainer";
 import RegisterContainer from "@/features/auth/container/RegisterContainer";
 import Register from "@/features/auth/register/Register";
