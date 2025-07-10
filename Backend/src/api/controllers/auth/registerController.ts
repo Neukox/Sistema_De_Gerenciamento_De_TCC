@@ -8,10 +8,14 @@ export default async function registerController(
 ): Promise<void> {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 6d1d8f0 (Enviando atualização sobre ligação com front end e back end.)
   try {
     console.log("Register controller called with body:", req.body);
     
     const { nome_completo, email, senha, tipo, curso, area_atuacao } = req.body;
+<<<<<<< HEAD
 
     // Validações básicas
     if (!nome_completo || !email || !senha || !tipo) {
@@ -81,14 +85,73 @@ export default async function registerController(
 =======
   const { nome_completo, email, senha, tipo, curso, area_atuacao } = req.body;
 >>>>>>> df0b45f (Refatorando estrutura de usuários e TCC, alterando campos para nome completo e ajustando relacionamentos)
+=======
+>>>>>>> 6d1d8f0 (Enviando atualização sobre ligação com front end e back end.)
 
-  // Validações básicas
-  if (!nome_completo || !email || !senha || !tipo) {
-    res
-      .status(400)
-      .json({ message: "Todos os campos são obrigatórios.", success: false });
-    return;
+    // Validações básicas
+    if (!nome_completo || !email || !senha || !tipo) {
+      console.log("Missing required fields");
+      res
+        .status(400)
+        .json({ message: "Todos os campos são obrigatórios.", success: false });
+      return;
+    }
+
+    // Valida o formato do email
+    if (!validateEmail(email)) {
+      console.log("Invalid email format");
+      res.status(400).json({ message: "Email inválido.", success: false });
+      return;
+    }
+
+    if (!tipo) {
+      console.log("Missing user type");
+      res
+        .status(400)
+        .json({ message: "Tipo de usuário é obrigatório.", success: false });
+      return;
+    }
+
+    // Chama o serviço de registro
+    console.log("Calling register service");
+    const { token, user } = await registerUser({
+      nome_completo,
+      email,
+      password: senha,
+      type: tipo.toUpperCase(), // Converte o tipo para maiúsculas
+      ...(curso && { course: curso }),
+      ...(area_atuacao && { areaOfExpertise: area_atuacao }),
+    });
+
+    console.log("Register service completed successfully");
+    
+    // Responde com sucesso
+    res.status(201).json({
+      message: "Usuário registrado com sucesso.",
+      success: true,
+      token,
+      usuario: {
+        id: user.id,
+        nome_completo: user.nome_completo,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Error in register controller:", error);
+    if (error instanceof Error) {
+      res.status(500).json({
+        message: error.message || "Erro interno do servidor",
+        success: false,
+      });
+    } else {
+      res.status(500).json({
+        message: "Erro interno do servidor",
+        success: false,
+      });
+    }
   }
+<<<<<<< HEAD
 
   // Valida o formato do email
   if (!validateEmail(email)) {
@@ -126,4 +189,6 @@ export default async function registerController(
     },
   });
 >>>>>>> b16b839 (Adicionando controlador e serviço de registro de usuário)
+=======
+>>>>>>> 6d1d8f0 (Enviando atualização sobre ligação com front end e back end.)
 }

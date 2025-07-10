@@ -1,23 +1,72 @@
-import '../index.css';
-import logo from '../assets/logo.png';
-import Input from '../Components/Input';  
-import Button from '../Components/Button';
-import {Link} from 'react-router-dom';
+import '../../index.css';
+import logo from '../../assets/logo.png';
+import Input from '../../Components/Input';  
+import Button from '../../Components/Button';
+import { Link} from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
-import { useTogglePassword} from '../hooks/useTogglepassword';
-
+import { useTogglePassword} from '../../hooks/useTogglepassword';
+import { useNavigate  } from 'react-router-dom';  
+import { useEffect, useState } from 'react';
+import { fetchLogin, type LoginData } from './fetchLoginAPI';
 
 
 function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>('');
+ 
+  useEffect(() => {
+      document.title = 'FocoTCC - Login';
+    }, []);
 
+  const navigate = useNavigate();
+
+   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    
+    // Validações básicas
+    if (!email || !password) {
+      setError('Por favor, preencha todos os campos.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('A senha deve ter pelo menos 6 caracteres.');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const loginData: LoginData = { email, password };
+      const response = await fetchLogin(loginData);
+      
+      if (response.success) {
+        // Login bem-sucedido, redireciona para o dashboard
+        navigate('/maindashboard');
+      }
+    } catch (error) {
+      // Trata erros de login
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao fazer login';
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+   }
 
   const{ mostrarSenha, toggleSenha } = useTogglePassword();
-  // const [mostrarSenha, setMostrarSenha] = useState(false);
-
+  
   return (
   <div className="h-screen w-screen flex justify-center items-center bg-[#F3C50D]">
-    <div className="bg-[#FDF2BF] w-[90%]  max-w-[400px] md:max-w-[500px] lg:max-w-[600px] rounded-lg shadow-lg flex flex-col mt-1 p-1 px-4">
-      {/* Logo and Title Section */}
+    <div className="bg-[#fffbef] w-[90%]  max-w-[400px] md:max-w-[500px] lg:max-w-[600px] rounded-lg shadow-lg flex flex-col mt-1 p-1 px-4">
+      
+       {/* Logo and Title Section */}
       <div className='flex flex-row items-center justify-center'>
        <img src={logo} alt="Logo" className="w-16 h-24 mr-2" /> <span className='text-black text-3xl font-bold '> FocoTCC</span>
       </div>
@@ -28,7 +77,7 @@ function Login() {
          <h2 className=' text-lg font-sans '>insira suas credenciais para acessar o sistema</h2>
        </div>
       {/* Input Fields Section */}
-      <form className="flex flex-col mt-3 fpont-sans font-semibold">
+      <form className="flex flex-col mt-3 fpont-sans font-semibold " onSubmit={handleLogin} noValidate>
         
         {/* Exibição de erro */}
         {error && (
@@ -41,7 +90,8 @@ function Login() {
         <Input type="email" 
         id="email" 
         placeholder="Digite seu email" 
-        autocomplete="email"
+        autoComplete="email"
+        name='email'
         required/>
        
         <label htmlFor="password">Senha</label> 
@@ -50,7 +100,8 @@ function Login() {
         <Input type={mostrarSenha ? "text" : "password"} 
         id="password" 
         placeholder="Digite sua senha"
-        autocomplete="current-password"
+        autoComplete="current-password"
+        name='password'
         required />
 
         {/* Eyesoff/ON*/}

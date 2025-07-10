@@ -33,6 +33,7 @@ const routes = Router();
 
 // Usando as rotas de autenticação
 <<<<<<< HEAD
+<<<<<<< HEAD
 routes.use("/auth", authRoutes);
 // Usando as rotas de alunos
 routes.use("/alunos", alunosRoutes);
@@ -54,6 +55,9 @@ routes.use("/reunioes", reunioesRoutes);
 // Exporta as rotas
 export default routes;
 routes.use("/", authRoutes);
+=======
+routes.use("/auth", authRoutes);
+>>>>>>> 6d1d8f0 (Enviando atualização sobre ligação com front end e back end.)
 // Usando as rotas de alunos
 routes.use("/alunos", alunosRoutes);
 // Usando as rotas de professores
