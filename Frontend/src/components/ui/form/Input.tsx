@@ -5,6 +5,14 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
 };
 
+/**
+ * Componente de Input Personalizado.
+ * Este componente renderiza um campo de entrada HTML com estilos personalizados.
+ * @param {string} [type="text"] - Tipo do campo de entrada (padrão é "text").
+ * @param {string} [className] - Classes CSS adicionais para estilização.
+ * @param {React.InputHTMLAttributes<HTMLInputElement>} props - Outras propriedades HTML do input, como `placeholder`, `value`, `onChange`, etc.
+ * @return {JSX.Element} Um elemento de input estilizado com classes CSS personalizadas.
+ */
 function Input({ type = "text", className, ...props }: InputProps) {
   return (
     <input

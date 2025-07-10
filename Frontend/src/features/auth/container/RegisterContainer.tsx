@@ -1,6 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Componente de contêiner para a página de registro.
+ * Este componente exibe o título e subtítulo da página de registro,
+ * Também inclui um link para a página de login caso o usuário já tenha uma conta.
+ */
 export default function RegisterContainer({
   children,
 }: {
