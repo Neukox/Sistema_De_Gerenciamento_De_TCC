@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import logo from "@/assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -48,6 +49,9 @@ import { useNavigate } from "react-router-dom";
 =======
 import "../../../index.css";
 import logo from "../../../assets/logo.png";
+=======
+import logo from "@/assets/logo.png";
+>>>>>>> 6ae9b3f (refatora importações para usar caminhos absolutos e ativa funcionalidades de autenticação nos hooks de login e registro)
 
 import { useState } from "react";
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
