@@ -1,27 +1,29 @@
-import logo from '@/assets/logo.png';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { isAuthenticated, logout, getUserData } from '../fetchLoginAPI';
+import logo from "@/assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 
 // Custom hooks
-import { InfosTCC } from '../../hooks/InfosTCC';
-import { useGeneralProgress } from '../../hooks/GeneralProgess';
-import { useCompletedMarks } from '../../hooks/CompletedMarks';
-import { usePendingTasks } from '../../hooks/PendingTasks';
-import { useLateTasks } from '../../hooks/LateTasks';
+import { InfosTCC } from "../../hooks/InfosTCC";
+import { useGeneralProgress } from "../../hooks/GeneralProgess";
+import { useCompletedMarks } from "../../hooks/CompletedMarks";
+import { usePendingTasks } from "../../hooks/PendingTasks";
+import { useLateTasks } from "../../hooks/LateTasks";
 
 // React icons
-import { IoPersonOutline, IoBookOutline, IoCalendarClearOutline, IoLogOutOutline } from "react-icons/io5";
+import {
+  IoPersonOutline,
+  IoBookOutline,
+  IoCalendarClearOutline,
+  IoLogOutOutline,
+} from "react-icons/io5";
 import { FaUserFriends, FaRegCheckCircle, FaRegClock } from "react-icons/fa";
 import { IoMdTrendingUp } from "react-icons/io";
 import { TiWarningOutline } from "react-icons/ti";
 import { LuTarget } from "react-icons/lu";
 import { GrTask } from "react-icons/gr";
-import { CiEdit } from "react-icons/ci";
-import { FaPlus } from "react-icons/fa";
-import { RiCalendarScheduleLine } from "react-icons/ri";
-import { HiOutlineNewspaper } from "react-icons/hi2";
+import { useTCCData } from "@/hooks/useTCCData";
+import useAuth from "../auth/context/useAuth";
+import useTitle from "@/hooks/useTitle";
 
 function MainDashboard() {
 
@@ -34,16 +36,10 @@ function MainDashboard() {
 
   const navigate = useNavigate();
 
-  // Set page title on mount
-  useEffect(() => {
-    document.title = 'FocoTCC - Dashboard';
-    
-    // Verifica se o usuário está autenticado
-    if (!isAuthenticated()) {
-      navigate('/login');
-      return;
-    }
-  }, [navigate]);
+  // Access authentication context
+  const { logout, user } = useAuth();
+
+  useTitle("FocoTCC - Dashboard");
 
   
 // Usa hook para calcular dias restantes só se datas existirem 
@@ -56,11 +52,8 @@ function MainDashboard() {
   // Função para fazer logout
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
-
-  // Dados do usuário logado
-  const userData = getUserData();
 
   if (loading) {
     return (
@@ -79,11 +72,11 @@ function MainDashboard() {
             <img src={logo} alt="Logo" className="w-[60px] h-24" />
             <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
           </div>
-          
+
           {/* User info and logout */}
           <div className="flex items-center gap-4">
             <span className="text-lg font-medium">
-              Olá, {userData?.nome_completo || 'Usuário'}
+              Olá, {user?.nome_completo || "Usuário"}
             </span>
             <button
               onClick={handleLogout}
@@ -96,15 +89,19 @@ function MainDashboard() {
         </div>
 
         <div className="flex flex-col items-start gap-2 mt-4">
-          <h1 className="text-4xl font-sans font-bold">{tccData?.title }</h1>
+          <h1 className="text-4xl font-sans font-bold">
+            {tccData?.title || title}
+          </h1>
           <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
-            <IoPersonOutline /> Aluno: {tccData?.aluno } • {tccData?.curso }
+            <IoPersonOutline /> Aluno: {tccData?.aluno || aluno} •{" "}
+            {tccData?.curso || curso}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
             <IoBookOutline /> Orientador: {tccData?.orientador }
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <FaUserFriends /> Coorientador: {tccData?.coorientador}
+            <FaUserFriends /> Coorientador:{" "}
+            {tccData?.coorientador || coorientador}
           </h2>
         </div>
       </div>

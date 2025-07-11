@@ -9,7 +9,7 @@ import type { AuthResponse, RegisterRequest } from "@/types/response/auth";
 export default async function registerUser(
   data: RegisterRequest
 ): Promise<AuthResponse> {
-  const response = await api.post("/register", data);
+  const response = await api.post("auth/register", data);
 
   return response.data;
 }

@@ -1,3 +1,4 @@
+import type { UserData } from "../user/user";
 import type { ApiResponse } from "./base";
 
 /**
@@ -21,10 +22,5 @@ export interface RegisterRequest {
  */
 export interface AuthResponse extends ApiResponse {
   token?: string;
-  usuario?: {
-    id: string;
-    nome_completo: string;
-    email: string;
-    role: string;
-  };
+  usuario?: UserData;
 }
