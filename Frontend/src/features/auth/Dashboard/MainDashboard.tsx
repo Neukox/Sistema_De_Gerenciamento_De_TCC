@@ -7,11 +7,7 @@ import { isAuthenticated, logout, getUserData } from '../fetchLoginAPI';
 
 
 // Custom hooks
-import { InfosTCC } from '../../../hooks/InfosTCC';
-import { useGeneralProgress } from '../../../hooks/GeneralProgess';
-import { useCompletedMarks } from '../../../hooks/CompletedMarks';
-import { usePendingTasks } from '../../../hooks/PendingTasks';
-import { useLateTasks } from '../../../hooks/LateTasks';
+
 import { useCronograma } from '../../../hooks/useCronograma';
 import { useStatusTheme } from '../../../hooks/useStatusTheme';
 import { useTCCData } from '../../../hooks/useTCCData';
@@ -23,6 +19,10 @@ import { IoMdTrendingUp } from "react-icons/io";
 import { TiWarningOutline } from "react-icons/ti";
 import { LuTarget } from "react-icons/lu";
 import { GrTask } from "react-icons/gr";
+import { CiEdit } from "react-icons/ci";
+import { FaPlus } from "react-icons/fa";
+import { RiCalendarScheduleLine } from "react-icons/ri";
+import { HiOutlineNewspaper } from "react-icons/hi2";
 
 function MainDashboard() {
 
@@ -50,11 +50,7 @@ function MainDashboard() {
 // Usa hook para calcular dias restantes só se datas existirem 
   const diasRestantes = useCronograma({ dataInicio, dataEntrega });
   // Busca dados dos outros hooks
-  const { title, aluno, curso, orientador, coorientador } = InfosTCC();
-  const { progress, description } = useGeneralProgress();
-  const { checked, total, descriptionM } = useCompletedMarks();
-  const { pending, descriptionP } = usePendingTasks();
-  const { late, descriptionL } = useLateTasks();
+ 
   const status  = useStatusTheme();
   const { tccData, loading } = useTCCData();
 
@@ -101,15 +97,15 @@ function MainDashboard() {
         </div>
 
         <div className="flex flex-col items-start gap-2 mt-4">
-          <h1 className="text-4xl font-sans font-bold">{tccData?.title || title}</h1>
+          <h1 className="text-4xl font-sans font-bold">{tccData?.title }</h1>
           <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
-            <IoPersonOutline /> Aluno: {tccData?.aluno || aluno} • {tccData?.curso || curso}
+            <IoPersonOutline /> Aluno: {tccData?.aluno } • {tccData?.curso }
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <IoBookOutline /> Orientador: {tccData?.orientador || orientador}
+            <IoBookOutline /> Orientador: {tccData?.orientador }
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <FaUserFriends /> Coorientador: {tccData?.coorientador || coorientador}
+            <FaUserFriends /> Coorientador: {tccData?.coorientador}
           </h2>
         </div>
       </div>
@@ -120,36 +116,36 @@ function MainDashboard() {
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
-            {tccData?.progress || progress}%
+            {tccData?.progress}%
           </span>
-          <span className="text-2xl text-[#9ea09d]">{description}</span>
+          <span className="text-2xl text-[#9ea09d]">Progresso geral do TCC</span>
         </div>
 
         {/* Completed milestones card */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <FaRegCheckCircle className="w-12 h-12 bg-[#d8fce4] text-[#7dc89c] p-1 rounded-lg" />
-            {checked}/{total}
+            {tccData.checked}/{tccData.total}
           </span>
-          <span className="text-2xl text-[#9ea09d]">{descriptionM}</span>
+          <span className="text-2xl text-[#9ea09d]">Marcos concluídos</span>
         </div>
 
         {/* Pending tasks card */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <FaRegClock className="w-12 h-12 bg-[#f2d1b1] text-[#dc9058] p-1 rounded-lg" />
-            {pending}
+            {tccData.pending}
           </span>
-          <span className="text-2xl text-[#9ea09d]">{descriptionP}</span>
+          <span className="text-2xl text-[#9ea09d]">Tarefas Pendentes</span>
         </div>
 
         {/* Overdue tasks card */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <TiWarningOutline className="w-12 h-12 bg-[#ffe1e0] text-[#d36c6c] p-1 rounded-lg" />
-            {late}
+            {tccData.late}
           </span>
-          <span className="text-2xl text-[#9ea09d]">{descriptionL}</span>
+          <span className="text-2xl text-[#9ea09d]">Tarefas atrasadas</span>
         </div>
       </div>
 
@@ -210,8 +206,18 @@ function MainDashboard() {
             </div>
 
             {/* Quick actions section */}
-            <div className="bg-[#fffbef] min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
+            <div className="bg-[#fffbef]  gap-8 min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
               <h1 className="text-3xl font-bold">Ações Rápidas</h1>
+              <div className='flex flex-col   gap-7 mt-3'>
+              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <CiEdit size={25} />
+ Editar TCC</span>
+              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <FaPlus size={25}/>
+ Nova tarefa</span>
+              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <RiCalendarScheduleLine size={25}/>
+ Agendar Reunião</span>
+              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <HiOutlineNewspaper size={25}/>
+ Gerar Relatório</span>
+              </div>
             </div>
           </div>
         </div>

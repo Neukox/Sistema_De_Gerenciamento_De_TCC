@@ -11,6 +11,10 @@ interface TCCData {
   coorientador: string;
   progress: number;
   institution: string;
+  checked: number,
+  total: number,
+  pending: number
+   late: number;
 }
 
 // Hook personalizado para dados do TCC
@@ -22,6 +26,10 @@ export const useTCCData = () => {
     orientador: 'Não definido',
     coorientador: 'Não definido',
     progress: 0,
+    checked: 0,
+    total: 0,
+    pending: 0,
+     late: 0,
     institution: 'Carregando...'
   });
   const [loading, setLoading] = useState(true);
@@ -40,7 +48,11 @@ export const useTCCData = () => {
             curso: userData.role === 'ALUNO' ? 'Ciência da Computação' : 'N/A',
             orientador: 'Prof. Dr. João Silva',
             coorientador: 'Prof. Dra. Maria Santos',
-            progress: 35,
+            progress: 65,
+            checked: 0,
+            total: 0,
+            pending: 0,
+            late: 0,
             institution: 'Universidade Federal'
           });
         }
