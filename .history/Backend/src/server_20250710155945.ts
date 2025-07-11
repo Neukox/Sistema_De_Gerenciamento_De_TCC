@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import routes from "./api/routes";
 import { errorHandler } from './api/middlewares/errorHandler';
+import authRoutes from 'api/routes/authRoutes';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Usar rotas externas com prefixo /api
-app.use("/api", routes);
+app.use("/api", authRoutes);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

@@ -1,10 +1,8 @@
 import '../../../index.css';
 import logo from '../../../assets/logo.png';
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated, logout, getUserData } from '../fetchLoginAPI';
-
 
 // Custom hooks
 import { InfosTCC } from '../../../hooks/InfosTCC';
@@ -12,8 +10,6 @@ import { useGeneralProgress } from '../../../hooks/GeneralProgess';
 import { useCompletedMarks } from '../../../hooks/CompletedMarks';
 import { usePendingTasks } from '../../../hooks/PendingTasks';
 import { useLateTasks } from '../../../hooks/LateTasks';
-import { useCronograma } from '../../../hooks/useCronograma';
-import { useStatusTheme } from '../../../hooks/useStatusTheme';
 import { useTCCData } from '../../../hooks/useTCCData';
 
 // React icons
@@ -25,14 +21,6 @@ import { LuTarget } from "react-icons/lu";
 import { GrTask } from "react-icons/gr";
 
 function MainDashboard() {
-
-  
-
-
-  // Simula as datas do backend com useState e useEffect
-  const [dataInicio] = useState<string | null>(null);
-  const [dataEntrega] = useState<string | null>(null);
-
   const navigate = useNavigate();
 
   // Set page title on mount
@@ -46,16 +34,12 @@ function MainDashboard() {
     }
   }, [navigate]);
 
-  
-// Usa hook para calcular dias restantes só se datas existirem 
-  const diasRestantes = useCronograma({ dataInicio, dataEntrega });
-  // Busca dados dos outros hooks
+  // Retrieve data from custom hooks
   const { title, aluno, curso, orientador, coorientador } = InfosTCC();
   const { progress, description } = useGeneralProgress();
   const { checked, total, descriptionM } = useCompletedMarks();
   const { pending, descriptionP } = usePendingTasks();
   const { late, descriptionL } = useLateTasks();
-  const status  = useStatusTheme();
   const { tccData, loading } = useTCCData();
 
   // Função para fazer logout
@@ -74,42 +58,26 @@ function MainDashboard() {
       </div>
     );
   }
-  
+
   return (
     <div className="flex flex-col items-center bg-[#F3C50D] h-screen overflow-x-hidden w-screen pt-6">
       {/* Header and project info */}
       <div className="w-[85%] h-[40%] bg-[#fffbef] flex flex-col rounded-lg shadow-lg p-6 pt-1">
-        <div className="flex justify-between items-center">
-          <div className="flex justify-center items-center">
-            <img src={logo} alt="Logo" className="w-[60px] h-24" />
-            <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
-          </div>
-          
-          {/* User info and logout */}
-          <div className="flex items-center gap-4">
-            <span className="text-lg font-medium">
-              Olá, {userData?.nome_completo || 'Usuário'}
-            </span>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
-            >
-              <IoLogOutOutline size={20} />
-              Sair
-            </button>
-          </div>
+        <div className="flex justify-center items-center">
+          <img src={logo} alt="Logo" className="w-[60px] h-24" />
+          <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
         </div>
 
         <div className="flex flex-col items-start gap-2 mt-4">
-          <h1 className="text-4xl font-sans font-bold">{tccData?.title || title}</h1>
+          <h1 className="text-4xl font-sans font-bold">{title}</h1>
           <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
-            <IoPersonOutline /> Aluno: {tccData?.aluno || aluno} • {tccData?.curso || curso}
+            <IoPersonOutline /> Aluno: {aluno} • {curso}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <IoBookOutline /> Orientador: {tccData?.orientador || orientador}
+            <IoBookOutline /> Orientador: {orientador}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <FaUserFriends /> Coorientador: {tccData?.coorientador || coorientador}
+            <FaUserFriends /> Coorientador: {coorientador}
           </h2>
         </div>
       </div>
@@ -120,7 +88,7 @@ function MainDashboard() {
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
-            {tccData?.progress || progress}%
+            {progress}%
           </span>
           <span className="text-2xl text-[#9ea09d]">{description}</span>
         </div>
@@ -171,42 +139,14 @@ function MainDashboard() {
         <div className="flex flex-row gap-4 mt-4">
           {/* Milestones section */}
           <div className="flex flex-col w-[65%] bg-[#fffbef] min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
-            {/* Você pode adicionar cards de marcos aqui */}
+            {/* You can place milestone cards here */}
           </div>
 
           {/* Right side: schedule + quick actions */}
           <div className="flex flex-col w-[35%]">
             {/* Schedule section */}
-            <div className="flex flex-col bg-[#fffbef] min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
+            <div className="bg-[#fffbef] min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
               <h1 className="text-3xl font-bold">Cronograma</h1>
-
-              <div className="flex flex-col  text-xl text-[#9ea09d] gap-12 mt-5">
-                <div className='flex justify-between '>
-                  <span>Data de início:</span>
-                  <span className='text-[#252525] font-semibold'> {dataInicio !== null ? dataInicio : '—'}</span>
-                </div>
-
-                <div className='flex justify-between '>
-                  <span>Data de entrega:</span>
-                  <span className='text-[#252525] font-semibold'> {dataEntrega !== null ? dataEntrega : '—'}</span>
-                </div>
-
-                <div className='flex justify-between '>
-                  <span>
-                  Dias restantes:
-                  </span>
-                  <span className='text-[#252525] font-semibold '>{diasRestantes !== null ? diasRestantes : '—'}
-                  </span>
-                 </div>
-              </div>
-               
-               {status && (
-               <span className="text-xl font-semibold mt-5 rounded-lg text-center p-1 flex justify-center items-center "  style={{
-                color: status.cor,
-                     backgroundColor: status.colorBackground, height: '2.5rem',
-                    }}> {status.nome}
-                </span>
-                )}
             </div>
 
             {/* Quick actions section */}

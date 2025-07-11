@@ -43,7 +43,7 @@ export const fetchRegister = async (registerData: RegisterData): Promise<Registe
       try {
         const errorData = await response.json();
         throw new Error(errorData.message || `Erro ${response.status}: ${response.statusText}`);
-      } catch {
+      } catch (parseError) {
         // Se não conseguir fazer parse, usa uma mensagem genérica
         throw new Error(`Erro ${response.status}: ${response.statusText}`);
       }
