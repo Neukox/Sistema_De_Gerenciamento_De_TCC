@@ -1,6 +1,6 @@
-import useAuth from '@/features/auth/context/useAuth';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import useAuth from "@/features/auth/context/useAuth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -15,15 +15,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login', { replace: true });
+    if (!isAuthenticated && import.meta.env.VITE_DEV_PROTECT_ROUTES === "true") {
+      navigate("/login", { replace: true });
     }
   }, [isAuthenticated, navigate]);
-
-  // Se não está autenticado, não renderiza nada (redirecionará)
-  if (!isAuthenticated) {
-    return null;
-  }
 
   return <>{children}</>;
 };
