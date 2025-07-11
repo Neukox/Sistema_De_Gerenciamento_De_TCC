@@ -41,7 +41,7 @@ function Button({
   return (
     <button
       className={cn(
-        "px-4 py-2 rounded-lg text-black font-semibold hover:translate-y-1 transition-transform duration-300",
+        "px-4 py-2 rounded-lg text-black font-semibold",
         variants[variant],
         className
       )}
