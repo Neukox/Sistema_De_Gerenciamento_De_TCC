@@ -3,8 +3,8 @@ import { isAxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import useAuth from "../context/useAuth";
-// import type { UserData } from "@/types/user/user";
+import useAuth from "../context/useAuth";
+import type { UserData } from "@/types/user/user";
 
 /**
  * Hook para realizar o login de um usuário.
@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 export function useLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const { setSession } = useAuth();
+  const { setSession } = useAuth();
 
   const loginUser = async (email: string, password: string): Promise<void> => {
     setLoading(true);
@@ -25,7 +25,7 @@ export function useLogin() {
       const response = await login(email, password);
 
       if (response.success) {
-        // setSession(response.usuario as UserData, response.token as string);
+        setSession(response.usuario as UserData, response.token as string);
         navigate("/maindashboard");
       }
     } catch (error: unknown) {
