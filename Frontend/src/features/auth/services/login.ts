@@ -11,7 +11,7 @@ export default async function login(
   email: string,
   password: string
 ): Promise<AuthResponse> {
-  const response = await api.post<AuthResponse>("/login", {
+  const response = await api.post<AuthResponse>("auth/login", {
     email,
     password,
   });

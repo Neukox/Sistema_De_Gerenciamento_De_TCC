@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import logo from "@/assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -38,24 +39,38 @@ import logo from '@/assets/logo.png';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated, logout, getUserData } from '../fetchLoginAPI';
+=======
+import logo from "@/assets/logo.png";
+import { useNavigate } from "react-router-dom";
+>>>>>>> 2761d5f (refatora componentes de autenticação)
 
 
 // Custom hooks
-import { InfosTCC } from '../../hooks/InfosTCC';
-import { useGeneralProgress } from '../../hooks/GeneralProgess';
-import { useCompletedMarks } from '../../hooks/CompletedMarks';
-import { usePendingTasks } from '../../hooks/PendingTasks';
-import { useLateTasks } from '../../hooks/LateTasks';
+import { InfosTCC } from "../../hooks/InfosTCC";
+import { useGeneralProgress } from "../../hooks/GeneralProgess";
+import { useCompletedMarks } from "../../hooks/CompletedMarks";
+import { usePendingTasks } from "../../hooks/PendingTasks";
+import { useLateTasks } from "../../hooks/LateTasks";
 
 >>>>>>>> 742fd03 (refatora estrutura de autenticação, adiciona componentes de contêiner e página de login):Frontend/src/features/Dashboard/MainDashboard.tsx
 // React icons
+<<<<<<< HEAD
 import { IoPersonOutline, IoBookOutline, IoCalendarClearOutline, IoLogOutOutline } from "react-icons/io5";
 >>>>>>> 742fd03 (refatora estrutura de autenticação, adiciona componentes de contêiner e página de login)
+=======
+import {
+  IoPersonOutline,
+  IoBookOutline,
+  IoCalendarClearOutline,
+  IoLogOutOutline,
+} from "react-icons/io5";
+>>>>>>> 2761d5f (refatora componentes de autenticação)
 import { FaUserFriends, FaRegCheckCircle, FaRegClock } from "react-icons/fa";
 import { IoMdTrendingUp } from "react-icons/io";
 import { TiWarningOutline } from "react-icons/ti";
 import { LuTarget } from "react-icons/lu";
 import { GrTask } from "react-icons/gr";
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
@@ -67,6 +82,11 @@ import { FaTrashCan } from "react-icons/fa6";
 import useTitle from "@/hooks/useTitle";
 import useAuth from "../auth/context/useAuth";
 import Button from "@/components/ui/Button";
+=======
+import { useTCCData } from "@/hooks/useTCCData";
+import useAuth from "../auth/context/useAuth";
+import useTitle from "@/hooks/useTitle";
+>>>>>>> 2761d5f (refatora componentes de autenticação)
 
 function MainDashboard() {
   // Navegação
@@ -515,6 +535,16 @@ function MainDashboard() {
   const [dataInicio] = useState<string | null>(null);
   const [dataEntrega] = useState<string | null>(null);
 
+<<<<<<< HEAD
+=======
+  const navigate = useNavigate();
+
+  // Access authentication context
+  const { logout, user } = useAuth();
+
+  useTitle("FocoTCC - Dashboard");
+
+>>>>>>> 2761d5f (refatora componentes de autenticação)
   
 // Usa hook para calcular dias restantes só se datas existirem 
   const diasRestantes = useCronograma({ dataInicio, dataEntrega });
@@ -527,12 +557,28 @@ function MainDashboard() {
   const status  = useStatusTheme();
   
 
+<<<<<<< HEAD
   // Define título da página
   useEffect(() => {
     document.title = 'FocoTCC - Dashboard';
   }, []);
 
 
+=======
+  // Função para fazer logout
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-[#F3C50D]">
+        <div className="text-2xl font-bold">Carregando...</div>
+      </div>
+    );
+  }
+>>>>>>> 2761d5f (refatora componentes de autenticação)
   
   return (
     <div className="flex flex-col items-center bg-[#F3C50D] h-screen overflow-x-hidden w-screen pt-6">
@@ -543,11 +589,11 @@ function MainDashboard() {
             <img src={logo} alt="Logo" className="w-[60px] h-24" />
             <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
           </div>
-          
+
           {/* User info and logout */}
           <div className="flex items-center gap-4">
             <span className="text-lg font-medium">
-              Olá, {userData?.nome_completo || 'Usuário'}
+              Olá, {user?.nome_completo || "Usuário"}
             </span>
             <button
               onClick={handleLogout}
@@ -560,15 +606,29 @@ function MainDashboard() {
         </div>
 
         <div className="flex flex-col items-start gap-2 mt-4">
+<<<<<<< HEAD
           <h1 className="text-4xl font-sans font-bold">{tccData?.title || title}</h1>
           <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
             <IoPersonOutline /> Aluno: {tccData?.aluno || aluno} • {tccData?.curso || curso}
+=======
+          <h1 className="text-4xl font-sans font-bold">
+            {tccData?.title || title}
+          </h1>
+          <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
+            <IoPersonOutline /> Aluno: {tccData?.aluno || aluno} •{" "}
+            {tccData?.curso || curso}
+>>>>>>> 2761d5f (refatora componentes de autenticação)
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
             <IoBookOutline /> Orientador: {tccData?.orientador || orientador}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
+<<<<<<< HEAD
             <FaUserFriends /> Coorientador: {tccData?.coorientador || coorientador}
+=======
+            <FaUserFriends /> Coorientador:{" "}
+            {tccData?.coorientador || coorientador}
+>>>>>>> 2761d5f (refatora componentes de autenticação)
           </h2>
         </div>
       </div>
