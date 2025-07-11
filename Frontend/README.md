@@ -1,69 +1,93 @@
-# React + TypeScript + Vite
+# Front End - Sistema de Gerenciamento de TCC
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório contém o código fonte do Front End do Sistema de Gerenciamento de TCC.
 
-Currently, two official plugins are available:
+## Estrutura do Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+Frontend/
+├── src/ // Código fonte do Front End
+│   ├── assets/ // Imagens, fontes e outros recursos estáticos
+│   ├── components/ // Componentes reutilizáveis
+│   │   ├── ui/ // Componentes de interface do usuário
+│   │   ├── shared/ // Componentes compartilhados
+│   ├── features/
+│   │   ├── auth/ // Funcionalidades de autenticação
+│   ├── hooks/
+│   ├── lib/ // Bibliotecas e utilitários
+│       ├── api/ // Comunicação com a API
+│   ├── pages/ // Páginas do aplicativo
+│   ├── types/ // Tipos TypeScript
+│   │   ├── response/ // Tipos de resposta da API
+│   ├── utils/ // Funções utilitárias
+│   └── App.tsx // Componente principal do aplicativo, onde são definidas as rotas e o layout
+│   └── index.css // Estilos globais do aplicativo
+│   └── main.tsx  // Ponto de entrada do aplicativo
+│   └── vite-env.d.ts // Declarações de ambiente do Vite
+├── .env.example // Exemplo de arquivo de variáveis de ambiente
+├── index.html // Arquivo HTML principal
+├── package.json // Dependências e scripts do projeto
+├── tsconfig.json // Configuração do TypeScript
+├── vite.config.ts // Configuração do Vite
+└── README.md // Documentação do projeto
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Tecnologias Utilizadas
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
+- **Vite**: Ferramenta de construção e desenvolvimento para aplicações web modernas.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Bibliotecas e Dependências
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Estilo e UI
+- **Tailwind CSS**: Framework CSS utilitário para estilização rápida e responsiva.
+- **Tailwind Merge**: Biblioteca para mesclar classes do Tailwind CSS, evitando duplicações e conflitos.
+- **clsx**: Biblioteca para manipulação de classes CSS condicionalmente.
+- **React Icons**: Conjunto de ícones SVG para React.
+- **Lucide**: Biblioteca de componentes de interface do usuário para React.
+- **Huge Icons**: Biblioteca de ícones SVG para React.
+- **React Toastify**: Biblioteca para exibição de notificações toast.
+
+### Gerenciamento de Estado e Rotas
+- **React Router**: Para gerenciamento de rotas.
+
+### API e Comunicação
+- **Axios**: Para requisições HTTP.
+
+### Formulários e Validação
+- **React Hook Form**: Biblioteca para gerenciamento de formulários.
+- **Zod**: Biblioteca para validação de esquemas de dados.
+
+## Configuração do Ambiente
+
+Obs: Tenha certeza de que você tem o Node.js e o npm instalados em sua máquina.
+
+Para configurar o ambiente de desenvolvimento, siga os passos abaixo:
+
+1. Clone o repositório:
+   ```bash
+   git clone <URL_DO_REPOSITORIO>
+   ```
+
+2. Navegue até o diretório do projeto:
+   ```bash
+   cd Frontend
+   ```
+
+3. Instale as dependências:
+   ```bash
+   npm install
+    ```
+
+4. Inicie o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+      ```
+
+5. Abra o navegador e acesse `http://localhost:5173` para ver o aplicativo em execução.
+
+Observação: Copie o arquivo `.env.example` para `.env` e configure as variáveis de ambiente conforme necessário.
+
+
+
+

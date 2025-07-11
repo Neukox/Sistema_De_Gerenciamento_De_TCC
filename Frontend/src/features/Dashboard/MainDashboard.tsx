@@ -1,19 +1,20 @@
-import '../../../index.css';
-import logo from '../../../assets/logo.png';
+import logo from "@/assets/logo.png";
 
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { isAuthenticated, logout, getUserData } from '../fetchLoginAPI';
-
+import { useState } from "react";
 
 // Custom hooks
 
-import { useCronograma } from '../../../hooks/useCronograma';
-import { useStatusTheme } from '../../../hooks/useStatusTheme';
-import { useTCCData } from '../../../hooks/useTCCData';
+import { useCronograma } from "../../hooks/useCronograma";
+import { useStatusTheme } from "../../hooks/useStatusTheme";
+import { useTCCData } from "../../hooks/useTCCData";
 
 // React icons
-import { IoPersonOutline, IoBookOutline, IoCalendarClearOutline, IoLogOutOutline } from "react-icons/io5";
+import {
+  IoPersonOutline,
+  IoBookOutline,
+  IoCalendarClearOutline,
+  IoLogOutOutline,
+} from "react-icons/io5";
 import { FaUserFriends, FaRegCheckCircle, FaRegClock } from "react-icons/fa";
 import { IoMdTrendingUp } from "react-icons/io";
 import { TiWarningOutline } from "react-icons/ti";
@@ -23,45 +24,25 @@ import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { HiOutlineNewspaper } from "react-icons/hi2";
+import useTitle from "@/hooks/useTitle";
+import useAuth from "../auth/context/useAuth";
 
 function MainDashboard() {
-
-  
-
-
   // Simula as datas do backend com useState e useEffect
   const [dataInicio] = useState<string | null>(null);
   const [dataEntrega] = useState<string | null>(null);
 
-  const navigate = useNavigate();
-
   // Set page title on mount
-  useEffect(() => {
-    document.title = 'FocoTCC - Dashboard';
-    
-    // Verifica se o usuário está autenticado
-    if (!isAuthenticated()) {
-      navigate('/login');
-      return;
-    }
-  }, [navigate]);
+  useTitle("FocoTCC - Dashboard Principal");
 
-  
-// Usa hook para calcular dias restantes só se datas existirem 
+  // Usa hook para calcular dias restantes só se datas existirem
   const diasRestantes = useCronograma({ dataInicio, dataEntrega });
   // Busca dados dos outros hooks
- 
-  const status  = useStatusTheme();
+
+  const status = useStatusTheme();
   const { tccData, loading } = useTCCData();
 
-  // Função para fazer logout
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
-  // Dados do usuário logado
-  const userData = getUserData();
+  const { logout, user } = useAuth();
 
   if (loading) {
     return (
@@ -70,7 +51,7 @@ function MainDashboard() {
       </div>
     );
   }
-  
+
   return (
     <div className="flex flex-col items-center bg-[#F3C50D] h-screen overflow-x-hidden w-screen pt-6">
       {/* Header and project info */}
@@ -80,14 +61,14 @@ function MainDashboard() {
             <img src={logo} alt="Logo" className="w-[60px] h-24" />
             <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
           </div>
-          
+
           {/* User info and logout */}
           <div className="flex items-center gap-4">
             <span className="text-lg font-medium">
-              Olá, {userData?.nome_completo || 'Usuário'}
+              Olá, {user?.nome_completo || "Usuário"}
             </span>
             <button
-              onClick={handleLogout}
+              onClick={logout}
               className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
             >
               <IoLogOutOutline size={20} />
@@ -97,12 +78,12 @@ function MainDashboard() {
         </div>
 
         <div className="flex flex-col items-start gap-2 mt-4">
-          <h1 className="text-4xl font-sans font-bold">{tccData?.title }</h1>
+          <h1 className="text-4xl font-sans font-bold">{tccData?.title}</h1>
           <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
-            <IoPersonOutline /> Aluno: {tccData?.aluno } • {tccData?.curso }
+            <IoPersonOutline /> Aluno: {tccData?.aluno} • {tccData?.curso}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
-            <IoBookOutline /> Orientador: {tccData?.orientador }
+            <IoBookOutline /> Orientador: {tccData?.orientador}
           </h2>
           <h2 className="flex items-center gap-2 text-2xl text-gray-600">
             <FaUserFriends /> Coorientador: {tccData?.coorientador}
@@ -118,7 +99,9 @@ function MainDashboard() {
             <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
             {tccData?.progress}%
           </span>
-          <span className="text-2xl text-[#9ea09d]">Progresso geral do TCC</span>
+          <span className="text-2xl text-[#9ea09d]">
+            Progresso geral do TCC
+          </span>
         </div>
 
         {/* Completed milestones card */}
@@ -177,46 +160,69 @@ function MainDashboard() {
               <h1 className="text-3xl font-bold">Cronograma</h1>
 
               <div className="flex flex-col  text-xl text-[#9ea09d] gap-12 mt-5">
-                <div className='flex justify-between '>
+                <div className="flex justify-between ">
                   <span>Data de início:</span>
-                  <span className='text-[#252525] font-semibold'> {dataInicio !== null ? dataInicio : '—'}</span>
+                  <span className="text-[#252525] font-semibold">
+                    {" "}
+                    {dataInicio !== null ? dataInicio : "—"}
+                  </span>
                 </div>
 
-                <div className='flex justify-between '>
+                <div className="flex justify-between ">
                   <span>Data de entrega:</span>
-                  <span className='text-[#252525] font-semibold'> {dataEntrega !== null ? dataEntrega : '—'}</span>
+                  <span className="text-[#252525] font-semibold">
+                    {" "}
+                    {dataEntrega !== null ? dataEntrega : "—"}
+                  </span>
                 </div>
 
-                <div className='flex justify-between '>
-                  <span>
-                  Dias restantes:
+                <div className="flex justify-between ">
+                  <span>Dias restantes:</span>
+                  <span className="text-[#252525] font-semibold ">
+                    {diasRestantes !== null ? diasRestantes : "—"}
                   </span>
-                  <span className='text-[#252525] font-semibold '>{diasRestantes !== null ? diasRestantes : '—'}
-                  </span>
-                 </div>
+                </div>
               </div>
-               
-               {status && (
-               <span className="text-xl font-semibold mt-5 rounded-lg text-center p-1 flex justify-center items-center "  style={{
-                color: status.cor,
-                     backgroundColor: status.colorBackground, height: '2.5rem',
-                    }}> {status.nome}
+
+              {status && (
+                <span
+                  className="text-xl font-semibold mt-5 rounded-lg text-center p-1 flex justify-center items-center "
+                  style={{
+                    color: status.cor,
+                    backgroundColor: status.colorBackground,
+                    height: "2.5rem",
+                  }}
+                >
+                  {" "}
+                  {status.nome}
                 </span>
-                )}
+              )}
             </div>
 
             {/* Quick actions section */}
             <div className="bg-[#fffbef]  gap-8 min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
               <h1 className="text-3xl font-bold">Ações Rápidas</h1>
-              <div className='flex flex-col   gap-7 mt-3'>
-              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <CiEdit size={25} />
- Editar TCC</span>
-              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <FaPlus size={25}/>
- Nova tarefa</span>
-              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <RiCalendarScheduleLine size={25}/>
- Agendar Reunião</span>
-              <span className='border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2' > <HiOutlineNewspaper size={25}/>
- Gerar Relatório</span>
+              <div className="flex flex-col   gap-7 mt-3">
+                <span className="border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2">
+                  {" "}
+                  <CiEdit size={25} />
+                  Editar TCC
+                </span>
+                <span className="border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2">
+                  {" "}
+                  <FaPlus size={25} />
+                  Nova tarefa
+                </span>
+                <span className="border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2">
+                  {" "}
+                  <RiCalendarScheduleLine size={25} />
+                  Agendar Reunião
+                </span>
+                <span className="border border-gray-400  px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300  transition-all flex items-center gap-2">
+                  {" "}
+                  <HiOutlineNewspaper size={25} />
+                  Gerar Relatório
+                </span>
               </div>
             </div>
           </div>
