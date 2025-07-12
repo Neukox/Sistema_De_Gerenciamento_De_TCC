@@ -217,6 +217,7 @@ model Comentario {
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 model Anotacao {
   id            Int      @id @default(autoincrement())
@@ -228,6 +229,8 @@ model Anotacao {
 
   TCC TCC @relation(fields: [TCC_id], references: [id])
 }
+=======
+>>>>>>> 8e141ec (adiciona modelo de RecuperacaoSenha e estrutura de áreas de conhecimento no seed)
 
 model RecuperacaoSenha {
   id        Int      @id @default(autoincrement())
@@ -239,6 +242,7 @@ model RecuperacaoSenha {
 
   Usuario Usuario @relation(fields: [Usuario_id], references: [id])
 }
+<<<<<<< HEAD
 
 // Novos modelos para cálculo de progresso
 
@@ -341,3 +345,5 @@ model Atividade {
 >>>>>>> b6de60f (Atualizando o esquema do Prisma)
 =======
 >>>>>>> 7ac15be (Removendo conflitos e ajustando o esquema do Prisma)
+=======
+>>>>>>> 8e141ec (adiciona modelo de RecuperacaoSenha e estrutura de áreas de conhecimento no seed)
