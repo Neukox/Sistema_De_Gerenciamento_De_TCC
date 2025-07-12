@@ -77,9 +77,10 @@ model Usuario {
   criado_em     DateTime    @default(now())
   atualizado_em DateTime    @updatedAt
 
-  Aluno       Aluno?
-  Professor   Professor?
-  Comentarios Comentario[]
+  Aluno            Aluno?
+  Professor        Professor?
+  Comentarios      Comentario[]
+  RecuperacaoSenha RecuperacaoSenha[]
 }
 
 model Aluno {
@@ -168,4 +169,15 @@ model Comentario {
   TCC       TCC        @relation(fields: [TCC_id], references: [id])
   Usuario   Usuario    @relation(fields: [Usuario_id], references: [id])
   Atividade Atividade? @relation(fields: [Atividades_id], references: [id])
+}
+
+model RecuperacaoSenha {
+  id        Int      @id @default(autoincrement())
+  tokenHash String   @unique
+  expiracao DateTime
+  criado_em DateTime @default(now())
+
+  Usuario_id Int
+
+  Usuario Usuario @relation(fields: [Usuario_id], references: [id])
 }
