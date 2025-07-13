@@ -51,10 +51,10 @@ export default authRoutes;
 >>>>>>> 6bcdba5 (Adicionando rotas de autenticação e centralizando as rotas da API)
 =======
 // Rota de recuperação de senha
-authRoutes.post("/recuperar-senha", requestPasswordResetController);
+authRoutes.post("/request-password-reset", requestPasswordResetController);
 
 // Rota de redefinição de senha
-authRoutes.post("/redefinir-senha", resetPasswordController);
+authRoutes.post("/reset-password", resetPasswordController);
 
 // Exporta as rotas de autenticação
 export default authRoutes;
