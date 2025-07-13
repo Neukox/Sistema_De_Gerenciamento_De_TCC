@@ -9,6 +9,7 @@ import professorRoutes from "./professorRoutes";
 import TCCRoutes from "./TCCRoutes";
 import areaConhecimentoRoutes from "./areaConhecimentoRoutes";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import atividadesRoutes from "./atividadesRoutes";
 import anotacaoRoutes from "./anotacaoRoutes";
 import progressRoutes from "./progressRoutes";
@@ -25,6 +26,9 @@ import TCCRoutes from "./TCCRoutes";
 >>>>>>> 89cd345 (Adiciona rotas para TCCs)
 =======
 >>>>>>> bb3c03f (Implementando serviços e rotas para gerenciamento de áreas de conhecimento)
+=======
+import atividadesRoutes from "./atividadesRoutes";
+>>>>>>> fbd8ab1 (adiciona rotas, controlador, serviço e repositório para criação de atividades)
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -45,6 +49,7 @@ routes.use("/tccs", TCCRoutes);
 routes.use("/areas-conhecimento", areaConhecimentoRoutes);
 // Usando as rotas de atividades
 routes.use("/atividades", atividadesRoutes);
+<<<<<<< HEAD
 // Usando as rotas de anotações
 routes.use("/anotacoes", anotacaoRoutes);
 // Usando as rotas de progresso
@@ -70,3 +75,8 @@ routes.use("/areas-conhecimento", areaConhecimentoRoutes);
 // Exporta as rotas
 export default routes;
 >>>>>>> 6bcdba5 (Adicionando rotas de autenticação e centralizando as rotas da API)
+=======
+
+// Exporta as rotas
+export default routes;
+>>>>>>> fbd8ab1 (adiciona rotas, controlador, serviço e repositório para criação de atividades)
