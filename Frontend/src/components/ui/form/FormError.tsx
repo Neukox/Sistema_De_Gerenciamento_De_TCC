@@ -15,7 +15,7 @@ type FormErrorProps = {
 
 export default function FormError({ children, ...props }: FormErrorProps) {
   return (
-    <p className={cn("text-red-500 text-sm mt-1", props.className)} {...props}>
+    <p className={cn("text-red-600 text-sm mt-1", props.className)} {...props}>
       {children}
     </p>
   );

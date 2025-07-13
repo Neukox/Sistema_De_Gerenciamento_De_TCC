@@ -61,7 +61,7 @@ function Register() {
         </div>
 
         <div className="flex-1">
-          <Label htmlFor="cpf">Curso</Label>
+          <Label htmlFor="curso">Curso</Label>
           <Input
             type="text"
             id="curso"

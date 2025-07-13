@@ -16,7 +16,7 @@ export default function AuthContainer({
   className?: string;
 }) {
   return (
-    <div
+    <main
       className={cn(
         "bg-neutral w-full max-w-[30rem] rounded-lg shadow-lg flex flex-col gap-4 p-6",
         className
@@ -27,6 +27,6 @@ export default function AuthContainer({
         <span className="text-black text-3xl font-bold">FocoTCC</span>
       </div>
       {children}
-    </div>
+    </main>
   );
 }

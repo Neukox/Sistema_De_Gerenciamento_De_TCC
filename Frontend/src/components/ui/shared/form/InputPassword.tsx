@@ -12,22 +12,27 @@ import { cn } from "@/utils/cn";
  * @return {JSX.Element} Um elemento de input estilizado com a funcionalidade de mostrar/ocultar senha.
  */
 export default function InputPassword({
+  id,
   className,
   ...props
 }: React.InputHTMLAttributes<HTMLInputElement>) {
   const { mostrarSenha, toggleSenha } = useTogglePassword();
 
   return (
-    <div className="relative min-w-fit flex">
+    <div className="relative min-w-fit flex" aria-labelledby={id}>
       <Input
         type={mostrarSenha ? "text" : "password"}
         className={cn("pr-10", className)}
+        id={id}
+        aria-describedby={id}
         {...props}
       />
       <button
         type="button"
         onClick={toggleSenha}
         className="absolute inset-y-0 right-0 flex items-center pr-2"
+        aria-label="Mostrar/Ocultar Senha"
+        aria-controls={id}
       >
         {mostrarSenha ? <EyeOff /> : <Eye />}
       </button>
