@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import bycrypt from "bcrypt";
+import bcrypt from "bcrypt";
 
 /**
  * Função para criptografar uma senha usando bcrypt
@@ -8,7 +8,7 @@ import bycrypt from "bcrypt";
  */
 
 export async function encryptPassword(password: string): Promise<string> {
-  const hashedPassword = await bycrypt.hash("sha256", password);
+  const hashedPassword = await bcrypt.hash(password, 10);
   return hashedPassword;
 }
 
@@ -22,7 +22,7 @@ export async function verifyPassword(
   password: string,
   hashedPassword: string
 ): Promise<boolean> {
-  const isMatch = await bycrypt.compare(password, hashedPassword);
+  const isMatch = await bcrypt.compare(password, hashedPassword);
   return isMatch;
 }
 

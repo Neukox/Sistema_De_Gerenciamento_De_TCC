@@ -32,3 +32,22 @@ export async function createUser(data: ICreateUser): Promise<Usuario | null> {
 
   return usuario;
 }
+
+/**
+ * Função para atualizar a senha de um usuário no banco de dados
+ * @param {number} id - ID do usuário a ser atualizado
+ * @param {string} newPassword - Nova senha do usuário
+ * @returns {Promise<Usuario | null>} Retorna o usuário atualizado ou null se não for possível atualizar
+ */
+
+export async function changePassword(
+  id: number,
+  newPassword: string
+): Promise<Usuario | null> {
+  const usuario = await prisma.usuario.update({
+    where: { id: id },
+    data: { senha: newPassword },
+  });
+
+  return usuario;
+}
