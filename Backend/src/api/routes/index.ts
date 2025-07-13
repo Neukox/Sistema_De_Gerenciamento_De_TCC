@@ -4,6 +4,7 @@ import alunosRoutes from "./alunosRoutes";
 import professorRoutes from "./professorRoutes";
 import TCCRoutes from "./TCCRoutes";
 import areaConhecimentoRoutes from "./areaConhecimentoRoutes";
+import atividadesRoutes from "./atividadesRoutes";
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -20,6 +21,8 @@ routes.use("/professores", professorRoutes);
 routes.use("/tccs", TCCRoutes);
 // Usando as rotas de áreas de conhecimento
 routes.use("/areas-conhecimento", areaConhecimentoRoutes);
+// Usando as rotas de atividades
+routes.use("/atividades", atividadesRoutes);
 
 // Exporta as rotas
 export default routes;
