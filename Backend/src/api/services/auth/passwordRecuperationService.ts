@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import { ResponseError } from "../../helpers/ResponseError";
 import { findUserByEmail } from "../../repositories/usuario/usuarioRepository";
 import { sendPasswordResetEmail } from "../../../email/emailService";
@@ -31,6 +30,7 @@ export async function requestPasswordReset(email: string): Promise<void> {
   await sendPasswordResetEmail({
     to: user.email,
     token: token,
+    user_id: user.id,
     userName: user.nome_completo,
   });
 }

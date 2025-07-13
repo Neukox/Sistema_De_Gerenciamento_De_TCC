@@ -15,6 +15,7 @@ import { encryptPassword, encryptToken } from "../../utils/criptrography";
  */
 
 export default async function resetPasswordService(
+  userId: number,
   token: string,
   newPassword: string
 ): Promise<Usuario> {
@@ -22,7 +23,7 @@ export default async function resetPasswordService(
   const tokenHash = encryptToken(token);
 
   // Verifica se o token de recuperação é válido
-  const verifyToken = await verifyRecoveryToken(tokenHash);
+  const verifyToken = await verifyRecoveryToken(userId, tokenHash);
 
   if (!verifyToken) {
     throw new ResponseError(

@@ -29,10 +29,15 @@ export async function setPasswordRecoveryToken(
  * @returns {Promise<RecuperacaoSenha | null>} Retorna o registro encontrado ou null se não existir
  */
 export async function verifyRecoveryToken(
+  userId: number,
   token: string
 ): Promise<RecuperacaoSenha | null> {
   const recoveryRequest = await prisma.recuperacaoSenha.findFirst({
-    where: { tokenHash: token, expiracao: { gte: new Date() } },
+    where: {
+      Usuario_id: userId,
+      tokenHash: token,
+      expiracao: { gte: new Date() },
+    },
   });
 
   return recoveryRequest;

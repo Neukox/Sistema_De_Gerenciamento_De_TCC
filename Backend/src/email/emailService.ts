@@ -17,7 +17,7 @@ export async function sendPasswordResetEmail(
 ): Promise<void> {
   const emailContent = parseTemplates("recuperar-senha", {
     userName: data.userName,
-    resetLink: `${process.env.CLIENT_URL}/reset-password?token=${data.token}`,
+    resetLink: `${process.env.CLIENT_URL}/reset-password?token=${data.token}?user_id=${data.user_id}`,
   });
 
   const msg = {

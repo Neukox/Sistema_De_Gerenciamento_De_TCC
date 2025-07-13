@@ -11,16 +11,16 @@ export async function resetPasswordController(
   req: Request,
   res: Response
 ): Promise<Response> {
-  const { token, nova_senha } = req.body;
+  const { usuario_id, token, nova_senha } = req.body;
 
-  if (!token || !nova_senha) {
+  if (!usuario_id || !token || !nova_senha) {
     return res.status(400).json({
-      message: "Token e nova senha são obrigatórios.",
+      message: "Dados insuficientes para redefinir a senha.",
       success: false,
     });
   }
 
-  const updatedUser = await resetPasswordService(token, nova_senha);
+  const updatedUser = await resetPasswordService(usuario_id, token, nova_senha);
 
   if (!updatedUser) {
     return res.status(404).json({
