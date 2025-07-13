@@ -5,8 +5,6 @@ export const API_CONFIG = {
     AUTH: {
       LOGIN: '/auth/login',
       REGISTER: '/auth/register',
-      REQUEST_PASSWORD_RESET: '/auth/request-password-reset',
-      RESET_PASSWORD: '/auth/reset-password',
     },
     TCC: {
       GET_ALL: '/tcc',
