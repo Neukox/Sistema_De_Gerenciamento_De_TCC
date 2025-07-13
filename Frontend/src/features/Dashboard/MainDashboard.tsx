@@ -61,6 +61,13 @@ import { useState } from "react";
 import { useCronograma } from "../../hooks/useCronograma";
 import { useStatusTheme } from "../../hooks/useStatusTheme";
 import { useTCCData } from "../../hooks/useTCCData";
+import{ useCard } from "../../hooks/useCard"
+
+// components
+import  MarksCard  from "../../components/MarksCard"
+
+
+// utils
 
 >>>>>>>> 742fd03 (refatora estrutura de autenticação, adiciona componentes de contêiner e página de login):Frontend/src/features/Dashboard/MainDashboard.tsx
 // React icons
@@ -601,9 +608,15 @@ function MainDashboard() {
 
   const status = useStatusTheme();
   const { tccData, loading } = useTCCData();
-
+  const {tarefas } = useCard();
   const { logout, user } = useAuth();
+<<<<<<< HEAD
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
+=======
+  
+
+
+>>>>>>> fb3fbc9 (atualização do frontend)
 
   if (loading) {
     return (
@@ -745,14 +758,37 @@ function MainDashboard() {
         {/* Main content below navbar */}
         <div className="flex flex-row gap-4 mt-4">
           {/* Milestones section */}
-          <div className="flex flex-col w-[65%] bg-[#fffbef] min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
-            {/* Você pode adicionar cards de marcos aqui */}
-          </div>
+            <div className="flex flex-col w-[65%] bg-[#fffbef] min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
+             <h1 className="flex items-center gap-2 font-bold text-4xl"> <LuTarget /> Marcos do Projeto</h1>
+             <h4 className="text-gray-500 mt-1">Acompanhe o progresso dos principais marcos do seu TCC</h4>
+              
+              
+              {tarefas.length === 0 ? (
+                <p className="text-gray-400 flex items-center mt-12 justify-center">Nenhuma tarefa cadastrada.</p>
+                ): (
+               
+                 <div className="space-y-5 w-full ">
+                    {tarefas.map((tarefa) => (
+
+                      <MarksCard 
+                      key={tarefa.id}
+                      id = {tarefa.id}
+                      title = {tarefa.title}
+                      description = {tarefa.description}
+                      prazo = {tarefa.prazo}
+                      
+                      stats={tarefa.stats}/>
+                   ))}
+                 </div>
+                
+               )}
+             </div>
+            
 
           {/* Right side: schedule + quick actions */}
           <div className="flex flex-col w-[35%]">
             {/* Schedule section */}
-            <div className="flex flex-col bg-[#fffbef] min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
+            <div className="flex flex-col bg-[#fffbef] min-h-72 mt-4  rounded-lg shadow-lg mb-5 p-6">
               <h1 className="text-3xl font-bold">Cronograma</h1>
 
               <div className="flex flex-col  text-xl text-[#9ea09d] gap-12 mt-5">
@@ -772,17 +808,17 @@ function MainDashboard() {
                   </span>
                 </div>
 
-                <div className="flex justify-between ">
+                <div className="flex justify-between  ">
                   <span>Dias restantes:</span>
                   <span className="text-[#252525] font-semibold ">
                     {diasRestantes !== null ? diasRestantes : "—"}
                   </span>
                 </div>
               </div>
-
-              {status && (
+             <div className="border-t mt-4 border-gray-200">
+               {status && (
                 <span
-                  className="text-xl font-semibold mt-5 rounded-lg text-center p-1 flex justify-center items-center "
+                  className="text-xl  font-semibold mt-5 rounded-lg text-center p-1 flex justify-center items-center "
                   style={{
                     color: status.cor,
                     backgroundColor: status.colorBackground,
@@ -792,7 +828,8 @@ function MainDashboard() {
                   {" "}
                   {status.nome}
                 </span>
-              )}
+                )}
+              </div>
             </div>
 
             {/* Quick actions section */}
