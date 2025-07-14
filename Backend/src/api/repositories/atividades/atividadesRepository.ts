@@ -1,6 +1,6 @@
 import { Atividade } from "@prisma/client";
 import prisma from "../../config/prisma";
-import { ICreateAtividade } from "./interfaces";
+import { ICreateAtividade, TCCAtividades } from "./interfaces";
 
 /**
  * Função para criar uma nova atividade no banco de dados.
@@ -31,10 +31,13 @@ export async function createAtividade(
 
 export async function getAtividadesByTCCId(
   tccId: number
-): Promise<Atividade[] | null> {
+): Promise<TCCAtividades[] | null> {
   const atividades = await prisma.atividade.findMany({
     where: {
       TCC_id: tccId,
+    },
+    omit: {
+      TCC_id: true,
     },
   });
 
