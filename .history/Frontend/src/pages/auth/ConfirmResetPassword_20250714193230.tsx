@@ -129,7 +129,7 @@ export function ConfirmResetPassword() {
 
         {/* Mensagem de feedback */}
         {message && (
-          <div className={`w-full mb-3 sm:mb-4 p-2 sm:p-3 rounded text-center text-sm ${
+          <div className={`w-full mb-4 p-3 rounded text-center ${
             messageType === 'success' 
               ? 'bg-green-100 text-green-700 border border-green-300' 
               : 'bg-red-100 text-red-700 border border-red-300'
@@ -138,8 +138,8 @@ export function ConfirmResetPassword() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 sm:gap-4">
-          <label htmlFor="new-password" className="block text-xs sm:text-sm font-medium mt-1 sm:mt-2">
+        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
+          <label htmlFor="new-password" className="block text-sm font-medium mt-2">
             Nova Senha
           </label>
 
@@ -148,13 +148,13 @@ export function ConfirmResetPassword() {
             id="new-password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:ring-2"
             placeholder="Digite sua nova senha"
             disabled={loading || !token || !userId}
             required
           />
 
-          <label htmlFor="confirm-password" className="block text-xs sm:text-sm font-medium mt-1 sm:mt-2">
+          <label htmlFor="confirm-password" className="block text-sm font-medium mt-2">
             Confirmar Nova Senha
           </label>
 
@@ -163,7 +163,7 @@ export function ConfirmResetPassword() {
             id="confirm-password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full p-2 sm:p-3 text-sm sm:text-base border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:ring-2"
             placeholder="Confirme sua nova senha"
             disabled={loading || !token || !userId}
             required
@@ -172,7 +172,7 @@ export function ConfirmResetPassword() {
           <button
             type="submit"
             disabled={loading || !token || !userId}
-            className={`mt-4 sm:mt-6 font-semibold py-2 sm:py-3 text-sm sm:text-base rounded transition ${
+            className={`mt-6 font-semibold py-2 rounded transition ${
               loading || !token || !userId
                 ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
                 : 'bg-primary hover:opacity-80 text-white'
@@ -183,10 +183,10 @@ export function ConfirmResetPassword() {
         </form>
 
         {/* Link para voltar ao login */}
-        <div className="mt-3 sm:mt-4 text-center">
+        <div className="mt-4 text-center">
           <a 
             href="/login" 
-            className="text-xs sm:text-sm text-primary hover:underline"
+            className="text-sm text-primary hover:underline"
           >
             Voltar ao login
           </a>

@@ -183,10 +183,10 @@ export function ConfirmResetPassword() {
         </form>
 
         {/* Link para voltar ao login */}
-        <div className="mt-3 sm:mt-4 text-center">
+        <div className="mt-4 text-center">
           <a 
             href="/login" 
-            className="text-xs sm:text-sm text-primary hover:underline"
+            className="text-sm text-primary hover:underline"
           >
             Voltar ao login
           </a>
