@@ -31,7 +31,7 @@ function Login() {
   return (
     <>
       <form
-        className="w-full flex flex-col items-center gap-3 fpont-sans font-semibold"
+        className="w-full flex flex-col items-center gap-3 font-sans font-semibold"
         onSubmit={handleSubmit(handleLogin)}
       >
         <div className="w-full flex flex-col gap-4">

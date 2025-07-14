@@ -124,10 +124,10 @@ export function RecuperacaoSenha() {
         {/* Conteúdo principal */}
         <div className="w-full px-6 py-6 flex flex-col items-center">
           {/* Título da página */}
-          <h2 className="text-2xl font-semibold text-center mb-2">
+          <h2 className="text-3xl font-bold mb-2 text-center">
             Recuperação de Senha
           </h2>
-          <p className="text-center mb-6 text-base">
+          <p className="text-center mb-6 text-lg font-sans">
             Insira seu e-mail para redefinir sua senha.
           </p>
 
@@ -144,7 +144,7 @@ export function RecuperacaoSenha() {
 
           {/* Input de email */}
           <div className="w-full mb-4">
-            <label htmlFor="email" className="block mb-1 font-medium">
+            <label htmlFor="email" className="block mb-1  font-bold">
               Email
             </label>
             <input
@@ -152,7 +152,7 @@ export function RecuperacaoSenha() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 bg-gray-200  focus:ring-gray-300  "
               placeholder="Digite seu email"
               disabled={loading}
               required
@@ -163,10 +163,10 @@ export function RecuperacaoSenha() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded transition duration-300 ${
+            className={`w-full py-3 rounded-lg transition duration-300 ${
               loading 
                 ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
-                : 'bg-primary text-white hover:bg-blue-700'
+                : 'bg-primary text-white hover:opacity-80 '
             }`}
           >
             {loading ? 'Enviando...' : 'Redefinir Senha'}
@@ -174,8 +174,8 @@ export function RecuperacaoSenha() {
 
           {/* Rodapé */}
           <div className="flex flex-row items-center justify-center mt-6 gap-1 text-sm">
-            <p>Lembrou da sua senha?</p>
-            <a href="/login" className="text-primary hover:underline">
+            <p className=' font-semibold hover:opacity-85'>Lembrou da sua senha?</p>
+            <a href="/login" className="text-primary font-bold hover:opacity-85">
               Voltar ao login
             </a>
           </div>
