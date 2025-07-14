@@ -232,6 +232,17 @@ model Anotacao {
 =======
 >>>>>>> 8e141ec (adiciona modelo de RecuperacaoSenha e estrutura de áreas de conhecimento no seed)
 
+model Anotacao {
+  id        Int      @id @default(autoincrement())
+  conteudo  String
+  criado_em DateTime @default(now())
+  atualizado_em DateTime @updatedAt
+
+  TCC_id    Int
+
+  TCC       TCC @relation(fields: [TCC_id], references: [id])
+}
+
 model RecuperacaoSenha {
   id        Int      @id @default(autoincrement())
   tokenHash String   @unique
