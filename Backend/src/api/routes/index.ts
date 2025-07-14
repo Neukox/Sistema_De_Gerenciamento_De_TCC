@@ -12,6 +12,7 @@ import areaConhecimentoRoutes from "./areaConhecimentoRoutes";
 <<<<<<< HEAD
 import atividadesRoutes from "./atividadesRoutes";
 import anotacaoRoutes from "./anotacaoRoutes";
+<<<<<<< HEAD
 import progressRoutes from "./progressRoutes";
 import reunioesRoutes from "./reunioesRoutes";
 =======
@@ -29,6 +30,8 @@ import TCCRoutes from "./TCCRoutes";
 =======
 import atividadesRoutes from "./atividadesRoutes";
 >>>>>>> fbd8ab1 (adiciona rotas, controlador, serviço e repositório para criação de atividades)
+=======
+>>>>>>> 6306014 (adiciona rotas para gerenciamento de anotações)
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -50,12 +53,17 @@ routes.use("/areas-conhecimento", areaConhecimentoRoutes);
 // Usando as rotas de atividades
 routes.use("/atividades", atividadesRoutes);
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Usando as rotas de anotações
 routes.use("/anotacoes", anotacaoRoutes);
 // Usando as rotas de progresso
 routes.use("/progress", progressRoutes);
 // Usando as rotas de reuniões
 routes.use("/reunioes", reunioesRoutes);
+=======
+// Usando as rotas de anotações
+routes.use("/anotacoes", anotacaoRoutes);
+>>>>>>> 6306014 (adiciona rotas para gerenciamento de anotações)
 
 // Exporta as rotas
 export default routes;
