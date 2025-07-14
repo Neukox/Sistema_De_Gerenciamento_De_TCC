@@ -127,6 +127,7 @@ model TCC {
   Atividades       Atividade[]
   Comentarios      Comentario[]
   AreaConhecimento AreaConhecimento? @relation(fields: [AreaConhecimento_id], references: [id])
+  Anotacoes        Anotacao[]
 }
 
 model Banca {
@@ -169,6 +170,17 @@ model Comentario {
   TCC       TCC        @relation(fields: [TCC_id], references: [id])
   Usuario   Usuario    @relation(fields: [Usuario_id], references: [id])
   Atividade Atividade? @relation(fields: [Atividades_id], references: [id])
+}
+
+model Anotacao {
+  id        Int      @id @default(autoincrement())
+  conteudo  String
+  criado_em DateTime @default(now())
+  atualizado_em DateTime @updatedAt
+
+  TCC_id    Int
+
+  TCC       TCC @relation(fields: [TCC_id], references: [id])
 }
 
 model RecuperacaoSenha {
