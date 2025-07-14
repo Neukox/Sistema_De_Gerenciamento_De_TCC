@@ -12,97 +12,139 @@ import { StatusIcon } from "./StatusIcon";
 import { getStatusColor, StatusColor } from "@/utils/StatusColor";
 
 // Hook do React para manipular estado interno do componente
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Tipagem para os ícones do react-icons (ícones dinâmicos)
 import type { IconType } from "react-icons";
 
+import { parsePrazo } from "./card/ParsePrazo"; // Função que converte string do prazo para objeto Date
+
 // Tipagem das propriedades que o componente MarksCard recebe
 interface TarefaCardProps {
-  id: number;        // Identificador da tarefa (ex: #1)
-  title: string;     // Título da tarefa
-  description: string; // Descrição da tarefa
-  prazo: string;     // Prazo da tarefa (data limite)
-  stats: string;     // Status atual da tarefa (ex: "desenvolvimento", "pendente", etc)
+  id: number;          // Identificador único da tarefa (ex: #1)
+  title: string;       // Título da tarefa
+  description: string; // Descrição detalhada da tarefa
+  prazo: string;       // Prazo da tarefa, em formato string (ex: "dd-mm-aaaa")
+  stats: string;       // Status atual da tarefa (ex: "desenvolvimento", "pendente")
 }
 
 // Componente funcional principal que renderiza o "card" de uma tarefa/marco do projeto
 const MarksCard = ({ id, title, description, prazo, stats }: TarefaCardProps) => {
-  // Hook de estado que armazena o status atual da tarefa em letras minúsculas
+  // Estado que guarda o status atual da tarefa em letras minúsculas
+  // Inicializado com o valor vindo da props "stats"
   const [statusAtual, setStatusAtual] = useState(stats.toLowerCase());
 
-  // Pega a cor do texto e do fundo conforme o status atual
+  // Estado booleano que indica se a tarefa está atrasada (true) ou não (false)
+  const [estaAtrasado, setEstaAtrasado] = useState(false);
+
+  // useEffect é executado sempre que o prazo mudar
+  useEffect(() => {
+    const hoje = new Date();               // Data atual (dia/hora exatos)
+    const dataPrazo = parsePrazo(prazo);  // Converte string "prazo" para objeto Date
+
+    // Se a data do prazo for menor que hoje, quer dizer que passou do prazo
+    if (dataPrazo < hoje) {
+      setEstaAtrasado(true);       // Marca a tarefa como atrasada
+      setStatusAtual("atrasado");  // Força o status para "atrasado"
+    } else {
+      setEstaAtrasado(false);      // Não está atrasada
+      // O statusAtual permanece o mesmo, não é alterado aqui para não sobrescrever status manual
+    }
+  }, [prazo]);  // Executa toda vez que a prop "prazo" mudar
+
+  // Função que altera o status atual da tarefa, chamada quando o usuário seleciona um status no dropdown
+  const handleStatusChange = (newStats: string) => {
+    setStatusAtual(newStats);
+  };
+
+  // Obtém as cores (texto e fundo) relacionadas ao status atual usando a função utilitária
+  // Isso serve para colorir visualmente o card conforme o status da tarefa
   const { cor, colorBackground } = getStatusColor(statusAtual);
 
-  // Pega o ícone correspondente ao status atual
+  // Pega o ícone correspondente ao status atual da tarefa (ícones definidos no StatusIcon)
   const Icon = StatusIcon[statusAtual];
 
   return (
-    // Container do card inteiro
+    // Container principal do card, com borda, sombra e espaçamento
     <div className="border border-gray-300 w-full min-h-40 rounded-md p-7 mt-5 shadow-lg">
       
-      {/* Parte superior do card com ID, título e dropdown */}
+      {/* Parte superior do card com ID, título e dropdown ou indicação de atraso */}
       <div className="border-b">
         <div className="flex flex-row items-center gap-4">
           
-          {/* Número de identificação da tarefa */}
+          {/* Número de identificação da tarefa, mostrado com # antes */}
           <h1 className="text-gray-600 text-xl">#{id}</h1>
 
-          {/* Título da tarefa */}
+          {/* Título da tarefa, em destaque */}
           <p className="text-xl font-semibold text-gray-800">{title}</p>
 
-          {/* Dropdown para alterar o status da tarefa */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              {/* Botão que mostra o status atual e abre o dropdown ao ser clicado */}
-              <button
-                className="flex items-center gap-2 px-3 py-1 rounded-md shadow-md focus:outline-none text-sm font-medium"
-                style={{ color: cor, backgroundColor: colorBackground }} // Cores dinâmicas
-              >
-                {/* Ícone do status atual, se existir */}
-                {Icon && <Icon size={18} />}
-                
-                {/* Texto com primeira letra maiúscula */}
-                {statusAtual.charAt(0).toUpperCase() + statusAtual.slice(1)}
-              </button>
-            </DropdownMenuTrigger>
-
-            {/* Conteúdo do dropdown (opções de status) */}
-            <DropdownMenuContent 
-              side="bottom"            // Mostra abaixo do botão
-              align="center"           // Alinha ao centro
-              className="bg-white z-50" // Cor e z-index
-              sideOffset={8}           // Espaço entre botão e dropdown
+          {/* Se a tarefa está atrasada, mostra o status fixo com cor e ícone, sem dropdown */}
+          {estaAtrasado ? (
+            <div
+              className="flex items-center font-bold gap-2 px-3 py-1 rounded-md shadow-md focus:outline-none text-sm "
+              style={{ color: cor, backgroundColor: colorBackground }}
             >
-              {/* Mapeia todos os status disponíveis e renderiza como itens no menu */}
-              {Object.entries(StatusColor).map(([key]) => {
-                // Ícone associado a cada status
-                const ItemIcon: IconType | undefined = StatusIcon[key];
-
-                return (
-                  <DropdownMenuItem
-                    key={key}                          // Chave única para cada item
-                    onClick={() => setStatusAtual(key)} // Altera o status ao clicar
-                    className="flex items-center gap-2 cursor-pointer font-medium hover:bg-gray-200"
+              {/* Ícone do status atrasado */}
+              {Icon && <Icon size={18} />}
+              {/* Texto do status atual com primeira letra maiúscula */}
+              {statusAtual.charAt(0).toUpperCase() + statusAtual.slice(1)}
+            </div>
+          ) : (
+            <>
+              {/* Caso não esteja atrasada, renderiza o Dropdown para alterar o status */}
+              <DropdownMenu>
+                {/* O gatilho do dropdown é um botão que mostra o status atual colorido */}
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="flex items-center gap-2 px-3 py-1 rounded-md shadow-md focus:outline-none text-sm font-bold"
+                    style={{ color: cor, backgroundColor: colorBackground }} // Cor dinâmica conforme status
                   >
-                    {/* Ícone do status, se existir */}
-                    {ItemIcon && <ItemIcon size={18} />}
+                    {/* Ícone do status atual, se existir */}
+                    {Icon && <Icon size={18} />}
+                    {/* Texto do status atual com primeira letra maiúscula */}
+                    {statusAtual.charAt(0).toUpperCase() + statusAtual.slice(1)}
+                  </button>
+                </DropdownMenuTrigger>
 
-                    {/* Texto com primeira letra maiúscula */}
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                  </DropdownMenuItem>
-                );
-              })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                {/* Conteúdo do dropdown com opções para alterar status */}
+                <DropdownMenuContent
+                  side="bottom"          // Mostra o menu abaixo do botão
+                  align="center"         // Alinha o menu ao centro do botão
+                  className="bg-white z-50" // Fundo branco e z-index para sobrepor
+                  sideOffset={8}         // Espaço entre botão e dropdown
+                >
+                  {/* Mapeia os status possíveis, exceto "atrasado" que é tratado separado */}
+                  {Object.entries(StatusColor)
+                    .filter(([Key]) => Key !== "atrasado")
+                    .map(([key]) => {
+                      // Para cada status, pega o ícone correspondente
+                      const ItemIcon: IconType | undefined = StatusIcon[key];
+
+                      return (
+                        <DropdownMenuItem
+                          key={key}                          // Chave única para React
+                          onClick={() => handleStatusChange(key)} // Ao clicar, altera o status
+                          className="flex items-center gap-2 cursor-pointer font-medium hover:bg-gray-200"
+                        >
+                          {/* Ícone do status */}
+                          {ItemIcon && <ItemIcon size={18} />}
+                          {/* Texto com primeira letra maiúscula */}
+                          {key.charAt(0).toUpperCase() + key.slice(1)}
+                        </DropdownMenuItem>
+                      );
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          )}
         </div>
 
-        {/* Parte inferior do card com descrição e prazo */}
+        {/* Parte inferior do card com descrição da tarefa e prazo */}
         <div className="flex flex-col gap-2 mt-2">
-          {/* Descrição da tarefa */}
+          {/* Texto da descrição da tarefa */}
           <p>{description}</p>
 
-          {/* Data limite */}
+          {/* Exibe o prazo da tarefa formatado como string */}
           <p className="text-sm font-medium text-gray-500 mb-1">Prazo: {prazo}</p>
         </div>
       </div>

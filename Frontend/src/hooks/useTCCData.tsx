@@ -15,6 +15,9 @@ interface TCCData {
   total: number,
   pending: number
    late: number;
+   data_inicio?: string | null;
+   prazo_entrega?: string | null;
+   status: string;
 }
 
 // Hook personalizado para dados do TCC
@@ -30,7 +33,10 @@ export const useTCCData = () => {
     total: 0,
     pending: 0,
      late: 0,
-    institution: 'Carregando...'
+    institution: 'Carregando...',
+    data_inicio: '-',
+  prazo_entrega: '-',
+  status: ''
   });
   const [loading, setLoading] = useState(true);
 
@@ -53,7 +59,11 @@ export const useTCCData = () => {
             total: 0,
             pending: 0,
             late: 0,
-            institution: 'Universidade Federal'
+            institution: 'Universidade Federal',
+            data_inicio: '2025-07-13',        
+            prazo_entrega: '2025-07-17',
+            status: 'concluido'
+            
           });
         }
       } catch (error) {

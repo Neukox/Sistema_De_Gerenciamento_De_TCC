@@ -1,8 +1,8 @@
 export const StatusColor = {
-    concluido: { cor: '#4CAF50', colorBackground: '#C8E6C9' },
-    pendente: { cor: '#878787', colorBackground: '#E0E0E0' },
-    desenvolvimento: { cor: '#1976D2', colorBackground: '#BBDEFB' },
-    atrasado: { cor: '#5C4141', colorBackground: '#FFCDD2' },
+    concluído: { cor: '#202D21', colorBackground: '#C8E6C9' },
+    pendente: { cor: '#343534', colorBackground: '#E0E0E0' },
+    desenvolvimento: { cor: '#1D3A56', colorBackground: '#BBDEFB' },
+    atrasado: { cor: '#3F2C2C', colorBackground: '#FFCDD2' },
 } as const;
 
 export type StatusType = keyof typeof StatusColor;
