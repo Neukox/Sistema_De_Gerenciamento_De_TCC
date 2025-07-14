@@ -13,6 +13,7 @@ import areaConhecimentoRoutes from "./areaConhecimentoRoutes";
 import atividadesRoutes from "./atividadesRoutes";
 import anotacaoRoutes from "./anotacaoRoutes";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import progressRoutes from "./progressRoutes";
 import reunioesRoutes from "./reunioesRoutes";
 =======
@@ -32,6 +33,9 @@ import atividadesRoutes from "./atividadesRoutes";
 >>>>>>> fbd8ab1 (adiciona rotas, controlador, serviço e repositório para criação de atividades)
 =======
 >>>>>>> 6306014 (adiciona rotas para gerenciamento de anotações)
+=======
+import progressRoutes from "./progressRoutes";
+>>>>>>> de35db7 (Enviando algoritmo de calculo de progresso de desenvolvimento de TCC.)
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -58,12 +62,15 @@ routes.use("/atividades", atividadesRoutes);
 routes.use("/anotacoes", anotacaoRoutes);
 // Usando as rotas de progresso
 routes.use("/progress", progressRoutes);
+<<<<<<< HEAD
 // Usando as rotas de reuniões
 routes.use("/reunioes", reunioesRoutes);
 =======
 // Usando as rotas de anotações
 routes.use("/anotacoes", anotacaoRoutes);
 >>>>>>> 6306014 (adiciona rotas para gerenciamento de anotações)
+=======
+>>>>>>> de35db7 (Enviando algoritmo de calculo de progresso de desenvolvimento de TCC.)
 
 // Exporta as rotas
 export default routes;

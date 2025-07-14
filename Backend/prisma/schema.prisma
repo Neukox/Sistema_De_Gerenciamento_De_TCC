@@ -233,14 +233,14 @@ model Anotacao {
 >>>>>>> 8e141ec (adiciona modelo de RecuperacaoSenha e estrutura de áreas de conhecimento no seed)
 
 model Anotacao {
-  id        Int      @id @default(autoincrement())
-  conteudo  String
-  criado_em DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  conteudo      String
+  criado_em     DateTime @default(now())
   atualizado_em DateTime @updatedAt
 
-  TCC_id    Int
+  TCC_id Int
 
-  TCC       TCC @relation(fields: [TCC_id], references: [id])
+  TCC TCC @relation(fields: [TCC_id], references: [id])
 }
 
 model RecuperacaoSenha {
@@ -254,6 +254,9 @@ model RecuperacaoSenha {
   Usuario Usuario @relation(fields: [Usuario_id], references: [id])
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> de35db7 (Enviando algoritmo de calculo de progresso de desenvolvimento de TCC.)
 
 // Novos modelos para cálculo de progresso
 
@@ -301,6 +304,7 @@ model Defesa {
 
   @@unique([TCC_id, tipo])
 }
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
@@ -358,3 +362,5 @@ model Atividade {
 >>>>>>> 7ac15be (Removendo conflitos e ajustando o esquema do Prisma)
 =======
 >>>>>>> 8e141ec (adiciona modelo de RecuperacaoSenha e estrutura de áreas de conhecimento no seed)
+=======
+>>>>>>> de35db7 (Enviando algoritmo de calculo de progresso de desenvolvimento de TCC.)
