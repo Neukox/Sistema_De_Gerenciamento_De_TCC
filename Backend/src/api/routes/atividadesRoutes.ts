@@ -1,10 +1,11 @@
 import Router from "express";
-import createAtividadeController from "../controllers/atividades/createController";
 import allowRoles from "../middlewares/allowRoles";
 import authorization from "../middlewares/authorization";
-import updateAtividadeController from "../controllers/atividades/updateController";
 import validateNumberParams from "../middlewares/validateNumberParams";
 import getByTccController from "../controllers/atividades/getByTccController";
+import getAtividadeByIdController from "../controllers/atividades/getByIdController";
+import createAtividadeController from "../controllers/atividades/createController";
+import updateAtividadeController from "../controllers/atividades/updateController";
 
 // Rotas para atividades
 
@@ -15,6 +16,13 @@ atividadesRouter.get(
   "/tcc/:id",
   [authorization, allowRoles(["ALUNO", "ADMIN"]), validateNumberParams],
   getByTccController
+);
+
+// Rota para buscar uma atividade específica pelo ID
+atividadesRouter.get(
+  "/:id",
+  [authorization, allowRoles(["ALUNO", "ADMIN"]), validateNumberParams],
+  getAtividadeByIdController
 );
 
 // Rota para criar uma nova atividade
