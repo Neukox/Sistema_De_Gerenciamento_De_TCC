@@ -13,13 +13,8 @@ export default async function validateAccessTCC(
 ): Promise<Response | void> {
   const user = req.user;
 
-  // Verifica se o usuário é um administrador
-  if (user?.role === "ADMIN") {
-    return next();
-  }
-
   const tccId = Number(req.params.id) || req.body.tccId;
-
+  
   // Busca o TCC pelo ID
   const tcc = await prisma.tCC.findUnique({
     where: { id: tccId },
@@ -28,8 +23,13 @@ export default async function validateAccessTCC(
 
   if (!tcc) {
     return res
-      .status(404)
-      .json({ message: "TCC não encontrado.", success: false });
+    .status(404)
+    .json({ message: "TCC não encontrado.", success: false });
+  }
+  
+  // Verifica se o usuário é um administrador
+  if (user?.role === "ADMIN") {
+    return next();
   }
 
   // Verifica se o usuário é um dos donos do TCC

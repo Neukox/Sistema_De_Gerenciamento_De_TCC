@@ -14,11 +14,6 @@ export default async function validateAccessAnotacao(
 ): Promise<Response | void> {
   const user = req.user;
 
-  // Verifica se o usuário é um administrador
-  if (user?.role === "ADMIN") {
-    return next();
-  }
-
   const atividadeId = req.params.id;
 
   // Busca a atividade pelo ID
@@ -34,6 +29,9 @@ export default async function validateAccessAnotacao(
   }
 
   // Verifica se o usuário é o dono do TCC ou um administrador
+  if (user?.role === "ADMIN") {
+    return next();
+  }
 
   if (atividade.TCC.Aluno_id === user?.id) {
     return next();
