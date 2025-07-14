@@ -6,7 +6,7 @@ import type { IconType } from "react-icons";
 // Mapeia os status para componentes React de ícones
 export const StatusIcon: Record<string, IconType> = {
     desenvolvimento: FaGear,
-    concluido: FaRegCheckCircle,
+    concluído: FaRegCheckCircle,
     pendente: FaRegClock,
     atrasado: TiWarningOutline,
 } as const;
