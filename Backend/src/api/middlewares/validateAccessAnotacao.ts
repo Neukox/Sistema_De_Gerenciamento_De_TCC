@@ -14,18 +14,18 @@ export default async function validateAccessAnotacao(
 ): Promise<Response | void> {
   const user = req.user;
 
-  const atividadeId = req.params.id;
+  const anotacaoId = req.params.id;
 
   // Busca a atividade pelo ID
-  const atividade = await prisma.atividade.findUnique({
-    where: { id: Number(atividadeId) },
+  const anotacao = await prisma.anotacao.findUnique({
+    where: { id: Number(anotacaoId) },
     include: { TCC: true },
   });
 
-  if (!atividade) {
+  if (!anotacao) {
     return res
       .status(404)
-      .json({ message: "Atividade não encontrada.", success: false });
+      .json({ message: "Anotação não encontrada.", success: false });
   }
 
   // Verifica se o usuário é o dono do TCC ou um administrador
@@ -33,7 +33,7 @@ export default async function validateAccessAnotacao(
     return next();
   }
 
-  if (atividade.TCC.Aluno_id === user?.id) {
+  if (anotacao.TCC.Aluno_id === user?.id) {
     return next();
   }
 
