@@ -38,14 +38,6 @@ enum StatusAtividade {
   CONCLUIDA
 }
 
-enum TopicoComentario {
-  GERAL
-  ORIENTACAO
-  ATIVIDADE
-  BANCA
-  OUTRO
-}
-
 enum StatusDefesa {
   NAO_REALIZADA
   AGENDADA
@@ -153,9 +145,6 @@ model TCC {
   Comentarios      Comentario[]
   AreaConhecimento AreaConhecimento? @relation(fields: [AreaConhecimento_id], references: [id])
   Anotacoes        Anotacao[]
-  EtapasTCC        EtapaTCC[]
-  Reunioes         Reuniao[]
-  Defesas          Defesa[]
 }
 
 model Banca {
@@ -201,14 +190,14 @@ model Comentario {
 }
 
 model Anotacao {
-  id            Int      @id @default(autoincrement())
-  conteudo      String
-  criado_em     DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  conteudo  String
+  criado_em DateTime @default(now())
   atualizado_em DateTime @updatedAt
 
-  TCC_id Int
+  TCC_id    Int
 
-  TCC TCC @relation(fields: [TCC_id], references: [id])
+  TCC       TCC @relation(fields: [TCC_id], references: [id])
 }
 
 model RecuperacaoSenha {
@@ -220,51 +209,4 @@ model RecuperacaoSenha {
   Usuario_id Int
 
   Usuario Usuario @relation(fields: [Usuario_id], references: [id])
-}
-
-// Novos modelos para cálculo de progresso
-
-model EtapaTCC {
-  id           Int         @id @default(autoincrement())
-  nome         String
-  descricao    String
-  ordem        Int // ordem das etapas (1, 2, 3...)
-  status       StatusEtapa @default(NAO_INICIADA)
-  concluida_em DateTime?
-  criado_em    DateTime    @default(now())
-
-  TCC_id Int
-  TCC    TCC @relation(fields: [TCC_id], references: [id])
-
-  @@unique([TCC_id, ordem])
-}
-
-model Reuniao {
-  id             Int           @id @default(autoincrement())
-  titulo         String
-  descricao      String?
-  data_agendada  DateTime
-  data_realizada DateTime?
-  status         StatusReuniao @default(AGENDADA)
-  observacoes    String?
-  criado_em      DateTime      @default(now())
-
-  TCC_id Int
-  TCC    TCC @relation(fields: [TCC_id], references: [id])
-}
-
-model Defesa {
-  id             Int          @id @default(autoincrement())
-  tipo           TipoDefesa
-  data_agendada  DateTime?
-  data_realizada DateTime?
-  status         StatusDefesa @default(NAO_REALIZADA)
-  nota           Float?
-  observacoes    String?
-  criado_em      DateTime     @default(now())
-
-  TCC_id Int
-  TCC    TCC @relation(fields: [TCC_id], references: [id])
-
-  @@unique([TCC_id, tipo])
 }
