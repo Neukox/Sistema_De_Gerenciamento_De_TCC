@@ -6,14 +6,18 @@ type Variants = {
   primary: string;
   secondary: string;
   neutral: string;
+  logout: string;
+  create: string;
 };
 
 // Define as variantes de estilo para o botão
 const variants: Variants = {
-  default: "text-black border border-gray-300 hover:bg-gray-100",
-  primary: "bg-primary hover:bg-primary/80 text-white",
-  secondary: "bg-secondary hover:bg-secondary/80 text-white",
-  neutral: "bg-neutral hover:bg-neutral/80 text-white",
+  default: "text-black border border-gray-300 hover:bg-gray-100 shadow-sm transition-colors duration-300",
+  primary: "bg-primary hover:bg-primary/80 text-white shadow-lg transition-colors duration-300",
+  secondary: "bg-secondary hover:bg-secondary/80 text-white shadow-lg transition-colors duration-300",
+  neutral: "bg-neutral hover:bg-neutral/80 text-white shadow-lg transition-colors duration-300",
+  logout: "bg-red-500 hover:bg-red-600 text-white shadow-lg transition-colors duration-300",
+  create: "bg-[#2AB95E] hover:bg-green-600 text-white shadow-lg transition-colors duration-300",
 };
 
 type ButtonProps = {

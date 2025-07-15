@@ -1,5 +1,7 @@
 import logo from "@/assets/logo.png";
 
+import  Span  from "@/components/ui/DashboardUtilits/Span"; // Importa o componente Span
+
 // Importa hooks customizados
 import { useCronograma } from "../../hooks/useCronograma";    // Calcula dias restantes no cronograma
 import { useStatusTheme } from "../../hooks/useStatusTheme";  // Retorna cores e nome para o status do TCC
@@ -29,6 +31,7 @@ import { HiOutlineNewspaper } from "react-icons/hi2";
 // Importa hooks de contexto (título da página e autenticação)
 import useTitle from "@/hooks/useTitle";
 import useAuth from "../auth/context/useAuth";
+import Button from "@/components/ui/Button";
 
 function MainDashboard() {
   // Usa hook que traz os dados do TCC do backend ou simulado
@@ -85,13 +88,24 @@ function MainDashboard() {
             <span className="text-lg font-medium">
               Olá, {user?.nome_completo || "Usuário"}
             </span>
-            <button
+              
+            <div className="flex items-center gap-2">
+            <Button
+            variant="logout"
               onClick={logout}
-              className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
+              className="flex items-center gap-2 text-white px-4 py-2 rounded-lg transition-colors"
             >
               <IoLogOutOutline size={20} />
               Sair
-            </button>
+            </Button>
+
+            <Button 
+            variant="create"
+            className="flex flex-wrap gap-2">
+                  <FaPlus size={25} />
+              Criar TCC
+            </Button>
+            </div>
           </div>
         </div>
 
@@ -154,28 +168,36 @@ function MainDashboard() {
       {/* Barra de navegação com abas */}
       <div className="w-[85%] flex flex-col mt-4">
         <div className="flex flex-row items-center text-2xl gap-28 pl-8 bg-neutral w-full min-h-20 rounded-sm shadow-lg">
-          <span className="flex items-center gap-2 font-medium text-[#252525] hover:text-gray-400 cursor-pointer">
+          <Span variant="primary" className="flex items-center gap-2">
             <LuTarget /> Marcos
-          </span>
-          <span className="flex items-center gap-2 font-medium text-[#252525] hover:text-gray-400 cursor-pointer">
+          </Span>
+          <Span variant="primary" className="flex items-center gap-2 ">
             <GrTask /> Tarefas
-          </span>
-          <span className="flex items-center gap-2 font-medium text-[#252525] hover:text-gray-400 cursor-pointer">
+          </Span>
+          <Span variant="primary" className="flex items-center gap-2 ">
             <IoCalendarClearOutline /> Notas
-          </span>
+          </Span>
         </div>
 
         {/* Conteúdo principal abaixo da navbar */}
         <div className="flex flex-row gap-4 mt-4">
           {/* Seção dos marcos */}
           <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
+             
+             <div className="flex flex-row justify-between mb-4">
+              <div className="flex flex-col">
             <h1 className="flex items-center gap-2 font-bold text-4xl">
               <LuTarget /> Marcos do Projeto
             </h1>
             <h4 className="text-gray-500 mt-1">
               Acompanhe o progresso dos principais marcos do seu TCC
             </h4>
-
+            </div>
+            <Button variant="create" className="flex flex-wrap items-center gap-2 px-4 py-2 h-14">
+              <FaPlus size={20}  />
+              Adicionar Marco
+            </Button>
+           </div>
             {/* Se não tiver tarefas, mostra mensagem */}
             {tarefas.length === 0 ? (
               <p className="text-gray-400 flex items-center mt-12 justify-center">

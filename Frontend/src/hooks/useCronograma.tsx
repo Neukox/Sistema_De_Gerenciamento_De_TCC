@@ -5,6 +5,11 @@ interface Cronograma {
   dataEntrega?: string | null;
 }
 
+function criarDataLocal(dataStr: string): Date {
+  const [ano, mes, dia] = dataStr.split("-").map(Number);
+  return new Date(ano, mes - 1, dia); // mês é zero-indexado
+}
+
 export function useCronograma({ dataInicio, dataEntrega }: Cronograma) {
   const [diasRestantes, setDiasRestantes] = useState<number | null>(0);
 
@@ -15,7 +20,8 @@ export function useCronograma({ dataInicio, dataEntrega }: Cronograma) {
     }
 
     const hoje = new Date();
-    const entrega = new Date(dataEntrega);
+    hoje.setHours(0, 0, 0, 0); // Zera as horas para comparar apenas os dias
+    const entrega = criarDataLocal(dataEntrega);
 
     // zerar horas para comparar só dias
     hoje.setHours(0, 0, 0, 0);

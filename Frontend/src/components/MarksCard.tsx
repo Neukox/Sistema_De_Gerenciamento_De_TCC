@@ -5,6 +5,8 @@ import {
   DropdownMenuTrigger,     // Define o gatilho (botão) que ativa o dropdown
 } from "../components/ui/dropdown-menu";
 
+import ProgressBar from "./card/ProgressBar";
+
 // Importa os ícones de status (ícones visuais baseados no status atual da tarefa)
 import { StatusIcon } from "./StatusIcon";
 
@@ -33,28 +35,45 @@ const MarksCard = ({ id, title, description, prazo, stats }: TarefaCardProps) =>
   // Estado que guarda o status atual da tarefa em letras minúsculas
   // Inicializado com o valor vindo da props "stats"
   const [statusAtual, setStatusAtual] = useState(stats.toLowerCase());
+   const [statusAnterior, setStatusAnterior] = useState(stats.toLowerCase());
 
   // Estado booleano que indica se a tarefa está atrasada (true) ou não (false)
   const [estaAtrasado, setEstaAtrasado] = useState(false);
+  const progressoStatus = statusAtual === "atrasado" ? statusAnterior : statusAtual;
+  const [dataConcluida, setDataConcluida] = useState<string | null>(null);
+
 
   // useEffect é executado sempre que o prazo mudar
   useEffect(() => {
     const hoje = new Date();               // Data atual (dia/hora exatos)
     const dataPrazo = parsePrazo(prazo);  // Converte string "prazo" para objeto Date
-
+    
+    const isAtrasado = dataPrazo < hoje; // Verifica se o prazo é menor que hoje
+  
     // Se a data do prazo for menor que hoje, quer dizer que passou do prazo
-    if (dataPrazo < hoje) {
-      setEstaAtrasado(true);       // Marca a tarefa como atrasada
-      setStatusAtual("atrasado");  // Força o status para "atrasado"
+    if (isAtrasado) {
+      setEstaAtrasado(true);   
+      setStatusAtual ("atrasado")    // Marca a tarefa como atrasada
     } else {
-      setEstaAtrasado(false);      // Não está atrasada
-      // O statusAtual permanece o mesmo, não é alterado aqui para não sobrescrever status manual
+      setEstaAtrasado(false);  
+      if ( isAtrasado && statusAtual === "atrasado") {
+        setStatusAtual(statusAnterior); // Se estava atrasada, volta ao status anterior
+      }
     }
-  }, [prazo]);  // Executa toda vez que a prop "prazo" mudar
+  }, [prazo, statusAtual, statusAnterior]);  // Executa toda vez que a prop "prazo" mudar
 
   // Função que altera o status atual da tarefa, chamada quando o usuário seleciona um status no dropdown
   const handleStatusChange = (newStats: string) => {
     setStatusAtual(newStats);
+    setStatusAnterior(newStats);
+
+    if (newStats === "concluído") {
+      const hoje = new Date();
+      const dataFormatada = hoje.toLocaleDateString("pt-BR");
+      setDataConcluida(dataFormatada); // Armazena a data de conclusão
+    } else {
+      setDataConcluida(null); // Reseta a data de conclusão se não for "concluído"
+    }
   };
 
   // Obtém as cores (texto e fundo) relacionadas ao status atual usando a função utilitária
@@ -64,6 +83,20 @@ const MarksCard = ({ id, title, description, prazo, stats }: TarefaCardProps) =>
   // Pega o ícone correspondente ao status atual da tarefa (ícones definidos no StatusIcon)
   const Icon = StatusIcon[statusAtual];
 
+
+  const getPercentByStatus = (status: string): number  => {
+    switch (status) {
+      case "pendente":
+      return 0; // Pendente não tem progresso
+      case "desenvolvimento":
+        return 50; // Em desenvolvimento tem 50% de progresso
+      case "concluído":
+        return 100; // Concluído tem 100% de progresso
+         default:
+          return 0;// Concluído tem 100% de progresso  
+        
+    }
+  }
   return (
     // Container principal do card, com borda, sombra e espaçamento
     <div className="border border-gray-300 w-full min-h-40 rounded-md p-7 mt-5 shadow-lg">
@@ -145,8 +178,17 @@ const MarksCard = ({ id, title, description, prazo, stats }: TarefaCardProps) =>
           <p>{description}</p>
 
           {/* Exibe o prazo da tarefa formatado como string */}
+          <div className="flex flex-row items-center gap-2 mb-4">
           <p className="text-sm font-medium text-gray-500 mb-1">Prazo: {prazo}</p>
+          {statusAnterior === "concluído" && (dataConcluida !== null) && (
+          <p className="text-sm font-medium text-gray-500 mb-1">Concluída: {dataConcluida}</p>)}
+          </div>
         </div>
+      </div>
+      <div className="border border-gray-200 mt-4 p-3 shadow-lg rounded-lg">
+        {/* Barra de progresso que mostra o andamento da tarefa */}
+        <span className="flex mb-3 justify-end pr-3">{getPercentByStatus(progressoStatus)}%</span>
+        <ProgressBar percent={  getPercentByStatus(progressoStatus)} />
       </div>
     </div>
   );
