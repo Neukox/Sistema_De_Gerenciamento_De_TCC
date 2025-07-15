@@ -62,7 +62,7 @@ function MainDashboard() {
   // Se estiver carregando dados, exibe tela de loading
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-[#F3C50D]">
+      <div className="flex justify-center items-center h-screen bg-secondary">
         <div className="text-2xl font-bold">Carregando...</div>
       </div>
     );
@@ -70,9 +70,9 @@ function MainDashboard() {
 
   // Renderiza o dashboard principal
   return (
-    <div className="flex flex-col items-center bg-[#F3C50D] h-screen overflow-x-hidden w-screen pt-6">
+    <div className="flex flex-col items-center bg-secondary h-screen overflow-x-hidden w-screen pt-6">
       {/* Cabeçalho e informações do projeto */}
-      <div className="w-[85%] h-[40%] bg-[#fffbef] flex flex-col rounded-lg shadow-lg p-6 pt-1">
+      <div className="w-[85%] h-[40%] bg-neutral flex flex-col rounded-lg shadow-lg p-6 pt-1">
         {/* Linha com logo e título do sistema */}
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center">
@@ -113,7 +113,7 @@ function MainDashboard() {
       {/* Cartões de resumo do progresso, marcos e tarefas */}
       <div className="flex flex-row items-center justify-between w-[85%] min-h-40 mt-4 gap-5">
         {/* Cartão de progresso geral do TCC */}
-        <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
             {tccData?.progress}%
@@ -124,7 +124,7 @@ function MainDashboard() {
         </div>
 
         {/* Cartão de marcos concluídos */}
-        <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <FaRegCheckCircle className="w-12 h-12 bg-[#d8fce4] text-[#7dc89c] p-1 rounded-lg" />
             {tccData.checked}/{tccData.total}
@@ -133,7 +133,7 @@ function MainDashboard() {
         </div>
 
         {/* Cartão de tarefas pendentes */}
-        <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <FaRegClock className="w-12 h-12 bg-[#f2d1b1] text-[#dc9058] p-1 rounded-lg" />
             {tccData.pending}
@@ -142,7 +142,7 @@ function MainDashboard() {
         </div>
 
         {/* Cartão de tarefas atrasadas */}
-        <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
           <span className="flex gap-2 items-center text-4xl font-bold">
             <TiWarningOutline className="w-12 h-12 bg-[#ffe1e0] text-[#d36c6c] p-1 rounded-lg" />
             {tccData.late}
@@ -153,7 +153,7 @@ function MainDashboard() {
 
       {/* Barra de navegação com abas */}
       <div className="w-[85%] flex flex-col mt-4">
-        <div className="flex flex-row items-center text-2xl gap-28 pl-8 bg-[#fffbef] w-full min-h-20 rounded-sm shadow-lg">
+        <div className="flex flex-row items-center text-2xl gap-28 pl-8 bg-neutral w-full min-h-20 rounded-sm shadow-lg">
           <span className="flex items-center gap-2 font-medium text-[#252525] hover:text-gray-400 cursor-pointer">
             <LuTarget /> Marcos
           </span>
@@ -168,7 +168,7 @@ function MainDashboard() {
         {/* Conteúdo principal abaixo da navbar */}
         <div className="flex flex-row gap-4 mt-4">
           {/* Seção dos marcos */}
-          <div className="flex flex-col w-[65%] bg-[#fffbef] min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
+          <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
             <h1 className="flex items-center gap-2 font-bold text-4xl">
               <LuTarget /> Marcos do Projeto
             </h1>
@@ -201,7 +201,7 @@ function MainDashboard() {
           {/* Lado direito: cronograma + ações rápidas */}
           <div className="flex flex-col w-[35%]">
             {/* Seção do cronograma */}
-            <div className="flex flex-col bg-[#fffbef] min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
+            <div className="flex flex-col bg-neutral min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
               <h1 className="text-3xl font-bold">Cronograma</h1>
 
               {/* Mostra as datas e dias restantes */}
@@ -246,7 +246,7 @@ function MainDashboard() {
             </div>
 
             {/* Seção de ações rápidas */}
-            <div className="bg-[#fffbef] gap-8 min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
+            <div className="bg-neutral gap-8 min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
               <h1 className="text-3xl font-bold">Ações Rápidas</h1>
               <div className="flex flex-col gap-7 mt-3">
                 {/* Botão para editar TCC */}

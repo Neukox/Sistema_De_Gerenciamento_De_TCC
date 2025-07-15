@@ -3,6 +3,13 @@ import { useState } from 'react';
 import logo from '../../assets/logo.png';
 import { API_CONFIG } from '../../config/api';
 
+import {
+  Input,
+  Button,
+  Label,
+} from "@/components/ui/form";
+
+
 // Tipagens para a API de recuperação de senha
 interface PasswordResetRequestResponse {
   message: string;
@@ -110,10 +117,10 @@ export function RecuperacaoSenha() {
       setLoading(false);
     }
   };  return (
-    <div className="bg-[#fbd304] w-screen min-h-screen flex justify-center items-center px-4">
+    <div className="bg-secondary w-screen min-h-screen flex justify-center items-center px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full max-w-md rounded-md shadow-lg flex flex-col items-center overflow-hidden"
+        className="bg-neutral w-full max-w-md rounded-md shadow-lg flex flex-col items-center overflow-hidden"
       >
         {/* Header com logo e título */}
         <div className="flex items-center justify-center w-full px-4 py-4 border-b border-gray-200">
@@ -144,15 +151,15 @@ export function RecuperacaoSenha() {
 
           {/* Input de email */}
           <div className="w-full mb-4">
-            <label htmlFor="email" className="block mb-1  font-bold">
+            <Label htmlFor="email" >
               Email
-            </label>
-            <input
+            </Label>
+            <Input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 bg-gray-200  focus:ring-gray-300  "
+              className="w-full"
               placeholder="Digite seu email"
               disabled={loading}
               required
@@ -160,17 +167,18 @@ export function RecuperacaoSenha() {
           </div>
 
           {/* Botão de enviar */}
-          <button
+          <Button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-lg transition duration-300 ${
+            variant='primary'
+            className={`w-full ${
               loading 
                 ? 'bg-gray-400 text-gray-200 cursor-not-allowed' 
                 : 'bg-primary text-white hover:opacity-80 '
             }`}
           >
             {loading ? 'Enviando...' : 'Redefinir Senha'}
-          </button>
+          </Button>
 
           {/* Rodapé */}
           <div className="flex flex-row items-center justify-center mt-6 gap-1 text-sm">

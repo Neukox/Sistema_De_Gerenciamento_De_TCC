@@ -1,0 +1,205 @@
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo.png';
+import { 
+  fetchResetPassword, 
+  validatePassword,
+  type ResetPasswordData 
+} from '../../features/auth/fetchConfirmPassword';
+
+
+import {
+  Input,
+  Button,
+  Label,
+} from "@/components/ui/form";
+
+export function ConfirmResetPassword() {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState<'success' | 'error' | ''>('');
+  
+  // Pegar parâmetros da URL (token e usuario_id)
+  const { token, userId } = useParams<{ token: string; userId: string }>();
+  const navigate = useNavigate();
+
+  // Verificar se os parâmetros necessários estão presentes
+  useEffect(() => {
+    if (!token || !userId) {
+      setMessage('Link de recuperação inválido ou expirado.');
+      setMessageType('error');
+    }
+  }, [token, userId]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validações básicas
+    if (!newPassword.trim()) {
+      setMessage('Por favor, insira sua nova senha.');
+      setMessageType('error');
+      return;
+    }
+
+    if (!confirmPassword.trim()) {
+      setMessage('Por favor, confirme sua nova senha.');
+      setMessageType('error');
+      return;
+    }
+
+    // Validar força da senha
+    const passwordValidation = validatePassword(newPassword);
+    if (!passwordValidation.isValid) {
+      setMessage(passwordValidation.message);
+      setMessageType('error');
+      return;
+    }
+
+    // Verificar se as senhas coincidem
+    if (newPassword !== confirmPassword) {
+      setMessage('As senhas não coincidem.');
+      setMessageType('error');
+      return;
+    }
+
+    // Verificar se temos os parâmetros necessários
+    if (!token || !userId) {
+      setMessage('Link de recuperação inválido ou expirado.');
+      setMessageType('error');
+      return;
+    }
+
+    setLoading(true);
+    setMessage('');
+    setMessageType('');
+
+    try {
+      const resetData: ResetPasswordData = {
+        usuario_id: parseInt(userId, 10),
+        token: token,
+        nova_senha: newPassword.trim(),
+      };
+
+      const response = await fetchResetPassword(resetData);
+      
+      if (response.success) {
+        setMessage('Senha redefinida com sucesso! Redirecionando para o login...');
+        setMessageType('success');
+        setNewPassword('');
+        setConfirmPassword('');
+        
+        // Redirecionar para login após 3 segundos
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+      } else {
+        setMessage(response.message || 'Erro ao redefinir senha.');
+        setMessageType('error');
+      }
+    } catch (error) {
+      console.error('Erro ao redefinir senha:', error);
+      
+      if (error instanceof Error) {
+        if (error.message.includes('400')) {
+          setMessage('Token inválido ou expirado. Solicite uma nova recuperação de senha.');
+        } else if (error.message.includes('404')) {
+          setMessage('Usuário não encontrado.');
+        } else if (error.message.includes('500')) {
+          setMessage('Erro interno do servidor. Tente novamente mais tarde.');
+        } else {
+          setMessage(error.message);
+        }
+      } else {
+        setMessage('Erro interno do servidor. Tente novamente mais tarde.');
+      }
+      setMessageType('error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="bg-secondary w-full min-h-screen flex justify-center items-center p-4">
+      <div className="bg-white w-full max-w-md mx-auto min-h-[500px] max-h-[90vh] p-4 sm:p-6 rounded-lg shadow-lg flex flex-col items-center overflow-y">
+        <div className="flex flex-col items-center mb-3 sm:mb-4">
+          <img src={logo} className="w-12 h-16 sm:w-[60px] sm:h-20 mb-2" alt="Logo do Sistema" />
+          <h1 className="text-lg sm:text-3xl font-semibold">FocoTCC</h1>
+        </div>
+
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 text-center">Definir Nova Senha</h2>
+
+        <p className="text-lg sm:text-lg font-sans font-semibold mb-6 sm:mb-8 text-center px-2">
+          Insira sua nova senha para acessar sua conta.
+        </p>
+
+        {/* Mensagem de feedback */}
+        {message && (
+          <div className={`w-full mb-3 sm:mb-4 p-2 sm:p-3 rounded text-center text-sm ${
+            messageType === 'success' 
+              ? 'bg-green-100 text-green-700 border border-green-300' 
+              : 'bg-red-100 text-red-700 border border-red-300'
+          }`}>
+            {message}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 sm:gap-2">
+          <Label htmlFor="new-password" >
+            Nova Senha
+          </Label>
+
+          <Input
+            type="password"
+            id="new-password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="w-full "
+            placeholder="Digite sua nova senha"
+            disabled={loading || !token || !userId}
+            required
+          />
+
+          <Label htmlFor="confirm-password" >
+            Confirmar Nova Senha
+          </Label>
+
+          <Input
+            type="password"
+            id="confirm-password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full "
+            placeholder="Confirme sua nova senha"
+            disabled={loading || !token || !userId}
+            required
+          />
+
+          <Button
+            type="submit"
+            variant='primary'
+            disabled={loading || !token || !userId}
+            className={` mt-2 ${
+              loading || !token || !userId
+                ? ' text-gray-200 cursor-not-allowed'
+                : 'bg-primary hover:opacity-80 text-white'
+            }`}
+          >
+            {loading ? 'Redefinindo...' : 'Confirmar'}
+          </Button>
+        </form>
+
+        {/* Link para voltar ao login */}
+        <div className="mt-3 sm:mt-4 text-center">
+          <a 
+            href="/login" 
+            className="text-primary font-bold hover:opacity-85"
+          >
+            Voltar ao login
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}

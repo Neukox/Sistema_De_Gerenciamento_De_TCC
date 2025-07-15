@@ -5,6 +5,8 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import { RecuperacaoSenha } from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
+import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
+
 
 export default function App() {
   return (
@@ -13,6 +15,7 @@ export default function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/recuperar-senha" element={<RecuperacaoSenha />} />
+      <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
       <Route
         path="/maindashboard"
         element={
