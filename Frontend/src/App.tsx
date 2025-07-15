@@ -18,7 +18,6 @@ import { ReunioesProvider } from "./context/ReunioesContext";
 import CriarAtividade from "./features/CriarAtividade/CriarAtividade";
 
 
-
 export default function App() {
   return (
     <ReunioesProvider>
