@@ -7,6 +7,7 @@ import RecuperacaoSenha from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
 import { CadastrarTcc } from "./pages/auth/CadastrarTcc";
+import path from 'path';
 
 export default function App() {
   return (

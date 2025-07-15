@@ -16,7 +16,7 @@ export default function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/recuperar-senha" element={<RecuperacaoSenha />} />
       <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
-      <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
+      <Route 
       <Route
         path="/maindashboard"
         element={
