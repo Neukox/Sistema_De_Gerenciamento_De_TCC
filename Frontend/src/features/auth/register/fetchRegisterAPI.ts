@@ -1,5 +1,5 @@
 import type { RegisterRequest } from "@/types/response/auth";
-import register from "../services/register";
+import register from "../../../services/auth/register";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
 import { useState } from "react";

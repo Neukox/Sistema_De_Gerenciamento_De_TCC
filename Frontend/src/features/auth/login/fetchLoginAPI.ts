@@ -1,4 +1,4 @@
-import login from "../services/login";
+import login from "../../../services/auth/login";
 import { isAxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
