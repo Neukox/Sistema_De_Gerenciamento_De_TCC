@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { 
-    calculateTCCProgressController,
-    getOrientadorTCCsProgressController 
-} from "../controllers/progress-desenvolvimento-tcc/progress";
 import authorization from "../middlewares/authorization";
 import allowRoles from "../middlewares/allowRoles";
+import validateAccessTCC from "../middlewares/validateAccessTCC";
+import validateNumberParams from "../middlewares/validateNumberParams";
+import getTCCProgressController from "../controllers/progresso-tcc/getTCCProgress";
+import getOrientadorTCCsProgressController from "../controllers/progresso-tcc/getOrientadorTCCsProgress";
 
 const router = Router();
 
@@ -14,10 +14,9 @@ const router = Router();
  * @access Professores e Alunos autenticados
  */
 router.get(
-    "/tcc/:tccId", 
-    authorization,
-    allowRoles(["PROFESSOR", "ALUNO"]),
-    calculateTCCProgressController
+  "/tcc/:id",
+  [authorization, validateNumberParams, validateAccessTCC],
+  getTCCProgressController
 );
 
 /**
@@ -26,10 +25,9 @@ router.get(
  * @access Apenas Professores
  */
 router.get(
-    "/orientador/:orientadorId", 
-    authorization,
-    allowRoles(["PROFESSOR"]),
-    getOrientadorTCCsProgressController
+  "/orientador/:id",
+  [authorization, allowRoles(["PROFESSOR"]), validateNumberParams],
+  getOrientadorTCCsProgressController
 );
 
 export default router;
