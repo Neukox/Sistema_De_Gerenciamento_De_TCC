@@ -1,7 +1,18 @@
 import { Button } from '@/components/ui/form';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
 export function BoasVindas() {
+  const navigate = useNavigate();
+
+  const handleCadastrarTCC = () => {
+    navigate('/cadastrar-tcc');
+  };
+
+  const handleFazerLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="bg-secondary w-full min-h-screen flex justify-center items-center px-4 sm:px-6 lg:px-8">
       <div className="bg-white w-full max-w-4xl mx-auto py-8 sm:py-12 lg:py-16 px-6 sm:px-8 lg:px-12 rounded-2xl shadow-lg">
@@ -90,6 +101,7 @@ export function BoasVindas() {
           <div className="mb-6">
             <Button
               variant="primary"
+              onClick={handleCadastrarTCC}
               className="px-8 py-3 text-base sm:text-lg font-semibold inline-flex items-center gap-2"
             >
               <span className="text-xl">+</span>
@@ -100,12 +112,12 @@ export function BoasVindas() {
           {/* Link para Login */}
           <p className="text-sm sm:text-base text-gray-600">
             Já tem um TCC cadastrado?{' '}
-            <a 
-              href="/login" 
-              className="text-blue-600 hover:text-blue-700 font-medium underline transition-colors"
+            <button 
+              onClick={handleFazerLogin}
+              className="text-blue-600 hover:text-blue-700 font-medium underline transition-colors bg-transparent border-none cursor-pointer"
             >
               Fazer Login
-            </a>
+            </button>
           </p>
         </div>
       </div>

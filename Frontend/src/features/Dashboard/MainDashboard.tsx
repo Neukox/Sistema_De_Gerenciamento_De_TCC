@@ -65,7 +65,7 @@ import  Span  from "@/components/ui/DashboardUtilits/Span"; // Importa o compone
 // Importa hooks customizados
 import { useCronograma } from "../../hooks/useCronograma";    // Calcula dias restantes no cronograma
 import { useStatusTheme } from "../../hooks/useStatusTheme";  // Retorna cores e nome para o status do TCC
-import { useTCCData } from "../../hooks/useTCCData";          // Busca dados do TCC (simulado/backend)
+import { useTCCContext } from "../../hooks/useTCCContext";     // Busca dados do TCC (contexto)
 import { useCard } from "../../hooks/useCard";                // Busca lista de tarefas/cards
 >>>>>>> 5bf1405 (salvando antes do pull)
 
@@ -582,6 +582,7 @@ import Button from "@/components/ui/Button";
 
 function MainDashboard() {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
   // Simula as datas do backend com useState e useEffect
   const [dataInicio] = useState<string | null>(null);
@@ -626,8 +627,13 @@ function MainDashboard() {
 =======
   // Set page title on mount
 =======
+=======
+  // Hook para navegação
+  const navigate = useNavigate();
+  
+>>>>>>> 75b08f2 (Enviando atualizações na tentativa de integração com dashboard e progresso e novo layout.)
   // Usa hook que traz os dados do TCC do backend ou simulado
-  const { tccData, loading } = useTCCData();
+  const { tccData, loading } = useTCCContext();
 
   // Pega datas de início e entrega do TCC para passar para o cronograma
   const dataInicio = tccData?.data_inicio ?? null;
@@ -664,6 +670,18 @@ function MainDashboard() {
 >>>>>>> fb3fbc9 (atualização do frontend)
 =======
 >>>>>>> 5bf1405 (salvando antes do pull)
+
+  // Função para navegar para o cadastro de TCC
+  const handleCriarTCC = () => {
+    navigate('/cadastrar-tcc');
+  };
+
+  // Verifica se o usuário já tem um TCC cadastrado
+  const temTCC = tccData && tccData.title !== 'Nenhum TCC Cadastrado' && tccData.title !== 'Carregando...' && tccData.title !== 'Erro ao Carregar TCC' && tccData.id;
+
+  // Debug log
+  console.log('MainDashboard - tccData:', tccData);
+  console.log('MainDashboard - temTCC:', temTCC);
 
   // Se estiver carregando dados, exibe tela de loading
   if (loading) {
@@ -710,18 +728,22 @@ function MainDashboard() {
               Sair
             </Button>
 
-            <Button 
-            variant="create"
-            className="flex flex-wrap gap-2">
-                  <FaPlus size={25} />
-              Criar TCC
-            </Button>
+            {!temTCC && (
+              <Button 
+              variant="create"
+              onClick={handleCriarTCC}
+              className="flex flex-wrap gap-2">
+                    <FaPlus size={25} />
+                Criar TCC
+              </Button>
+            )}
             </div>
           </div>
         </div>
 
         {/* Informações do TCC */}
         <div className="flex flex-col items-start gap-2 mt-4">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           <h1 className="text-4xl font-sans font-bold">{tccData?.title || title}</h1>
@@ -758,6 +780,32 @@ function MainDashboard() {
             <FaUserFriends /> Coorientador: {tccData?.coorientador}
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
           </h2>
+=======
+          {temTCC ? (
+            <>
+              <h1 className="text-4xl font-sans font-bold">{tccData?.title}</h1>
+              <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-600">
+                <IoPersonOutline /> Aluno: {tccData?.aluno} • {tccData?.curso}
+              </h2>
+              <h2 className="flex items-center gap-2 text-2xl text-gray-600">
+                <IoBookOutline /> Orientador: {tccData?.orientador}
+              </h2>
+              <h2 className="flex items-center gap-2 text-2xl text-gray-600">
+                <FaUserFriends /> Coorientador: {tccData?.coorientador}
+              </h2>
+            </>
+          ) : (
+            <>
+              <h1 className="text-4xl font-sans font-bold text-gray-500">Nenhum TCC Cadastrado</h1>
+              <h2 className="flex items-center gap-2 text-2xl font-medium text-gray-400">
+                <IoPersonOutline /> Aluno: {user?.nome_completo || 'Usuário'}
+              </h2>
+              <p className="text-lg text-gray-500 mt-2">
+                Clique no botão "Criar TCC" acima para começar seu trabalho de conclusão de curso.
+              </p>
+            </>
+          )}
+>>>>>>> 75b08f2 (Enviando atualizações na tentativa de integração com dashboard e progresso e novo layout.)
         </div>
       </div>
 

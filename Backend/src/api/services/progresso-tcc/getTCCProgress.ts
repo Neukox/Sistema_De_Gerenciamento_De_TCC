@@ -44,26 +44,6 @@ export default async function getTCCProgressService(
           },
         },
       },
-      Orientador: {
-        select: {
-          area_atuacao: true,
-          Usuario: {
-            select: {
-              nome_completo: true,
-            },
-          },
-        },
-      },
-      Coorientador: {
-        select: {
-          area_atuacao: true,
-          Usuario: {
-            select: {
-              nome_completo: true,
-            },
-          },
-        },
-      },
       Atividades: true,
       EtapasTCC: true,
       Anotacoes: true,

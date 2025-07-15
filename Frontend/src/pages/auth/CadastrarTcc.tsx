@@ -1,9 +1,81 @@
+import { useState, useEffect } from 'react';
 import Label from '@/components/ui/form/Label';
 import { Input } from '@/components/ui/form';
 import { Button } from '@/components/ui/form';
 import logo from '../../assets/logo.png';
+import { useCadastrarTCC } from '@/hooks/useCadastrarTCC';
+import { AREAS_CONHECIMENTO_ESTATICAS } from '@/services/fetchProfessoresAreas';
+import type { AreaConhecimento } from '@/services/fetchProfessoresAreas';
 
 export function CadastrarTcc() {
+  const { cadastrarTCC, loading } = useCadastrarTCC();
+  const [areasConhecimento, setAreasConhecimento] = useState<AreaConhecimento[]>([]);
+  const [loadingData, setLoadingData] = useState(true);
+
+  // Estado do formulário
+  const [formData, setFormData] = useState({
+    titulo: '',
+    tema: '',
+    resumo: '',
+    dataInicio: '',
+    dataConclusao: '',
+    statusAtual: '',
+    areaConhecimentoId: '',
+    orientador: '',
+    coorientador: '',
+  });
+
+  // Carregar áreas de conhecimento
+  useEffect(() => {
+    const carregarDados = async () => {
+      try {
+        setLoadingData(true);
+        // Usar áreas estáticas diretamente
+        setAreasConhecimento(AREAS_CONHECIMENTO_ESTATICAS);
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        // Mesmo com erro, mantém as áreas estáticas
+        setAreasConhecimento(AREAS_CONHECIMENTO_ESTATICAS);
+      } finally {
+        setLoadingData(false);
+      }
+    };
+
+    carregarDados();
+  }, []);
+
+  // Função para atualizar o estado do formulário
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Função para submeter o formulário
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validações básicas
+    if (!formData.titulo || !formData.tema || !formData.resumo || !formData.statusAtual || !formData.areaConhecimentoId || !formData.orientador) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    await cadastrarTCC(formData);
+  };
+
+  if (loadingData) {
+    return (
+      <div className="bg-secondary w-full min-h-screen flex justify-center items-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando dados...</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="bg-secondary w-full min-h-screen flex justify-center items-start overflow-x-hidden px-4 sm:px-6 lg:px-8">
       <div className="bg-white w-full max-w-md sm:max-w-lg lg:max-w-xl my-4 sm:my-6 lg:my-10 py-6 sm:py-8 lg:py-10 rounded-2xl shadow-lg">
@@ -20,95 +92,94 @@ export function CadastrarTcc() {
           </p>
         </div>
 
-        <form action="" className="px-4 sm:px-6 lg:px-8">
+        <form onSubmit={handleSubmit} className="px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="titulo-do-tcc">
-                Título do TCC
+              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="titulo">
+                Título do TCC *
               </Label>
               <Input
                 type="text"
-                id="titulo-do-tcc"
+                id="titulo"
+                name="titulo"
+                value={formData.titulo}
+                onChange={handleInputChange}
                 className="w-full h-12"
                 placeholder="Digite o título do seu TCC"
+                required
               />
             </div>
 
             {/* Tema do TCC */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="tema-do-tcc">
-                Tema do TCC
+              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="tema">
+                Tema do TCC *
               </Label>
               <Input
                 type="text"
-                id="tema-do-tcc"
+                id="tema"
+                name="tema"
+                value={formData.tema}
+                onChange={handleInputChange}
                 className="w-full h-12"
                 placeholder="Digite o tema do seu TCC"
+                required
               />
             </div>
 
             {/* Área do conhecimento */}
             <div>
               <Label
-                htmlFor="area-do-conhecimento"
+                htmlFor="areaConhecimentoId"
                 className="block text-sm sm:text-base font-medium mb-2"
               >
-                Área do Conhecimento
+                Área do Conhecimento *
               </Label>
               <select
-                id="area-do-conhecimento"
-                name="areaDoConhecimento"
+                id="areaConhecimentoId"
+                name="areaConhecimentoId"
+                value={formData.areaConhecimentoId}
+                onChange={handleInputChange}
                 className="w-full h-12 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
+                required
               >
                 <option value="">Selecione uma área</option>
-                <option value="CIENCIAS_HUMANAS">Ciências Humanas</option>
-                <option value="CIENCIAS_EXATAS">Ciências Exatas</option>
-                <option value="CIENCIAS_BIOLOGICAS">Ciências Biológicas</option>
-                <option value="ENGENHARIAS">Engenharias</option>
-                <option value="CIENCIAS_SOCIAIS">Ciências Sociais</option>
-                <option value="CIENCIAS_AGRARIAS">Ciências Agrárias</option>
-                <option value="LINGUISTICA">Linguística</option>
-                <option value="TECNOLOGIA">Tecnologia</option>
-                <option value="ARTES">Artes</option>
-                <option value="SAUDE">Saúde</option>
-                <option value="OUTROS">Outros</option>
+                {areasConhecimento.map((area) => (
+                  <option key={area.id} value={area.id}>
+                    {area.nome}
+                  </option>
+                ))}
               </select>
-            </div>
-
-            {/* Curso */}
-            <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="curso">
-                Curso
-              </Label>
-              <Input
-                type="text"
-                id="curso"
-                className="w-full h-12"
-                placeholder="Digite o nome do seu curso"
-              />
             </div>
 
             {/* Orientador */}
             <div>
               <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="orientador">
-                Orientador
+                Orientador *
               </Label>
               <Input
                 type="text"
                 id="orientador"
+                name="orientador"
+                value={formData.orientador}
+                onChange={handleInputChange}
                 className="w-full h-12"
                 placeholder="Digite o nome do seu orientador"
+                required
               />
             </div>
 
             {/* Coorientador */}
             <div>
               <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="coorientador">
-                Coorientador
+                Coorientador (Opcional)
               </Label>
               <Input
                 type="text"
                 id="coorientador"
+                name="coorientador"
+                value={formData.coorientador}
+                onChange={handleInputChange}
                 className="w-full h-12"
                 placeholder="Digite o nome do seu coorientador (opcional)"
               />
@@ -117,13 +188,17 @@ export function CadastrarTcc() {
             {/* Resumo do TCC */}
             <div>
               <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="resumo">
-                Resumo/Descrição
+                Resumo/Descrição *
               </Label>
               <textarea
                 id="resumo"
+                name="resumo"
+                value={formData.resumo}
+                onChange={handleInputChange}
                 className="w-full h-32 sm:h-36 lg:h-40 px-3 py-2 border-2 border-gray-300 rounded-lg bg-white resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Digite um resumo ou descrição do seu TCC"
                 rows={4}
+                required
               ></textarea>
             </div>
 
@@ -131,24 +206,30 @@ export function CadastrarTcc() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Data de Início */}
               <div>
-                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="data-inicio">
+                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="dataInicio">
                   Data de início
                 </Label>
                 <Input
                   type="date"
-                  id="data-inicio"
+                  id="dataInicio"
+                  name="dataInicio"
+                  value={formData.dataInicio}
+                  onChange={handleInputChange}
                   className="w-full h-12"
                 />
               </div>
 
               {/* Data de Conclusão */}
               <div>
-                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="data-conclusao">
+                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="dataConclusao">
                   Data de conclusão
                 </Label>
                 <Input
                   type="date"
-                  id="data-conclusao"
+                  id="dataConclusao"
+                  name="dataConclusao"
+                  value={formData.dataConclusao}
+                  onChange={handleInputChange}
                   className="w-full h-12"
                 />
               </div>
@@ -156,13 +237,16 @@ export function CadastrarTcc() {
 
             {/* Status Atual */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="status-atual">
-                Status Atual
+              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="statusAtual">
+                Status Atual *
               </Label>
               <select
-                id="status-atual"
+                id="statusAtual"
                 name="statusAtual"
+                value={formData.statusAtual}
+                onChange={handleInputChange}
                 className="w-full h-12 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
+                required
               >
                 <option value="">Selecione o status</option>
                 <option value="PLANEJAMENTO">Planejamento</option>
@@ -178,9 +262,17 @@ export function CadastrarTcc() {
               <Button
                 type="submit"
                 variant="primary"
+                disabled={loading}
                 className="w-full"
               >
-                Cadastrar TCC
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Cadastrando...
+                  </span>
+                ) : (
+                  'Cadastrar TCC'
+                )}
               </Button>
             </div>
           </div>
