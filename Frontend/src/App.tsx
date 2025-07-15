@@ -3,10 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import MainDashboard from "./features/Dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import { RecuperacaoSenha } from "./pages/auth/ResetPassword";
+import RecuperacaoSenha from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
-
 
 export default function App() {
   return (

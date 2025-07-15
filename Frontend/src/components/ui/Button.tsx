@@ -1,6 +1,7 @@
 import React from "react";
 import { cn } from "@/utils/cn"; // Ajuste o caminho conforme necessário
 
+
 type Variants = {
   default: string;
   primary: string;
@@ -21,8 +22,8 @@ const variants: Variants = {
 };
 
 type ButtonProps = {
-  variant?: keyof Variants;
-  className?: string;
+  variant?: keyof typeof variants;
+  className?: string | string[];
   children?: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
