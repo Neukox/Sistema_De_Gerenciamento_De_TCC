@@ -17,6 +17,16 @@ export interface RegisterRequest {
 }
 
 /**
+ * Interface para a requisição de redefinição de senha do usuário.
+ * Inclui o id do usuário, token de redefinição e nova senha.
+ */
+export interface ResetPasswordRequest {
+  usuario_id: number;
+  token: string;
+  nova_senha: string;
+}
+
+/**
  * Interface para a resposta de autenticação da API.
  * Inclui o token JWT e informações do usuário autenticado.
  */
