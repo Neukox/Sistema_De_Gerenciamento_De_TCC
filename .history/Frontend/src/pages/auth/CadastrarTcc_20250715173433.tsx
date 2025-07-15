@@ -58,7 +58,7 @@ export function CadastrarTcc() {
               <select
                 id="area-do-conhecimento"
                 name="areaDoConhecimento"
-                className="w-full h-12 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
+                className="w-full h-12 px-3 py-2 border-2 border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Selecione uma área</option>
                 <option value="CIENCIAS_HUMANAS">Ciências Humanas</option>
@@ -83,7 +83,7 @@ export function CadastrarTcc() {
               <Input
                 type="text"
                 id="curso"
-                className="w-full h-12"
+                className="w-full border-2 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Digite o nome do seu curso"
               />
             </div>
@@ -96,7 +96,7 @@ export function CadastrarTcc() {
               <Input
                 type="text"
                 id="orientador"
-                className="w-full h-12"
+                className="w-full border-2 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Digite o nome do seu orientador"
               />
             </div>
@@ -109,7 +109,7 @@ export function CadastrarTcc() {
               <Input
                 type="text"
                 id="coorientador"
-                className="w-full h-12"
+                className="w-full border-2 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Digite o nome do seu coorientador (opcional)"
               />
             </div>
@@ -137,7 +137,7 @@ export function CadastrarTcc() {
                 <Input
                   type="date"
                   id="data-inicio"
-                  className="w-full h-12"
+                  className="w-full border-2 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
@@ -149,7 +149,7 @@ export function CadastrarTcc() {
                 <Input
                   type="date"
                   id="data-conclusao"
-                  className="w-full h-12"
+                  className="w-full border-2 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -162,7 +162,7 @@ export function CadastrarTcc() {
               <select
                 id="status-atual"
                 name="statusAtual"
-                className="w-full h-12 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
+                className="w-full h-12 px-3 py-2 border-2 border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Selecione o status</option>
                 <option value="PLANEJAMENTO">Planejamento</option>
@@ -178,7 +178,7 @@ export function CadastrarTcc() {
               <Button
                 type="submit"
                 variant="primary"
-                className="w-full"
+                className="w-full py-3 text-base sm:text-lg font-semibold rounded-lg transition-all duration-200 hover:scale-105"
               >
                 Cadastrar TCC
               </Button>

@@ -15,34 +15,32 @@ export function CadastrarTcc() {
 
         <div className="px-4">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl text-center mt-4 sm:mt-5 font-bold">Cadastrar TCC</h1>
-          <p className="text-sm sm:text-base lg:text-lg text-center mt-3 sm:mt-5 text-gray-600 mb-5 font-semibold">
+          <p className="text-sm sm:text-base lg:text-lg text-center mt-3 sm:mt-5 text-gray-600">
             Registre seu trabalho de conclusão de curso!
           </p>
         </div>
 
-        <form action="" className="px-4 sm:px-6 lg:px-8">
-          <div className="space-y-6">
-            <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="titulo-do-tcc">
-                Título do TCC
-              </Label>
-              <Input
-                type="text"
-                id="titulo-do-tcc"
-                className="w-full h-12"
-                placeholder="Digite o título do seu TCC"
-              />
-            </div>
+        <form action="">
+          <div>
+            <Label className="flex ml-10 mt-20" htmlFor="titulo-do-tcc">
+              Título do TCC
+            </Label>
+            <Input
+              type="text"
+              id="titulo-do-tcc"
+              className="border-2 w-[400px] ml-10 mt-2 px-3"
+              placeholder="Digite o título do seu TCC"
+            />
 
             {/* Tema do TCC */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="tema-do-tcc">
+              <Label className="flex ml-10 mt-10" htmlFor="tema-do-tcc">
                 Tema do TCC
               </Label>
               <Input
                 type="text"
                 id="tema-do-tcc"
-                className="w-full h-12"
+                className="border-2 w-[400px] ml-10 mt-2 px-3"
                 placeholder="Digite o tema do seu TCC"
               />
             </div>
@@ -51,16 +49,15 @@ export function CadastrarTcc() {
             <div>
               <Label
                 htmlFor="area-do-conhecimento"
-                className="block text-sm sm:text-base font-medium mb-2"
+                className="block mb-1 ml-10 mt-10"
               >
                 Área do Conhecimento
               </Label>
               <select
                 id="area-do-conhecimento"
                 name="areaDoConhecimento"
-                className="w-full h-12 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
+                className="w-[400px] h-[50px] ml-10 mt-2 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
               >
-                <option value="">Selecione uma área</option>
                 <option value="CIENCIAS_HUMANAS">Ciências Humanas</option>
                 <option value="CIENCIAS_EXATAS">Ciências Exatas</option>
                 <option value="CIENCIAS_BIOLOGICAS">Ciências Biológicas</option>
@@ -77,108 +74,104 @@ export function CadastrarTcc() {
 
             {/* Curso */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="curso">
+              <Label className="flex ml-10 mt-10" htmlFor="Curso">
                 Curso
               </Label>
               <Input
                 type="text"
                 id="curso"
-                className="w-full h-12"
+                className="border-2 w-[400px] ml-10 mt-2 px-3"
                 placeholder="Digite o nome do seu curso"
               />
             </div>
 
             {/* Orientador */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="orientador">
+              <Label className="flex ml-10 mt-10" htmlFor="orientador">
                 Orientador
               </Label>
               <Input
                 type="text"
                 id="orientador"
-                className="w-full h-12"
+                className="border-2 w-[400px] ml-10 mt-2 px-3"
                 placeholder="Digite o nome do seu orientador"
               />
             </div>
 
             {/* Coorientador */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="coorientador">
+              <Label className="flex ml-10 mt-10" htmlFor="coorientador">
                 Coorientador
               </Label>
               <Input
                 type="text"
                 id="coorientador"
-                className="w-full h-12"
+                className="border-2 w-[400px] ml-10 mt-2 px-3"
                 placeholder="Digite o nome do seu coorientador (opcional)"
               />
             </div>
 
             {/* Resumo do TCC */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="resumo">
+              <Label className="flex ml-10 mt-10" htmlFor="Resumo">
                 Resumo/Descrição
               </Label>
               <textarea
                 id="resumo"
-                className="w-full h-32 sm:h-36 lg:h-40 px-3 py-2 border-2 border-gray-300 rounded-lg bg-white resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-[400px] h-[150px] ml-10 mt-2 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
                 placeholder="Digite um resumo ou descrição do seu TCC"
                 rows={4}
               ></textarea>
             </div>
 
-            {/* Datas - Layout responsivo lado a lado em telas maiores */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Data de Início */}
-              <div>
-                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="data-inicio">
-                  Data de início
-                </Label>
-                <Input
-                  type="date"
-                  id="data-inicio"
-                  className="w-full h-12"
-                />
-              </div>
+            {/* Data de Início */}
+            <div>
+              <Label className="flex mt-10 ml-10" htmlFor="Data de inicio">
+                Data de início
+              </Label>
+              <Input
+                type="date"
+                id="data-inicio"
+                className="border-2 w-[400px] ml-10 mt-2 px-3"
+              />
+            </div>
 
-              {/* Data de Conclusão */}
-              <div>
-                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="data-conclusao">
-                  Data de conclusão
-                </Label>
-                <Input
-                  type="date"
-                  id="data-conclusao"
-                  className="w-full h-12"
-                />
-              </div>
+            {/* Data de Conclusão */}
+            <div>
+              <Label className="flex mt-10 ml-10" htmlFor="Data de conclusão">
+                Data de conclusão
+              </Label>
+              <Input
+                type="date"
+                id="data-conclusao"
+                className="border-2 w-[400px] ml-10 mt-2 px-3"
+              />
             </div>
 
             {/* Status Atual */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="status-atual">
+              <Label className="flex mt-10 ml-10" htmlFor="Status atual">
                 Status Atual
               </Label>
               <select
                 id="status-atual"
                 name="statusAtual"
-                className="w-full h-12 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
+                className="w-[400px] h-[50px] ml-10 mt-2 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
               >
-                <option value="">Selecione o status</option>
-                <option value="PLANEJAMENTO">Planejamento</option>
-                <option value="DESENVOLVIMENTO">Desenvolvimento</option>
-                <option value="REVISAO">Revisão</option>
-                <option value="FINALIZACAO">Finalização</option>
-                <option value="CONCLUIDO">Concluído</option>
+                <option value="Planejamento">Planejamento</option>
+                <option value="Desenvolvimento">Desenvolvimento</option>
+                <option value="Revisao">Revisão</option>
+                <option value="Finalizacao">Finalização</option>
+                <option value="Concluido">Concluído</option>
               </select>
             </div>
 
             {/* Botão de Cadastrar TCC */}
-            <div className="pt-4">
+            <div className="flex justify-center mt-10">
               <Button
                 type="submit"
                 variant="primary"
-                className="w-full"
+                className="w-[400px]"
               >
                 Cadastrar TCC
               </Button>

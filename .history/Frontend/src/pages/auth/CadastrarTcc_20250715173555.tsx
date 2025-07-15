@@ -178,7 +178,7 @@ export function CadastrarTcc() {
               <Button
                 type="submit"
                 variant="primary"
-                className="w-full"
+                className="w-full py-3 text-base sm:text-lg font-semibold rounded-lg transition-all duration-200 hover:scale-105"
               >
                 Cadastrar TCC
               </Button>
