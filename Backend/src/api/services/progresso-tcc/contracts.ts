@@ -55,3 +55,14 @@ export interface GetTCCProgress {
     };
   };
 }
+
+/**
+ * Interface para o progresso do TCC retornado pelo serviço getTCCProgressByProfessorService
+ */
+export interface GetTCCProgressByProfessor {
+  tcc_id: number;
+  titulo: string;
+  aluno: string;
+  progresso_total: number;
+  status_atual: string;
+}
