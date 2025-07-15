@@ -61,7 +61,7 @@ export const useTCCData = () => {
             late: 0,
             institution: 'Universidade Federal',
             data_inicio: '2025-07-13',        
-            prazo_entrega: '2025-07-17',
+            prazo_entrega: '2025-07-12',
             status: 'concluido'
             
           });

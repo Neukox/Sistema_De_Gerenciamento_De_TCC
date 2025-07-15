@@ -206,21 +206,21 @@ function MainDashboard() {
 
               {/* Mostra as datas e dias restantes */}
               <div className="flex flex-col text-xl text-[#9ea09d] gap-12 mt-5">
-                <div className="flex justify-between ">
+                <div className="flex justify-between">
                   <span>Data de início:</span>
                   <span className="text-[#252525] font-semibold">
                     {dataInicio !== null ? dataInicio : "—"}
                   </span>
                 </div>
 
-                <div className="flex justify-between ">
+                <div className="flex justify-between">
                   <span>Data de entrega:</span>
                   <span className="text-[#252525] font-semibold">
                     {dataEntrega !== null ? dataEntrega : "—"}
                   </span>
                 </div>
 
-                <div className="flex justify-between  ">
+                <div className="flex justify-between ">
                   <span>Dias restantes:</span>
                   <span className="text-[#252525] font-semibold ">
                     {diasRestantes !== null ? diasRestantes : "—"}
@@ -250,28 +250,28 @@ function MainDashboard() {
               <h1 className="text-3xl font-bold">Ações Rápidas</h1>
               <div className="flex flex-col gap-7 mt-3">
                 {/* Botão para editar TCC */}
-                <span className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
+                <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
                   <CiEdit size={25} />
                   Editar TCC
-                </span>
+                </button>
 
                 {/* Botão para criar nova tarefa */}
-                <span className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
+                <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
                   <FaPlus size={25} />
                   Nova tarefa
-                </span>
+                </button>
 
                 {/* Botão para agendar reunião */}
-                <span className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
+                <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
                   <RiCalendarScheduleLine size={25} />
                   Agendar Reunião
-                </span>
+                </button>
 
                 {/* Botão para gerar relatório */}
-                <span className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
+                <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
                   <HiOutlineNewspaper size={25} />
                   Gerar Relatório
-                </span>
+                </button>
               </div>
             </div>
           </div>
