@@ -5,12 +5,16 @@
  * A soma dos pesos é 100%.
  */
 
-// Constantes dos pesos para cada componente (soma = 100%)
+/** Constantes de paso das tarefas */
 export const PESO_TAREFAS = 30;
+/** Constantes de paso das etapas */
 export const PESO_ETAPAS = 30;
+/** Constantes de paso das anotações */
 export const PESO_ANOTACOES = 10;
+/** Constantes de paso das reuniões */
 export const PESO_REUNIOES = 10;
+/** Constantes de paso das defesas */
 export const PESO_DEFESAS = 20;
 
-// Quantidade mínima de anotações para obter pontuação completa
+/** Quantidade mínima de anotações para obter pontuação completa */
 export const MIN_ANOTACOES_COMPLETAS = 10;
