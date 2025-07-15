@@ -7,7 +7,7 @@ import RecuperacaoSenha from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
 import { CadastrarTcc } from "./pages/auth/CadastrarTcc";
-import { BoasVindas } from "./pages/auth/BoasVindas";
+import {Boas}
 
 export default function App() {
   return (
@@ -18,7 +18,6 @@ export default function App() {
       <Route path="/recuperar-senha" element={<RecuperacaoSenha />} />
       <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
       <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
-      <Route path="/boas-vindas" element={<BoasVindas />} />
       <Route
         path="/maindashboard"
         element={
