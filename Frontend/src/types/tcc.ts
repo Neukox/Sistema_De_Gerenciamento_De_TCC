@@ -37,9 +37,9 @@ export interface TCCData {
   total: number;
   pending: number;
   late: number;
-  data_inicio?: string | null;
-  prazo_entrega?: string | null;
-  status: typeof statusTCC[keyof typeof statusTCC];
+  data_inicio?: Date | null;
+  prazo_entrega?: Date | null;
+  status: (typeof statusTCC)[keyof typeof statusTCC];
 }
 
 export interface TCCContextType {

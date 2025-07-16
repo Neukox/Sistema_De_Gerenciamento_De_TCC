@@ -5,7 +5,7 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AuthContextProvider from "./features/auth/context/AuthContextProvider.tsx";
-import TCCProvider from "./contexts/TCCContext.tsx";
+import TCCProvider from "./features/TCC/contexts/TCCContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

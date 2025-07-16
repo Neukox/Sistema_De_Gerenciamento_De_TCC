@@ -1,9 +1,10 @@
 import type { StatusTCC } from "../tcc";
+import type { ApiResponse } from "./base";
 
 /**
  * Tipagem de dados da resposta da API para obter TCC
  */
-export interface GetTCCResponse {
+export interface GetTCCResponse extends ApiResponse {
   id: number;
   titulo: string;
   tema: string;
@@ -11,7 +12,7 @@ export interface GetTCCResponse {
   resumo: string;
   dataInicio: Date | null;
   dataConclusao: Date | null;
-  statusAtual: keyof StatusTCC | null;
+  statusAtual: StatusTCC;
   criado_em: Date;
   aluno: {
     id: number;
