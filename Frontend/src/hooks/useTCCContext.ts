@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TCCContext } from "@/features/TCC/contexts/TCCContext";
+import TCCContext from "@/features/TCC/contexts/TCCContext";
 import type { TCCContextType } from "../types/tcc";
 
 /**
