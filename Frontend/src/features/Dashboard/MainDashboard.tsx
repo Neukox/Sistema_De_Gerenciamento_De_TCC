@@ -9,15 +9,19 @@ import { useNavigate } from "react-router-dom";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
 =======
 >>>>>>> 0ef06f5 (salvando primeira alteração)
+=======
+>>>>>>> 018dda3 (salvando primeira alteração)
 // Hooks customizados
 import { useCronograma } from "../../hooks/useCronograma";
 import { useStatusTheme } from "../../hooks/useStatusTheme";
 import { useTCCContext } from "../../hooks/useTCCContext";
 import { useCard } from "../../hooks/useCard";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 import { useTabActive } from "@/hooks/TabAtive";
@@ -127,6 +131,15 @@ import MarksCard from "../../components/card/MarksCard";
 
 // Ícones
 >>>>>>> 0ef06f5 (salvando primeira alteração)
+=======
+import { useTabActive } from "@/hooks/TabAtive";
+import { useNotes } from "@/hooks/Notes";
+
+// Componentes
+import MarksCard from "../../components/card/MarksCard";
+
+// Ícones
+>>>>>>> 018dda3 (salvando primeira alteração)
 import {
   IoPersonOutline,
   IoBookOutline,
@@ -152,7 +165,10 @@ import { HiOutlineNewspaper } from "react-icons/hi2";
 <<<<<<< HEAD
 import { FaTrashCan } from "react-icons/fa6";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 018dda3 (salvando primeira alteração)
 // Hooks de contexto
 import useTitle from "@/hooks/useTitle";
 import useAuth from "../auth/context/useAuth";
@@ -187,6 +203,7 @@ function MainDashboard() {
   const { tarefas } = useCard();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   const {  user } = useAuth();
 =======
@@ -195,6 +212,9 @@ function MainDashboard() {
 =======
   const {  user } = useAuth();
 >>>>>>> f293097 (segunda alteração para o pessoal)
+=======
+  const { logout, user } = useAuth();
+>>>>>>> 018dda3 (salvando primeira alteração)
   const { activeTab, changeTab, isActive } = useTabActive<"marcos" | "tarefas" | "notas">("marcos");
   const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } = useNotes();
 
@@ -221,6 +241,7 @@ function MainDashboard() {
 
   // Renderiza o dashboard
 <<<<<<< HEAD
+<<<<<<< HEAD
   return (
 
     <div className="flex flex-col items-center bg-secondary min-h-screen overflow-x-hidden overflow-y-auto scrollbar-hide w-full px-4 sm:px-6 pt-4 sm:pt-6">
@@ -229,12 +250,37 @@ function MainDashboard() {
         {/* Logo e controles */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
     
+=======
+  return (
+    <div className="flex flex-col items-center bg-secondary h-screen overflow-x-hidden w-screen pt-6">
+      {/* Cabeçalho */}
+      <div className="w-[85%] h-[40%] bg-neutral flex flex-col rounded-lg shadow-lg p-6 pt-1">
+        {/* Logo e controles */}
+        <div className="flex justify-between items-center">
+>>>>>>> 018dda3 (salvando primeira alteração)
           <div className="flex justify-center items-center">
             <img src={logo} alt="Logo" className="w-12 h-16 sm:w-[60px] sm:h-24" />
             <span className="text-black text-xl sm:text-3xl font-bold ml-2 sm:ml-4">FocoTCC</span>
           </div>
 
           {/* Usuário e botões */}
+<<<<<<< HEAD
+=======
+          <div className="flex items-center gap-4">
+            <span className="text-lg font-medium">
+              Olá, {user?.nome_completo || "Usuário"}
+            </span>
+              
+            <div className="flex items-center gap-2">
+            <Button
+            variant="logout"
+              onClick={logout}
+              className="flex items-center gap-2 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              <IoLogOutOutline size={20} />
+              Sair
+            </Button>
+>>>>>>> 018dda3 (salvando primeira alteração)
 
           <div className="flex items-center">
             <div className="flex items-center gap-3 sm:gap-5">
@@ -291,11 +337,19 @@ function MainDashboard() {
       </div>
 
       {/* Cartões de resumo */}
+<<<<<<< HEAD
       <div className="grid grid-cols-2 lg:grid-cols-4 w-full max-w-7xl mt-4 gap-3 sm:gap-5">
         {/* Progresso geral */}
         <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
           <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
             <IoMdTrendingUp className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#dbeafe] rounded-md p-1" />
+=======
+      <div className="flex flex-row items-center justify-between w-[85%] min-h-40 mt-4 gap-5">
+        {/* Progresso geral */}
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+          <span className="flex gap-2 items-center text-4xl font-bold">
+            <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
+>>>>>>> 018dda3 (salvando primeira alteração)
             {tccData?.progress}%
           </span>
           <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">
@@ -304,27 +358,45 @@ function MainDashboard() {
         </div>
 
         {/* Marcos concluídos */}
+<<<<<<< HEAD
         <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
           <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
             <FaRegCheckCircle className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#d8fce4] text-[#7dc89c] p-1 rounded-lg" />
+=======
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+          <span className="flex gap-2 items-center text-4xl font-bold">
+            <FaRegCheckCircle className="w-12 h-12 bg-[#d8fce4] text-[#7dc89c] p-1 rounded-lg" />
+>>>>>>> 018dda3 (salvando primeira alteração)
             {tccData.checked}/{tccData.total}
           </span>
           <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">Marcos concluídos</span>
         </div>
 
         {/* Tarefas pendentes */}
+<<<<<<< HEAD
         <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
           <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
             <FaRegClock className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#f2d1b1] text-[#dc9058] p-1 rounded-lg" />
+=======
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+          <span className="flex gap-2 items-center text-4xl font-bold">
+            <FaRegClock className="w-12 h-12 bg-[#f2d1b1] text-[#dc9058] p-1 rounded-lg" />
+>>>>>>> 018dda3 (salvando primeira alteração)
             {tccData.pending}
           </span>
           <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">Tarefas Pendentes</span>
         </div>
 
         {/* Tarefas atrasadas */}
+<<<<<<< HEAD
         <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
           <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
             <TiWarningOutline className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#ffe1e0] text-[#d36c6c] p-1 rounded-lg" />
+=======
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+          <span className="flex gap-2 items-center text-4xl font-bold">
+            <TiWarningOutline className="w-12 h-12 bg-[#ffe1e0] text-[#d36c6c] p-1 rounded-lg" />
+>>>>>>> 018dda3 (salvando primeira alteração)
             {tccData.late}
           </span>
           <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">Tarefas atrasadas</span>
@@ -332,8 +404,13 @@ function MainDashboard() {
       </div>
 
       {/* Navegação por abas */}
+<<<<<<< HEAD
       <div className="w-full max-w-7xl flex flex-col mt-4">
         <div className="flex flex-row items-center text-base sm:text-xl lg:text-2xl bg-neutral w-full min-h-16 sm:min-h-20 rounded-lg shadow-lg overflow-hidden">
+=======
+      <div className="w-[85%] flex flex-col mt-4">
+        <div className="flex flex-row items-center text-2xl bg-neutral w-full min-h-20 rounded-lg shadow-lg overflow-hidden">
+>>>>>>> 018dda3 (salvando primeira alteração)
           <Button
             variant="select"
             className={`flex items-center justify-center gap-1 sm:gap-2 rounded-sm px-3 sm:px-5 flex-1 sm:min-w-[180px] sm:flex-none h-16 sm:h-20 transition-all duration-400 ease-out text-sm sm:text-base
@@ -345,6 +422,7 @@ function MainDashboard() {
             <span className="sm:hidden">Marcos</span>
           </Button>
 
+<<<<<<< HEAD
           <Button
             variant="select"
             className={`flex items-center justify-center gap-1 sm:gap-2 rounded-sm px-3 sm:px-5 flex-1 sm:min-w-[180px] sm:flex-none h-16 sm:h-20 transition-all duration-400 ease-out text-sm sm:text-base
@@ -370,6 +448,32 @@ function MainDashboard() {
 
         {/* Conteúdo das abas */}
         <div className="flex flex-col lg:flex-row gap-4 mt-4">
+=======
+          {/* Container das outras abas */}
+          <div className="flex flex-row flex-grow bg-neutral">
+            <Button
+              variant="select"
+              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
+                ${isActive("tarefas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
+              onClick={() => changeTab("tarefas")}
+            >
+              <GrTask /> Tarefas
+            </Button>
+
+            <Button
+              variant="select"
+              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
+                ${isActive("notas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
+              onClick={() => changeTab("notas")}
+            >
+              <IoCalendarClearOutline /> Anotações
+            </Button>
+          </div>
+        </div>
+
+        {/* Conteúdo das abas */}
+        <div className="flex flex-row gap-4 mt-4">
+>>>>>>> 018dda3 (salvando primeira alteração)
           {/* Aba: Marcos */}
           {activeTab === "marcos" && (
             <div className="flex flex-col w-full lg:w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-4 sm:p-6 mt-4 mb-5">
@@ -394,8 +498,12 @@ function MainDashboard() {
                   Nenhuma marco cadastrada.
                 </p>
               ) : (
+<<<<<<< HEAD
                 <div className="space-y-3 sm:space-y-5 w-full">
                 
+=======
+                <div className="space-y-5 w-full">
+>>>>>>> 018dda3 (salvando primeira alteração)
                   {tarefas.map((tarefa) => (
                     <MarksCard
                       key={tarefa.id}
@@ -437,8 +545,12 @@ function MainDashboard() {
                   Nenhuma tarefa cadastrada.
                 </p>
               ) : (
+<<<<<<< HEAD
                 <div className="space-y-3 sm:space-y-5 w-full">
 
+=======
+                <div className="space-y-5 w-full">
+>>>>>>> 018dda3 (salvando primeira alteração)
                   {tarefas.map((tarefa) => (
                     <MarksCard
                       key={tarefa.id}
@@ -499,7 +611,11 @@ function MainDashboard() {
                 </div>
 
                 {/* Se não houver notas, exibe mensagem */}
+<<<<<<< HEAD
                 <div className="mt-4 overflow-y-visible">
+=======
+                <div className="mt-4 h-f overflow-y-visible">
+>>>>>>> 018dda3 (salvando primeira alteração)
                   {listaNota.length === 0 ? (
                     <p className="text-gray-400 flex items-center mt-8 justify-center text-sm sm:text-base">
                       Nenhuma anotação cadastrada.
@@ -533,6 +649,7 @@ function MainDashboard() {
           )} 
 
           {/* Sidebar direita */}
+<<<<<<< HEAD
           <div className="flex flex-col w-full lg:w-[35%] order-first lg:order-last">
             {/* Cronograma */}
             <div className="flex flex-col bg-neutral min-h-60 sm:min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-4 sm:p-6">
@@ -541,6 +658,15 @@ function MainDashboard() {
               {/* Datas */}
               <div className="flex flex-col text-sm sm:text-lg lg:text-xl text-[#9ea09d] gap-6 sm:gap-8 lg:gap-12 mt-3 sm:mt-5">
 
+=======
+          <div className="flex flex-col w-[35%]">
+            {/* Cronograma */}
+            <div className="flex flex-col bg-neutral min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
+              <h1 className="text-3xl font-bold">Cronograma</h1>
+
+              {/* Datas */}
+              <div className="flex flex-col text-xl text-[#9ea09d] gap-12 mt-5">
+>>>>>>> 018dda3 (salvando primeira alteração)
                 <div className="flex justify-between">
                   <span>Data de início:</span>
                   <span className="text-[#252525] font-semibold">
@@ -580,6 +706,7 @@ function MainDashboard() {
             </div>
 
             {/* Ações rápidas */}
+<<<<<<< HEAD
             <div className="bg-neutral min-h-60 sm:min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-4 sm:p-6">
               <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">Ações Rápidas</h1>
               <div className="flex flex-col gap-4 sm:gap-5 lg:gap-7 mt-3">
@@ -609,6 +736,28 @@ function MainDashboard() {
                   <HiOutlineNewspaper size={20} className="sm:hidden" />
                   <HiOutlineNewspaper size={25} className="hidden sm:block" />
 
+=======
+            <div className="bg-neutral gap-8 min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
+              <h1 className="text-3xl font-bold">Ações Rápidas</h1>
+              <div className="flex flex-col gap-7 mt-3">
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
+                  <CiEdit size={25} />
+                  Editar TCC
+                </Button>
+
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
+                  <FaPlus size={25} />
+                  Nova tarefa
+                </Button>
+
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
+                  <RiCalendarScheduleLine size={25} />
+                  Agendar Reunião
+                </Button>
+
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
+                  <HiOutlineNewspaper size={25} />
+>>>>>>> 018dda3 (salvando primeira alteração)
                   Gerar Relatório
                 </Button>
               </div>
