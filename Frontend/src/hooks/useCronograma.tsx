@@ -5,10 +5,9 @@ interface Cronograma {
   dataEntrega?: string | null;
 }
 
-function criarDataLocal(dataStr: string): Date {
-  const [ano, mes, dia] = dataStr.split("-").map(Number);
-  return new Date(ano, mes - 1, dia); // mês é zero-indexado
-}
+const ano = new Date().getFullYear();
+const mes = new Date().getMonth();
+const dia = new Date().getDate();
 
 export function useCronograma({ dataInicio, dataEntrega }: Cronograma) {
   const [diasRestantes, setDiasRestantes] = useState<number | null>(0);
@@ -20,21 +19,20 @@ export function useCronograma({ dataInicio, dataEntrega }: Cronograma) {
     }
 
     try {
-      const hoje = new Date();
-      hoje.setHours(0, 0, 0, 0); // Zera as horas para comparar apenas os dias
-      const entrega = criarDataLocal(dataEntrega);
+      const inicio = new Date(dataInicio);
+      const entrega = new Date(dataEntrega);
 
-      // Verificar se a data é válida
-      if (isNaN(entrega.getTime())) {
+      // Verificar se ambas as datas são válidas
+      if (isNaN(inicio.getTime()) || isNaN(entrega.getTime())) {
         setDiasRestantes(null);
         return;
       }
 
-      // zerar horas para comparar só dias
-      hoje.setHours(0, 0, 0, 0);
-      entrega.setHours(0, 0, 0, 0);
+      // Converter para UTC e zerar horas para comparar só dias
+      const inicioUTC = new Date(Date.UTC(ano, mes, dia));
+      const entregaUTC = new Date(Date.UTC(ano, mes, dia));
 
-      const diferencaMs = entrega.getTime() - hoje.getTime();
+      const diferencaMs = entregaUTC.getTime() - inicioUTC.getTime();
       const dias = Math.ceil(diferencaMs / (1000 * 60 * 60 * 24));
 
       setDiasRestantes(dias);

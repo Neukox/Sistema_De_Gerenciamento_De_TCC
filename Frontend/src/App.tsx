@@ -20,7 +20,7 @@ export default function App() {
       <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
       <Route path="/boas-vindas" element={<BoasVindas />} />
       <Route
-        path="/maindashboard"
+        path="/dashboard"
         element={
           <ProtectedRoute>
             <MainDashboard />
