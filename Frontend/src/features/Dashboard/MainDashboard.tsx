@@ -8,13 +8,17 @@ import { useNavigate } from "react-router-dom";
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
 // Hooks customizados
 import { useCronograma } from "../../hooks/useCronograma";
 import { useStatusTheme } from "../../hooks/useStatusTheme";
 import { useTCCContext } from "../../hooks/useTCCContext";
 import { useCard } from "../../hooks/useCard";
+<<<<<<< HEAD
 <<<<<<< HEAD
 import { useTabActive } from "@/hooks/TabAtive";
 import { useNotes } from "@/hooks/Notes";
@@ -114,6 +118,15 @@ import MarksCard from "../../components/card/MarksCard";
 
 // Ícones
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
+=======
+import { useTabActive } from "@/hooks/TabAtive";
+import { useNotes } from "@/hooks/Notes";
+
+// Componentes
+import MarksCard from "../../components/card/MarksCard";
+
+// Ícones
+>>>>>>> 0ef06f5 (salvando primeira alteração)
 import {
   IoPersonOutline,
   IoBookOutline,
@@ -172,8 +185,12 @@ function MainDashboard() {
 
   // Dados das listas
   const { tarefas } = useCard();
+<<<<<<< HEAD
 
   const {  user } = useAuth();
+=======
+  const { logout, user } = useAuth();
+>>>>>>> 0ef06f5 (salvando primeira alteração)
   const { activeTab, changeTab, isActive } = useTabActive<"marcos" | "tarefas" | "notas">("marcos");
   const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } = useNotes();
 
@@ -199,6 +216,7 @@ function MainDashboard() {
   }
 
   // Renderiza o dashboard
+<<<<<<< HEAD
   return (
 
     <div className="flex flex-col items-center bg-secondary min-h-screen overflow-x-hidden overflow-y-auto scrollbar-hide w-full px-4 sm:px-6 pt-4 sm:pt-6">
@@ -750,12 +768,17 @@ function MainDashboard() {
         {/* Linha com logo e título do sistema */}
 =======
   // Renderiza o dashboard
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
   return (
     <div className="flex flex-col items-center bg-secondary h-screen overflow-x-hidden w-screen pt-6">
       {/* Cabeçalho */}
       <div className="w-[85%] h-[40%] bg-neutral flex flex-col rounded-lg shadow-lg p-6 pt-1">
         {/* Logo e controles */}
+<<<<<<< HEAD
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center">
             <img src={logo} alt="Logo" className="w-[60px] h-24" />
@@ -862,9 +885,12 @@ function MainDashboard() {
       {/* Cartões de resumo */}
       <div className="flex flex-row items-center justify-between w-[85%] min-h-40 mt-4 gap-5">
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* Cartão de progresso geral do TCC */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
 =======
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
         {/* Progresso geral */}
         <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
@@ -882,9 +908,12 @@ function MainDashboard() {
         </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* Cartão de marcos concluídos */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
 =======
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
         {/* Marcos concluídos */}
         <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
@@ -896,9 +925,12 @@ function MainDashboard() {
         </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* Cartão de tarefas pendentes */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
 =======
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
         {/* Tarefas pendentes */}
         <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
@@ -910,9 +942,12 @@ function MainDashboard() {
         </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* Cartão de tarefas atrasadas */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
 =======
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
         {/* Tarefas atrasadas */}
         <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
@@ -971,6 +1006,7 @@ function MainDashboard() {
         {/* Conteúdo das abas */}
         <div className="flex flex-row gap-4 mt-4">
 <<<<<<< HEAD
+<<<<<<< HEAD
           {/* Seção dos marcos */}
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1015,6 +1051,9 @@ function MainDashboard() {
 =======
           {/* Aba: Marcos */}
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
+=======
+          {/* Aba: Marcos */}
+>>>>>>> 0ef06f5 (salvando primeira alteração)
           {activeTab === "marcos" && (
             <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
               <div className="flex flex-row justify-between mb-4">
@@ -1171,9 +1210,12 @@ function MainDashboard() {
           {/* Sidebar direita */}
           <div className="flex flex-col w-[35%]">
 <<<<<<< HEAD
+<<<<<<< HEAD
             {/* Seção do cronograma */}
             <div className="flex flex-col bg-[#fffbef] min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
 =======
+=======
+>>>>>>> 0ef06f5 (salvando primeira alteração)
             {/* Cronograma */}
             <div className="flex flex-col bg-neutral min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
@@ -1222,6 +1264,7 @@ function MainDashboard() {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             {/* Quick actions section */}
             <div className="bg-[#fffbef] min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
               <h1 className="text-3xl font-bold">Ações Rápidas</h1>
@@ -1251,6 +1294,12 @@ function MainDashboard() {
               <h1 className="text-3xl font-bold">Ações Rápidas</h1>
               <div className="flex flex-col gap-7 mt-3">
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
+=======
+            {/* Ações rápidas */}
+            <div className="bg-neutral gap-8 min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
+              <h1 className="text-3xl font-bold">Ações Rápidas</h1>
+              <div className="flex flex-col gap-7 mt-3">
+>>>>>>> 0ef06f5 (salvando primeira alteração)
                 <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
 >>>>>>> db5a824 (salvando antes do pull)
                   <CiEdit size={25} />
