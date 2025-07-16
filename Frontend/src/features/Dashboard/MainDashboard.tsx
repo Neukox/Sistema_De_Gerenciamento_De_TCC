@@ -7,11 +7,15 @@ import { useNavigate } from "react-router-dom";
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
 // Hooks customizados
 import { useCronograma } from "../../hooks/useCronograma";
 import { useStatusTheme } from "../../hooks/useStatusTheme";
 import { useTCCContext } from "../../hooks/useTCCContext";
 import { useCard } from "../../hooks/useCard";
+<<<<<<< HEAD
 import { useTabActive } from "@/hooks/TabAtive";
 import { useNotes } from "@/hooks/Notes";
 
@@ -101,6 +105,15 @@ import { IoPersonOutline, IoBookOutline, IoCalendarClearOutline, IoLogOutOutline
 =======
 // Importa ícones React
 >>>>>>> 5bf1405 (salvando antes do pull)
+=======
+import { useTabActive } from "@/hooks/TabAtive";
+import { useNotes } from "@/hooks/Notes";
+
+// Componentes
+import MarksCard from "../../components/card/MarksCard";
+
+// Ícones
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
 import {
   IoPersonOutline,
   IoBookOutline,
@@ -585,16 +598,21 @@ function MainDashboard() {
 =======
 import { FaTrashCan } from "react-icons/fa6";
 
+<<<<<<< HEAD
 
 >>>>>>> db5a824 (salvando antes do pull)
 
 // Importa hooks de contexto (título da página e autenticação)
 >>>>>>> 5bf1405 (salvando antes do pull)
+=======
+// Hooks de contexto
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
 import useTitle from "@/hooks/useTitle";
 import useAuth from "../auth/context/useAuth";
 import Button from "@/components/ui/Button";
 
 function MainDashboard() {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
@@ -647,33 +665,36 @@ function MainDashboard() {
   
 >>>>>>> 75b08f2 (Enviando atualizações na tentativa de integração com dashboard e progresso e novo layout.)
   // Usa hook que traz os dados do TCC do backend ou simulado
+=======
+  // Navegação
+  const navigate = useNavigate();
+  
+  // Dados do TCC
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
   const { tccData, loading } = useTCCContext();
 
-  // Pega datas de início e entrega do TCC para passar para o cronograma
+  // Datas do cronograma
   const dataInicio = tccData?.data_inicio ?? null;
   const dataEntrega = tccData?.prazo_entrega ?? null;
 
+<<<<<<< HEAD
   // Atualiza o título da aba do navegador na montagem do componente
 >>>>>>> 5bf1405 (salvando antes do pull)
+=======
+  // Configurações da página
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
   useTitle("FocoTCC - Dashboard Principal");
 
-  // Usa hook que calcula os dias restantes entre dataInicio e dataEntrega
+  // Cálculos
   const diasRestantes = useCronograma({ dataInicio, dataEntrega });
-
-  // Verifica se o prazo está atrasado (diasRestantes negativo)
   const prazoAtrasado = diasRestantes !== null && diasRestantes < 0;
-
-  // Define a chave do status (se atrasado força "Atrasado", senão usa status do backend)
   const statusKey = prazoAtrasado ? "Atrasado" : tccData?.status ?? " ";
-
-  // Pega as cores e o nome formatado do status usando o hook criado
   const status = useStatusTheme(statusKey);
 
-  // Pega lista de tarefas/cards do hook useCard
+  // Dados das listas
   const { tarefas } = useCard();
-
-  // Pega funções e dados do usuário logado (logout, nome etc)
   const { logout, user } = useAuth();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
@@ -686,23 +707,24 @@ function MainDashboard() {
 >>>>>>> 5bf1405 (salvando antes do pull)
 
   // Usa hook para gerenciar abas ativas
+=======
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
   const { activeTab, changeTab, isActive } = useTabActive<"marcos" | "tarefas" | "notas">("marcos");
+  const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } = useNotes();
 
-const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } = useNotes(); // Pega as notas do hook useNotes
-
-  // Função para navegar para o cadastro de TCC
+  // Funções
   const handleCriarTCC = () => {
     navigate('/cadastrar-tcc');
   };
 
-  // Verifica se o usuário já tem um TCC cadastrado
+  // Verificações
   const temTCC = tccData && tccData.title !== 'Nenhum TCC Cadastrado' && tccData.title !== 'Carregando...' && tccData.title !== 'Erro ao Carregar TCC' && tccData.id;
 
-  // Debug log
+  // Debug
   console.log('MainDashboard - tccData:', tccData);
   console.log('MainDashboard - temTCC:', temTCC);
 
-  // Se estiver carregando dados, exibe tela de loading
+  // Loading
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen bg-[#F3C50D]">
@@ -716,6 +738,7 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
 =======
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
 =======
   // Renderiza o dashboard principal
@@ -725,13 +748,21 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
       {/* Cabeçalho e informações do projeto */}
       <div className="w-[85%] h-[40%] bg-[#fffbef] flex flex-col rounded-lg shadow-lg p-6 pt-1">
         {/* Linha com logo e título do sistema */}
+=======
+  // Renderiza o dashboard
+  return (
+    <div className="flex flex-col items-center bg-secondary h-screen overflow-x-hidden w-screen pt-6">
+      {/* Cabeçalho */}
+      <div className="w-[85%] h-[40%] bg-neutral flex flex-col rounded-lg shadow-lg p-6 pt-1">
+        {/* Logo e controles */}
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
         <div className="flex justify-between items-center">
           <div className="flex justify-center items-center">
             <img src={logo} alt="Logo" className="w-[60px] h-24" />
             <span className="text-black text-3xl font-bold ml-4">FocoTCC</span>
           </div>
 
-          {/* Informações do usuário e botão de logout */}
+          {/* Usuário e botões */}
           <div className="flex items-center gap-4">
             <span className="text-lg font-medium">
               Olá, {user?.nome_completo || "Usuário"}
@@ -828,10 +859,15 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
         </div>
       </div>
 
-      {/* Cartões de resumo do progresso, marcos e tarefas */}
+      {/* Cartões de resumo */}
       <div className="flex flex-row items-center justify-between w-[85%] min-h-40 mt-4 gap-5">
+<<<<<<< HEAD
         {/* Cartão de progresso geral do TCC */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+=======
+        {/* Progresso geral */}
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
           <span className="flex gap-2 items-center text-4xl font-bold">
             <IoMdTrendingUp className="w-12 h-12 bg-[#dbeafe] rounded-md p-1" />
             {tccData?.progress || progress}%
@@ -845,8 +881,13 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
         </div>
 
+<<<<<<< HEAD
         {/* Cartão de marcos concluídos */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+=======
+        {/* Marcos concluídos */}
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
           <span className="flex gap-2 items-center text-4xl font-bold">
             <FaRegCheckCircle className="w-12 h-12 bg-[#d8fce4] text-[#7dc89c] p-1 rounded-lg" />
             {checked}/{total}
@@ -854,8 +895,13 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
           <span className="text-2xl text-[#9ea09d]">{descriptionM}</span>
         </div>
 
+<<<<<<< HEAD
         {/* Cartão de tarefas pendentes */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+=======
+        {/* Tarefas pendentes */}
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
           <span className="flex gap-2 items-center text-4xl font-bold">
             <FaRegClock className="w-12 h-12 bg-[#f2d1b1] text-[#dc9058] p-1 rounded-lg" />
             {pending}
@@ -863,8 +909,13 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
           <span className="text-2xl text-[#9ea09d]">{descriptionP}</span>
         </div>
 
+<<<<<<< HEAD
         {/* Cartão de tarefas atrasadas */}
         <div className="flex flex-col items-center justify-center w-full bg-[#fffbef] rounded-lg shadow-lg p-4">
+=======
+        {/* Tarefas atrasadas */}
+        <div className="flex flex-col items-center justify-center w-full bg-neutral rounded-lg shadow-lg p-4">
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
           <span className="flex gap-2 items-center text-4xl font-bold">
             <TiWarningOutline className="w-12 h-12 bg-[#ffe1e0] text-[#d36c6c] p-1 rounded-lg" />
             {late}
@@ -873,7 +924,7 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
         </div>
       </div>
 
-      {/* Barra de navegação com abas */}
+      {/* Navegação por abas */}
       <div className="w-[85%] flex flex-col mt-4">
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -895,9 +946,8 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
             <LuTarget /> Marcos
           </Button>
 
-          {/* Container com fundo neutro para os outros botões */}
+          {/* Container das outras abas */}
           <div className="flex flex-row flex-grow bg-neutral">
-            {/* Tarefas */}
             <Button
               variant="select"
               className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
@@ -907,7 +957,6 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
               <GrTask /> Tarefas
             </Button>
 
-            {/* Notas */}
             <Button
               variant="select"
               className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
@@ -919,8 +968,9 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
           </div>
         </div>
 
-        {/* Conteúdo principal abaixo da navbar */}
+        {/* Conteúdo das abas */}
         <div className="flex flex-row gap-4 mt-4">
+<<<<<<< HEAD
           {/* Seção dos marcos */}
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -962,6 +1012,9 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                   />
                 ))}
 =======
+=======
+          {/* Aba: Marcos */}
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
           {activeTab === "marcos" && (
             <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
               <div className="flex flex-row justify-between mb-4">
@@ -979,14 +1032,12 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                 </Button>
 >>>>>>> db5a824 (salvando antes do pull)
               </div>
-              {/* Se não tiver tarefas, mostra mensagem */}
               {tarefas.length === 0 ? (
                 <p className="text-gray-400 flex items-center mt-12 justify-center">
                   Nenhuma tarefa cadastrada.
                 </p>
               ) : (
                 <div className="space-y-5 w-full">
-                  {/* Mapeia cada tarefa para um componente MarksCard */}
                   {tarefas.map((tarefa) => (
                     <MarksCard
                       key={tarefa.id}
@@ -995,8 +1046,8 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                       description={tarefa.description}
                       prazo={tarefa.prazo}
                       stats={tarefa.stats}
-                      mostrar={true} //Passa a prop mostrar como false para exibir o progresso
-                      mostrarEditar={false} // Passa a prop mostrarEditar como false para não exibir o botão de editar
+                      mostrar={true}
+                      mostrarEditar={false}
                     />
                   ))}
                 </div>
@@ -1004,7 +1055,7 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
             </div>
           )}
 
-          {/* Seção de tarefas */}
+          {/* Aba: Tarefas */}
           {activeTab === "tarefas" && (
             <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
               <div className="flex flex-row justify-between mb-4">
@@ -1021,14 +1072,12 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                   Nova Tarefa
                 </Button>
               </div>
-              {/* Se não tiver tarefas, mostra mensagem */}
               {tarefas.length === 0 ? (
                 <p className="text-gray-400 flex items-center mt-12 justify-center">
                   Nenhuma tarefa cadastrada.
                 </p>
               ) : (
                 <div className="space-y-5 w-full">
-                  {/* Mapeia cada tarefa para um componente MarksCard */}
                   {tarefas.map((tarefa) => (
                     <MarksCard
                       key={tarefa.id}
@@ -1037,8 +1086,8 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                       description={tarefa.description}
                       prazo={tarefa.prazo}
                       stats={tarefa.stats}
-                      mostrar={false} // Passa a prop mostrar como false para não exibir o progresso
-                      mostrarEditar={true} // Passa a prop mostrarEditar como false para não exibir o botão de editar
+                      mostrar={false}
+                      mostrarEditar={true}
                     />
                   ))}
                 </div>
@@ -1047,7 +1096,7 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
           )} 
 
 
-          {/* Seção de notas */}
+          {/* Aba: Anotações */}
           {activeTab === "notas" && (
             <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
               <div className="flex flex-row mb-4">
@@ -1061,7 +1110,7 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                 </div>
               </div>
 
-              {/*seção do textarea*/}
+              {/* Área de texto */}
               <div className="flex flex-col gap-2 w-full">
                 <div className="flex flex-col">
                   <textarea
@@ -1080,18 +1129,20 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                     Adicionar Anotações
                   </Button>
 
-                  {/* Erro fica aqui, logo abaixo do botão */}
+                  {/* impede de adicionar notas vazias */}
                   {erroNota && (
                     <span className="text-red-500 text-sm mt-4">{erroNota}</span>
                   )}
                 </div>
 
+                {/* Se não houver notas, exibe mensagem */}
                 <div className="mt-4 h-f overflow-y-visible">
                   {listaNota.length === 0 ? (
                     <p className="text-gray-400 flex items-center mt-8 justify-center">
                       Nenhuma tarefa cadastrada.
                     </p>
                   ) : (
+                    /* Mapeia e renderiza cada nota da lista */
                     listaNota.map((nota, i) => (
                       <div key={i} className="bg-gray-300 rounded-lg p-4 mt-6">
                         <div className="mb-2 bg-gray-200 h-32 flex justify-between px-4 py-4 rounded-md shadow-sm">
@@ -1117,13 +1168,18 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
             </div>
           )} 
 
-          {/* Lado direito: cronograma + ações rápidas */}
+          {/* Sidebar direita */}
           <div className="flex flex-col w-[35%]">
+<<<<<<< HEAD
             {/* Seção do cronograma */}
             <div className="flex flex-col bg-[#fffbef] min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
+=======
+            {/* Cronograma */}
+            <div className="flex flex-col bg-neutral min-h-72 mt-4 rounded-lg shadow-lg mb-5 p-6">
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
               <h1 className="text-3xl font-bold">Cronograma</h1>
 
-              {/* Mostra as datas e dias restantes */}
+              {/* Datas */}
               <div className="flex flex-col text-xl text-[#9ea09d] gap-12 mt-5">
                 <div className="flex justify-between">
                   <span>Data de início:</span>
@@ -1147,7 +1203,7 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                 </div>
               </div>
 
-              {/* Exibe o status com as cores obtidas pelo hook */}
+              {/* Status */}
               <div className="border-t mt-4 border-gray-200">
                 {status && (
                   <span
@@ -1164,6 +1220,7 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
               </div>
             </div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             {/* Quick actions section */}
             <div className="bg-[#fffbef] min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
@@ -1188,25 +1245,28 @@ const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } 
                 <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
 >>>>>>> 8ab79b4 (salvando antes do pull)
 =======
+=======
+            {/* Ações rápidas */}
+            <div className="bg-neutral gap-8 min-h-80 mt-1 rounded-lg shadow-lg mb-5 p-6">
+              <h1 className="text-3xl font-bold">Ações Rápidas</h1>
+              <div className="flex flex-col gap-7 mt-3">
+>>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
                 <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
 >>>>>>> db5a824 (salvando antes do pull)
                   <CiEdit size={25} />
                   Editar TCC
                 </Button>
 
-                {/* Botão para criar nova tarefa */}
                 <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
                   <FaPlus size={25} />
                   Nova tarefa
                 </Button>
 
-                {/* Botão para agendar reunião */}
                 <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
                   <RiCalendarScheduleLine size={25} />
                   Agendar Reunião
                 </Button>
 
-                {/* Botão para gerar relatório */}
                 <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
                   <HiOutlineNewspaper size={25} />
                   Gerar Relatório
