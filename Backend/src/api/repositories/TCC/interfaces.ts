@@ -21,12 +21,14 @@ export interface GetTCCQuery {
     id?: number;
     nome?: string;
   };
-  orientador: {
-    id: number;
-    nome: string;
-    area_atuacao: string;
-    email: string;
-  };
+  orientador?:
+    | {
+        id: number;
+        nome: string;
+        area_atuacao: string;
+        email: string;
+      }
+    | "Não definido";
   coorientador?:
     | {
         id: number;
