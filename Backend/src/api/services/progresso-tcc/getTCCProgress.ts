@@ -44,6 +44,26 @@ export default async function getTCCProgressService(
           },
         },
       },
+      Orientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              nome_completo: true,
+            },
+          },
+        },
+      },
+      Coorientador: {
+        select: {
+          area_atuacao: true,
+          Usuario: {
+            select: {
+              nome_completo: true,
+            },
+          },
+        },
+      },
       Atividades: true,
       EtapasTCC: true,
       Anotacoes: true,
@@ -65,14 +85,16 @@ export default async function getTCCProgressService(
       nome_completo: tcc.Aluno.Usuario.nome_completo,
       curso: tcc.Aluno.curso,
     },
-    orientador: {
-      nome_completo: tcc.orientador_nome || "Não definido",
-      area_atuacao: "Não definido",
-    },
-    coorientador: tcc.coorientador_nome
+    orientador: tcc.Orientador
       ? {
-          nome_completo: tcc.coorientador_nome,
-          area_atuacao: "Não definido",
+          nome_completo: tcc.Orientador.Usuario.nome_completo,
+          area_atuacao: tcc.Orientador.area_atuacao,
+        }
+      : "Não definido",
+    coorientador: tcc.Coorientador
+      ? {
+          nome_completo: tcc.Coorientador.Usuario.nome_completo,
+          area_atuacao: tcc.Coorientador.area_atuacao,
         }
       : "não definido",
     progresso: {

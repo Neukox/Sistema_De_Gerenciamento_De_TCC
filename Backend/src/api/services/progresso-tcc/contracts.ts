@@ -7,10 +7,12 @@ export interface GetTCCProgress {
     nome_completo: string;
     curso: string;
   };
-  orientador: {
-    nome_completo: string;
-    area_atuacao: string;
-  };
+  orientador:
+    | {
+        nome_completo: string;
+        area_atuacao: string;
+      }
+    | "Não definido";
   coorientador?:
     | {
         nome_completo: string;
