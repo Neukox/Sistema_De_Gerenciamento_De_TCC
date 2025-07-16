@@ -1,39 +1,42 @@
 // Configurações da API
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_URL?.replace(/\/$/, '') || 'http://localhost:3000/api',
+  BASE_URL:
+    import.meta.env.VITE_API_URL?.replace(/\/$/, "") ||
+    "http://localhost:3000/api",
   ENDPOINTS: {
     AUTH: {
-      LOGIN: '/auth/login',
-      REGISTER: '/auth/register',
-      REQUEST_PASSWORD_RESET: '/auth/request-password-reset',
-      RESET_PASSWORD: '/auth/reset-password',
+      LOGIN: "/auth/login",
+      REGISTER: "/auth/register",
+      REQUEST_PASSWORD_RESET: "/auth/request-password-reset",
+      RESET_PASSWORD: "/auth/reset-password",
     },
     TCC: {
-      GET_ALL: '/tccs',
-      GET_BY_ID: '/tccs/:id',
-      CREATE: '/tccs',
-      UPDATE: '/tccs/:id',
-      DELETE: '/tccs/:id',
+      GET_BY_ALUNO: "/tccs/aluno",
+      GET_ALL: "/tccs",
+      GET_BY_ID: "/tccs/:id",
+      CREATE: "/tccs",
+      UPDATE: "/tccs/:id",
+      DELETE: "/tccs/:id",
     },
     PROFESSORES: {
-      GET_ALL: '/professores',
+      GET_ALL: "/professores",
     },
     AREAS_CONHECIMENTO: {
-      GET_ALL: '/areas-conhecimento',
-      GET_BY_ID: '/areas-conhecimento/:id',
+      GET_ALL: "/areas-conhecimento",
+      GET_BY_ID: "/areas-conhecimento/:id",
     },
     USERS: {
-      PROFILE: '/user/profile',
+      PROFILE: "/user/profile",
     },
   },
   HEADERS: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 };
 
 // Função para obter headers com token de autenticação
 export const getAuthHeaders = () => {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem("authToken");
   return {
     ...API_CONFIG.HEADERS,
     ...(token && { Authorization: `Bearer ${token}` }),
@@ -52,10 +55,10 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
 
   // Se a resposta for 401 (não autorizado), remove o token e redireciona para login
   if (response.status === 401) {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userData');
-    window.location.href = '/login';
-    throw new Error('Sessão expirada. Faça login novamente.');
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userData");
+    window.location.href = "/login";
+    throw new Error("Sessão expirada. Faça login novamente.");
   }
 
   return response;

@@ -1,4 +1,29 @@
-// Tipagem para dados do TCC
+/**
+ * Define os possíveis status de um TCC
+ */
+
+export type StatusTCC = {
+  PLANEJAMENTO: "Planejamento";
+  DESENVOLVIMENTO: "Desenvolvimento";
+  REVISAO: "Revisão";
+  FINALIZACAO: "Finalização";
+  CONCLUIDO: "Concluído";
+};
+
+/**
+ * Define os status de TCC disponíveis
+ */
+export const statusTCC: StatusTCC = {
+  PLANEJAMENTO: "Planejamento",
+  DESENVOLVIMENTO: "Desenvolvimento",
+  REVISAO: "Revisão",
+  FINALIZACAO: "Finalização",
+  CONCLUIDO: "Concluído",
+};
+
+/**
+ * Tipagem de dados do TCC
+ */
 export interface TCCData {
   id?: number;
   title: string;
@@ -14,7 +39,7 @@ export interface TCCData {
   late: number;
   data_inicio?: string | null;
   prazo_entrega?: string | null;
-  status: string;
+  status: typeof statusTCC[keyof typeof statusTCC];
 }
 
 export interface TCCContextType {
