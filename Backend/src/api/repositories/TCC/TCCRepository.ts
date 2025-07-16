@@ -294,17 +294,14 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
       id: tcc.AreaConhecimento?.id,
       nome: tcc.AreaConhecimento?.nome,
     },
-    orientador: tcc.Orientador ? {
-      id: tcc.Orientador.Usuario.id,
-      nome: tcc.Orientador.Usuario.nome_completo,
-      area_atuacao: tcc.Orientador.area_atuacao,
-      email: tcc.Orientador.Usuario.email,
-    } : {
-      id: 0,
-      nome: "Não definido",
-      area_atuacao: "Não definido",
-      email: "nao-definido@email.com",
-    },
+    orientador: tcc.Orientador
+      ? {
+          id: tcc.Orientador.Usuario.id,
+          nome: tcc.Orientador.Usuario.nome_completo,
+          area_atuacao: tcc.Orientador.area_atuacao,
+          email: tcc.Orientador.Usuario.email,
+        }
+      : "Não definido",
     coorientador: tcc.Coorientador
       ? {
           id: tcc.Coorientador.Usuario.id,
@@ -324,15 +321,6 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
 export async function findTCCByAlunoId(
   id: number
 ): Promise<GetTCCQuery | null> {
-  console.log('=== DEBUG findTCCByAlunoId ===');
-  console.log('Buscando TCC para o aluno ID:', id);
-  console.log('Tipo do ID:', typeof id);
-  
-  if (!id || isNaN(id)) {
-    console.log('ID inválido:', id);
-    throw new Error('ID inválido.');
-  }
-
   const tcc = await prisma.tCC.findFirst({
     where: {
       Aluno: {
