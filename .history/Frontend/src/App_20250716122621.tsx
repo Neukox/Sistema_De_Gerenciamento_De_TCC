@@ -24,7 +24,7 @@ export default function App() {
       
       {/* Protected Routes */}
       <Route
-        path="/dashboard"
+        path="/maindashboard"
         element={
           <ProtectedRoute>
             <MainDashboard />
