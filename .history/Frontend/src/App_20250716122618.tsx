@@ -20,9 +20,7 @@ export default function App() {
       <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
       <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
       <Route path="/boas-vindas" element={<BoasVindas />} />
-      <Route path="/agendar-reuniao" element={<AgendarReuniao />} />
       
-      {/* Protected Routes */}
       <Route
         path="/maindashboard"
         element={
