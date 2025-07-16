@@ -6,6 +6,7 @@ import logo from "@/assets/logo.png";
 import { useNavigate } from "react-router-dom";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Hooks customizados
 import { useCronograma } from "../../hooks/useCronograma";
 import { useStatusTheme } from "../../hooks/useStatusTheme";
@@ -60,6 +61,8 @@ import { useState } from "react";
 =======
 =======
 import  Span  from "@/components/ui/DashboardUtilits/Span"; // Importa o componente Span
+=======
+>>>>>>> db5a824 (salvando antes do pull)
 
 >>>>>>> 1c31ef0 (salvando antes do pull)
 // Importa hooks customizados
@@ -67,10 +70,15 @@ import { useCronograma } from "../../hooks/useCronograma";    // Calcula dias re
 import { useStatusTheme } from "../../hooks/useStatusTheme";  // Retorna cores e nome para o status do TCC
 import { useTCCContext } from "../../hooks/useTCCContext";     // Busca dados do TCC (contexto)
 import { useCard } from "../../hooks/useCard";                // Busca lista de tarefas/cards
+<<<<<<< HEAD
 >>>>>>> 5bf1405 (salvando antes do pull)
 
+=======
+import { useTabActive } from "@/hooks/TabAtive";
+import { useNotes } from "@/hooks/Notes";
+>>>>>>> db5a824 (salvando antes do pull)
 // Importa componentes
-import MarksCard from "../../components/MarksCard";
+import MarksCard from "../../components/card/MarksCard";
 
 <<<<<<< HEAD
 import { useCronograma } from "../../hooks/useCronograma";
@@ -114,6 +122,7 @@ import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { HiOutlineNewspaper } from "react-icons/hi2";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 import { FaTrashCan } from "react-icons/fa6";
@@ -573,6 +582,11 @@ function MainDashboard() {
 function MainDashboard() {
 =======
 =======
+=======
+import { FaTrashCan } from "react-icons/fa6";
+
+
+>>>>>>> db5a824 (salvando antes do pull)
 
 // Importa hooks de contexto (título da página e autenticação)
 >>>>>>> 5bf1405 (salvando antes do pull)
@@ -671,6 +685,11 @@ function MainDashboard() {
 =======
 >>>>>>> 5bf1405 (salvando antes do pull)
 
+  // Usa hook para gerenciar abas ativas
+  const { activeTab, changeTab, isActive } = useTabActive<"marcos" | "tarefas" | "notas">("marcos");
+
+const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } = useNotes(); // Pega as notas do hook useNotes
+
   // Função para navegar para o cadastro de TCC
   const handleCriarTCC = () => {
     navigate('/cadastrar-tcc');
@@ -730,7 +749,7 @@ function MainDashboard() {
 
             {!temTCC && (
               <Button 
-              variant="create"
+              variant="primary"
               onClick={handleCriarTCC}
               className="flex flex-wrap gap-2">
                     <FaPlus size={25} />
@@ -857,25 +876,53 @@ function MainDashboard() {
       {/* Barra de navegação com abas */}
       <div className="w-[85%] flex flex-col mt-4">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div className="flex flex-row items-center text-2xl gap-28 pl-8 bg-[#fffbef] w-full min-h-20 rounded-sm shadow-lg">
           <span className="flex items-center gap-2 font-medium text-[#252525] hover:text-gray-400 cursor-pointer">
 =======
         <div className="flex flex-row items-center text-2xl gap-28 pl-8 bg-neutral w-full min-h-20 rounded-sm shadow-lg">
           <Span variant="primary" className="flex items-center gap-2">
 >>>>>>> 1c31ef0 (salvando antes do pull)
+=======
+        <div className="flex flex-row items-center text-2xl bg-neutral w-full min-h-20 rounded-lg shadow-lg overflow-hidden">
+          <Button
+            variant="select"
+            className={`flex items-center justify-center gap-2 rounded-sm px-5 min-w-[180px] h-20 transition-all duration-400 ease-out
+              ${isActive("marcos") ? "bg-gray-600 text-white rounded-l-lg" : "bg-neutral"}`}
+            onClick={() => changeTab("marcos")}
+          >
+>>>>>>> db5a824 (salvando antes do pull)
             <LuTarget /> Marcos
-          </Span>
-          <Span variant="primary" className="flex items-center gap-2 ">
-            <GrTask /> Tarefas
-          </Span>
-          <Span variant="primary" className="flex items-center gap-2 ">
-            <IoCalendarClearOutline /> Notas
-          </Span>
+          </Button>
+
+          {/* Container com fundo neutro para os outros botões */}
+          <div className="flex flex-row flex-grow bg-neutral">
+            {/* Tarefas */}
+            <Button
+              variant="select"
+              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
+                ${isActive("tarefas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
+              onClick={() => changeTab("tarefas")}
+            >
+              <GrTask /> Tarefas
+            </Button>
+
+            {/* Notas */}
+            <Button
+              variant="select"
+              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
+                ${isActive("notas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
+              onClick={() => changeTab("notas")}
+            >
+              <IoCalendarClearOutline /> Anotações
+            </Button>
+          </div>
         </div>
 
         {/* Conteúdo principal abaixo da navbar */}
         <div className="flex flex-row gap-4 mt-4">
           {/* Seção dos marcos */}
+<<<<<<< HEAD
 <<<<<<< HEAD
           <div className="flex flex-col w-[65%] bg-[#fffbef] min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
 =======
@@ -914,9 +961,161 @@ function MainDashboard() {
                     stats={tarefa.stats}
                   />
                 ))}
+=======
+          {activeTab === "marcos" && (
+            <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
+              <div className="flex flex-row justify-between mb-4">
+                <div className="flex flex-col">
+                  <h1 className="flex items-center gap-3 font-bold text-4xl">
+                    <LuTarget /> Marcos do Projeto
+                  </h1>
+                  <h4 className="text-gray-500 mt-1">
+                    Acompanhe o progresso dos principais marcos do seu TCC
+                  </h4>
+                </div>
+                <Button variant="primary" className="flex flex-wrap items-center gap-2 px-4 py-2 h-14">
+                  <FaPlus size={20} />
+                  Adicionar Marco
+                </Button>
+>>>>>>> db5a824 (salvando antes do pull)
               </div>
-            )}
-          </div>
+              {/* Se não tiver tarefas, mostra mensagem */}
+              {tarefas.length === 0 ? (
+                <p className="text-gray-400 flex items-center mt-12 justify-center">
+                  Nenhuma tarefa cadastrada.
+                </p>
+              ) : (
+                <div className="space-y-5 w-full">
+                  {/* Mapeia cada tarefa para um componente MarksCard */}
+                  {tarefas.map((tarefa) => (
+                    <MarksCard
+                      key={tarefa.id}
+                      id={tarefa.id}
+                      title={tarefa.title}
+                      description={tarefa.description}
+                      prazo={tarefa.prazo}
+                      stats={tarefa.stats}
+                      mostrar={true} //Passa a prop mostrar como false para exibir o progresso
+                      mostrarEditar={false} // Passa a prop mostrarEditar como false para não exibir o botão de editar
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Seção de tarefas */}
+          {activeTab === "tarefas" && (
+            <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
+              <div className="flex flex-row justify-between mb-4">
+                <div className="flex flex-col">
+                  <h1 className="flex items-center gap-3 font-bold text-4xl">
+                    <GrTask /> Tarefas
+                  </h1>
+                  <h4 className="text-gray-500 mt-1">
+                    Gerencie suas tarefas do seu TCC
+                  </h4>
+                </div>
+                <Button variant="primary" className="flex flex-wrap items-center gap-2 px-4 py-2 h-14">
+                  <FaPlus size={20} />
+                  Nova Tarefa
+                </Button>
+              </div>
+              {/* Se não tiver tarefas, mostra mensagem */}
+              {tarefas.length === 0 ? (
+                <p className="text-gray-400 flex items-center mt-12 justify-center">
+                  Nenhuma tarefa cadastrada.
+                </p>
+              ) : (
+                <div className="space-y-5 w-full">
+                  {/* Mapeia cada tarefa para um componente MarksCard */}
+                  {tarefas.map((tarefa) => (
+                    <MarksCard
+                      key={tarefa.id}
+                      id={tarefa.id}
+                      title={tarefa.title}
+                      description={tarefa.description}
+                      prazo={tarefa.prazo}
+                      stats={tarefa.stats}
+                      mostrar={false} // Passa a prop mostrar como false para não exibir o progresso
+                      mostrarEditar={true} // Passa a prop mostrarEditar como false para não exibir o botão de editar
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          )} 
+
+
+          {/* Seção de notas */}
+          {activeTab === "notas" && (
+            <div className="flex flex-col w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-6 mt-4 mb-5">
+              <div className="flex flex-row mb-4">
+                <div className="flex flex-col">
+                  <h1 className="flex items-center gap-3 font-bold text-4xl">
+                    <IoCalendarClearOutline /> Anotações e Observações
+                  </h1>
+                  <h4 className="text-gray-500 mt-1">
+                    Registre aqui suas anotções e observações rapidas sobre o TCC
+                  </h4>
+                </div>
+              </div>
+
+              {/*seção do textarea*/}
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col">
+                  <textarea
+                    value={notaAtual}
+                    onChange={(e) => setNotaAtual(e.target.value)}
+                    placeholder="Adicione suas anotações..."
+                    className="p-4 w-full h-44 mt-4 bg-gray-300 rounded-sm font-sans font-normal text-black border-gray-100 focus:outline-none"
+                  />
+
+                  <Button
+                    variant="primary"
+                    onClick={() => salvarNota(notaAtual)}
+                    className="flex flex-wrap items-center gap-2 px-4 py-2 h-12 w-[28%] mt-4"
+                  >
+                    <FaPlus size={20} />
+                    Adicionar Anotações
+                  </Button>
+
+                  {/* Erro fica aqui, logo abaixo do botão */}
+                  {erroNota && (
+                    <span className="text-red-500 text-sm mt-4">{erroNota}</span>
+                  )}
+                </div>
+
+                <div className="mt-4 h-f overflow-y-visible">
+                  {listaNota.length === 0 ? (
+                    <p className="text-gray-400 flex items-center mt-8 justify-center">
+                      Nenhuma tarefa cadastrada.
+                    </p>
+                  ) : (
+                    listaNota.map((nota, i) => (
+                      <div key={i} className="bg-gray-300 rounded-lg p-4 mt-6">
+                        <div className="mb-2 bg-gray-200 h-32 flex justify-between px-4 py-4 rounded-md shadow-sm">
+                          <div className="flex justify-between w-full">
+                            <div className="flex flex-col">
+                              <p className="whitespace-pre-wrap break-words w-full font-semibold text-gray-800">
+                                • {nota.texto}
+                              </p>
+                              <span className="text-sm text-gray-600 mt-14 border-t">
+                                {nota.data}
+                              </span>
+                            </div>
+                            <Button variant="edit" onClick={() => {removerNota(nota.id)}}>
+                              <FaTrashCan size={20} />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+          )} 
 
           {/* Lado direito: cronograma + ações rápidas */}
           <div className="flex flex-col w-[35%]">
@@ -982,32 +1181,36 @@ function MainDashboard() {
               <div className="flex flex-col gap-7 mt-3">
                 {/* Botão para editar TCC */}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <span className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
 >>>>>>> 5bf1405 (salvando antes do pull)
 =======
                 <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
 >>>>>>> 8ab79b4 (salvando antes do pull)
+=======
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
+>>>>>>> db5a824 (salvando antes do pull)
                   <CiEdit size={25} />
                   Editar TCC
-                </button>
+                </Button>
 
                 {/* Botão para criar nova tarefa */}
-                <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
                   <FaPlus size={25} />
                   Nova tarefa
-                </button>
+                </Button>
 
                 {/* Botão para agendar reunião */}
-                <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
                   <RiCalendarScheduleLine size={25} />
                   Agendar Reunião
-                </button>
+                </Button>
 
                 {/* Botão para gerar relatório */}
-                <button className="border border-gray-400 px-5 py-2 rounded-md h-12 shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all flex items-center gap-2">
+                <Button variant="quicks" className=" px-5 py-2 h-12  flex items-center gap-2">
                   <HiOutlineNewspaper size={25} />
                   Gerar Relatório
-                </button>
+                </Button>
               </div>
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
             </div>

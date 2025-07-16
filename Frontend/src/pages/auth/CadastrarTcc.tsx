@@ -95,7 +95,7 @@ export function CadastrarTcc() {
         <form onSubmit={handleSubmit} className="px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="titulo">
+              <Label className="block text-sm sm:text-base font-semibold mb-2" htmlFor="titulo">
                 Título do TCC *
               </Label>
               <Input
@@ -112,7 +112,7 @@ export function CadastrarTcc() {
 
             {/* Tema do TCC */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="tema">
+              <Label className="block text-sm sm:text-base mb-2 font-semibold" htmlFor="tema">
                 Tema do TCC *
               </Label>
               <Input
@@ -131,7 +131,7 @@ export function CadastrarTcc() {
             <div>
               <Label
                 htmlFor="areaConhecimentoId"
-                className="block text-sm sm:text-base font-medium mb-2"
+                className="block text-sm sm:text-base font-semibold mb-2"
               >
                 Área do Conhecimento *
               </Label>
@@ -154,7 +154,7 @@ export function CadastrarTcc() {
 
             {/* Orientador */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="orientador">
+              <Label className="block text-sm sm:text-base font-semibold mb-2" htmlFor="orientador">
                 Orientador *
               </Label>
               <Input
@@ -171,7 +171,7 @@ export function CadastrarTcc() {
 
             {/* Coorientador */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="coorientador">
+              <Label className="block text-sm sm:text-base font-semibold mb-2" htmlFor="coorientador">
                 Coorientador (Opcional)
               </Label>
               <Input
@@ -187,7 +187,7 @@ export function CadastrarTcc() {
 
             {/* Resumo do TCC */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="resumo">
+              <Label className="block text-sm sm:text-base font-semibold mb-2" htmlFor="resumo">
                 Resumo/Descrição *
               </Label>
               <textarea
@@ -206,7 +206,7 @@ export function CadastrarTcc() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Data de Início */}
               <div>
-                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="dataInicio">
+                <Label className="block text-sm sm:text-base font-semibold mb-2" htmlFor="dataInicio">
                   Data de início
                 </Label>
                 <Input
@@ -221,7 +221,7 @@ export function CadastrarTcc() {
 
               {/* Data de Conclusão */}
               <div>
-                <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="dataConclusao">
+                <Label className="block text-sm sm:text-base font-semibold mb-2" htmlFor="dataConclusao">
                   Data de conclusão
                 </Label>
                 <Input
@@ -237,7 +237,7 @@ export function CadastrarTcc() {
 
             {/* Status Atual */}
             <div>
-              <Label className="block text-sm sm:text-base font-medium mb-2" htmlFor="statusAtual">
+              <Label className="block text-sm sm:text-base font-semibold mb-2" htmlFor="statusAtual">
                 Status Atual *
               </Label>
               <select
