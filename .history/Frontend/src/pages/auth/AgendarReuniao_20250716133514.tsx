@@ -37,7 +37,7 @@ export function AgendarReuniao() {
 
           {/* Descrição */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg  mb-1 ml-1 font-semibold" htmlFor="descricao">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="descricao">
               Descrição da Reunião
             </label>
             <textarea
@@ -50,7 +50,7 @@ export function AgendarReuniao() {
           {/* Data e Hora */}
           <div className="flex flex-col md:flex-row gap-6 mb-6">
             <div className="flex-1">
-              <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="data">
+              <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="data">
                 Data da Reunião
               </label>
               <Input
@@ -61,7 +61,7 @@ export function AgendarReuniao() {
             </div>
 
             <div className="flex-1">
-              <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="hora">
+              <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="hora">
                 Hora da Reunião
               </label>
               <Input
@@ -74,7 +74,7 @@ export function AgendarReuniao() {
 
           {/* Participantes */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="participantes">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="participantes">
               Participantes
             </label>
             <Input
@@ -87,7 +87,7 @@ export function AgendarReuniao() {
 
           {/* Local/Plataforma */}
           <div className="mb-10">
-            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="local">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="local">
               Local/Plataforma
             </label>
             <Input

@@ -14,7 +14,7 @@ export function AgendarReuniao() {
 
         {/* Título do formulário */}
         <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-4xl font-bold font-semibold">Agendar Nova Reunião</h2>
+          <h2 className="text-2xl sm:text-4xl font-bold">Agendar Nova Reunião</h2>
           <p className="text-sm sm:text-lg mt-2 sm:mt-4 text-gray-600">
             Preencha os detalhes da sua reunião
           </p>
@@ -24,7 +24,7 @@ export function AgendarReuniao() {
         <form>
           {/* Título */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg  mb-1 ml-1 font-semibold" htmlFor="titulo">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="titulo">
               Título da Reunião
             </label>
             <Input
@@ -37,12 +37,12 @@ export function AgendarReuniao() {
 
           {/* Descrição */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg  mb-1 ml-1 font-semibold" htmlFor="descricao">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="descricao">
               Descrição da Reunião
             </label>
             <textarea
               id="descricao"
-              className="px-3 w-[100%] h-[30%] py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
+              className="px-3 w-[] py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
               placeholder="Descreva o objetivo da reunião"
             ></textarea>
           </div>
@@ -50,10 +50,10 @@ export function AgendarReuniao() {
           {/* Data e Hora */}
           <div className="flex flex-col md:flex-row gap-6 mb-6">
             <div className="flex-1">
-              <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="data">
+              <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="data">
                 Data da Reunião
               </label>
-              <Input
+              <input
                 id="data"
                 type="date"
                 className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -61,10 +61,10 @@ export function AgendarReuniao() {
             </div>
 
             <div className="flex-1">
-              <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="hora">
+              <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="hora">
                 Hora da Reunião
               </label>
-              <Input
+              <input
                 id="hora"
                 type="time"
                 className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -74,10 +74,10 @@ export function AgendarReuniao() {
 
           {/* Participantes */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="participantes">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="participantes">
               Participantes
             </label>
-            <Input
+            <input
               id="participantes"
               type="text"
               className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -87,10 +87,10 @@ export function AgendarReuniao() {
 
           {/* Local/Plataforma */}
           <div className="mb-10">
-            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="local">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="local">
               Local/Plataforma
             </label>
-            <Input
+            <input
               id="local"
               type="text"
               className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -102,7 +102,7 @@ export function AgendarReuniao() {
 <div className="flex justify-center md:justify-end">
   <button
     type="submit"
-    className="flex items-center gap-2 px-5 py-3 bg-primary text-white rounded-lg shadow-lg hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base"
+    className="flex items-center gap-2 px-6 h-12 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm sm:text-base"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -117,7 +117,6 @@ export function AgendarReuniao() {
     Agendar Reunião
   </button>
 </div>
-
 
         </form>
       </div>

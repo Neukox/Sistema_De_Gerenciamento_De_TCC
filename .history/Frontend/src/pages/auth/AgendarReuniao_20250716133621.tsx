@@ -87,7 +87,7 @@ export function AgendarReuniao() {
 
           {/* Local/Plataforma */}
           <div className="mb-10">
-            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="local">
+            <label className="block text-base sm:text-lg font-medium mb-1 ml-1" htmlFor="local">
               Local/Plataforma
             </label>
             <Input
