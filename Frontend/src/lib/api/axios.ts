@@ -1,4 +1,5 @@
 import axios from "axios";
+import { redirect } from "react-router-dom";
 
 /**
  * Instancia axios com a URL base da API e os cabeçalhos padrão.
@@ -28,6 +29,12 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    if (error.response && error.response.status === 401) {
+      // Redirecionar para a página de login se o token for inválido
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      redirect("/login");
+    }
     return Promise.reject(error);
   }
 );

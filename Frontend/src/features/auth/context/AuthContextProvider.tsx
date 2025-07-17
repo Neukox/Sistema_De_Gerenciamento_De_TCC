@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import type { UserData } from "@/types/user/user";
 import AuthContext from "./AuthContext";
 import { useNavigate } from "react-router-dom";
+import isTokenExpired from "@/utils/jwt";
 
 /**
  * Provider para o contexto de autenticação.
@@ -30,10 +31,19 @@ export default function AuthProvider({
 
     // Se os dados do usuário e o token estiverem presentes, define o estado
     if (storedUser && storedToken) {
+      // Verifica se o token está expirado
+      if (isTokenExpired(storedToken)) {
+        // Se o token estiver expirado, limpa o localStorage e redireciona para o login
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/login");
+        return;
+      }
+
       setUser(JSON.parse(storedUser));
       setToken(storedToken);
     }
-  }, []);
+  }, [navigate]);
 
   // Função para definir a sessão do usuário
   // Esta função atualiza o estado do usuário e do token, e armazena os dados no localStorage
