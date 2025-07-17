@@ -1,13 +1,6 @@
-import Button from "@/components/ui/Button";
+import Button, { type ButtonProps } from "@/components/ui/Button";
 import { cn } from "@/utils/cn";
 import { FaSpinner } from "react-icons/fa";
-
-type SubmitProps = {
-  variant?: "default" | "primary" | "secondary" | "neutral";
-  className?: string;
-  children?: React.ReactNode;
-  disabled?: boolean;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 /**
  * Componente de Botão Personalizado para Submissão de Formulários.
@@ -25,7 +18,7 @@ export default function Submit({
   children = "Enviar",
   disabled = false,
   ...props
-}: SubmitProps) {
+}: ButtonProps) {
   return (
     <Button
       type="submit"

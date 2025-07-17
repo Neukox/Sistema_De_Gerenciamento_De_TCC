@@ -29,7 +29,7 @@ const variants: Variants = {
   
 };
 
-type ButtonProps = {
+export type ButtonProps = {
   variant?: keyof typeof variants;
   className?: string | string[];
   children?: React.ReactNode;
