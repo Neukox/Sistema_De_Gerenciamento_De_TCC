@@ -6,12 +6,11 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
-import { CadastrarTcc } from "../src/features/CadastroTcc/CadastrarTcc";
-import { BoasVindas } from "../src/features/BoasVindas/BoasVindas";
-import { AgendarReuniao } from "../src/features/AgendarReunião/AgendarReuniao";
 import { HistoricoAtividades } from "../src/features/Historico/HistoricoAtividades";
 import UserProfile from "./features/Profile/UserProfile";
-
+import { CadastrarTcc } from "./pages/CadastrarTcc";
+import { BoasVindas } from "./pages/BoasVindas";
+import { AgendarReuniao } from "./pages/AgendarReuniao";
 
 export default function App() {
   return (
@@ -31,7 +30,7 @@ export default function App() {
         {/* Public Routes */}
 
         {/* Redirect to login if no route matches */}
-        
+
         {/* Protected Routes */}
         <Route
           path="/dashboard"

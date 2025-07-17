@@ -16,19 +16,23 @@ const ProtectedRoute: React.FC = () => {
 
   // Verifica se o usuário é um Aluno e se o TCC está definido
   if (user?.role === "ALUNO") {
+    // Se o usuário for um Aluno e não tiver um TCC cadastrado, redireciona para Boas Vindas
     if (!tccData || !tccData.id) {
-      return <Navigate to="/cadastrar-tcc" replace />;
+      return <Navigate to="/" replace />;
     }
 
-    return <Navigate to="/cadastrar-tcc" replace />;
+    return <Navigate to="/maindashboard" replace />;
   }
 
   if (user?.role === "PROFESSOR") {
     // Se o usuário for um Professor, redireciona para Boas Vindas
-    return <Navigate to="/boas-vindas" replace />;
+    return <Navigate to="/" replace />;
   }
 
-  // Verifica se o usuário é um Orientador e se o TCC está definido
+  // Se o usuário for um ADMIN, redireciona para o Dashboard Principal
+  if (user?.role === "ADMIN") {
+    return <Navigate to="/maindashboard" replace />;
+  }
 
   // Se o usuário estiver autenticado, renderiza os componentes filhos
   return <Outlet />;
