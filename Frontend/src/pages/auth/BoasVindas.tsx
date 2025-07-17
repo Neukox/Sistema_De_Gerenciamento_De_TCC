@@ -1,6 +1,10 @@
 import { Button } from '@/components/ui/form';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import { LuTarget } from "react-icons/lu";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { IoMdTrendingUp } from "react-icons/io";
+
 
 export function BoasVindas() {
   const navigate = useNavigate();
@@ -15,11 +19,11 @@ export function BoasVindas() {
 
   return (
     <div className="bg-secondary w-full min-h-screen flex justify-center items-center px-4 sm:px-6 lg:px-8">
-      <div className="bg-white w-full max-w-4xl mx-auto py-8 sm:py-12 lg:py-16 px-6 sm:px-8 lg:px-12 rounded-2xl shadow-lg">
+      <div className="bg-white w-full max-w-4xl mx-auto py-8 sm:py-12 lg:py-16 px-6 sm:px-8 mb-6 mt-6 lg:px-12 rounded-2xl shadow-lg">
         
         {/* Header com Logo */}
         <div className="flex justify-center items-center mb-8 sm:mb-12">
-          <img src={logo} alt="Logo" className="w-12 h-12 sm:w-16 sm:h-16 mr-3" />
+          <img src={logo} alt="Logo" className="w-24 h-24 sm:w-16 sm:h-16 object-contain " />
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800">FocoTCC</h1>
         </div>
 
@@ -39,8 +43,7 @@ export function BoasVindas() {
           {/* Card 1: Organize Marcos */}
           <div className="text-center p-6">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                <div className="w-4 h-4 border-2 border-white rounded-full"></div>
+              <div className="w-8 h-8 flex items-center justify-center"> <LuTarget size={35} className='flex text-blue-600 items-center' />
               </div>
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
@@ -54,11 +57,8 @@ export function BoasVindas() {
           {/* Card 2: Gerencie Tarefas */}
           <div className="text-center p-6">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
+                <IoMdCheckmarkCircleOutline size={35} className='flex text-green-800 items-center' />
+
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
               Gerencie Tarefas
@@ -71,11 +71,7 @@ export function BoasVindas() {
           {/* Card 3: Monitore Progresso */}
           <div className="text-center p-6">
             <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-                </svg>
-              </div>
+              <IoMdTrendingUp size={35} className='flex items-center text-orange-800' />
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3">
               Monitore Progresso
@@ -110,11 +106,11 @@ export function BoasVindas() {
           </div>
 
           {/* Link para Login */}
-          <p className="text-sm sm:text-base text-gray-600">
+          <p className="text-sm sm:text-base font-semibold text-gray-600">
             Já tem um TCC cadastrado?{' '}
             <button 
               onClick={handleFazerLogin}
-              className="text-blue-600 hover:text-blue-700 font-medium underline transition-colors bg-transparent border-none cursor-pointer"
+              className="text-primary hover:opacity-85 font-semibold outline-none transition-colors bg-transparent border-none cursor-pointer"
             >
               Fazer Login
             </button>
