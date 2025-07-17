@@ -3,6 +3,7 @@ import useAuth from "@/features/auth/context/useAuth";
 import { getAlunoTCC } from "@/services/tcc/getAlunoTCC";
 import { type TCCData, statusTCC } from "@/types/tcc";
 import TCCContext from "./TCCContext";
+import formatDate from "@/utils/format-date";
 
 interface TCCProviderProps {
   children: React.ReactNode;
@@ -27,8 +28,8 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
     pending: 0,
     late: 0,
     institution: "Carregando...",
-    data_inicio: null,
-    prazo_entrega: null,
+    data_inicio: "-",
+    prazo_entrega: "-",
     status: "Planejamento",
   });
   const [loading, setLoading] = useState(true);
@@ -80,8 +81,8 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
             pending: 0,
             late: 0,
             institution: "Universidade Federal",
-            data_inicio: tccResponse.dataInicio || null,
-            prazo_entrega: tccResponse.dataConclusao || null,
+            data_inicio: formatDate(tccResponse.dataInicio || "-", false),
+            prazo_entrega: formatDate(tccResponse.dataConclusao || "-", false),
             status:
               statusTCC?.[
                 tccResponse.statusAtual as unknown as keyof typeof statusTCC
@@ -131,8 +132,10 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchTCCData();
-  });
+    if (user) {
+      fetchTCCData();
+    }
+  }, [user]); // Só executa quando 'user' mudar
 
   return (
     <TCCContext.Provider
