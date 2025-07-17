@@ -3,11 +3,10 @@ import {
   findTCCByAlunoId,
 } from "../../repositories/TCC/TCCRepository";
 import { ResponseError } from "../../helpers/ResponseError";
-import prisma from "../../config/prisma";
 import { CreateTCCPayload } from "../../repositories/TCC/interfaces";
 import { ICreateTCCService } from "./contracts";
-import { findProfessorByUsuarioId } from "../../repositories/professor/professorRepository";
-import { createBanca } from "../../repositories/banca/bancaRepository";
+import { findProfessorByName } from "../../repositories/professor/professorRepository";
+import { findAreaConhecimentoByName } from "../../repositories/area-conhecimento/areaConhecimentoRepository";
 
 export default async function createTCCService(
   data: ICreateTCCService
@@ -49,58 +48,37 @@ export default async function createTCCService(
   }
 
   // Buscar orientador por nome
-  const orientador = await prisma.professor.findFirst({
-    where: {
-      Usuario: {
-        nome_completo: {
-          contains: data.orientadorNome.trim(),
-          mode: 'insensitive'
-        }
-      }
-    },
-    include: {
-      Usuario: {
-        select: {
-          nome_completo: true
-        }
-      }
-    }
-  });
+  const orientador = await findProfessorByName(data.orientadorNome.trim());
 
   if (!orientador) {
-    throw new ResponseError(
-      404,
-      `Orientador com nome "${data.orientadorNome}" não encontrado.`
-    );
+    throw new ResponseError(404, `Orientador não encontrado.`);
   }
 
   // Buscar coorientador por nome (se fornecido)
   let coorientador = null;
   if (data.coorientadorNome && data.coorientadorNome.trim()) {
-    coorientador = await prisma.professor.findFirst({
-      where: {
-        Usuario: {
-          nome_completo: {
-            contains: data.coorientadorNome.trim(),
-            mode: 'insensitive'
-          }
-        }
-      },
-      include: {
-        Usuario: {
-          select: {
-            nome_completo: true
-          }
-        }
-      }
-    });
+    coorientador = await findProfessorByName(data.coorientadorNome.trim());
 
-    if (!coorientador) {
+    // Verifica se o coorientador é o mesmo que o orientador
+    if (coorientador && coorientador.Usuario_id === orientador.Usuario_id) {
       throw new ResponseError(
-        404,
-        `Coorientador com nome "${data.coorientadorNome}" não encontrado.`
+        400,
+        "O coorientador não pode ser o mesmo que o orientador."
       );
     }
+
+    if (!coorientador) {
+      throw new ResponseError(404, `Coorientador não encontrado.`);
+    }
+  }
+
+  // busca a área de conhecimento pelo ID
+  const areaConhecimento = await findAreaConhecimentoByName(
+    data.areaConhecimento.trim()
+  );
+
+  if (!areaConhecimento) {
+    throw new ResponseError(404, `Área de conhecimento não encontrada.`);
   }
 
   // Criação do TCC com IDs dos orientadores
@@ -112,7 +90,7 @@ export default async function createTCCService(
     dataConclusao: dataConclusaoDate,
     statusAtual: data.statusAtual,
     alunoId: data.alunoId,
-    areaConhecimentoId: data.areaConhecimentoId,
+    areaConhecimentoId: areaConhecimento.id,
     orientadorId: orientador.Usuario_id,
     coorientadorId: coorientador?.Usuario_id,
   });

@@ -8,7 +8,7 @@ export interface ICreateTCCService {
   dataConclusao?: string;
   statusAtual: $Enums.StatusTCC;
   alunoId: number;
-  areaConhecimentoId: number;
+  areaConhecimento: string;
   orientadorNome: string; // Nome que será buscado no banco de dados
   coorientadorNome?: string; // Nome que será buscado no banco de dados
 }
