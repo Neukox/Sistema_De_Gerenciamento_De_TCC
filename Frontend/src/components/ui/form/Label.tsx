@@ -23,7 +23,7 @@ export default function Label({
   ...props
 }: LabelProps) {
   return (
-    <label className={cn("font-bold mb-2 block", className)} {...props}>
+    <label className={cn("font-semibold mb-2 block", className)} {...props}>
       {children}
       {required && <span className="text-red-500"> *</span>}
     </label>
