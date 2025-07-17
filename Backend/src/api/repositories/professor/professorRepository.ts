@@ -78,3 +78,34 @@ export async function findProfessorByUsuarioId(
 
   return professor;
 }
+
+/**
+ * Função para buscar um professor pelo nome
+ * @param {string} nome - Nome do professor a ser buscado
+ * @returns {Promise<Professor | null>} Retorna o professor encontrado ou null se não existir
+ */
+
+export async function findProfessorByName(
+  nome: string
+): Promise<Professor | null> {
+  const professor = await prisma.professor.findFirst({
+    where: {
+      Usuario: {
+        nome_completo: {
+          contains: nome,
+          mode: "insensitive", // Ignora maiúsculas/minúsculas
+        },
+      },
+    },
+    include: {
+      Usuario: {
+        select: {
+          nome_completo: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  return professor;
+}

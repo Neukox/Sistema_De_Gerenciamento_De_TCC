@@ -42,3 +42,24 @@ export async function findAreaConhecimentoById(
     quantidadeTCCs: area._count.tccs || 0, // Adiciona a contagem de TCCs
   };
 }
+
+/**
+ * Função para buscar uma área de conhecimento pelo nome
+ * @param {string} nome - Nome da área de conhecimento a ser buscada
+ * @returns {Promise<AreaConhecimento | null>} Retorna a área de conhecimento encontrada ou null se não existir
+ */
+
+export async function findAreaConhecimentoByName(
+  nome: string
+): Promise<AreaConhecimento | null> {
+  const area = await prisma.areaConhecimento.findFirst({
+    where: {
+      nome: {
+        equals: nome,
+        mode: "insensitive", // Ignora maiúsculas/minúsculas
+      },
+    },
+  });
+
+  return area;
+}

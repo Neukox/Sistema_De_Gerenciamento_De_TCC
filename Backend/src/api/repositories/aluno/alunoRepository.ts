@@ -41,3 +41,33 @@ export async function createAluno(data: Aluno): Promise<Aluno | null> {
 
   return aluno;
 }
+
+/**
+ * Função para buscar um aluno pelo ID
+ * @param {number} id - ID do aluno a ser buscado
+ * @returns {Promise<Aluno | null>} Retorna o aluno encontrado ou null se não existir
+ */
+export async function findAlunoById(id: number): Promise<GetAlunos | null> {
+  const aluno = await prisma.aluno.findUnique({
+    where: { Usuario_id: id },
+    include: {
+      Usuario: {
+        select: {
+          email: true,
+          nome_completo: true,
+        },
+      },
+    },
+  });
+
+  if (!aluno) {
+    return null;
+  }
+
+  return {
+    id: aluno.Usuario_id,
+    nome_completo: aluno.Usuario.nome_completo,
+    email: aluno.Usuario.email,
+    curso: aluno.curso,
+  };
+}
