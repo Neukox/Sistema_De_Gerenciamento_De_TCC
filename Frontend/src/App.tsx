@@ -4,7 +4,7 @@ import MainDashboard from "./features/Dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
-import ProtectedRoute from "./components/ui/ProtectedRoute";
+import ProtectedRoute from "./pages/ProtectedRoute";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
 import { CadastrarTcc } from "../src/features/CadastroTcc/CadastrarTcc";
 import { BoasVindas } from "../src/features/BoasVindas/BoasVindas";
