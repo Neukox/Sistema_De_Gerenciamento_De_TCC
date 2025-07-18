@@ -52,40 +52,40 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
         // Buscar TCC real do aluno
         console.log("Buscando TCC do aluno...");
 
-        const tccResponse = await getAlunoTCC();
-        console.log("Resposta COMPLETA do TCC:", tccResponse);
+        const { success, tcc } = await getAlunoTCC();
+        console.log("Resposta COMPLETA do TCC:", tcc);
 
-        if (tccResponse.success) {
+        if (success) {
           console.log("TCC encontrado, atualizando dados...");
-          console.log("ID do TCC:", tccResponse.id);
-          console.log("Título:", tccResponse.titulo);
-          console.log("Orientador:", tccResponse.orientador);
-          console.log("Coorientador:", tccResponse.coorientador);
+          console.log("ID do TCC:", tcc.id);
+          console.log("Título:", tcc.titulo);
+          console.log("Orientador:", tcc.orientador);
+          console.log("Coorientador:", tcc.coorientador);
 
           setTccData({
-            id: tccResponse.id,
-            title: tccResponse.titulo,
-            aluno: tccResponse.aluno.nome,
-            curso: tccResponse.aluno.curso,
+            id: tcc.id,
+            title: tcc.titulo,
+            aluno: tcc.aluno.nome,
+            curso: tcc.aluno.curso,
             orientador:
-              typeof tccResponse.orientador === "string"
-                ? tccResponse.orientador
-                : tccResponse.orientador?.nome || "Não definido",
+              typeof tcc.orientador === "string"
+                ? tcc.orientador
+                : tcc.orientador?.nome || "Não definido",
             coorientador:
-              typeof tccResponse.coorientador === "string"
-                ? tccResponse.coorientador
-                : tccResponse.coorientador?.nome || "Não definido",
+              typeof tcc.coorientador === "string"
+                ? tcc.coorientador
+                : tcc.coorientador?.nome || "Não definido",
             progress: 0, // TODO: Implementar cálculo de progresso
             checked: 0,
             total: 0,
             pending: 0,
             late: 0,
             institution: "Universidade Federal",
-            data_inicio: formatDate(tccResponse.dataInicio || "-", false),
-            prazo_entrega: formatDate(tccResponse.dataConclusao || "-", false),
+            data_inicio: formatDate(tcc.dataInicio || "-", false),
+            prazo_entrega: formatDate(tcc.dataConclusao || "-", false),
             status:
               statusTCC?.[
-                tccResponse.statusAtual as unknown as keyof typeof statusTCC
+                tcc.statusAtual as unknown as keyof typeof statusTCC
               ] || "Planejamento",
           });
         } else {
@@ -132,9 +132,7 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchTCCData();
-    }
+    fetchTCCData();
   }, [user]); // Só executa quando 'user' mudar
 
   return (

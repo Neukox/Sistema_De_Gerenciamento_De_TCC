@@ -7,10 +7,13 @@ import {
   FormError,
   Submit,
 } from "@/components/ui/form";
-import type { AreaConhecimento } from "@/services/fetchProfessoresAreas";
 import type { GetProfessor } from "@/types/response/professor";
 import useCreateTCCForm from "./create-tcc-form.hook";
 import type { CreateTCCFormData } from "./create-tcc-form.schema";
+import useCreateTCC from "../create-tcc-fetch";
+import type { RegisterTCCRequest } from "@/types/response/tcc";
+import { statusTCC } from "@/types/tcc";
+import type { AreaConhecimento } from "@/types/area-conhecimento";
 
 type CreateTCCFormProps = {
   areasConhecimento: AreaConhecimento[];
@@ -35,8 +38,23 @@ export default function CreateTCCForm({
     formState: { errors },
   } = useCreateTCCForm();
 
+  const { registerTCC, isLoading } = useCreateTCC();
+
   const onSubmit = (data: CreateTCCFormData) => {
-    console.log("Dados do formulário:", data);
+    // Mapeia os dados do formulário para o formato esperado pela API
+    const requestData: RegisterTCCRequest = {
+      titulo: data.titulo,
+      tema: data.tema,
+      resumo: data.resumo,
+      dataInicio: data.dataInicio,
+      dataConclusao: data.dataConclusao,
+      statusAtual: data.status as keyof typeof statusTCC,
+      areaConhecimento: data.areaConhecimento,
+      orientadorNome: data.orientador,
+      coorientadorNome: data.coorientador,
+    };
+
+    registerTCC(requestData);
   };
 
   return (
@@ -210,11 +228,11 @@ export default function CreateTCCForm({
           placeholder="Selecione o status atual do TCC"
           {...register("status")}
         >
-          <option value="PLANEJAMENTO">Planejamento</option>
-          <option value="DESENVOLVIMENTO">Desenvolvimento</option>
-          <option value="REVISAO">Revisão</option>
-          <option value="FINALIZACAO">Finalização</option>
-          <option value="CONCLUIDO">Concluído</option>
+          {Object.keys(statusTCC).map((status) => (
+            <option key={status} value={status}>
+              {status.valueOf()}
+            </option>
+          ))}
         </Select>
         {errors.status && <FormError>{errors.status.message}</FormError>}
       </div>
@@ -227,7 +245,7 @@ export default function CreateTCCForm({
 
       {/* Botão de Cadastrar TCC */}
       <div className="col-span-2">
-        <Submit variant="primary" className="w-full" disabled={false}>
+        <Submit variant="primary" className="w-full" disabled={isLoading}>
           Cadastrar TCC
         </Submit>
       </div>
