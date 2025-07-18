@@ -4,7 +4,6 @@ import Input, { type InputProps } from "./Input";
 type OptionType = {
   index: number | string;
   value: string | number;
-  label?: string | number; // Rótulo opcional, se não fornecido, o valor será usado como rótulo
 };
 
 type DatalistProps = {
@@ -31,11 +30,9 @@ export default function Datalist({
   return (
     <div className="relative">
       <Input list={id} variant={variant} className={cn(className)} {...props} />
-      <datalist id={id}>
+      <datalist id={id} aria-labelledby={id}>
         {options.map((option) => (
-          <option key={option.index} value={option.value}>
-            {option.label || option.value}
-          </option>
+          <option key={option.index} value={option.value} />
         ))}
       </datalist>
     </div>

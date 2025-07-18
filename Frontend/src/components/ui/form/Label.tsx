@@ -25,7 +25,7 @@ export default function Label({
   return (
     <label className={cn("font-semibold mb-2 block", className)} {...props}>
       {children}
-      {required && <span className="text-red-500"> *</span>}
+      {required && <span className="text-red-600"> *</span>}
     </label>
   );
 }

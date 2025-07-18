@@ -30,7 +30,7 @@ function Input({
   return (
     <input
       className={cn(
-        "px-3 py-2 rounded-lg border border-solid border-gray-400 bg-gray-100 font-normal transition-colors duration-1000 ease-in-out focus:outline-none",
+        "px-3 py-2 rounded-lg border border-solid border-gray-400 bg-gray-100 font-normal transition-colors duration-300 ease-in-out focus:outline-none",
         Variants[variant],
         className
       )}
