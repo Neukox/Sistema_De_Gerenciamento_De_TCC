@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/form";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import { Plus } from "lucide-react";
+import useTitle from "@/hooks/useTitle";
 
 export function BoasVindas() {
   const navigate = useNavigate();
+
+  useTitle("Bem-vindo | FocoTCC");
 
   const handleCadastrarTCC = () => {
     navigate("/cadastrar-tcc");

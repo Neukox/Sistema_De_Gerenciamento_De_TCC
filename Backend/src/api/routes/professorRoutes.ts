@@ -8,7 +8,7 @@ import getAllProfessoresController from "../controllers/professores/getAllContro
 const professorRoutes = Router();
 
 // Rota para obter todos os professores
-professorRoutes.get("/", [authorization], getAllProfessoresController);
+professorRoutes.get("/", getAllProfessoresController);
 
 export default professorRoutes;
 

@@ -4,13 +4,13 @@ import MainDashboard from "./features/Dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
-import ProtectedRoute from "./pages/ProtectedRoute";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
 import { HistoricoAtividades } from "../src/features/Historico/HistoricoAtividades";
 import UserProfile from "./features/Profile/UserProfile";
 import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import { AgendarReuniao } from "./pages/AgendarReuniao";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 export default function App() {
   return (
