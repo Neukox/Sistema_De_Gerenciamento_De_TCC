@@ -232,31 +232,6 @@ function MainDashboard() {
 
         {/* Conteúdo das abas */}
         <div className="flex flex-col lg:flex-row gap-4 mt-4">
-=======
-          {/* Container das outras abas */}
-          <div className="flex flex-row flex-grow bg-neutral">
-            <Button
-              variant="select"
-              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
-                ${isActive("tarefas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
-              onClick={() => changeTab("tarefas")}
-            >
-              <GrTask /> Tarefas
-            </Button>
-
-            <Button
-              variant="select"
-              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
-                ${isActive("notas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
-              onClick={() => changeTab("notas")}
-            >
-              <IoCalendarClearOutline /> Anotações
-            </Button>
-          </div>
-        </div>
-
-        {/* Conteúdo das abas */}
-        <div className="flex flex-row gap-4 mt-4">
           {/* Aba: Marcos */}
           {activeTab === "marcos" && (
             <div className="flex flex-col w-full lg:w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-4 sm:p-6 mt-4 mb-5">
@@ -387,8 +362,6 @@ function MainDashboard() {
 
                 {/* Se não houver notas, exibe mensagem */}
                 <div className="mt-4 overflow-y-visible">
-=======
-
                   {listaNota.length === 0 ? (
                     <p className="text-gray-400 flex items-center mt-8 justify-center text-sm sm:text-base">
                       Nenhuma anotação cadastrada.
