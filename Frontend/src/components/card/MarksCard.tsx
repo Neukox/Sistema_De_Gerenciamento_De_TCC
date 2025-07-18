@@ -94,73 +94,78 @@ const MarksCard = ({ id, title, description, prazo, stats, mostrar, mostrarEdita
 
   return (
     // Container principal - Estrutura base do card com bordas, sombra e espaçamento
-    <div className="border border-gray-300 w-full min-h-40 rounded-md p-7 mt-5 shadow-lg">
+    <div className="border border-gray-300 w-full min-h-40 rounded-md p-4 sm:p-7 mt-5 shadow-lg">
       
       {/* Seção do cabeçalho - Área superior com ID, título e controles de status */}
       <div className="border-b">
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
           
           {/* ID da tarefa - Identificador numérico visual da tarefa */}
-          <h1 className="text-gray-600 text-xl">#{id}</h1>
+          <h1 className="text-gray-600 text-lg sm:text-xl">#{id}</h1>
 
           {/* Título da tarefa - Nome principal em destaque */}
-          <p className="text-xl font-semibold text-gray-800">{title}</p>
+          <p className="text-lg sm:text-xl font-semibold text-gray-800 flex-1">{title}</p>
 
           {/* Controle de status - Dropdown interativo ou indicador fixo para tarefas atrasadas */}
-          {estaAtrasado ? (
-            // Status fixo - Exibido quando a tarefa está atrasada, não permite alteração
-            <div
-              className="flex items-center font-bold gap-2 px-3 py-1 rounded-md shadow-md focus:outline-none text-sm"
-              style={{ color: cor, backgroundColor: colorBackground }}
-            >
-              {Icon && <Icon size={18} />}
-              {statusAtual.charAt(0).toUpperCase() + statusAtual.slice(1)}
-            </div>
-          ) : (
-            // Dropdown interativo - Permite ao usuário alterar o status da tarefa
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className="flex items-center gap-2 px-3 py-1 rounded-md shadow-md focus:outline-none text-sm font-bold"
-                  style={{ color: cor, backgroundColor: colorBackground }}
-                >
-                  {Icon && <Icon size={18} />}
-                  {statusAtual.charAt(0).toUpperCase() + statusAtual.slice(1)}
-                </button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent
-                side="bottom"
-                align="center"
-                className="bg-white z-50"
-                sideOffset={8}
+          <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-2 sm:mt-0">
+            {estaAtrasado ? (
+              // Status fixo - Exibido quando a tarefa está atrasada, não permite alteração
+              <div
+                className="flex items-center font-bold gap-1 sm:gap-2 px-2 sm:px-3 py-1 rounded-md shadow-md focus:outline-none text-xs sm:text-sm"
+                style={{ color: cor, backgroundColor: colorBackground }}
               >
-                {Object.entries(StatusColor)
-                  .filter(([Key]) => Key !== "atrasado")
-                  .map(([key]) => {
-                    const ItemIcon: IconType | undefined = StatusIcon[key];
+                {Icon && <Icon size={16} className="sm:hidden" />}
+                {Icon && <Icon size={18} className="hidden sm:block" />}
+                <span className="whitespace-nowrap">{statusAtual.charAt(0).toUpperCase() + statusAtual.slice(1)}</span>
+              </div>
+            ) : (
+              // Dropdown interativo - Permite ao usuário alterar o status da tarefa
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 rounded-md shadow-md focus:outline-none text-xs sm:text-sm font-bold"
+                    style={{ color: cor, backgroundColor: colorBackground }}
+                  >
+                    {Icon && <Icon size={16} className="sm:hidden" />}
+                    {Icon && <Icon size={18} className="hidden sm:block" />}
+                    <span className="whitespace-nowrap">{statusAtual.charAt(0).toUpperCase() + statusAtual.slice(1)}</span>
+                  </button>
+                </DropdownMenuTrigger>
 
-                    return (
-                      <DropdownMenuItem
-                        key={key}
-                        onClick={() => handleStatusChange(key)}
-                        className="flex items-center gap-2 cursor-pointer font-medium hover:bg-gray-200"
-                      >
-                        {ItemIcon && <ItemIcon size={18} />}
-                        {key.charAt(0).toUpperCase() + key.slice(1)}
-                      </DropdownMenuItem>
-                    );
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+                <DropdownMenuContent
+                  side="bottom"
+                  align="center"
+                  className="bg-white z-50"
+                  sideOffset={8}
+                >
+                  {Object.entries(StatusColor)
+                    .filter(([Key]) => Key !== "atrasado")
+                    .map(([key]) => {
+                      const ItemIcon: IconType | undefined = StatusIcon[key];
 
-          {/* Botão de edição - Aparece condicionalmente para permitir edição da tarefa */}
-          {mostrarEditar && (
-            <Button className="border-none ml-auto" variant="edit">
-              <LuPencilLine size={20} />
-            </Button>
-          )}
+                      return (
+                        <DropdownMenuItem
+                          key={key}
+                          onClick={() => handleStatusChange(key)}
+                          className="flex items-center gap-2 cursor-pointer font-medium hover:bg-gray-200"
+                        >
+                          {ItemIcon && <ItemIcon size={18} />}
+                          {key.charAt(0).toUpperCase() + key.slice(1)}
+                        </DropdownMenuItem>
+                      );
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            {/* Botão de edição - Aparece condicionalmente para permitir edição da tarefa */}
+            {mostrarEditar && (
+              <Button className="border-none ml-auto" variant="edit">
+                <LuPencilLine size={18} className="sm:hidden" />
+                <LuPencilLine size={20} className="hidden sm:block" />
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Detalhes da tarefa - Área inferior com descrição e informações de prazo */}

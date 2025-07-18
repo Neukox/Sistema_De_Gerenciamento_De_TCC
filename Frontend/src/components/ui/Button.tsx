@@ -11,6 +11,7 @@ type Variants = {
   select: string;
   edit: string;
   quicks: string;
+  DropProf: string;
 };
 
 // Define as variantes de estilo para o botão
@@ -19,10 +20,11 @@ const variants: Variants = {
   primary: "bg-primary hover:bg-primary/80 text-white shadow-lg transition-colors duration-300",
   secondary: "bg-secondary hover:bg-secondary/80 text-white shadow-lg transition-colors duration-300",
   neutral: "bg-neutral hover:bg-neutral/80 text-white shadow-lg transition-colors duration-300",
-  logout: "bg-red-500 hover:bg-red-600 text-white shadow-lg transition-colors duration-300",
+  logout: " text-red-500 hover:text-red-700 transition-colors duration-300",
   select: "font-medium text-[#252525] hover:text-gray-400 cursor-pointer transition-colors duration-300",
   edit: " hover:text-blue-900 transition-colors duration-300",
-  quicks: "border border-gray-400 rounded-md shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all"
+  quicks: "border border-gray-400 rounded-md shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all",
+  DropProf: "text-black hover:text-gray-400 transition-colors duration-300",
 };
 
 type ButtonProps = {

@@ -6,10 +6,12 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
-import { CadastrarTcc } from "./pages/auth/CadastrarTcc";
-import { BoasVindas } from "./pages/auth/BoasVindas";
-import { AgendarReuniao } from "./pages/auth/AgendarReuniao";
-import { HistoricoAtividades } from "./pages/auth/HistoricoAtividades";
+import { CadastrarTcc } from "../src/features/CadastroTcc/CadastrarTcc";
+import { BoasVindas } from "../src/features/BoasVindas/BoasVindas";
+import { AgendarReuniao } from "../src/features/AgendarReunião/AgendarReuniao";
+import { HistoricoAtividades } from "../src/features/Historico/HistoricoAtividades";
+import UserProfile from "./features/Profile/UserProfile";
+
 
 export default function App() {
   return (
@@ -23,6 +25,9 @@ export default function App() {
       <Route path="/boas-vindas" element={<BoasVindas />} />
       <Route path="/agendar-reuniao" element={<AgendarReuniao />} />
       <Route path="/historico-atividades" element={<HistoricoAtividades />} />
+      <Route path="/perfil" element={<UserProfile />} />
+
+      {/* Public Routes */}
 
       {/* Redirect to login if no route matches */}
       

@@ -14,7 +14,7 @@ export function AgendarReuniao() {
 
         {/* Título do formulário */}
         <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-4xl font-bold font-semibold">Agendar Nova Reunião</h2>
+          <h2 className="text-2xl sm:text-4xl  font-semibold">Agendar Nova Reunião</h2>
           <p className="text-sm sm:text-lg mt-2 sm:mt-4 text-gray-600">
             Preencha os detalhes da sua reunião
           </p>

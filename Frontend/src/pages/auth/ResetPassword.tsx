@@ -1,3 +1,4 @@
+
 import AuthContainer from "@/features/auth/container/AuthContainer";
 import RecoverPasswordForm from "@/features/auth/recover-password/RecoverPasswordForm";
 import useTitle from "@/hooks/useTitle";
