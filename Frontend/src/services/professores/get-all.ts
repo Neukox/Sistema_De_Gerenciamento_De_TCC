@@ -14,14 +14,13 @@ import type {
  */
 
 export default async function getAllProfessores(
-  params: GetAllProfessoresParams
+  params?: GetAllProfessoresParams
 ): Promise<GetAllProfessoresResponse> {
   const response = await api.get<GetAllProfessoresResponse>(
     API_CONFIG.ENDPOINTS.PROFESSORES.GET_ALL,
     {
       params: {
-        nome: params.nome,
-        disponibilidade: params.disponibilidade,
+        ...params, // Inclui os parâmetros de consulta se fornecidos
       },
     }
   );
