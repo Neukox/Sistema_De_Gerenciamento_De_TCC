@@ -1211,6 +1211,7 @@ function MainDashboard() {
 
         {/* Conteúdo das abas */}
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div className="flex flex-row gap-4 mt-4">
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1259,6 +1260,9 @@ function MainDashboard() {
 =======
         <div className="flex flex-col lg:flex-row gap-4 mt-4">
 >>>>>>> f293097 (segunda alteração para o pessoal)
+=======
+        <div className="flex flex-col lg:flex-row gap-4 mt-4">
+>>>>>>> 0032a62 (segunda alteração para o pessoal)
           {/* Aba: Marcos */}
 >>>>>>> 9cb91c8 (dashboard concluido e alternado comentarios)
 =======
