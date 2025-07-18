@@ -1,7 +1,16 @@
-import Button from "@/components/ui/Button";
-import { Input, Datalist, Label, Select, Textarea } from "@/components/ui/form";
+import {
+  Input,
+  Datalist,
+  Label,
+  Select,
+  Textarea,
+  FormError,
+  Submit,
+} from "@/components/ui/form";
 import type { AreaConhecimento } from "@/services/fetchProfessoresAreas";
 import type { GetProfessor } from "@/types/response/professor";
+import useCreateTCCForm from "./create-tcc-form.hook";
+import type { CreateTCCFormData } from "./create-tcc-form.schema";
 
 type CreateTCCFormProps = {
   areasConhecimento: AreaConhecimento[];
@@ -19,21 +28,36 @@ export default function CreateTCCForm({
   areasConhecimento,
   professores,
 }: CreateTCCFormProps) {
+  // Hook para gerenciar o formulário de criação de TCC
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useCreateTCCForm();
+
+  const onSubmit = (data: CreateTCCFormData) => {
+    console.log("Dados do formulário:", data);
+  };
+
   return (
-    <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <form
+      className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="col-span-2">
         <Label className="" htmlFor="titulo" required>
           Título do TCC
         </Label>
         <Input
-          type="text"
           id="titulo"
-          name="titulo"
+          type="text"
           variant="primary"
           className="w-full"
           placeholder="Digite o título do seu TCC"
-          required
+          aria-invalid={!!errors.titulo}
+          {...register("titulo")}
         />
+        {errors.titulo && <FormError>{errors.titulo.message}</FormError>}
       </div>
 
       {/* Tema do TCC */}
@@ -42,14 +66,15 @@ export default function CreateTCCForm({
           Tema do TCC
         </Label>
         <Input
+          id="tema"
           type="text"
           variant="primary"
-          id="tema"
-          name="tema"
           className="w-full"
           placeholder="Digite o tema do seu TCC"
-          required
+          aria-invalid={!!errors.tema}
+          {...register("tema")}
         />
+        {errors.tema && <FormError>{errors.tema.message}</FormError>}
       </div>
 
       {/* Área do conhecimento */}
@@ -60,16 +85,18 @@ export default function CreateTCCForm({
         <Datalist
           id="areaConhecimento"
           variant="primary"
-          name="areaConhecimento"
           className="w-full"
           placeholder="Selecione a área do conhecimento"
           options={areasConhecimento.map((area) => ({
             index: area.id,
             value: area.nome,
-            label: area.nome,
           }))}
-          required
+          aria-invalid={!!errors.areaConhecimento}
+          {...register("areaConhecimento")}
         />
+        {errors.areaConhecimento && (
+          <FormError>{errors.areaConhecimento.message}</FormError>
+        )}
       </div>
 
       {/* Orientador */}
@@ -80,16 +107,18 @@ export default function CreateTCCForm({
         <Datalist
           id="orientador"
           variant="primary"
-          name="orientador"
           className="w-full"
           placeholder="Selecione o orientador"
           options={professores.map((professor) => ({
             index: professor.id,
             value: professor.nome_completo,
-            label: professor.nome_completo,
           }))}
-          required
+          aria-invalid={!!errors.orientador}
+          {...register("orientador")}
         />
+        {errors.orientador && (
+          <FormError>{errors.orientador.message}</FormError>
+        )}
       </div>
 
       {/* Coorientador */}
@@ -100,7 +129,6 @@ export default function CreateTCCForm({
         <Datalist
           id="coorientador"
           variant="primary"
-          name="coorientador"
           className="w-full"
           placeholder="Selecione o coorientador"
           options={professores.map((professor) => ({
@@ -108,8 +136,12 @@ export default function CreateTCCForm({
             value: professor.nome_completo,
             label: professor.nome_completo,
           }))}
-          required={false}
+          aria-invalid={!!errors.coorientador}
+          {...register("coorientador")}
         />
+        {errors.coorientador && (
+          <FormError>{errors.coorientador.message}</FormError>
+        )}
       </div>
 
       {/* Resumo do TCC */}
@@ -120,36 +152,49 @@ export default function CreateTCCForm({
         <Textarea
           id="resumo"
           variant="primary"
-          name="resumo"
           className="w-full"
           placeholder="Escreva um resumo ou descrição do seu TCC"
           rows={8}
-          required
+          aria-invalid={!!errors.resumo}
+          {...register("resumo")}
         />
+        {errors.resumo && <FormError>{errors.resumo.message}</FormError>}
       </div>
 
       {/* Data de Início */}
       <div className="col-span-2 sm:col-span-1">
-        <Label htmlFor="dataInicio">Data de início</Label>
+        <Label htmlFor="dataInicio" required>
+          Data de início
+        </Label>
         <Input
           id="dataInicio"
           type="date"
           variant="primary"
-          name="dataInicio"
           className="w-full"
+          {...register("dataInicio")}
+          aria-invalid={!!errors.dataInicio}
         />
+        {errors.dataInicio && (
+          <FormError>{errors.dataInicio.message}</FormError>
+        )}
       </div>
 
       {/* Data de Conclusão */}
       <div className="col-span-2 sm:col-span-1">
-        <Label htmlFor="dataConclusao">Data de conclusão</Label>
+        <Label htmlFor="dataConclusao" required>
+          Data de conclusão
+        </Label>
         <Input
+          id="dataConclusao"
           type="date"
           variant="primary"
-          id="dataConclusao"
-          name="dataConclusao"
           className="w-full"
+          aria-invalid={!!errors.dataConclusao}
+          {...register("dataConclusao")}
         />
+        {errors.dataConclusao && (
+          <FormError>{errors.dataConclusao.message}</FormError>
+        )}
       </div>
 
       {/* Status Atual */}
@@ -160,24 +205,31 @@ export default function CreateTCCForm({
         <Select
           id="statusAtual"
           variant="primary"
-          name="statusAtual"
           className="w-full"
-          required
+          aria-invalid={!!errors.status}
+          placeholder="Selecione o status atual do TCC"
+          {...register("status")}
         >
-          <option value="">Selecione o status</option>
           <option value="PLANEJAMENTO">Planejamento</option>
           <option value="DESENVOLVIMENTO">Desenvolvimento</option>
           <option value="REVISAO">Revisão</option>
           <option value="FINALIZACAO">Finalização</option>
           <option value="CONCLUIDO">Concluído</option>
         </Select>
+        {errors.status && <FormError>{errors.status.message}</FormError>}
+      </div>
+
+      <div className="col-span-2" role="note">
+        <p>
+          &#40;<span className="text-red-600">*</span>&#41; Campos obrigatórios
+        </p>
       </div>
 
       {/* Botão de Cadastrar TCC */}
       <div className="col-span-2">
-        <Button type="submit" variant="primary" className="w-full">
+        <Submit variant="primary" className="w-full" disabled={false}>
           Cadastrar TCC
-        </Button>
+        </Submit>
       </div>
     </form>
   );
