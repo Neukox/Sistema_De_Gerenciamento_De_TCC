@@ -166,6 +166,7 @@ const MarksCard = ({ id, title, description, prazo, stats, mostrar, mostrarEdita
               </Button>
             )}
           </div>
+
         </div>
 
         {/* Detalhes da tarefa - Área inferior com descrição e informações de prazo */}

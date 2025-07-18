@@ -25,6 +25,8 @@ const variants: Variants = {
   edit: " hover:text-blue-900 transition-colors duration-300",
   quicks: "border border-gray-400 rounded-md shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all",
   DropProf: "text-black hover:text-gray-400 transition-colors duration-300",
+
+  
 };
 
 type ButtonProps = {

@@ -10,7 +10,7 @@ import { useTabActive } from "@/hooks/TabAtive";
 import { useNotes } from "@/hooks/Notes";
 
 // Componentes
-import MarksCard from "../../components/card/MarksCard";
+import  MarksCard from "../../components/card/MarksCard";
 import { DropdownPerfil } from "@/components/DropdownPerfil";
 // Ícones
 import {
@@ -28,7 +28,6 @@ import { FaPlus } from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { HiOutlineNewspaper } from "react-icons/hi2";
 import { FaTrashCan } from "react-icons/fa6";
-
 
 // Hooks de contexto
 import useTitle from "@/hooks/useTitle";
@@ -57,6 +56,7 @@ function MainDashboard() {
 
   // Dados das listas
   const { tarefas } = useCard();
+
   const {  user } = useAuth();
   const { activeTab, changeTab, isActive } = useTabActive<"marcos" | "tarefas" | "notas">("marcos");
   const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } = useNotes();
@@ -84,20 +84,24 @@ function MainDashboard() {
 
   // Renderiza o dashboard
   return (
+
     <div className="flex flex-col items-center bg-secondary min-h-screen overflow-x-hidden w-full px-4 sm:px-6 pt-4 sm:pt-6">
       {/* Cabeçalho */}
       <div className="w-full max-w-7xl bg-neutral flex flex-col rounded-lg shadow-lg p-4 sm:p-6">
         {/* Logo e controles */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+    
           <div className="flex justify-center items-center">
             <img src={logo} alt="Logo" className="w-12 h-16 sm:w-[60px] sm:h-24" />
             <span className="text-black text-xl sm:text-3xl font-bold ml-2 sm:ml-4">FocoTCC</span>
           </div>
 
           {/* Usuário e botões */}
+
           <div className="flex items-center">
             <div className="flex items-center gap-3 sm:gap-5">
               <DropdownPerfil />
+
 
               {!temTCC && (
                 <Button 
@@ -228,6 +232,31 @@ function MainDashboard() {
 
         {/* Conteúdo das abas */}
         <div className="flex flex-col lg:flex-row gap-4 mt-4">
+=======
+          {/* Container das outras abas */}
+          <div className="flex flex-row flex-grow bg-neutral">
+            <Button
+              variant="select"
+              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
+                ${isActive("tarefas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
+              onClick={() => changeTab("tarefas")}
+            >
+              <GrTask /> Tarefas
+            </Button>
+
+            <Button
+              variant="select"
+              className={`flex items-center justify-center gap-2 rounded-sm px-5 h-20 transition-all duration-400 ease-out
+                ${isActive("notas") ? "bg-gray-600 text-white" : "bg-transparent"}`}
+              onClick={() => changeTab("notas")}
+            >
+              <IoCalendarClearOutline /> Anotações
+            </Button>
+          </div>
+        </div>
+
+        {/* Conteúdo das abas */}
+        <div className="flex flex-row gap-4 mt-4">
           {/* Aba: Marcos */}
           {activeTab === "marcos" && (
             <div className="flex flex-col w-full lg:w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-4 sm:p-6 mt-4 mb-5">
@@ -253,6 +282,7 @@ function MainDashboard() {
                 </p>
               ) : (
                 <div className="space-y-3 sm:space-y-5 w-full">
+                
                   {tarefas.map((tarefa) => (
                     <MarksCard
                       key={tarefa.id}
@@ -295,6 +325,7 @@ function MainDashboard() {
                 </p>
               ) : (
                 <div className="space-y-3 sm:space-y-5 w-full">
+
                   {tarefas.map((tarefa) => (
                     <MarksCard
                       key={tarefa.id}
@@ -356,6 +387,8 @@ function MainDashboard() {
 
                 {/* Se não houver notas, exibe mensagem */}
                 <div className="mt-4 overflow-y-visible">
+=======
+
                   {listaNota.length === 0 ? (
                     <p className="text-gray-400 flex items-center mt-8 justify-center text-sm sm:text-base">
                       Nenhuma anotação cadastrada.
@@ -396,6 +429,7 @@ function MainDashboard() {
 
               {/* Datas */}
               <div className="flex flex-col text-sm sm:text-lg lg:text-xl text-[#9ea09d] gap-6 sm:gap-8 lg:gap-12 mt-3 sm:mt-5">
+
                 <div className="flex justify-between">
                   <span>Data de início:</span>
                   <span className="text-[#252525] font-semibold">
@@ -459,6 +493,7 @@ function MainDashboard() {
                 <Button variant="quicks" className="px-3 sm:px-5 py-2 h-10 sm:h-12 flex items-center gap-2 text-sm sm:text-base">
                   <HiOutlineNewspaper size={20} className="sm:hidden" />
                   <HiOutlineNewspaper size={25} className="hidden sm:block" />
+
                   Gerar Relatório
                 </Button>
               </div>
