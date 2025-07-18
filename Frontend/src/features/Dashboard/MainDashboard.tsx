@@ -448,6 +448,7 @@ function MainDashboard() {
 
         {/* Conteúdo das abas */}
         <div className="flex flex-col lg:flex-row gap-4 mt-4">
+<<<<<<< HEAD
 =======
           {/* Container das outras abas */}
           <div className="flex flex-row flex-grow bg-neutral">
@@ -474,6 +475,8 @@ function MainDashboard() {
         {/* Conteúdo das abas */}
         <div className="flex flex-row gap-4 mt-4">
 >>>>>>> 018dda3 (salvando primeira alteração)
+=======
+>>>>>>> 343d118 (adicionando menu no dashboard e tela de perfil concluida)
           {/* Aba: Marcos */}
           {activeTab === "marcos" && (
             <div className="flex flex-col w-full lg:w-[65%] bg-neutral min-h-60 rounded-lg shadow-lg p-4 sm:p-6 mt-4 mb-5">
