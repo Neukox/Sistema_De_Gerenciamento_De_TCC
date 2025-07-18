@@ -85,7 +85,7 @@ function MainDashboard() {
   // Renderiza o dashboard
   return (
 
-    <div className="flex flex-col items-center bg-secondary min-h-screen overflow-x-hidden w-full px-4 sm:px-6 pt-4 sm:pt-6">
+    <div className="flex flex-col items-center bg-secondary min-h-screen overflow-x-hidden overflow-y-auto scrollbar-hide w-full px-4 sm:px-6 pt-4 sm:pt-6">
       {/* Cabeçalho */}
       <div className="w-full max-w-7xl bg-neutral flex flex-col rounded-lg shadow-lg p-4 sm:p-6">
         {/* Logo e controles */}

@@ -3,9 +3,13 @@ import { ImProfile } from "react-icons/im";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { IoStatsChart } from "react-icons/io5";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa";
+
+
 import { useState } from "react";
 
 
+import { useNavigate } from "react-router-dom";
 
 import { Input } from "@/components/ui/form";
 import { Button } from "@/components/ui/form";
@@ -121,6 +125,13 @@ function UserProfile() {
     }
   };
 
+
+   const navigate = useNavigate();
+
+  const handleNavigateToDashboard = () => {
+    navigate('/dashboard');
+  };
+
   return (
     <div className="flex flex-col bg-secondary min-h-screen p-4 sm:p-6 justify-center">
 
@@ -138,7 +149,8 @@ function UserProfile() {
       <div className="w-full max-w-7xl mx-auto">
         {/* Título */}
         <div className="flex w-full items-center mb-4 bg-neutral p-4 rounded-lg shadow">
-          <h1 className="text-xl sm:text-2xl font-bold">Perfil do Usuário</h1>
+          <h1 className="text-xl sm:text-2xl font-bold flex items-center shrink-0 gap-4"><FaArrowLeft size={36} onClick={handleNavigateToDashboard} className="hover:bg-gray-300 rounded-full p-1 cursor-pointer" />
+ Perfil do Usuário</h1>
         </div>
 
         <div className="w-full flex flex-col lg:flex-row gap-6">
