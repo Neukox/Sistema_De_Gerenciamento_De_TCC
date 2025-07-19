@@ -43,7 +43,7 @@ export const useReunioes = () => {
 
   useEffect(() => {
     fetchReunioes();
-  }, [fetchReunioes]);
+  }, [tccData?.id]);
 
   return {
     reunioes,
