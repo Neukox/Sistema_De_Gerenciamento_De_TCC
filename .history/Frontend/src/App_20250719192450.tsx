@@ -12,8 +12,6 @@ import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import { EditarTCC } from "./features/EditarTCC/EditarTCC";
-
 
 export default function App() {
   return (
@@ -26,8 +24,10 @@ export default function App() {
         <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
         <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
         <Route path="/boas-vindas" element={<BoasVindas />} />
-        <Route path="/editar-tcc" element={<EditarTCC />} />
-
+        <Route path="/agendar-reuniao" element={<AgendarReuniao />} />
+        
+        {/* Public Routes */}
+        
         {/* Protected Routes */}
         <Route
           path="/dashboard"
