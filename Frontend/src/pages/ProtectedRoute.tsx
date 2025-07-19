@@ -1,21 +1,25 @@
-import React from "react";
 import useAuth from "@/features/auth/context/useAuth";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+
+type ProtectedRouteProps = {
+  roles: string[];
+};
 
 /**
- * Componente para proteger rotas que requerem autenticação
- * @returns Componente Outlet se o usuário estiver autenticado, ou redireciona para a página de login
+ * Componente para proteger rotas com base no perfil do usuário
+ * @param {ProtectedRouteProps} props - Propriedades do componente, incluindo os papéis permitidos
+ * @returns Componente Outlet se o usuário tiver o papel necessário, ou redireciona para a página de login
  */
-export default function ProtectedRoute({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const { isAuthenticated } = useAuth();
+export default function ProtectedRoute({ roles }: ProtectedRouteProps) {
+  const { user } = useAuth();
 
-  if (!isAuthenticated && import.meta.env.VITE_DEV_PROTECT_ROUTES === "true") {
+  if (!user && import.meta.env.VITE_DEV_PROTECT_ROUTES === "true") {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  if (user && roles && !roles.includes(user.role)) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
 }

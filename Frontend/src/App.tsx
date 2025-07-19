@@ -23,6 +23,7 @@ export default function App() {
     <ReunioesProvider>
     <div className="scrollbar-hide">
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
