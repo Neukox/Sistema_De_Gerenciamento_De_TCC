@@ -12,7 +12,7 @@ export const useReunioes = () => {
   const [error, setError] = useState<string | null>(null);
   const { tccData } = useTCCContext();
 
-  const fetchReunioes = useCallback(async () => {
+  const fetchReunioes = async () => {
     if (!tccData?.id) {
       setLoading(false);
       return;
@@ -39,11 +39,11 @@ export const useReunioes = () => {
     } finally {
       setLoading(false);
     }
-  }, [tccData?.id]);
+  };
 
   useEffect(() => {
     fetchReunioes();
-  }, [fetchReunioes]);
+  }, [tccData?.id]);
 
   return {
     reunioes,
