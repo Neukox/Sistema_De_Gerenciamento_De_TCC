@@ -1,10 +1,20 @@
-
+import { EditarTCC } from "./features/EditarTCC/EditarTCC";
+        {/* Rota protegida para edição de TCC */}
+        <Route
+          path="/editar-tcc"
+          element={
+            <ProtectedRoute>
+              <EditarTCC areasConhecimento={[]} professores={[]} />
+            </ProtectedRoute>
+          }
+        />
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
 import MainDashboard from "./features/Dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
+import EditarTCC from "./features/EditarTCC/EditarTCC";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
 import { HistoricoAtividades } from "../src/features/Historico/HistoricoAtividades";
 import UserProfile from "./features/Profile/UserProfile";
@@ -12,8 +22,6 @@ import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import { EditarTCC } from "./features/EditarTCC/EditarTCC";
-
 
 export default function App() {
   return (
@@ -26,8 +34,7 @@ export default function App() {
         <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
         <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
         <Route path="/boas-vindas" element={<BoasVindas />} />
-        <Route path="/editar-tcc" element={<EditarTCC />} />
-
+        
         {/* Protected Routes */}
         <Route
           path="/dashboard"
@@ -61,7 +68,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        {/* Rota de edição de TCC removida conforme solicitado */}
+        <Route path="/editar-tcc" element={<ProtectedRoute><EditarTCC />}</ProtectedRoute>} />
       </Routes>
     </div>
   );

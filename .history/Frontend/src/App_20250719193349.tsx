@@ -12,7 +12,7 @@ import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import { EditarTCC } from "./features/EditarTCC/EditarTCC";
+
 
 
 export default function App() {
