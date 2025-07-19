@@ -1,0 +1,24 @@
+// src/App.tsx
+import { Routes, Route } from "react-router-dom";
+import MainDashboard from "./features/Dashboard/MainDashboard";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import ProtectedRoute from "./components/ui/ProtectedRoute";
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/maindashboard"
+        element={
+          <ProtectedRoute>
+            <MainDashboard />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+}

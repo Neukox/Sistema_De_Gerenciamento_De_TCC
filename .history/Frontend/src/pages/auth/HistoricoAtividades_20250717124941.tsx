@@ -1,0 +1,12 @@
+//Layout de historico de atividades.
+
+
+export function HistoricoAtividades() {
+    return (
+        <div className="flex items-center justify-center h-screen bg-historico">
+            <div className="bg-historicoatividades w-screen h-[300%]">
+
+            </div>
+        </div>
+    )
+}
