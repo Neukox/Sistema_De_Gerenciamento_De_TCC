@@ -141,130 +141,111 @@ export function AgendarReuniao() {
 
         {/* Título do formulário */}
         <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-4xl font-semibold">Agendar Nova Reunião</h2>
+          <h2 className="text-2xl sm:text-4xl  font-semibold">Agendar Nova Reunião</h2>
           <p className="text-sm sm:text-lg mt-2 sm:mt-4 text-gray-600">
-            Preencha os detalhes da sua reunião para o TCC: <strong>{tccData.title}</strong>
+            Preencha os detalhes da sua reunião
           </p>
         </div>
 
         {/* Formulário */}
-        <form onSubmit={handleSubmit}>
+        <form>
           {/* Título */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg mb-1 ml-1 font-semibold" htmlFor="titulo">
+            <label className="block text-base sm:text-lg  mb-1 ml-1 font-semibold" htmlFor="titulo">
               Título da Reunião
             </label>
             <Input
               id="titulo"
               type="text"
-              className={`w-full h-10 border rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.titulo ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Ex: Reunião de Orientação"
-              value={formData.titulo}
-              onChange={(e) => handleInputChange('titulo', e.target.value)}
-              disabled={loading}
             />
-            {errors.titulo && (
-              <p className="text-red-500 text-sm mt-1">{errors.titulo}</p>
-            )}
           </div>
 
           {/* Descrição */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg mb-1 ml-1 font-semibold" htmlFor="descricao">
+            <label className="block text-base sm:text-lg  mb-1 ml-1 font-semibold" htmlFor="descricao">
               Descrição da Reunião
             </label>
             <textarea
               id="descricao"
-              className={`px-3 w-full h-24 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg border border-solid bg-gray-200 font-normal resize-none ${
-                errors.descricao ? 'border-red-500' : 'border-gray-400'
-              }`}
+              className="px-3 w-[100%] h-[30%] py-2 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal"
               placeholder="Descreva o objetivo da reunião"
-              value={formData.descricao}
-              onChange={(e) => handleInputChange('descricao', e.target.value)}
-              disabled={loading}
-            />
-            {errors.descricao && (
-              <p className="text-red-500 text-sm mt-1">{errors.descricao}</p>
-            )}
+            ></textarea>
           </div>
 
           {/* Data e Hora */}
+          <div className="flex flex-col md:flex-row gap-6 mb-6">
+            <div className="flex-1">
+              <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="data">
+                Data da Reunião
+              </label>
+              <Input
+                id="data"
+                type="date"
+                className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="flex-1">
+              <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="hora">
+                Hora da Reunião
+              </label>
+              <Input
+                id="hora"
+                type="time"
+                className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          {/* Participantes */}
           <div className="mb-6">
-            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="data_agendada">
-              Data e Hora da Reunião
+            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="participantes">
+              Participantes
             </label>
             <Input
-              id="data_agendada"
-              type="datetime-local"
-              className={`w-full h-10 border rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.data_agendada ? 'border-red-500' : 'border-gray-300'
-              }`}
-              value={formData.data_agendada}
-              onChange={(e) => handleInputChange('data_agendada', e.target.value)}
-              disabled={loading}
+              id="participantes"
+              type="text"
+              className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex: Nome dos participantes"
             />
-            {errors.data_agendada && (
-              <p className="text-red-500 text-sm mt-1">{errors.data_agendada}</p>
-            )}
           </div>
 
-          {/* Observações */}
+          {/* Local/Plataforma */}
           <div className="mb-10">
-            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="observacoes">
-              Observações (Opcional)
+            <label className="block text-base sm:text-lg font-semibold mb-1 ml-1" htmlFor="local">
+              Local/Plataforma
             </label>
-            <textarea
-              id="observacoes"
-              className="px-3 w-full h-20 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg border border-solid border-gray-400 bg-gray-200 font-normal resize-none"
-              placeholder="Ex: Tópicos a serem discutidos, material necessário, etc."
-              value={formData.observacoes}
-              onChange={(e) => handleInputChange('observacoes', e.target.value)}
-              disabled={loading}
+            <Input
+              id="local"
+              type="text"
+              className="w-full h-10 border border-gray-300 rounded-lg px-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex: Zoom, Google Meet, Sala 101"
             />
           </div>
 
-          {/* Botões */}
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-4">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={handleBack}
-              disabled={loading}
-              className="px-6 py-3"
-            >
-              Cancelar
-            </Button>
-            
-            <Button
-              type="submit"
-              variant="primary"
-              disabled={loading || !formData.titulo.trim() || !formData.data_agendada}
-              className="px-6 py-3 flex items-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Agendando...
-                </>
-              ) : (
-                <>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-5 h-5"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                  </svg>
-                  Agendar Reunião
-                </>
-              )}
-            </Button>
-          </div>
+         {/* Botão */}
+<div className="flex justify-center md:justify-end">
+  <button
+    type="submit"
+    className="flex items-center gap-2 px-5 py-3 bg-primary text-white rounded-lg shadow-lg hover:bg-primary/80 transition-colors duration-300 text-sm sm:text-base"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="w-5 h-5"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+    </svg>
+    Agendar Reunião
+  </button>
+</div>
+
+
         </form>
       </div>
     </div>
