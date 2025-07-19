@@ -41,7 +41,9 @@ export default function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <MainDashboard />
+              <TCCAlunoLayout title="Dashboard">
+                <MainDashboard />
+              </TCCAlunoLayout>
             </ProtectedRoute>
           }
         />

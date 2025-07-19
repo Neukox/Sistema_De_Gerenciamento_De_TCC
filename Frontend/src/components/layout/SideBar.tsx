@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
 import Button from "../ui/Button";
-import { CgClose } from "react-icons/cg";
 import Logo from "../common/Logo";
+import { Menu } from "lucide-react";
 
 type SideBarProps = {
   children?: React.ReactNode;
@@ -32,17 +32,19 @@ export default function SideBar({ children, isOpen, onClose }: SideBarProps) {
           }
         )}
       >
-        <div className="flex justify-between gap-4 border-b border-secondary px-4 py-1 relative pt-3 lg:py-0">
-          <Logo withName />
+        <div className="flex gap-4 border-b border-secondary px-4 relative py-2 lg:py-1">
           <Button
             onClick={onClose}
             variant="transparent"
-            className="absolute right-0 top-0 lg:hidden rounded-full p-2"
+            className="lg:hidden rounded-full p-0"
           >
-            <CgClose className="size-8" />
+            <Menu className="size-8" />
           </Button>
+          <Logo withName size="medium" />
         </div>
-        <nav className="mt-6">{children}</nav>
+        <div className="py-6 px-4 h-[calc(100vh_-_77px)] overflow-y-auto">
+          {children}
+        </div>
       </aside>
     </>
   );

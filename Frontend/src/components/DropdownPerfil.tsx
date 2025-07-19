@@ -3,37 +3,51 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-    DropdownMenuSeparator,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import Button from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
-
-import { LuHistory } from "react-icons/lu";
 import { IoLogOutOutline } from "react-icons/io5";
-import { IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-
 import useAuth from "@/features/auth/context/useAuth";
-
 import { useTCCContext } from "../hooks/useTCCContext";
-
 
 export function DropdownPerfil() {
   const { user, logout } = useAuth();
-  const { tccData, } = useTCCContext();
+  const { tccData } = useTCCContext();
   const navigate = useNavigate();
 
-  const handleNavigateToHistory = () => {
-    navigate('/historico-atividades');
-  };
-
   const handleNavigateToProfile = () => {
-    navigate('/perfil');
+    navigate("/perfil");
   };
 
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex gap-4 items-center justify-center outline-none transition-all duration-300 bg-primary text-white rounded-full p-2 w-12 h-12 hover:bg-primary/80 focus:bg-primary/80">
+        <span className="font-semibold">
+          {user?.nome_completo[0].toUpperCase() || "U"}
+          {user?.nome_completo.split(" ")[1] &&
+            user?.nome_completo.split(" ")[1][0].toUpperCase()}
+        </span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="end"
+        className="w-48 p-3 cursor-pointer bg-white shadow-lg rounded-lg border-border-gray-200 transition-all duration-200"
+      >
+        <DropdownMenuLabel>
+          <div className="flex flex-col items-start gap-1 border-b border-gray-300 pb-3">
+            <span className="font-medium">Davi Leal</span>
+            <span className="text-xs text-gray-500 font-semibold  ">
+              davi.leal@example.com
+            </span>
+            <span className="text-xs text-gray-500">
+              <span className="font-semibold ">Curso: {tccData?.curso}</span>
+            </span>
+          </div>
+        </DropdownMenuLabel>
 
-    return (
+        <DropdownMenuSeparator />
 
        <DropdownMenu >
             
