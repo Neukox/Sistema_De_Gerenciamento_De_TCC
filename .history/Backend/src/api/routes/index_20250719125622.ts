@@ -30,8 +30,6 @@ routes.use("/atividades", atividadesRoutes);
 routes.use("/anotacoes", anotacaoRoutes);
 // Usando as rotas de progresso
 routes.use("/progress", progressRoutes);
-// Usando as rotas de reuniões
-routes.use("/reunioes", reunioesRoutes);
 
 // Exporta as rotas
 export default routes;
