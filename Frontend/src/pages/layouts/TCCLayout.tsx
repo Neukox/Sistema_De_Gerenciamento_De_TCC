@@ -6,17 +6,16 @@ import { GraduationCap, LucideLayoutDashboard, Notebook } from "lucide-react";
 import { FaTasks } from "react-icons/fa";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { LuHistory } from "react-icons/lu";
+import { useLocation, Outlet } from "react-router-dom";
+import { pagesTitles } from "@/lib/pages";
 
-type TCCAlunoLayoutProps = {
-  children?: React.ReactNode;
-  title?: string;
-};
+type AlunoPage = keyof typeof pagesTitles.aluno;
 
-export default function TCCAlunoLayout({
-  children,
-  title,
-}: TCCAlunoLayoutProps) {
+export default function TCCLayout() {
   const { isOpen: sidebarOpen, close, open } = useToogle(false);
+
+  const location = useLocation();
+  const page = (location.pathname.split("/").pop() as AlunoPage) || "dashboard";
 
   return (
     <div className="flex h-screen">
@@ -48,9 +47,9 @@ export default function TCCAlunoLayout({
           </NavbarLink>
         </nav>
       </SideBar>
-      <main className="overflow-y-auto min-h-0 flex-1">
-        <Header title={title} onMenuClick={open} />
-        {children}
+      <main className="overflow-y-auto min-h-screen flex-1">
+        <Header title={pagesTitles.aluno[page]} onMenuClick={open} />
+        <Outlet />
       </main>
     </div>
   );
