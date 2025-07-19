@@ -20,6 +20,7 @@ import useAuth from "@/features/auth/context/useAuth";
 import { useTCCContext } from "../../hooks/useTCCContext";
 import api from "@/lib/api/axios";
 import { useTogglePassword } from "@/hooks/useTogglepassword";
+import type { UserData } from "@/types/user/user";
 
 
 

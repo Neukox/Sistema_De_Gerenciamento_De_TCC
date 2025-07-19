@@ -20,6 +20,7 @@ import useAuth from "@/features/auth/context/useAuth";
 import { useTCCContext } from "../../hooks/useTCCContext";
 import api from "@/lib/api/axios";
 import { useTogglePassword } from "@/hooks/useTogglepassword";
+import type { UserData } from "@/types/user/user";
 
 
 
@@ -78,29 +79,11 @@ function UserProfile() {
       if (response.status === 200) {
         showNotification("Nome alterado com sucesso!", "success");
         setNomeData({ novoNome: "" });
-        
-        // Atualizar o contexto do usuário com o novo nome
-        if (user) {
-          const updatedUser = {
-            ...user,
-            nome_completo: nomeData.novoNome
-          };
-          const currentToken = localStorage.getItem("token") || "";
-          setSession(updatedUser, currentToken);
-        }
+        // Aqui você pode atualizar o contexto do usuário se necessário
       }
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Erro ao alterar nome:", error);
-      let errorMessage = "Erro ao alterar nome. Tente novamente.";
-      
-      if (error && typeof error === 'object' && 'response' in error) {
-        const axiosError = error as { response?: { data?: { message?: string } } };
-        if (axiosError.response?.data?.message) {
-          errorMessage = axiosError.response.data.message;
-        }
-      }
-      
-      showNotification(errorMessage, "error");
+      showNotification("Erro ao alterar nome. Tente novamente.", "error");
     } finally {
       setIsLoadingNome(false);
     }
@@ -135,18 +118,9 @@ function UserProfile() {
         showNotification("Senha alterada com sucesso!", "success");
         setSenhaData({ novaSenha: "", confirmarSenha: "" });
       }
-    } catch (error: unknown) {
+    } catch (error) {
       console.error("Erro ao alterar senha:", error);
-      let errorMessage = "Erro ao alterar senha. Tente novamente.";
-      
-      if (error && typeof error === 'object' && 'response' in error) {
-        const axiosError = error as { response?: { data?: { message?: string } } };
-        if (axiosError.response?.data?.message) {
-          errorMessage = axiosError.response.data.message;
-        }
-      }
-      
-      showNotification(errorMessage, "error");
+      showNotification("Erro ao alterar senha. Tente novamente.", "error");
     } finally {
       setIsLoadingSenha(false);
     }
