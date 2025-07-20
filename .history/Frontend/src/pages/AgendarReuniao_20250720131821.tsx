@@ -83,11 +83,13 @@ export function AgendarReuniao() {
       return;
     }
 
+    // Permite agendar quantas reuniões quiser, sem restrição
     const reuniao = await criarReuniao({
       titulo: formData.titulo.trim(),
       descricao: formData.descricao.trim() || undefined,
       data_agendada: formData.data_agendada,
-      observacoes: formData.observacoes.trim() || undefined
+      observacoes: formData.observacoes.trim() || undefined,
+      tcc_id: tccData.id // Garante que a reunião está vinculada ao TCC do usuário
     });
 
     if (reuniao) {

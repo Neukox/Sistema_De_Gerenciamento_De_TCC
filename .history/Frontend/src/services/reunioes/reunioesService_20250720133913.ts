@@ -4,8 +4,7 @@ import type { StatusReuniao, ReuniaoWithTCC, CreateReuniaoRequest, UpdateReuniao
 export interface GetReunioesResponse {
 success: boolean;
 message?: string;
-reunioes?: ReuniaoWithTCC[];
-data?: {
+data: {
   reunioes: ReuniaoWithTCC[];
   pagination?: {
     current_page?: number;
