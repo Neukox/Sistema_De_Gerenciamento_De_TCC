@@ -2,7 +2,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import logo from "@/assets/logo.png";
+=======
+>>>>>>> 16ce80d (Adiciona componente TCCInfo e cartões de resumo na página MainDashboard, incluindo cálculo de porcentagem de progresso.)
 import { useNavigate } from "react-router-dom";
 
 <<<<<<< HEAD
@@ -30,6 +33,7 @@ import { useNotes } from "@/hooks/Notes";
 // Componentes
 import MarksCard from "../../components/card/MarksCard";
 // Ícones
+<<<<<<< HEAD
 import {
   IoPersonOutline,
   IoBookOutline,
@@ -148,6 +152,10 @@ import {
 import { FaUserFriends, FaRegCheckCircle, FaRegClock } from "react-icons/fa";
 import { IoMdTrendingUp } from "react-icons/io";
 import { TiWarningOutline } from "react-icons/ti";
+=======
+import { IoCalendarClearOutline } from "react-icons/io5";
+import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
+>>>>>>> 16ce80d (Adiciona componente TCCInfo e cartões de resumo na página MainDashboard, incluindo cálculo de porcentagem de progresso.)
 import { LuTarget } from "react-icons/lu";
 import { GrTask } from "react-icons/gr";
 <<<<<<< HEAD
@@ -172,11 +180,18 @@ import { FaTrashCan } from "react-icons/fa6";
 import useTitle from "@/hooks/useTitle";
 import useAuth from "../auth/context/useAuth";
 import Button from "@/components/ui/Button";
+<<<<<<< HEAD
 =======
 import { useTCCData } from "@/hooks/useTCCData";
 import useAuth from "../auth/context/useAuth";
 import useTitle from "@/hooks/useTitle";
 >>>>>>> 2761d5f (refatora componentes de autenticação)
+=======
+import TCCInfo from "../TCC/TCCInfo/TCCInfo";
+import { Card } from "@/components/ui/card";
+import { calculatePercentage } from "@/utils/calculate";
+import { CgNotes } from "react-icons/cg";
+>>>>>>> 16ce80d (Adiciona componente TCCInfo e cartões de resumo na página MainDashboard, incluindo cálculo de porcentagem de progresso.)
 
 function MainDashboard() {
   // Navegação
@@ -231,11 +246,6 @@ function MainDashboard() {
     removerNota,
   } = useNotes();
 >>>>>>> 1aacf97 (melhora layout de maindashboard)
-
-  // Funções
-  const handleCriarTCC = () => {
-    navigate("/cadastrar-tcc");
-  };
 
   // Verificações
   const temTCC =
@@ -1401,20 +1411,25 @@ function MainDashboard() {
 =======
     <>
       <div className="flex flex-col flex-1 items-center bg-secondary min-h-screen overflow-x-hidden overflow-y-auto scrollbar-hide w-full px-4 sm:px-6 pt-4 sm:pt-6">
-        {/* Cabeçalho */}
-        <div className="w-full max-w-7xl bg-neutral flex flex-col rounded-lg shadow-lg p-4 sm:p-6">
-          {/* Logo e controles */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div className="flex justify-center items-center">
-              <img
-                src={logo}
-                alt="Logo"
-                className="w-12 h-16 sm:w-[60px] sm:h-24"
-              />
-              <span className="text-black text-xl sm:text-3xl font-bold ml-2 sm:ml-4">
-                FocoTCC
+        {/* Infomaçoẽs de TCC */}
+        <TCCInfo />
+        {/* Cartões de resumo */}
+        <div className="grid grid-cols-1 md:grid-cols-3 w-full max-w-7xl mt-4 gap-3 sm:gap-5">
+          {/* Tarefas */}
+          <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
+            <div className="flex flex-col">
+              <h3 className="text-md font-bold">Tarefas</h3>
+              <span className="flex gap-1 sm:gap-2 items-center text-4xl font-bold">
+                {tccData.checked}/{tccData.total}
+              </span>
+              <span className="text-blue-500 font-medium">
+                {`${calculatePercentage(
+                  tccData.checked,
+                  tccData.total
+                )}% Concluídas`}
               </span>
             </div>
+<<<<<<< HEAD
             {/* Usuário e botões */}
             <div className="flex items-center">
               <div className="flex items-center gap-3 sm:gap-5">
@@ -1606,89 +1621,38 @@ function MainDashboard() {
 =======
                 )}
               </div>
+=======
+            <div className="bg-blue-100 size-16 rounded-full p-2 flex items-center justify-center">
+              <IoMdTrendingUp className="size-10 text-blue-400" />
+>>>>>>> 16ce80d (Adiciona componente TCCInfo e cartões de resumo na página MainDashboard, incluindo cálculo de porcentagem de progresso.)
             </div>
-          </div>
-          {/* Informações do TCC */}
-          <div className="flex flex-col items-start gap-2 mt-4">
-            {temTCC ? (
-              <>
-                <h1 className="text-xl sm:text-2xl lg:text-4xl font-sans font-bold break-words">
-                  {tccData?.title}
-                </h1>
-                <h2 className="flex items-center gap-2 text-sm sm:text-xl lg:text-2xl font-medium text-gray-600 flex-wrap">
-                  <IoPersonOutline className="flex-shrink-0" />
-                  <span>
-                    Aluno: {tccData?.aluno} • {tccData?.curso}
-                  </span>
-                </h2>
-                <h2 className="flex items-center gap-2 text-sm sm:text-xl lg:text-2xl text-gray-600 flex-wrap">
-                  <IoBookOutline className="flex-shrink-0" />
-                  <span>Orientador: {tccData?.orientador}</span>
-                </h2>
-                <h2 className="flex items-center gap-2 text-sm sm:text-xl lg:text-2xl text-gray-600 flex-wrap">
-                  <FaUserFriends className="flex-shrink-0" />
-                  <span>Coorientador: {tccData?.coorientador}</span>
-                </h2>
-              </>
-            ) : (
-              <>
-                <h1 className="text-xl sm:text-2xl lg:text-4xl font-sans font-bold text-gray-500">
-                  Nenhum TCC Cadastrado
-                </h1>
-                <h2 className="flex items-center gap-2 text-sm sm:text-xl lg:text-2xl font-medium text-gray-400 flex-wrap">
-                  <IoPersonOutline className="flex-shrink-0" />
-                  <span>Aluno: {user?.nome_completo || "Usuário"}</span>
-                </h2>
-                <p className="text-sm sm:text-base lg:text-lg text-gray-500 mt-2">
-                  Clique no botão "Criar TCC" acima para começar seu trabalho de
-                  conclusão de curso.
-                </p>
-              </>
-            )}
-          </div>
-        </div>
-        {/* Cartões de resumo */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 w-full max-w-7xl mt-4 gap-3 sm:gap-5">
-          {/* Progresso geral */}
-          <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
-            <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
-              <IoMdTrendingUp className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#dbeafe] rounded-md p-1" />
-              {tccData?.progress}%
-            </span>
-            <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">
-              Progresso geral do TCC
-            </span>
-          </div>
-          {/* Marcos concluídos */}
-          <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
-            <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
-              <FaRegCheckCircle className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#d8fce4] text-[#7dc89c] p-1 rounded-lg" />
-              {tccData.checked}/{tccData.total}
-            </span>
-            <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">
-              Marcos concluídos
-            </span>
-          </div>
-          {/* Tarefas pendentes */}
-          <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
-            <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
-              <FaRegClock className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#f2d1b1] text-[#dc9058] p-1 rounded-lg" />
-              {tccData.pending}
-            </span>
-            <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">
-              Tarefas Pendentes
-            </span>
-          </div>
-          {/* Tarefas atrasadas */}
-          <div className="flex flex-col items-center justify-center bg-neutral rounded-lg shadow-lg p-3 sm:p-4 min-h-[120px]">
-            <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
-              <TiWarningOutline className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-[#ffe1e0] text-[#d36c6c] p-1 rounded-lg" />
-              {tccData.late}
-            </span>
-            <span className="text-xs sm:text-base lg:text-2xl text-[#9ea09d] text-center">
-              Tarefas atrasadas
-            </span>
-          </div>
+          </Card>
+          {/* Reuniões */}
+          <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
+            <div>
+              <h3 className="text-md font-bold">Reuniões</h3>
+              <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
+                0
+              </span>
+              <span className=" text-violet-600 font-medium">0 Agendadas</span>
+            </div>
+            <div className="size-16 bg-violet-200 rounded-full flex items-center justify-center">
+              <IoMdPeople className="size-10 text-violet-500" />
+            </div>
+          </Card>
+          {/* Anotações */}
+          <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
+            <div>
+              <h3 className="text-md font-bold">Anotações</h3>
+              <span className="flex gap-1 sm:gap-2 items-center text-xl sm:text-2xl lg:text-4xl font-bold">
+                0
+              </span>
+              <span className=" text-orange-500 font-medium">0 esta semana</span>
+            </div>
+            <div className="size-16 bg-orange-200 rounded-full flex items-center justify-center">
+              <CgNotes className="size-10 text-orange-500" />
+            </div>
+          </Card>
         </div>
         {/* Navegação por abas */}
         <div className="w-full max-w-7xl flex flex-col mt-4">
