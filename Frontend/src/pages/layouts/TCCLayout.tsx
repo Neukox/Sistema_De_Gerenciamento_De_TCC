@@ -11,6 +11,11 @@ import { pagesTitles } from "@/lib/pages";
 
 type AlunoPage = keyof typeof pagesTitles.aluno;
 
+/**
+ * Layout principal do TCC
+ * @returns Componente de layout do TCC
+ */
+
 export default function TCCLayout() {
   const { isOpen: sidebarOpen, close, open } = useToogle(false);
 
@@ -25,11 +30,11 @@ export default function TCCLayout() {
             <LucideLayoutDashboard className="size-6" />
             Dashboard
           </NavbarLink>
-          <NavbarLink to="/">
+          <NavbarLink to="/tarefas">
             <FaTasks className="size-6" />
             Tarefas
           </NavbarLink>
-          <NavbarLink to="/">
+          <NavbarLink to="/anotacoes">
             <Notebook className="size-6" />
             Anotações
           </NavbarLink>

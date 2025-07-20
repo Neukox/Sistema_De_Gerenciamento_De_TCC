@@ -20,7 +20,7 @@ export default function Header({ title, onMenuClick }: HeaderProps) {
           <Menu className="size-8 text-black" />
         </Button>
         <Logo className="lg:hidden" size="medium" />
-        <h1 className="text-3xl font-">{title}</h1>
+        <span className="text-3xl font-">{title}</span>
       </div>
       <DropdownPerfil />
     </header>
