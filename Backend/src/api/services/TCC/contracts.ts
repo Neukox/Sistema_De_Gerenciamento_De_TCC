@@ -47,8 +47,3 @@ export interface CreateTCCServicePayload {
       }
     | "Não definido";
 }
-
-export interface GetOneTCC extends GetTCCQuery {
-  orientador: MembroBanca;
-  coorientador: MembroBanca | "Não definido"; // Pode ser um objeto MembroBanca ou uma string "Não definido
-}

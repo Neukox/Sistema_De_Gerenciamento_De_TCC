@@ -43,12 +43,6 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
           email: true,
         },
       },
-      Orientador: {
-        connect: { Usuario_id: data.orientadorId },
-      },
-      Coorientador: data.coorientadorId
-        ? { connect: { Usuario_id: data.coorientadorId } }
-        : undefined,
     },
   });
 
@@ -126,99 +120,6 @@ export async function createTCC(data: ICreateTCC): Promise<CreateTCCPayload> {
         }
       : "Não definido",
   };
-}
-
-/**
- * Buscar todos os TCCs do banco de dados.
- * @returns Lista de TCCs.
- */
-export async function findAllTCCs(): Promise<GetTCCQuery[]> {
-  const tccs = await prisma.tCC.findMany({
-    include: {
-      Usuario: {
-        select: {
-          Usuario_id: true,
-          curso: true,
-          Usuario: {
-            select: {
-              id: true,
-              nome_completo: true,
-              email: true,
-            },
-          },
-        },
-      },
-      AreaConhecimento: {
-        select: {
-          id: true,
-          nome: true,
-        },
-      },
-      Orientador: {
-        select: {
-          area_atuacao: true,
-          Usuario: {
-            select: {
-              id: true,
-              nome_completo: true,
-              email: true,
-            },
-          },
-        },
-      },
-      Coorientador: {
-        select: {
-          area_atuacao: true,
-          Usuario: {
-            select: {
-              id: true,
-              nome_completo: true,
-              email: true,
-            },
-          },
-        },
-      },
-    },
-  });
-
-  return tccs.map((tcc) => ({
-    id: tcc.id,
-    titulo: tcc.titulo,
-    tema: tcc.tema,
-    resumo: tcc.resumo,
-    dataInicio: tcc.dataInicio,
-    dataConclusao: tcc.dataConclusao,
-    statusAtual: tcc.status_atual,
-    criado_em: tcc.criado_em,
-    atualizado_em: tcc.ultima_atualizacao,
-    finalizado_em: tcc.finalizado_em || null,
-    aluno: {
-      id: tcc.Aluno.Usuario.id,
-      nome: tcc.Aluno.Usuario.nome_completo,
-      curso: tcc.Aluno.curso,
-      email: tcc.Aluno.Usuario.email,
-    },
-    areaConhecimento: {
-      id: areaConhecimento?.id,
-      nome: areaConhecimento?.nome,
-    },
-    orientador: tcc.Orientador
-      ? {
-          id: tcc.Orientador.Usuario.id,
-          nome: tcc.Orientador.Usuario.nome_completo,
-          area_atuacao: tcc.Orientador.area_atuacao,
-          email: tcc.Orientador.Usuario.email,
-        }
-      : "Não definido",
-    coorientador: tcc.Coorientador
-      ? {
-          id: tcc.Coorientador.Usuario.id,
-          nome: tcc.Coorientador.Usuario.nome_completo,
-          area_atuacao: tcc.Coorientador.area_atuacao,
-          email: tcc.Coorientador.Usuario.email,
-        }
-      : "Não definido",
-  }));
 }
 
 /**

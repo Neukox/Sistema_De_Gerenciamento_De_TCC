@@ -185,25 +185,10 @@ model Atividade {
 }
 
 model Comentario {
-  id                 Int              @id @default(autoincrement())
-  topico             TopicoComentario
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 9c923d7 (Atualizando o esquema do Prisma)
-}
-
-model Comentario {
   id                 Int      @id @default(autoincrement())
-<<<<<<< HEAD
+  topico             TopicoComentario
   texto              String
->>>>>>> 071d99f (Atualizando o esquema do Prisma)
   titulo             String
->>>>>>> b6de60f (Atualizando o esquema do Prisma)
-=======
->>>>>>> 7ac15be (Removendo conflitos e ajustando o esquema do Prisma)
-  texto              String
   data_criacao       DateTime         @default(now())
   ultima_atualizacao DateTime         @updatedAt
 
@@ -215,22 +200,6 @@ model Comentario {
   Usuario   Usuario    @relation(fields: [Usuario_id], references: [id])
   Atividade Atividade? @relation(fields: [Atividades_id], references: [id])
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-model Anotacao {
-  id            Int      @id @default(autoincrement())
-  conteudo      String
-  criado_em     DateTime @default(now())
-  atualizado_em DateTime @updatedAt
-
-  TCC_id Int
-
-  TCC TCC @relation(fields: [TCC_id], references: [id])
-}
-=======
->>>>>>> 8e141ec (adiciona modelo de RecuperacaoSenha e estrutura de áreas de conhecimento no seed)
 
 model Anotacao {
   id            Int      @id @default(autoincrement())
@@ -253,10 +222,6 @@ model RecuperacaoSenha {
 
   Usuario Usuario @relation(fields: [Usuario_id], references: [id])
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> de35db7 (Enviando algoritmo de calculo de progresso de desenvolvimento de TCC.)
 
 // Novos modelos para cálculo de progresso
 
@@ -304,63 +269,4 @@ model Defesa {
 
   @@unique([TCC_id, tipo])
 }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
 
-model Atividade {
-  id            Int      @id @default(autoincrement())
-  nome          String
-  descricao     String
-  status        String
-  data_entrega  DateTime
-  concluido_em  DateTime
-  arquivo_url   String
-  feedback      String?
-
-  tccId         Int
-  tcc           TCC      @relation(fields: [tccId], references: [id])
-}
-=======
-  tccId Int
-  tcc   TCC @relation(fields: [tccId], references: [id])
-}
-
-model Atividade {
-  id           Int      @id @default(autoincrement())
-  nome         String
-  descricao    String
-  status       String
-  data_entrega DateTime
-  concluido_em DateTime
-  arquivo_url  String
-  feedback     String?
-
-  tccId Int
-  tcc   TCC @relation(fields: [tccId], references: [id])
-}
->>>>>>> 1a921ee2d30067305bbb31c1a612f5391164170c
-=======
-  topico             String
-  texto              String
-  data_criacao       DateTime @default(now())
-  ultima_atualizacao DateTime @updatedAt
-
-  TCC_id        Int
-  Usuario_id    Int
-  Atividades_id Int?
-
-  TCC       TCC        @relation(fields: [TCC_id], references: [id])
-  Usuario   Usuario    @relation(fields: [Usuario_id], references: [id])
-  Atividade Atividade? @relation(fields: [Atividades_id], references: [id])
-}
->>>>>>> 9c923d7 (Atualizando o esquema do Prisma)
->>>>>>> 071d99f (Atualizando o esquema do Prisma)
->>>>>>> b6de60f (Atualizando o esquema do Prisma)
-=======
->>>>>>> 7ac15be (Removendo conflitos e ajustando o esquema do Prisma)
-=======
->>>>>>> 8e141ec (adiciona modelo de RecuperacaoSenha e estrutura de áreas de conhecimento no seed)
-=======
->>>>>>> de35db7 (Enviando algoritmo de calculo de progresso de desenvolvimento de TCC.)
