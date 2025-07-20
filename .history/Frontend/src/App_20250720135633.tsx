@@ -15,7 +15,7 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import { EditarTCC } from "./features/EditarTCC/EditarTCC";
 import HistoricoReunioes from "./features/HistoricoReunio/HistoricoReuniao";
 import { ReunioesProvider } from "./context/ReunioesContext";
-import CriarAtividade from "./features/CriarAtividade/CriarAtividade";
+
 
 
 
@@ -33,9 +33,6 @@ export default function App() {
         <Route path="/boas-vindas" element={<BoasVindas />} />
         <Route path="/editar-tcc" element={<EditarTCC />} />
         <Route path="/historico-reunioes" element={<HistoricoReunioes />} />
-        <Route path="/criar-atividade" element={<CriarAtividade />} />
-
-        {/* Public Routes */}
 
         {/* Protected Routes */}
         <Route
