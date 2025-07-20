@@ -83,6 +83,7 @@ export function AgendarReuniao() {
       return;
     }
 
+    // Permite agendar quantas reuniões quiser, sem restrição
     const reuniao = await criarReuniao({
       titulo: formData.titulo.trim(),
       descricao: formData.descricao.trim() || undefined,

@@ -14,11 +14,9 @@ import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { EditarTCC } from "./features/EditarTCC/EditarTCC";
 import HistoricoReunioes from "./features/HistoricoReunio/HistoricoReuniao";
-import { ReunioesProvider } from "./context/ReunioesContext";
 
 export default function App() {
   return (
-    <ReunioesProvider>
     <div className="scrollbar-hide">
       <Routes>
         <Route path="/" element={<LoginPage />} />
@@ -29,7 +27,7 @@ export default function App() {
         <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
         <Route path="/boas-vindas" element={<BoasVindas />} />
         <Route path="/editar-tcc" element={<EditarTCC />} />
-        <Route path="/historico-reunioes" element={<HistoricoReunioes />} />
+        <</>
 
         {/* Protected Routes */}
         <Route
@@ -67,6 +65,5 @@ export default function App() {
         {/* Rota de edição de TCC removida conforme solicitado */}
       </Routes>
     </div>
-    </ReunioesProvider>
   );
 }
