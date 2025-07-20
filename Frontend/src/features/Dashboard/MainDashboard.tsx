@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import logo from "@/assets/logo.png";
 =======
 >>>>>>> 16ce80d (Adiciona componente TCCInfo e cartões de resumo na página MainDashboard, incluindo cálculo de porcentagem de progresso.)
@@ -31,9 +32,15 @@ import { useCard } from "../../hooks/useCard";
 =======
 >>>>>>> d0e5b3c (Adiciona páginas de Tarefas e Anotações, incluindo layouts correspondentes e rotas no App. Refatora o Header para exibir o título corretamente.)
 import { useTabActive } from "@/hooks/TabAtive";
+=======
+// Hooks e bibliotecas
+import { useNavigate } from "react-router-dom";
+import { useTCCContext } from "../../hooks/useTCCContext";
+>>>>>>> b59839e (Adiciona página Dashboard com integração do MainDashboard, refatora componentes de TCC e implementa novos componentes de progresso e cronograma. Atualiza configuração do Tailwind para suportar novas larguras máximas.)
 import useTitle from "@/hooks/useTitle";
-
+import { calculatePercentage } from "@/utils/calculate";
 // Ícones
+<<<<<<< HEAD
 <<<<<<< HEAD
 import {
   IoPersonOutline,
@@ -167,10 +174,14 @@ import { GrTask } from "react-icons/gr";
 <<<<<<< HEAD
 =======
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
+=======
+import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
+>>>>>>> b59839e (Adiciona página Dashboard com integração do MainDashboard, refatora componentes de TCC e implementa novos componentes de progresso e cronograma. Atualiza configuração do Tailwind para suportar novas larguras máximas.)
 import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { HiOutlineNewspaper } from "react-icons/hi2";
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -204,6 +215,19 @@ import useAuth from "../auth/context/useAuth";
 import { calculatePercentage } from "@/utils/calculate";
 import { CgNotes } from "react-icons/cg";
 >>>>>>> 16ce80d (Adiciona componente TCCInfo e cartões de resumo na página MainDashboard, incluindo cálculo de porcentagem de progresso.)
+=======
+import { BookOpen } from "lucide-react";
+import { CgNotes } from "react-icons/cg";
+// Componentes
+import { Card, CardHeader } from "@/components/ui/card";
+import Button from "@/components/ui/Button";
+import TCCInfo from "../TCC/info/TCCInfo";
+import TCCProgress from "../TCC/progress/TCCProgress";
+import TCCTimeline from "../TCC/timeline/TCCTimeline";
+
+// Hooks de contexto
+import useAuth from "../auth/context/useAuth";
+>>>>>>> b59839e (Adiciona página Dashboard com integração do MainDashboard, refatora componentes de TCC e implementa novos componentes de progresso e cronograma. Atualiza configuração do Tailwind para suportar novas larguras máximas.)
 
 function MainDashboard() {
   // Navegação
@@ -212,13 +236,10 @@ function MainDashboard() {
   // Dados do TCC
   const { tccData, loading } = useTCCContext();
 
-  // Datas do cronograma
-  const dataInicio = tccData?.data_inicio ?? null;
-  const dataEntrega = tccData?.prazo_entrega ?? null;
-
   // Configurações da página
   useTitle("Dashboard Principal | Foco TCC");
 
+<<<<<<< HEAD
   // Cálculos
   const diasRestantes = useCronograma({ dataInicio, dataEntrega });
   const prazoAtrasado = diasRestantes !== null && diasRestantes < 0;
@@ -246,6 +267,8 @@ function MainDashboard() {
   const { activeTab, changeTab, isActive } = useTabActive<"marcos" | "tarefas" | "notas">("marcos");
   const { notaAtual, setNotaAtual, listaNota, salvarNota, erroNota, removerNota } = useNotes();
 =======
+=======
+>>>>>>> b59839e (Adiciona página Dashboard com integração do MainDashboard, refatora componentes de TCC e implementa novos componentes de progresso e cronograma. Atualiza configuração do Tailwind para suportar novas larguras máximas.)
   const { user } = useAuth();
   const { activeTab, changeTab, isActive } = useTabActive<
     "marcos" | "tarefas" | "notas"
@@ -288,6 +311,7 @@ function MainDashboard() {
 <<<<<<< HEAD
 <<<<<<< HEAD
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     <div className="flex flex-col items-center bg-secondary min-h-screen overflow-x-hidden overflow-y-auto scrollbar-hide w-full px-4 sm:px-6 pt-4 sm:pt-6">
@@ -1795,10 +1819,93 @@ function MainDashboard() {
               </div>
 >>>>>>> 1462c08 (resolvendo conflitos de arquivos)
             </div>
+=======
+    <div className="flex flex-col gap-8 min-h-screen w-full max-w-8xl">
+      {/* Infomaçoẽs de TCC */}
+      <TCCInfo />
+      {/* Cartões de resumo */}
+      <div className="grid grid-cols-1 md:grid-cols-3 w-full gap-4">
+        {/* Tarefas */}
+        <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
+          <div className="flex flex-col">
+            <h3 className="text-md font-semibold">Tarefas</h3>
+            <span className="flex gap-1 items-center text-4xl font-semibold">
+              {tccData.checked}/{tccData.total}
+            </span>
+            <span className="text-blue-500 font-medium">
+              {`${calculatePercentage(
+                tccData.checked,
+                tccData.total
+              )}% Concluídas`}
+            </span>
           </div>
+          <div className="bg-blue-100 size-16 rounded-full p-2 flex items-center justify-center">
+            <IoMdTrendingUp className="size-10 text-blue-400" />
+>>>>>>> b59839e (Adiciona página Dashboard com integração do MainDashboard, refatora componentes de TCC e implementa novos componentes de progresso e cronograma. Atualiza configuração do Tailwind para suportar novas larguras máximas.)
+          </div>
+        </Card>
+        {/* Reuniões */}
+        <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
+          <div>
+            <h3 className="text-md font-semibold">Reuniões</h3>
+            <span className="flex gap-1 items-center text-4xl font-semibold">
+              0
+            </span>
+            <span className=" text-violet-600 font-medium">0 Agendadas</span>
+          </div>
+          <div className="size-16 bg-violet-200 rounded-full flex items-center justify-center">
+            <IoMdPeople className="size-10 text-violet-500" />
+          </div>
+        </Card>
+        {/* Anotações */}
+        <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
+          <div>
+            <h3 className="text-md font-semibold">Anotações</h3>
+            <span className="flex gap-1 items-center text-4xl font-semibold">
+              0
+            </span>
+            <span className=" text-orange-500 font-medium">0 esta semana</span>
+          </div>
+          <div className="size-16 bg-orange-200 rounded-full flex items-center justify-center">
+            <CgNotes className="size-10 text-orange-500" />
+          </div>
+        </Card>
+      </div>
+      {/* Progresso, Cronograma do TCC e ações rápidas */}
+      <div className="w-full flex flex-col md:flex-row gap-4">
+        {/* Progressp do TCC */}
+        <TCCProgress />
+        <div className="flex flex-col gap-4 w-full md:w-2/3">
+          {/* Cronograma */}
+          <TCCTimeline />
+          {/* Ações rápidas */}
+          <Card className="w-full p-6 flex flex-col gap-6">
+            <CardHeader className="p-0 gap-2">
+              <BookOpen className="size-6" />
+              <h2 className="text-xl font-semibold">Ações Rápidas</h2>
+            </CardHeader>
+            <div className="flex flex-col gap-6">
+              <Button variant="quicks" className="flex items-center gap-2">
+                <CiEdit className="size-6" />
+                Editar TCC
+              </Button>
+              <Button variant="quicks" className="flex items-center gap-2">
+                <FaPlus className="size-6" />
+                Nova tarefa
+              </Button>
+              <Button variant="quicks" className="flex items-center gap-2">
+                <RiCalendarScheduleLine className="size-6" />
+                Agendar Reunião
+              </Button>
+              <Button variant="quicks" className="flex items-center gap-2">
+                <HiOutlineNewspaper className="size-6" />
+                Gerar Relatório
+              </Button>
+            </div>
+          </Card>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

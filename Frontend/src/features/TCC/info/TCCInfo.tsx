@@ -4,10 +4,10 @@ import { GraduationCap } from "lucide-react";
 
 export default function TCCInfo() {
   return (
-    <Card className="w-full max-w-7xl bg-neutral flex flex-col rounded-lg shadow-lg p-4 sm:p-6">
+    <Card className="w-full bg-neutral flex flex-col rounded-lg shadow-lg p-4 sm:p-6">
       <div className="flex flex-col gap-4">
         <span className="flex items-center gap-2 text-lg font-semibold">
-          <GraduationCap className="inline size-6 text-primary" />
+          <GraduationCap className="inline size-8 text-primary" />
           Trabalho de Conclusão de Curso
         </span>
         <h2 className="text-xl font-bold">Nenhum TCC Cadastrado</h2>

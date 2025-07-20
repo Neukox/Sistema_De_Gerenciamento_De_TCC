@@ -6,12 +6,15 @@ export default {
         primary: "#0F2C67", // Azul escuro
         secondary: "#F3C50D", // Amarelo
         neutral: "#fffbef", // Âmbar
-        historico : "#ebbb13",
-        historicoatividades: "#faf9e7" 
-        
+        historico: "#ebbb13",
+        historicoatividades: "#faf9e7",
       },
       fontFamily: {
         OpenSans: ["Open Sans", "sans-serif"],
+      },
+      maxWidth: {
+        "8xl": "90rem", // 1440px
+        "9xl": "100rem", // 1600px
       },
     },
   },

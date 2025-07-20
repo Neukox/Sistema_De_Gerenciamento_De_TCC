@@ -1,7 +1,6 @@
 
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
-import MainDashboard from "./features/Dashboard/MainDashboard";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
@@ -17,6 +16,11 @@ import HistoricoReunioes from "./features/HistoricoReunio/HistoricoReuniao";
 import { ReunioesProvider } from "./context/ReunioesContext";
 import CriarAtividade from "./features/CriarAtividade/CriarAtividade";
 
+import TCCLayout from "./pages/layouts/TCCLayout";
+import RequireAuthRoute from "./pages/RequireAuthRoute";
+import TasksPage from "./pages/tcc/TasksPage";
+import NotesPage from "./pages/tcc/NotesPage";
+import DashboardPage from "./pages/tcc/DashboardPage";
 
 export default function App() {
   return (
@@ -38,41 +42,21 @@ export default function App() {
         {/* Public Routes */}
 
         {/* Protected Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <TCCAlunoLayout title="Dashboard">
-                <MainDashboard />
-              </TCCAlunoLayout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/agendar-reuniao"
-          element={
-            <ProtectedRoute>
-              <AgendarReuniao />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/historico-atividades"
-          element={
-            <ProtectedRoute>
-              <HistoricoAtividades />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/perfil"
-          element={
-            <ProtectedRoute>
-              <UserProfile />
-            </ProtectedRoute>
-          }
-        />
-        {/* Rota de edição de TCC removida conforme solicitado */}
+        <Route path="/" element={<RequireAuthRoute />}>
+          <Route path="boas-vindas" element={<BoasVindas />} />
+          <Route path="perfil" element={<UserProfile />} />
+          <Route element={<ProtectedRoute roles={["ALUN0"]} />}>
+            <Route path="cadastrar-tcc" element={<CadastrarTcc />} />
+            <Route element={<TCCLayout />}>
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="historico" element={<HistoricoAtividades />} />
+              <Route path="tarefas" element={<TasksPage />} />
+              <Route path="anotacoes" element={<NotesPage />} />
+              <Route path="agendar-reuniao" element={<AgendarReuniao />} />
+              {/* Outras rotas do TCC */}
+            </Route>
+          </Route>
+        </Route>
       </Routes>
     </div>
     </ReunioesProvider>

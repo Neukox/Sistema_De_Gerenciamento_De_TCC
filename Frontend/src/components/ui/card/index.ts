@@ -1,3 +1,4 @@
 import Card from "./Card";
+import CardHeader from "./CardHeader";
 
-export { Card };
+export { Card, CardHeader };
