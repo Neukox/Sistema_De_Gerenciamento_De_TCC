@@ -33,9 +33,7 @@ export default function App() {
         <Route path="/boas-vindas" element={<BoasVindas />} />
         <Route path="/editar-tcc" element={<EditarTCC />} />
         <Route path="/historico-reunioes" element={<HistoricoReunioes />} />
-        <Route path="/criar-atividade" element={<CriarAtividade />} />
-
-        {/* Public Routes */}
+        
 
         {/* Protected Routes */}
         <Route

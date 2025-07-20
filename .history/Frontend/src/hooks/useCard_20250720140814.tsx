@@ -11,6 +11,7 @@ export interface CardInfos {
 }
 
 // Hook customizado que mantém o estado da lista de tarefas
+// Inicializa com o arrayCards que simula dados do backend
 export function useCard () {
    const [tarefas, setTarefas] = useState<CardInfos[]>(arrayCards)
    // Retorna o estado e função para atualizar as tarefas
