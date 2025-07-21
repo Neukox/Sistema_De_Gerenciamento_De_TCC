@@ -21,10 +21,7 @@ export interface GetTCCResponse extends ApiResponse {
       curso: string;
       email: string;
     };
-    areaConhecimento?: {
-      id?: number;
-      nome?: string;
-    };
+    areaConhecimento?: string;
     orientador?:
       | {
           id: number;

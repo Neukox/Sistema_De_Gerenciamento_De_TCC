@@ -28,6 +28,9 @@ export const API_CONFIG = {
     USERS: {
       PROFILE: "/user/profile",
     },
+    PROGRESS: {
+      GET_TCC_PROGRESS: "/progress/tcc/", // id do TCC deve ser concatenado
+    },
   },
   HEADERS: {
     "Content-Type": "application/json",
