@@ -5,7 +5,7 @@
 export default function getJwtConfig() {
   return {
     secret: process.env.JWT_SECRET || "default_secret",
-    expiresIn: "1h" as const,
+    expiresIn: "4h" as const,
     algorithm: "HS256" as const,
   };
 }
