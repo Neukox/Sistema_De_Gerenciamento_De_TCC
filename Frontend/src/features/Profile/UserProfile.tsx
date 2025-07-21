@@ -214,7 +214,7 @@ function UserProfile() {
               </div>
               <div className="flex justify-between">
                 <p className="text-sm text-gray-600 font-medium">Progresso Geral:</p>
-                <p className="text-sm font-bold text-[#244C9E]">{tccData?.progress || "Não encontrado"}</p>
+                <p className="text-sm font-bold text-[#244C9E]">{"Não encontrado"}</p>
               </div>
             </div>
           </div>

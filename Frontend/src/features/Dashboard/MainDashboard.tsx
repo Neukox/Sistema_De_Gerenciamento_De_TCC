@@ -1,5 +1,4 @@
 // Hooks e bibliotecas
-import { useNavigate } from "react-router-dom";
 import { calculatePercentage } from "@/utils/calculate";
 import { useTCCDashboard } from "./dashboard-fetch";
 // Ícones
@@ -20,7 +19,7 @@ import { useTCCContext } from "@/hooks/useTCCContext";
 
 function MainDashboard() {
   // Navegação
-  const navigate = useNavigate();
+ 
 
   const { tccData } = useTCCContext();
 
