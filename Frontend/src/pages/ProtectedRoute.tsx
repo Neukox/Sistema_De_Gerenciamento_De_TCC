@@ -1,8 +1,9 @@
 import useAuth from "@/features/auth/context/useAuth";
+import type { Roles } from "@/types/auth";
 import { Navigate, Outlet } from "react-router-dom";
 
 type ProtectedRouteProps = {
-  roles: string[];
+  roles: [keyof Roles]; // Array of roles that are allowed to access the route
 };
 
 /**
@@ -13,7 +14,7 @@ type ProtectedRouteProps = {
 export default function ProtectedRoute({ roles }: ProtectedRouteProps) {
   const { user } = useAuth();
 
-  if (!user && import.meta.env.VITE_DEV_PROTECT_ROUTES === "true") {
+  if (!user) {
     return <Navigate to="/login" replace />;
   }
 
