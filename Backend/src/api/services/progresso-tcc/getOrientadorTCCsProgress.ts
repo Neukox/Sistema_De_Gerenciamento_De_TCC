@@ -3,7 +3,7 @@ import { GetTCCProgressByProfessor } from "./contracts";
 import {
   calculateCompleteProgress,
   calculateProgressPercentage,
-} from "../../utils/calculateProgress";
+} from "../../utils/calculate";
 
 /**
  * Serviço para obter o progresso de um TCC específico.

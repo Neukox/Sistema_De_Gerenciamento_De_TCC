@@ -34,6 +34,22 @@ export interface GetTCCQuery {
         email: string;
       }
     | "Não definido";
+  tarefas: {
+    total: number;
+    concluidas: number;
+  }
+  etapas: {
+    total: number;
+    concluidas: number;
+  };
+  anotacoes: {
+    total: number;
+    esta_semana: number;
+  };
+  reunioes: {
+    total: number;
+    agendadas: number;
+  };
 }
 
 export interface ICreateTCC {

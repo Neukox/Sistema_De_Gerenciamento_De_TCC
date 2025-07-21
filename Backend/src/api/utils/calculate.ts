@@ -1,5 +1,6 @@
 import {
   $Enums,
+  Anotacao,
   Atividade,
   Defesa,
   EtapaTCC,
@@ -151,6 +152,17 @@ export function calculateCompletedStages(stages: EtapaTCC[]): number {
 }
 
 /**
+ * calcula as anotações feitas na semana atual
+ * @param notes - Lista de anotações do TCC
+ * @returns Número de anotações feitas na semana atual
+ */
+export function calculateNotesThisWeek(notes: Anotacao[]): number {
+  const today = new Date();
+  const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+  return notes.filter((note) => new Date(note.criado_em) >= startOfWeek).length;
+}
+
+/**
  * calcula o número de reuniões realizadas
  * @param notes - Lista de anotações do TCC
  * @returns Número de anotações
@@ -158,6 +170,15 @@ export function calculateCompletedStages(stages: EtapaTCC[]): number {
 
 export function calculateCompletedMeetings(meetings: Reuniao[]): number {
   return meetings.filter((item) => item.status === "REALIZADA").length;
+}
+
+/**
+ * calcula o número de reuniões agendadas
+ * @param meetings - Lista de reuniões do TCC
+ * @returns Número de reuniões agendadas
+ */
+export function calculateScheduledMeetings(meetings: Reuniao[]): number {
+  return meetings.filter((item) => item.status === "AGENDADA").length;
 }
 
 /**

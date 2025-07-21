@@ -1,3 +1,9 @@
+import {
+  calculateCompletedStages,
+  calculateCompletedTasks,
+  calculateNotesThisWeek,
+  calculateScheduledMeetings,
+} from "../../utils/calculate";
 import prisma from "../../config/prisma";
 import { GetTCCQuery, ICreateTCC } from "./interfaces";
 import { CreateTCCPayload } from "./interfaces";
@@ -171,6 +177,10 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
           },
         },
       },
+      Atividades: true,
+      EtapasTCC: true,
+      Reunioes: true,
+      Anotacoes: true,
     },
   });
 
@@ -208,6 +218,22 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
           email: tcc.Coorientador.Usuario.email,
         }
       : "Não definido",
+    tarefas: {
+      total: tcc.Atividades?.length || 0,
+      concluidas: calculateCompletedTasks(tcc.Atividades || []),
+    },
+    etapas: {
+      total: tcc.EtapasTCC?.length || 0,
+      concluidas: calculateCompletedStages(tcc.EtapasTCC || []),
+    },
+    anotacoes: {
+      total: tcc.Anotacoes?.length || 0,
+      esta_semana: calculateNotesThisWeek(tcc.Anotacoes || []),
+    },
+    reunioes: {
+      total: tcc.Reunioes?.length || 0,
+      agendadas: calculateScheduledMeetings(tcc.Reunioes || []),
+    },
   }));
 }
 
@@ -268,6 +294,10 @@ export async function findTCCByAlunoId(
           },
         },
       },
+      Atividades: true,
+      EtapasTCC: true,
+      Reunioes: true,
+      Anotacoes: true,
     },
   });
 
@@ -309,6 +339,22 @@ export async function findTCCByAlunoId(
           email: tcc.Coorientador.Usuario.email,
         }
       : "Não definido",
+    tarefas: {
+      total: tcc.Atividades?.length || 0,
+      concluidas: calculateCompletedTasks(tcc.Atividades || []),
+    },
+    etapas: {
+      total: tcc.EtapasTCC?.length || 0,
+      concluidas: calculateCompletedStages(tcc.EtapasTCC || []),
+    },
+    anotacoes: {
+      total: tcc.Anotacoes?.length || 0,
+      esta_semana: calculateNotesThisWeek(tcc.Anotacoes || []),
+    },
+    reunioes: {
+      total: tcc.Reunioes?.length || 0,
+      agendadas: calculateScheduledMeetings(tcc.Reunioes || []),
+    },
   };
 }
 
@@ -365,6 +411,10 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
           },
         },
       },
+      Atividades: true,
+      EtapasTCC: true,
+      Reunioes: true,
+      Anotacoes: true,
     },
   });
 
@@ -406,5 +456,21 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
           email: tcc.Coorientador.Usuario.email,
         }
       : "Não definido",
+    tarefas: {
+      total: tcc.Atividades?.length || 0,
+      concluidas: calculateCompletedTasks(tcc.Atividades || []),
+    },
+    etapas: {
+      total: tcc.EtapasTCC?.length || 0,
+      concluidas: calculateCompletedStages(tcc.EtapasTCC || []),
+    },
+    anotacoes: {
+      total: tcc.Anotacoes?.length || 0,
+      esta_semana: calculateNotesThisWeek(tcc.Anotacoes || []),
+    },
+    reunioes: {
+      total: tcc.Reunioes?.length || 0,
+      agendadas: calculateScheduledMeetings(tcc.Reunioes || []),
+    },
   };
 }

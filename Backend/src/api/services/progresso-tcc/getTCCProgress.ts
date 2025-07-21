@@ -6,7 +6,7 @@ import {
   calculateDefenseStatus,
   calculateProgressPercentage,
   calculateProgressStatus,
-} from "../../utils/calculateProgress";
+} from "../../utils/calculate";
 import prisma from "../../config/prisma";
 import { GetTCCProgress } from "./contracts";
 import {
