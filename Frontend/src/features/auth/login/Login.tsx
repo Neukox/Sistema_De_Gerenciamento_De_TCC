@@ -25,7 +25,7 @@ function Login() {
   const { loginUser, loading } = useLogin();
 
   const handleLogin = (data: LoginFormData) => {
-    loginUser(data.email, data.password);
+    loginUser(data);
   };
 
   return (
