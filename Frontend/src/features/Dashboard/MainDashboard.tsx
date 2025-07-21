@@ -1,15 +1,14 @@
 // Hooks e bibliotecas
 import { useNavigate } from "react-router-dom";
-import { useTCCContext } from "../../hooks/useTCCContext";
-import useTitle from "@/hooks/useTitle";
 import { calculatePercentage } from "@/utils/calculate";
+import { useTCCDashboard } from "./dashboard-fetch";
 // Ícones
 import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { HiOutlineNewspaper } from "react-icons/hi2";
-import { BookOpen } from "lucide-react";
+import { BookOpen, TargetIcon } from "lucide-react";
 import { CgNotes } from "react-icons/cg";
 // Componentes
 import { Card, CardHeader } from "@/components/ui/card";
@@ -17,33 +16,17 @@ import Button from "@/components/ui/Button";
 import TCCInfo from "../TCC/info/TCCInfo";
 import TCCProgress from "../TCC/progress/TCCProgress";
 import TCCTimeline from "../TCC/timeline/TCCTimeline";
-
-// Hooks de contexto
-import useAuth from "../auth/context/useAuth";
+import { useTCCContext } from "@/hooks/useTCCContext";
 
 function MainDashboard() {
   // Navegação
   const navigate = useNavigate();
 
-  // Dados do TCC
-  const { tccData, loading } = useTCCContext();
+  const { tccData } = useTCCContext();
 
-  // Configurações da página
-  useTitle("Dashboard Principal | Foco TCC");
+  const { data, loading } = useTCCDashboard(tccData?.id as number);
 
-  const { user } = useAuth();
-
-  // Verificações
-  const temTCC =
-    tccData &&
-    tccData.title !== "Nenhum TCC Cadastrado" &&
-    tccData.title !== "Carregando..." &&
-    tccData.title !== "Erro ao Carregar TCC" &&
-    tccData.id;
-
-  // Debug
-  console.log("MainDashboard - tccData:", tccData);
-  console.log("MainDashboard - temTCC:", temTCC);
+  console.log(data);
 
   // Loading
   if (loading) {
@@ -58,20 +41,58 @@ function MainDashboard() {
   return (
     <div className="flex flex-col gap-8 min-h-screen w-full max-w-8xl">
       {/* Infomaçoẽs de TCC */}
-      <TCCInfo />
+      <TCCInfo
+        info={{
+          title: data.tcc?.titulo as string,
+          course: data.tcc?.aluno.curso as string,
+          advisor:
+            typeof data.tcc?.orientador === "string"
+              ? data.tcc?.orientador
+              : data.tcc?.orientador?.nome || "Nenhum orientador atribuído",
+          coAdvisor:
+            typeof data.tcc?.coorientador === "string"
+              ? data.tcc?.coorientador
+              : data.tcc?.coorientador?.nome || "Nenhum coorientador atribuído",
+          knowledgeArea: data.tcc?.areaConhecimento as string,
+          totalProgress: data.progresso?.total as number,
+          startDate: data.tcc?.dataInicio
+            ? new Date(data.tcc.dataInicio).toLocaleDateString("pt-BR")
+            : undefined,
+          endDate: data.tcc?.dataConclusao
+            ? new Date(data.tcc.dataConclusao).toLocaleDateString("pt-BR")
+            : undefined,
+        }}
+      />
       {/* Cartões de resumo */}
-      <div className="grid grid-cols-1 md:grid-cols-3 w-full gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-4">
         {/* Tarefas */}
         <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
           <div className="flex flex-col">
+            <h3 className="text-md font-semibold">Marcos</h3>
+            <span className="flex gap-1 items-center text-3xl font-semibold">
+              {data.tcc?.etapas.concluidas ?? 0}/{data.tcc?.etapas.total ?? 0}
+            </span>
+            <span className="text-green-500 font-medium">
+              {`${calculatePercentage(
+                data.tcc?.etapas.concluidas as number,
+                data.tcc?.etapas.total as number
+              )}% Concluídas`}
+            </span>
+          </div>
+          <div className="bg-green-100 size-16 rounded-full p-2 flex items-center justify-center">
+            <TargetIcon className="size-10 text-green-400" />
+          </div>
+        </Card>
+        <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
+          <div className="flex flex-col">
             <h3 className="text-md font-semibold">Tarefas</h3>
-            <span className="flex gap-1 items-center text-4xl font-semibold">
-              {tccData.checked}/{tccData.total}
+            <span className="flex gap-1 items-center text-3xl font-semibold">
+              {data.tcc?.tarefas.concluidas ?? 0}/{data.tcc?.tarefas.total ?? 0}
             </span>
             <span className="text-blue-500 font-medium">
               {`${calculatePercentage(
-                tccData.checked,
-                tccData.total
+                data.tcc?.tarefas.concluidas as number,
+                data.tcc?.tarefas.total as number
               )}% Concluídas`}
             </span>
           </div>
@@ -83,10 +104,12 @@ function MainDashboard() {
         <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
           <div>
             <h3 className="text-md font-semibold">Reuniões</h3>
-            <span className="flex gap-1 items-center text-4xl font-semibold">
-              0
+            <span className="flex gap-1 items-center text-3xl font-semibold">
+              {data.tcc?.reunioes.total ?? 0}
             </span>
-            <span className=" text-violet-600 font-medium">0 Agendadas</span>
+            <span className=" text-violet-600 font-medium">
+              {data.tcc?.reunioes.agendadas ?? 0} Agendadas
+            </span>
           </div>
           <div className="size-16 bg-violet-200 rounded-full flex items-center justify-center">
             <IoMdPeople className="size-10 text-violet-500" />
@@ -96,10 +119,12 @@ function MainDashboard() {
         <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
           <div>
             <h3 className="text-md font-semibold">Anotações</h3>
-            <span className="flex gap-1 items-center text-4xl font-semibold">
-              0
+            <span className="flex gap-1 items-center text-3xl font-semibold">
+              {data.tcc?.anotacoes.total ?? 0}
             </span>
-            <span className=" text-orange-500 font-medium">0 esta semana</span>
+            <span className=" text-orange-500 font-medium">
+              {data.tcc?.anotacoes.esta_semana ?? 0} esta semana
+            </span>
           </div>
           <div className="size-16 bg-orange-200 rounded-full flex items-center justify-center">
             <CgNotes className="size-10 text-orange-500" />
@@ -107,12 +132,16 @@ function MainDashboard() {
         </Card>
       </div>
       {/* Progresso, Cronograma do TCC e ações rápidas */}
-      <div className="w-full flex flex-col md:flex-row gap-4">
+      <div className="w-full flex flex-col md:flex-row md:items-start gap-4">
         {/* Progressp do TCC */}
         <TCCProgress />
         <div className="flex flex-col gap-4 w-full md:w-2/3">
           {/* Cronograma */}
-          <TCCTimeline />
+          <TCCTimeline
+            startDate={data.tcc?.dataInicio as Date}
+            endDate={data.tcc?.dataConclusao as Date}
+            status={(data.tcc?.statusAtual as unknown as string) || "PENDENTE"}
+          />
           {/* Ações rápidas */}
           <Card className="w-full p-6 flex flex-col gap-6">
             <CardHeader className="p-0 gap-2">

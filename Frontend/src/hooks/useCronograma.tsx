@@ -1,48 +1,39 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 
-interface Cronograma {
-  dataInicio?: string | null;
-  dataEntrega?: string | null;
-}
+/**
+ * Hook para calcular os dias restantes entre duas datas
+ * @param {Date | string} dataInicio - Data de início do cronograma
+ * @param {Date | string} dataEntrega - Data de entrega do cronograma
+ * @returns {number | null} - Dias restantes ou null se as datas forem inválidas
+ */
 
-const ano = new Date().getFullYear();
-const mes = new Date().getMonth();
-const dia = new Date().getDate();
-
-export function useCronograma({ dataInicio, dataEntrega }: Cronograma) {
-  const [diasRestantes, setDiasRestantes] = useState<number | null>(0);
-
-  useEffect(() => {
-    if (!dataInicio || !dataEntrega || dataInicio === '-' || dataEntrega === '-') {
-      setDiasRestantes(null);
-      return;
+export function useCronograma(
+  dataInicio: Date | string,
+  dataEntrega: Date | string
+) {
+  const diasRestantes = useMemo(() => {
+    if (
+      !dataInicio ||
+      !dataEntrega ||
+      dataInicio === "-" ||
+      dataEntrega === "-"
+    ) {
+      return null;
     }
 
-    try {
-      const inicio = new Date(dataInicio);
-      const entrega = new Date(dataEntrega);
+    const inicio = new Date(dataInicio);
+    const entrega = new Date(dataEntrega);
 
-      // Verificar se ambas as datas são válidas
-      if (isNaN(inicio.getTime()) || isNaN(entrega.getTime())) {
-        setDiasRestantes(null);
-        return;
-      }
-
-      // Converter para UTC e zerar horas para comparar só dias
-      const inicioUTC = new Date(Date.UTC(ano, mes, dia));
-      const entregaUTC = new Date(Date.UTC(ano, mes, dia));
-
-      const diferencaMs = entregaUTC.getTime() - inicioUTC.getTime();
-      const dias = Math.ceil(diferencaMs / (1000 * 60 * 60 * 24));
-
-      setDiasRestantes(dias);
-    } catch (error) {
-      console.error('Erro ao calcular dias restantes:', error);
-      setDiasRestantes(null);
+    // Verificar se ambas as datas são válidas
+    if (isNaN(inicio.getTime()) || isNaN(entrega.getTime())) {
+      return null;
     }
 
+    inicio.setHours(0, 0, 0, 0);
+    entrega.setHours(0, 0, 0, 0);
 
-    
+    const diferencaMs = entrega.getTime() - inicio.getTime();
+    return Math.ceil(diferencaMs / (1000 * 60 * 60 * 24));
   }, [dataInicio, dataEntrega]);
 
   return diasRestantes;

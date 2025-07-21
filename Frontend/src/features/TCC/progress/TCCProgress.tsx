@@ -1,16 +1,17 @@
 import ProgressBar from "@/components/common/ProgressBar";
 import { Card, CardHeader } from "@/components/ui/card";
+import type { TCCProgress } from "@/types/progresso";
 import { cn } from "@/utils/cn";
 import { PresentationIcon, Target } from "lucide-react";
-import { CgNotes } from "react-icons/cg";
 import { FaTasks } from "react-icons/fa";
 import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
 
 type TCCProgressProps = {
   className?: string;
+  progress?: TCCProgress;
 };
 
-export default function TCCProgress({ className }: TCCProgressProps) {
+export default function TCCProgress({ className, progress }: TCCProgressProps) {
   return (
     <Card
       className={cn(
@@ -22,44 +23,43 @@ export default function TCCProgress({ className }: TCCProgressProps) {
         <IoMdTrendingUp className="size-6" />
         <h2 className="text-2xl font-semibold">Progresso Detalhado</h2>
       </CardHeader>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col flex-1 justify-between gap-6">
         <ProgressBar
           title="Marcos"
-          progress={0}
+          progress={progress?.detalhamento.etapas.pontuacao ?? 0}
           icon={() => <Target className="text-green-500 size-5" />}
         >
           <span className="text-sm text-gray-500">
-            0 de 0 marcos concluídos
+            {`${progress?.detalhamento.etapas.concluidas ?? 0} de ${
+              progress?.detalhamento.etapas.total ?? 0
+            } etapas concluídas`}
           </span>
         </ProgressBar>
         <ProgressBar
           title="Tarefas"
-          progress={0}
+          progress={progress?.detalhamento.tarefas.pontuacao ?? 0}
           icon={() => <FaTasks className="text-blue-500" />}
         >
           <span className="text-sm text-gray-500">
-            0 de 0 tarefas concluídas
-          </span>
-        </ProgressBar>
-        <ProgressBar
-          title="Anotações"
-          progress={0}
-          icon={() => <CgNotes className="text-orange-500" />}
-        >
-          <span className="text-sm text-gray-500">
-            0 de 10 anotações criadas
+            {`${progress?.detalhamento.tarefas.concluidas ?? 0} de ${
+              progress?.detalhamento.tarefas.total ?? 0
+            } tarefas concluídas`}
           </span>
         </ProgressBar>
         <ProgressBar
           title="Reuniões"
-          progress={0}
+          progress={progress?.detalhamento.reunioes.realizadas ?? 0}
           icon={() => <IoMdPeople className="text-violet-500" />}
         >
-          <span className="text-sm text-gray-500">0 de 0 anotações feitas</span>
+          <span className="text-sm text-gray-500">
+            {`${progress?.detalhamento.reunioes.realizadas ?? 0} de ${
+              progress?.detalhamento.reunioes.agendadas ?? 0
+            } reuniões realizadas`}
+          </span>
         </ProgressBar>
         <ProgressBar
           title="Defesas"
-          progress={0}
+          progress={progress?.detalhamento.defesas.pontuacao ?? 0}
           icon={() => <PresentationIcon className="text-red-500 size-4" />}
         >
           <span className="text-sm text-gray-500">
