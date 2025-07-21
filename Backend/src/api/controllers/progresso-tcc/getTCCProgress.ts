@@ -19,6 +19,6 @@ export default async function getTCCProgressController(
   return res.status(200).json({
     message: "Progresso do TCC obtido com sucesso.",
     success: true,
-    data: progress,
+    ...progress,
   });
 }

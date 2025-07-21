@@ -22,6 +22,6 @@ export default async function getTccByIdController(
   res.status(200).json({
     message: "TCC encontrado com sucesso.",
     success: true,
-    data: tcc,
+    tcc,
   });
 }
