@@ -18,7 +18,7 @@ export default function ProtectedRoute({ roles }: ProtectedRouteProps) {
     return <Navigate to="/login" replace />;
   }
 
-  if (user && roles && !roles.includes(user.role) && import.meta.VITE_DEV_PROTECT_ROUTE === "true") {
+  if (user && roles && !roles.includes(user.role) && import.meta.VITE_DEV_PROTECT_ROUTES === "true") {
     return <Navigate to="/login" replace />;
   }
 
