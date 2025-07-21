@@ -14,11 +14,11 @@ type ProtectedRouteProps = {
 export default function ProtectedRoute({ roles }: ProtectedRouteProps) {
   const { user } = useAuth();
 
-  if (!user && import.meta.VITE_DEV_PROTECT_ROUTES === "true") {
+  if (!user && import.meta.env.VITE_DEV_PROTECT_ROUTES === "true") {
     return <Navigate to="/login" replace />;
   }
 
-  if (user && roles && !roles.includes(user.role) && import.meta.VITE_DEV_PROTECT_ROUTES === "true") {
+  if (user && roles && !roles.includes(user.role) && import.meta.env.VITE_DEV_PROTECT_ROUTES === "true") {
     return <Navigate to="/login" replace />;
   }
 
