@@ -17,10 +17,7 @@ export interface GetTCCQuery {
     curso: string;
     email: string;
   };
-  areaConhecimento?: {
-    id?: number;
-    nome?: string;
-  };
+  areaConhecimento?: string;
   orientador?:
     | {
         id: number;

@@ -191,10 +191,7 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
       curso: tcc.Aluno.curso,
       email: tcc.Aluno.Usuario.email,
     },
-    areaConhecimento: {
-      id: tcc.AreaConhecimento?.id,
-      nome: tcc.AreaConhecimento?.nome,
-    },
+    areaConhecimento: tcc.AreaConhecimento?.nome,
     orientador: tcc.Orientador
       ? {
           id: tcc.Orientador.Usuario.id,
@@ -295,10 +292,7 @@ export async function findTCCByAlunoId(
       curso: tcc.Aluno.curso,
       email: tcc.Aluno.Usuario.email,
     },
-    areaConhecimento: {
-      id: tcc.AreaConhecimento?.id,
-      nome: tcc.AreaConhecimento?.nome,
-    },
+    areaConhecimento: tcc.AreaConhecimento?.nome,
     orientador: tcc.Orientador
       ? {
           id: tcc.Orientador.Usuario_id,
@@ -395,10 +389,7 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
       curso: tcc.Aluno.curso,
       email: tcc.Aluno.Usuario.email,
     },
-    areaConhecimento: {
-      id: tcc.AreaConhecimento?.id,
-      nome: tcc.AreaConhecimento?.nome,
-    },
+    areaConhecimento: tcc.AreaConhecimento?.nome,
     orientador: tcc.Orientador
       ? {
           id: tcc.Orientador.Usuario.id,
