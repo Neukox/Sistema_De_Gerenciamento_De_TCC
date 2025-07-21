@@ -13,7 +13,7 @@ export const API_CONFIG = {
     TCC: {
       GET_BY_ALUNO: "/tccs/aluno",
       GET_ALL: "/tccs",
-      GET_BY_ID: "/tccs/:id",
+      GET_BY_ID: "/tccs/", // id do TCC deve ser concatenado
       CREATE: "/tccs",
       UPDATE: "/tccs/:id",
       DELETE: "/tccs/:id",
