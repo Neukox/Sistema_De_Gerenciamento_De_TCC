@@ -9,7 +9,6 @@ export interface GetTCCResponse extends ApiResponse {
     id: number;
     titulo: string;
     tema: string;
-    curso: string;
     resumo: string;
     dataInicio: Date | null;
     dataConclusao: Date | null;
@@ -38,6 +37,22 @@ export interface GetTCCResponse extends ApiResponse {
           email: string;
         }
       | "Não definido";
+    tarefas: {
+      total: number;
+      concluidas: number;
+    };
+    etapas: {
+      total: number;
+      concluidas: number;
+    };
+    anotacoes: {
+      total: number;
+      esta_semana: number;
+    };
+    reunioes: {
+      total: number;
+      agendadas: number;
+    };
   };
 }
 

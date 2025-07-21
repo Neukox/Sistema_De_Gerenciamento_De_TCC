@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useAuth from "@/features/auth/context/useAuth";
 import { getAlunoTCC } from "@/services/tcc/getAlunoTCC";
 import { type TCCData, statusTCC } from "@/types/tcc";
 import TCCContext from "./TCCContext";
 import formatDate from "@/utils/format-date";
+import { useQuery } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
+import type { ApiResponse } from "@/types/response/base";
+import type { GetTCCResponse } from "@/types/response/tcc";
 
 interface TCCProviderProps {
   children: React.ReactNode;
@@ -16,128 +20,82 @@ interface TCCProviderProps {
  */
 
 export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
-  const [tccData, setTccData] = useState<TCCData>({
-    title: "Nenhum TCC Cadastrado",
-    aluno: "Carregando...",
-    curso: "Carregando...",
-    orientador: "Carregando...",
-    coorientador: "Carregando...",
-    progress: 0,
-    checked: 0,
-    total: 0,
-    pending: 0,
-    late: 0,
-    institution: "Carregando...",
-    data_inicio: "-",
-    prazo_entrega: "-",
-    status: "Planejamento",
-  });
-  const [loading, setLoading] = useState(true);
-
   const { user } = useAuth();
 
-  const fetchTCCData = async () => {
-    setLoading(true);
+  const { data, isLoading, refetch } = useQuery<
+    GetTCCResponse,
+    AxiosError<ApiResponse>
+  >({
+    queryKey: ["aluno-tcc", user?.id],
+    queryFn: getAlunoTCC,
+    enabled: !!user,
+    staleTime: 1000 * 60 * 5, // cache por 5 minutos
+    retry: 1,
+  });
 
-    try {
-      console.log("=== INÍCIO FETCH TCC DATA ===");
-      console.log("Dados do usuário:", user);
-      console.log("Token no localStorage:", localStorage.getItem("token"));
-      console.log(
-        "UserData no localStorage:",
-        localStorage.getItem("userData")
-      );
+  console.log("=== INÍCIO FETCH TCC DATA ===");
+  console.log("Dados do usuário:", user);
+  console.log("Token no localStorage:", localStorage.getItem("token"));
+  console.log("UserData no localStorage:", localStorage.getItem("userData"));
 
-      if (user) {
-        // Buscar TCC real do aluno
-        console.log("Buscando TCC do aluno...");
+  console.log("Buscando TCC do aluno...");
 
-        const { success, tcc } = await getAlunoTCC();
-        console.log("Resposta COMPLETA do TCC:", tcc);
+  console.log("Resposta COMPLETA do TCC:", data);
 
-        if (success) {
-          console.log("TCC encontrado, atualizando dados...");
-          console.log("ID do TCC:", tcc.id);
-          console.log("Título:", tcc.titulo);
-          console.log("Orientador:", tcc.orientador);
-          console.log("Coorientador:", tcc.coorientador);
+  if (data?.success) {
+    console.log("TCC encontrado, atualizando dados...");
+    console.log("ID do TCC:", data.tcc.id);
+    console.log("Título:", data.tcc.titulo);
+    console.log("Orientador:", data.tcc.orientador);
+    console.log("Coorientador:", data.tcc.coorientador);
+  }
 
-          setTccData({
-            id: tcc.id,
-            title: tcc.titulo,
-            aluno: tcc.aluno.nome,
-            curso: tcc.aluno.curso,
-            orientador:
-              typeof tcc.orientador === "string"
-                ? tcc.orientador
-                : tcc.orientador?.nome || "Não definido",
-            coorientador:
-              typeof tcc.coorientador === "string"
-                ? tcc.coorientador
-                : tcc.coorientador?.nome || "Não definido",
-            progress: 0, // TODO: Implementar cálculo de progresso
-            checked: 0,
-            total: 0,
-            pending: 0,
-            late: 0,
-            institution: "Universidade Federal",
-            data_inicio: formatDate(tcc.dataInicio || "-", false),
-            prazo_entrega: formatDate(tcc.dataConclusao || "-", false),
-            status:
-              statusTCC?.[
-                tcc.statusAtual as unknown as keyof typeof statusTCC
-              ] || "Planejamento",
-          });
-        } else {
-          console.log("Nenhum TCC encontrado para o aluno");
-          setTccData({
-            title: "Nenhum TCC Cadastrado",
-            aluno: "Carregando...",
-            curso: "Carregando...",
-            orientador: "Carregando...",
-            coorientador: "Carregando...",
-            progress: 0,
-            checked: 0,
-            total: 0,
-            pending: 0,
-            late: 0,
-            institution: "Carregando...",
-            data_inicio: null,
-            prazo_entrega: null,
-            status: "Planejamento",
-          });
-        }
+  const tccData: TCCData = data?.tcc
+    ? {
+        id: data.tcc.id,
+        title: data.tcc.titulo,
+        aluno: data.tcc.aluno.nome,
+        curso: data.tcc.aluno.curso,
+        orientador:
+          typeof data.tcc.orientador === "string"
+            ? data.tcc.orientador
+            : data.tcc.orientador?.nome || "Não definido",
+        coorientador:
+          typeof data.tcc.coorientador === "string"
+            ? data.tcc.coorientador
+            : data.tcc.coorientador?.nome || "Não definido",
+        data_inicio: data.tcc.dataInicio
+          ? formatDate(data.tcc.dataInicio)
+          : null,
+        prazo_entrega: data.tcc.dataConclusao
+          ? formatDate(data.tcc.dataConclusao)
+          : null,
+        status:
+          statusTCC[
+            data.tcc.statusAtual as unknown as keyof typeof statusTCC
+          ] || "Planejamento",
       }
-    } catch (error) {
-      console.error("Erro ao carregar dados do TCC:", error);
-      setTccData({
-        title: "Nenhum TCC Cadastrado",
-        aluno: "Carregando...",
-        curso: "Carregando...",
-        orientador: "Carregando...",
-        coorientador: "Carregando...",
-        progress: 0,
-        checked: 0,
-        total: 0,
-        pending: 0,
-        late: 0,
-        institution: "Carregando...",
+    : {
+        id: 0,
+        title: "",
+        aluno: "",
+        curso: "",
+        orientador: "Não definido",
+        coorientador: "Não definido",
         data_inicio: null,
         prazo_entrega: null,
         status: "Planejamento",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchTCCData();
-  }, [user]); // Só executa quando 'user' mudar
+      };
 
   return (
     <TCCContext.Provider
-      value={{ tccData, loading, refreshTCCData: fetchTCCData }}
+      value={{
+        tccData,
+        loading: isLoading,
+        refreshTCCData: async () => {
+          await refetch();
+        },
+      }}
     >
       {children}
     </TCCContext.Provider>

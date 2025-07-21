@@ -1,7 +1,6 @@
 /**
  * Define os possíveis status de um TCC
  */
-
 export type StatusTCC = {
   PLANEJAMENTO: "Planejamento";
   DESENVOLVIMENTO: "Desenvolvimento";
@@ -31,15 +30,9 @@ export interface TCCData {
   curso: string;
   orientador: string;
   coorientador: string;
-  progress: number;
-  institution: string;
-  checked: number;
-  total: number;
-  pending: number;
-  late: number;
   data_inicio?: string | null;
   prazo_entrega?: string | null;
-  status: (typeof statusTCC)[keyof typeof statusTCC];
+  status: string;
 }
 
 export interface TCCContextType {
