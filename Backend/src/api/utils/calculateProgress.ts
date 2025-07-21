@@ -1,14 +1,11 @@
 import {
   $Enums,
   Atividade,
-  Banca,
   Defesa,
   EtapaTCC,
   Reuniao,
 } from "@prisma/client";
 import {
-  MIN_ANOTACOES_COMPLETAS,
-  PESO_ANOTACOES,
   PESO_ETAPAS,
   PESO_REUNIOES,
   PESO_TAREFAS,
@@ -22,7 +19,6 @@ export function calculateCompleteProgress(tcc: TCCProgress): CalculateProgress {
   // Cálculo do progresso de cada componente
   const progresso_tarefas = calculateTasksProgress(tcc);
   const progresso_etapas = calculateStagesProgress(tcc);
-  const progresso_anotacoes = calculateNotesProgress(tcc);
   const progresso_reunioes = calculateMeetingsProgress(tcc);
   const progresso_defesas = calculateDefensesProgress(tcc);
 
@@ -30,14 +26,12 @@ export function calculateCompleteProgress(tcc: TCCProgress): CalculateProgress {
   const progresso_total =
     progresso_tarefas +
     progresso_etapas +
-    progresso_anotacoes +
     progresso_reunioes +
     progresso_defesas;
 
   return {
     progresso_tarefas,
     progresso_etapas,
-    progresso_anotacoes,
     progresso_reunioes,
     progresso_defesas,
     progresso_total,
@@ -69,15 +63,6 @@ export function calculateStagesProgress(tcc: TCCProgress): number {
   const etapasConcluidas =
     tcc.EtapasTCC?.filter((etapa) => etapa.status === "CONCLUIDA").length || 0;
   return totalEtapas > 0 ? (etapasConcluidas / totalEtapas) * PESO_ETAPAS : 0;
-}
-
-/**
- * Calcula o progresso das anotações do TCC
- */
-
-export function calculateNotesProgress(tcc: TCCProgress): number {
-  const qtdAnotacoes = tcc.Anotacoes?.length || 0;
-  return Math.min(qtdAnotacoes / MIN_ANOTACOES_COMPLETAS, 1) * PESO_ANOTACOES;
 }
 
 /**

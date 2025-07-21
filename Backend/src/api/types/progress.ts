@@ -16,7 +16,6 @@ import {
 export interface CalculateProgress {
   progresso_tarefas: number; // Progresso das tarefas (30%)
   progresso_etapas: number; // Progresso das etapas (30%)
-  progresso_anotacoes: number; // Progresso das anotações (10%)
   progresso_reunioes: number; // Progresso das reuniões (10%)
   progresso_defesas: number; // Progresso das defesas (20% = 10% pré-banca + 10% banca final)
   progresso_total: number; // Progresso total (soma dos componentes)
@@ -26,9 +25,8 @@ export interface CalculateProgress {
  * Interface para o progresso calculado de um TCC.
  */
 export interface TCCProgress extends TCC {
-  Atividades: Atividade[];
+  Atividades?: Atividade[];
   EtapasTCC?: EtapaTCC[];
-  Anotacoes?: Anotacao[];
   Reunioes?: Reuniao[];
   Defesas?: Defesa[];
   progresso_total?: number;

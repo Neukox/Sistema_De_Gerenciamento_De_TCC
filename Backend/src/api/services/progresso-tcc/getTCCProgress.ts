@@ -10,8 +10,6 @@ import {
 import prisma from "../../config/prisma";
 import { GetTCCProgress } from "./contracts";
 import {
-  MIN_ANOTACOES_COMPLETAS,
-  PESO_ANOTACOES,
   PESO_DEFESAS,
   PESO_ETAPAS,
   PESO_REUNIOES,
@@ -34,39 +32,8 @@ export default async function getTCCProgressService(
       id,
     },
     include: {
-      Aluno: {
-        select: {
-          curso: true,
-          Usuario: {
-            select: {
-              nome_completo: true,
-            },
-          },
-        },
-      },
-      Orientador: {
-        select: {
-          area_atuacao: true,
-          Usuario: {
-            select: {
-              nome_completo: true,
-            },
-          },
-        },
-      },
-      Coorientador: {
-        select: {
-          area_atuacao: true,
-          Usuario: {
-            select: {
-              nome_completo: true,
-            },
-          },
-        },
-      },
       Atividades: true,
       EtapasTCC: true,
-      Anotacoes: true,
       Reunioes: true,
       Defesas: true,
     },
@@ -81,26 +48,9 @@ export default async function getTCCProgressService(
   return {
     id: tcc.id,
     titulo: tcc.titulo,
-    aluno: {
-      nome_completo: tcc.Aluno.Usuario.nome_completo,
-      curso: tcc.Aluno.curso,
-    },
-    orientador: tcc.Orientador
-      ? {
-          nome_completo: tcc.Orientador.Usuario.nome_completo,
-          area_atuacao: tcc.Orientador.area_atuacao,
-        }
-      : "Não definido",
-    coorientador: tcc.Coorientador
-      ? {
-          nome_completo: tcc.Coorientador.Usuario.nome_completo,
-          area_atuacao: tcc.Coorientador.area_atuacao,
-        }
-      : "não definido",
     progresso: {
       total: calculateProgressPercentage(progress.progresso_total),
       status: calculateProgressStatus(progress.progresso_total),
-      status_atual: calculateProgressStatus(progress.progresso_total),
       detalhamento: {
         tarefas: {
           pontuacao: calculateProgressPercentage(progress.progresso_tarefas),
@@ -113,12 +63,6 @@ export default async function getTCCProgressService(
           peso: PESO_ETAPAS,
           total: tcc.EtapasTCC.length,
           concluidas: calculateCompletedStages(tcc.EtapasTCC),
-        },
-        anotacoes: {
-          pontuacao: calculateProgressPercentage(progress.progresso_anotacoes),
-          peso: PESO_ANOTACOES,
-          total: tcc.Anotacoes.length,
-          minimo: MIN_ANOTACOES_COMPLETAS,
         },
         reunioes: {
           pontuacao: calculateProgressPercentage(progress.progresso_reunioes),
