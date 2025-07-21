@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import AuthContextProvider from "./features/auth/context/AuthContextProvider.tsx";
+import AuthProvider from "./features/auth/context/AuthProvider.tsx";
 import TCCProvider from "./features/TCC/contexts/TCCProvider.tsx";
 import queryClient from "./lib/api/react-query.ts";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthContextProvider>
+      <AuthProvider>
         <QueryClientProvider client={queryClient}>
           <TCCProvider>
             <App />
@@ -27,7 +27,7 @@ createRoot(document.getElementById("root")!).render(
             />
           </TCCProvider>
         </QueryClientProvider>
-      </AuthContextProvider>
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>
 );

@@ -1,4 +1,3 @@
-
 // src/App.tsx
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/auth/LoginPage";
@@ -13,9 +12,7 @@ import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { EditarTCC } from "./features/EditarTCC/EditarTCC";
 import HistoricoReunioes from "./features/HistoricoReunio/HistoricoReuniao";
-import { ReunioesProvider } from "./context/ReunioesContext";
 import CriarAtividade from "./features/CriarAtividade/CriarAtividade";
-
 import TCCLayout from "./pages/layouts/TCCLayout";
 import RequireAuthRoute from "./pages/RequireAuthRoute";
 import TasksPage from "./pages/tcc/TasksPage";
@@ -24,28 +21,22 @@ import DashboardPage from "./pages/tcc/DashboardPage";
 
 export default function App() {
   return (
-    <ReunioesProvider>
     <div className="scrollbar-hide">
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/recuperar-senha" element={<RecuperacaoSenha />} />
         <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
-        <Route path="/cadastrar-tcc" element={<CadastrarTcc />} />
-        <Route path="/boas-vindas" element={<BoasVindas />} />
         <Route path="/editar-tcc" element={<EditarTCC />} />
         <Route path="/historico-reunioes" element={<HistoricoReunioes />} />
         <Route path="/criar-atividade" element={<CriarAtividade />} />
-
-        {/* Public Routes */}
 
         {/* Protected Routes */}
         <Route path="/" element={<RequireAuthRoute />}>
           <Route path="boas-vindas" element={<BoasVindas />} />
           <Route path="perfil" element={<UserProfile />} />
-          <Route element={<ProtectedRoute roles={["ALUN0"]} />}>
+          <Route element={<ProtectedRoute roles={["ALUNO"]} />}>
             <Route path="cadastrar-tcc" element={<CadastrarTcc />} />
             <Route element={<TCCLayout />}>
               <Route path="dashboard" element={<DashboardPage />} />
@@ -59,6 +50,5 @@ export default function App() {
         </Route>
       </Routes>
     </div>
-    </ReunioesProvider>
   );
 }

@@ -18,6 +18,7 @@ export default function AuthProvider({
 }) {
   const [user, setUser] = useState<UserData | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   // Verifica se o usuário está autenticado
   const isAuthenticated = !!user;
 
@@ -43,6 +44,7 @@ export default function AuthProvider({
       setUser(JSON.parse(storedUser));
       setToken(storedToken);
     }
+    setLoading(false);
   }, [navigate]);
 
   // Função para definir a sessão do usuário
@@ -67,7 +69,7 @@ export default function AuthProvider({
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, token, setSession, logout }}
+      value={{ isAuthenticated, user, token, loading, setSession, logout }}
     >
       {children}
     </AuthContext.Provider>
