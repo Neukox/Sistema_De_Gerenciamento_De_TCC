@@ -8,16 +8,18 @@ import {
   Submit,
 } from "@/components/ui/form";
 import type { GetProfessor } from "@/types/response/professor";
-import useCreateTCCForm from "./create-tcc-form.hook";
-import type { CreateTCCFormData } from "./create-tcc-form.schema";
-import useCreateTCC from "../create-tcc-fetch";
-import type { RegisterTCCRequest } from "@/types/response/tcc";
+import type { TCCFormData } from "./tcc-form.schema";
 import { statusTCC } from "@/types/tcc";
 import type { AreaConhecimento } from "@/types/area-conhecimento";
+import useTCCForm from "./tcc-form.hook";
 
-type CreateTCCFormProps = {
+type TCCFormProps = {
   areasConhecimento: AreaConhecimento[];
   professores: GetProfessor[];
+  initialData?: Partial<TCCFormData>;
+  onSubmit: (data: TCCFormData) => void;
+  submitLabel?: string;
+  isLoading?: boolean;
 };
 
 /**
@@ -27,35 +29,20 @@ type CreateTCCFormProps = {
  * @returns JSX.Element - Formulário de criação de TCC.
  */
 
-export default function CreateTCCForm({
+export default function TCCForm({
   areasConhecimento,
   professores,
-}: CreateTCCFormProps) {
+  initialData,
+  onSubmit,
+  submitLabel,
+  isLoading = false,
+}: TCCFormProps) {
   // Hook para gerenciar o formulário de criação de TCC
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useCreateTCCForm();
-
-  const { registerTCC, isLoading } = useCreateTCC();
-
-  const onSubmit = (data: CreateTCCFormData) => {
-    // Mapeia os dados do formulário para o formato esperado pela API
-    const requestData: RegisterTCCRequest = {
-      titulo: data.titulo,
-      tema: data.tema,
-      resumo: data.resumo,
-      dataInicio: data.dataInicio,
-      dataConclusao: data.dataConclusao,
-      statusAtual: data.status as keyof typeof statusTCC,
-      areaConhecimento: data.areaConhecimento,
-      orientadorNome: data.orientador,
-      coorientadorNome: data.coorientador,
-    };
-
-    registerTCC(requestData);
-  };
+  } = useTCCForm(initialData);
 
   return (
     <form
@@ -246,7 +233,7 @@ export default function CreateTCCForm({
       {/* Botão de Cadastrar TCC */}
       <div className="col-span-2">
         <Submit variant="primary" className="w-full" disabled={isLoading}>
-          Cadastrar TCC
+          {submitLabel || "Enviar"}
         </Submit>
       </div>
     </form>

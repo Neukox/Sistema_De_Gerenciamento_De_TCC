@@ -1,8 +1,10 @@
-import CreateTCCForm from "./form/CreateTCCForm";
+import TCCForm from "../form/TCCForm";
 import useAreaConhecimento from "@/hooks/useAreaConhecimento";
 import useProfessores from "@/features/professor/hooks/useProfessores";
 import CreateTCCError from "./CreateTCCError";
 import CreateTCCLoading from "./CreateTCCLoading";
+import useCreateTCC from "./create-tcc-fetch";
+import type { statusTCC } from "@/types/tcc";
 
 /**
  * Componente principal para criar um novo TCC.
@@ -16,7 +18,7 @@ export default function CreateTCC() {
     isLoading: loadingAreas,
     error: errorAreas,
   } = useAreaConhecimento();
-  
+
   const {
     professores,
     isLoading: loadingProfessores,
@@ -25,17 +27,10 @@ export default function CreateTCC() {
     disponibilidade: true,
   });
 
-  console.log("Áreas de Conhecimento:", areasConhecimento);
-  console.log("Professores:", professores);
+  const { registerTCC, isLoading } = useCreateTCC();
 
   // Verifica se há erros ao carregar áreas de conhecimento ou professores
   if (errorAreas || errorProfessores) return <CreateTCCError />;
-
-  console.error(
-    "Erro ao carregar áreas de conhecimento ou professores:",
-    errorAreas,
-    errorProfessores
-  );
 
   // Verifica se os dados ainda estão sendo carregados
   if (loadingAreas || loadingProfessores) return <CreateTCCLoading />;
@@ -48,9 +43,19 @@ export default function CreateTCC() {
           Registre seu trabalho de conclusão de curso!
         </p>
       </div>
-      <CreateTCCForm
+      <TCCForm
         areasConhecimento={areasConhecimento || []}
         professores={professores || []}
+        onSubmit={(data) =>
+          registerTCC({
+            ...data,
+            orientadorNome: data.orientador,
+            coorientadorNome: data.coorientador,
+            statusAtual: data.status as keyof typeof statusTCC,
+          })
+        }
+        submitLabel="Cadastrar TCC"
+        isLoading={isLoading}
       />
     </>
   );

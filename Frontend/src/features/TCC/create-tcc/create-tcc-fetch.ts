@@ -21,7 +21,7 @@ export default function useCreateTCC() {
         {
           autoClose: 5000,
           onClose: () => {
-            navigate("/maindashboard");
+            navigate("/dashboard");
           },
           hideProgressBar: false,
         }

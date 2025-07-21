@@ -5,7 +5,7 @@ import { statusTCC } from "@/types/tcc";
  * Schema de validação para o formulário de criação de TCC.
  * Utiliza a biblioteca Zod para definir as regras de validação.
  */
-export const createTCCFormSchema = z
+export const TCCFormSchema = z
   .object({
     titulo: z.string().min(1, "Título é obrigatório"),
     tema: z.string().min(1, "Tema é obrigatório"),
@@ -39,5 +39,5 @@ export const createTCCFormSchema = z
     }
   );
 
-export type CreateTCCFormData = z.infer<typeof createTCCFormSchema>;
-export default createTCCFormSchema;
+export type TCCFormData = z.infer<typeof TCCFormSchema>;
+export default TCCFormSchema;
