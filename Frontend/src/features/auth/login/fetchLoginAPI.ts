@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../context/useAuth";
-import type { UserData } from "@/types/user/user";
+import type { UserData } from "@/types/user";
 
 /**
  * Hook para realizar o login de um usuário.

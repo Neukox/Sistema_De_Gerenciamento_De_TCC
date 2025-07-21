@@ -5,7 +5,7 @@ import { isAxiosError } from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useAuth from "../context/useAuth";
-import type { UserData } from "@/types/user/user";
+import type { UserData } from "@/types/user";
 
 /**
  * Hook para registrar um novo usuário.

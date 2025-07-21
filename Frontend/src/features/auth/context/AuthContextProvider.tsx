@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { UserData } from "@/types/user/user";
+import type { UserData } from "@/types/user";
 import AuthContext from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import isTokenExpired from "@/utils/jwt";

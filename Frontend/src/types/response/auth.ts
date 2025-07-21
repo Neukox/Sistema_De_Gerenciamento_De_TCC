@@ -1,4 +1,4 @@
-import type { UserData } from "../user/user";
+import type { UserData } from "../user";
 import type { ApiResponse } from "./base";
 
 /**
