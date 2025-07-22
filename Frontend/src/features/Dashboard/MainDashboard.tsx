@@ -16,17 +16,21 @@ import TCCInfo from "../TCC/info/TCCInfo";
 import TCCProgress from "../TCC/progress/TCCProgress";
 import TCCTimeline from "../TCC/timeline/TCCTimeline";
 import { useTCCContext } from "@/hooks/useTCCContext";
+import { useNavigate } from "react-router-dom";
 
 function MainDashboard() {
   // Navegação
-  const { tccData } = useTCCContext();
+  const navigate = useNavigate();
+
+  const { tccData, setEditable } = useTCCContext();
 
   // Verificação se tccData existe antes de chamar o hook
   const { data, loading } = useTCCDashboard(tccData?.id as number);
 
-  console.log("TCC Data:", tccData);
-  console.log("Dashboard Data:", data);
-  console.log("Loading:", loading);
+  const handleEditTCC = () => {
+    setEditable(true);
+    navigate("/meu-tcc");
+  };
 
   // Loading state - mostra carregando enquanto dados estão sendo buscados
   if (loading || !data) {
@@ -161,7 +165,11 @@ function MainDashboard() {
               <h2 className="text-xl font-semibold">Ações Rápidas</h2>
             </CardHeader>
             <div className="flex flex-col gap-6">
-              <Button variant="quicks" className="flex items-center gap-2">
+              <Button
+                variant="quicks"
+                className="flex items-center gap-2"
+                onClick={handleEditTCC}
+              >
                 <CiEdit className="size-6" />
                 Editar TCC
               </Button>

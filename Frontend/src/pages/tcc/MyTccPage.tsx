@@ -5,6 +5,7 @@ import EditTCC from "@/features/TCC/edit-tcc/EditTCC";
 import { useTCCContext } from "@/hooks/useTCCContext";
 import useTitle from "@/hooks/useTitle";
 import { GraduationCapIcon, Save } from "lucide-react";
+import { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 
 /**
@@ -20,6 +21,12 @@ export default function MyTccPage() {
   const handleEditTCC = () => {
     setEditable((prev) => !prev);
   };
+
+  useEffect(() => {
+    return () => {
+      setEditable(false); // Reseta o estado de edição ao desmontar o componente
+    };
+  }, [setEditable]);
 
   return (
     <div className="flex flex-col gap-6">
