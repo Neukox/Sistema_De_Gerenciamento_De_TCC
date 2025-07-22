@@ -12,8 +12,8 @@ export default {
       fontFamily: {
         OpenSans: ["Open Sans", "sans-serif"],
       },
-      container: {
-        xs: "28rem", // 448px
+      screens: {
+        "xs": "28rem", // 448px
       },
       maxWidth: {
         "8xl": "90rem", // 1440px

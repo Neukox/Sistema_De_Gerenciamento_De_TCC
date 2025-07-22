@@ -42,7 +42,7 @@ export default function SideBar({ children, isOpen, onClose }: SideBarProps) {
           </Button>
           <Logo withName size="medium" />
         </div>
-        <div className="py-6 px-4 h-[calc(100vh_-_77px)] overflow-y-auto">
+        <div className="py-6 px-4 h-[calc(100vh_-_81px)] overflow-y-auto">
           {children}
         </div>
       </aside>

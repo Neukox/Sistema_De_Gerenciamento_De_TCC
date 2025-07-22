@@ -67,7 +67,7 @@ export default function TCCLayout() {
       </SideBar>
       <div className="overflow-y-auto min-h-screen flex-1">
         <Header title={pagesTitles.aluno[page]} onMenuClick={open} />
-        <main className="p-4 md:p-6 lg:p-8 bg-secondary min-h-[calc(100vh_-_5rem)]">
+        <main className="p-4 md:p-6 lg:p-8 bg-secondary min-h-[calc(100vh_-_5rem)] flex justify-center">
           <Outlet />
         </main>
       </div>

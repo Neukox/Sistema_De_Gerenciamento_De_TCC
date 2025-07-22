@@ -14,7 +14,9 @@ export default function DashboardPage() {
 
   return (
     <Suspense fallback={<DashboardLoading />}>
-      <Dashboard />
+      <div className="flex flex-col items-center gap-6 w-full max-w-8xl">
+        <Dashboard />
+      </div>
     </Suspense>
   );
 }
