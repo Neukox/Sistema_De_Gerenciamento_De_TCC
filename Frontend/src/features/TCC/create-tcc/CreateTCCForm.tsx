@@ -8,17 +8,15 @@ import {
   Submit,
 } from "@/components/ui/form";
 import type { GetProfessor } from "@/types/response/professor";
-import type { TCCFormData } from "./tcc-form.schema";
+import type { TCCFormData } from "../form/tcc-form.schema";
 import { statusTCC } from "@/types/tcc";
 import type { AreaConhecimento } from "@/types/area-conhecimento";
-import useTCCForm from "./tcc-form.hook";
+import useTCCForm from "../form/tcc-form.hook";
 
 type TCCFormProps = {
   areasConhecimento: AreaConhecimento[];
   professores: GetProfessor[];
-  initialData?: Partial<TCCFormData>;
   onSubmit: (data: TCCFormData) => void;
-  submitLabel?: string;
   isLoading?: boolean;
 };
 
@@ -29,12 +27,10 @@ type TCCFormProps = {
  * @returns JSX.Element - Formulário de criação de TCC.
  */
 
-export default function TCCForm({
+export default function CreateTCCForm({
   areasConhecimento,
   professores,
-  initialData,
   onSubmit,
-  submitLabel,
   isLoading = false,
 }: TCCFormProps) {
   // Hook para gerenciar o formulário de criação de TCC
@@ -42,7 +38,7 @@ export default function TCCForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useTCCForm(initialData);
+  } = useTCCForm();
 
   return (
     <form
@@ -233,7 +229,7 @@ export default function TCCForm({
       {/* Botão de Cadastrar TCC */}
       <div className="col-span-2">
         <Submit variant="primary" className="w-full" disabled={isLoading}>
-          {submitLabel || "Enviar"}
+          Cadastrar TCC
         </Submit>
       </div>
     </form>

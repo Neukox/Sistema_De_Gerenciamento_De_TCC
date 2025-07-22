@@ -1,4 +1,4 @@
-import TCCForm from "../form/TCCForm";
+import CreateTCCForm from "./CreateTCCForm";
 import useAreaConhecimento from "@/hooks/useAreaConhecimento";
 import useProfessores from "@/features/professor/hooks/useProfessores";
 import CreateTCCError from "./CreateTCCError";
@@ -43,7 +43,7 @@ export default function CreateTCC() {
           Registre seu trabalho de conclusão de curso!
         </p>
       </div>
-      <TCCForm
+      <CreateTCCForm
         areasConhecimento={areasConhecimento || []}
         professores={professores || []}
         onSubmit={(data) =>
@@ -54,7 +54,6 @@ export default function CreateTCC() {
             statusAtual: data.status as keyof typeof statusTCC,
           })
         }
-        submitLabel="Cadastrar TCC"
         isLoading={isLoading}
       />
     </>
