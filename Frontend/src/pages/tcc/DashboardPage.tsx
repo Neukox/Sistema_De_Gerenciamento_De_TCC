@@ -5,7 +5,7 @@ export default function DashboardPage() {
   useTitle("Dashboard | Foco TCC");
 
   return (
-    <div className="bg-secondary min-h-screen p-4 md:p-6 lg:p-8 flex justify-center">
+    <div className="flex justify-center">
       <MainDashboard />
     </div>
   );

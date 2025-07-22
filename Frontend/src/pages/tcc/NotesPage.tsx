@@ -10,7 +10,7 @@ export default function NotesPage() {
   useTitle("Anotações | Foco TCC");
 
   return (
-    <div className="bg-secondary min-h-screen p-4 flex">
+    <div className="flex">
       <NotesLayout />
     </div>
   );

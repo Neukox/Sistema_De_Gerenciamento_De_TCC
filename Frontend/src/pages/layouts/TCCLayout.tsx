@@ -48,7 +48,7 @@ export default function TCCLayout() {
             <LuHistory className="size-6" />
             Histórico
           </NavbarLink>
-          <NavbarLink to="/">
+          <NavbarLink to="/meu-tcc">
             <GraduationCap className="size-6" />
             Meu TCC
           </NavbarLink>
@@ -60,10 +60,12 @@ export default function TCCLayout() {
 
         </nav>
       </SideBar>
-      <main className="overflow-y-auto min-h-screen flex-1">
+      <div className="overflow-y-auto min-h-screen flex-1">
         <Header title={pagesTitles.aluno[page]} onMenuClick={open} />
-        <Outlet />
-      </main>
+        <main className="p-4 md:p-6 lg:p-8 bg-secondary min-h-[calc(100vh_-_5rem)]">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }

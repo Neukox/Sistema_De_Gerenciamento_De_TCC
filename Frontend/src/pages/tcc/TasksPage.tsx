@@ -10,7 +10,7 @@ export default function TasksPage() {
   useTitle("Tarefas | Foco TCC");
 
   return (
-    <div className="bg-secondary min-h-screen p-4 flex">
+    <div className="flex">
       <TasksLayout />
     </div>
   );
