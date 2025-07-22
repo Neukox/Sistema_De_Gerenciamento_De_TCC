@@ -6,5 +6,6 @@ export const pagesTitles = {
     anotacoes: "Anotações",
     tarefas: "Tarefas",
     "assistente-tcc": "Assistente FocoTCC",
+    "meu-tcc": "Meu TCC",
   },
 };
