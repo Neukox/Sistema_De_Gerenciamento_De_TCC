@@ -78,5 +78,4 @@ export interface UpdateTCCRequest {
   areaConhecimento: string;
   orientadorNome: string;
   coorientadorNome?: string;
-  curso: string;
 }
