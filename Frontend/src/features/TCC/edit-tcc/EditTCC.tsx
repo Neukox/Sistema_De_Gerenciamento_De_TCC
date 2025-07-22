@@ -3,6 +3,8 @@ import EditTCCForm from "./EditTCCForm";
 import { useTCCContext } from "@/hooks/useTCCContext";
 import useAreaConhecimento from "@/hooks/useAreaConhecimento";
 import useProfessores from "@/features/professor/hooks/useProfessores";
+import { useEditTCC } from "./edit-tcc";
+import type { statusTCC } from "@/types/tcc";
 
 /**
  * Componente para editar informações do TCC
@@ -14,6 +16,8 @@ export default function EditTCC() {
 
   const { areasConhecimento } = useAreaConhecimento();
   const { professores } = useProfessores();
+
+  const { mutate } = useEditTCC();
 
   return (
     <>
@@ -33,8 +37,15 @@ export default function EditTCC() {
             areaConhecimento: tccData.area_conhecimento ?? "",
             status: tccData.status,
           }}
-          onSubmit={() => {
-            console.log("Formulário enviado");
+          onSubmit={(data) => {
+            mutate({
+              ...data,
+              id: tccData.id,
+              orientadorNome: data.orientador,
+              coorientadorNome: data.coorientador,
+              areaConhecimento: data.areaConhecimento,
+              statusAtual: tccData.status as keyof typeof statusTCC,
+            });
           }}
         />
       </Card>

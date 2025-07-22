@@ -1,6 +1,7 @@
 import Button from "@/components/ui/Button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Submit } from "@/components/ui/form";
+import { useEditTCC } from "@/features/TCC/edit-tcc/edit-tcc";
 import EditTCCLoading from "@/features/TCC/edit-tcc/EditTCCLoading";
 import { useTCCContext } from "@/hooks/useTCCContext";
 import useTitle from "@/hooks/useTitle";
@@ -21,15 +22,23 @@ export default function MyTccPage() {
 
   const { editable, setEditable } = useTCCContext();
 
-  const handleEditTCC = () => {
-    setEditable((prev) => !prev);
+  const { isPending } = useEditTCC();
+
+  const openEditTCC = () => {
+    setEditable(true);
+  };
+
+  const closeEditTCC = () => {
+    setEditable(false);
   };
 
   useEffect(() => {
     return () => {
-      setEditable(false); // Reseta o estado de edição ao desmontar o componente
+      if (!location.pathname.includes("/meu-tcc")) {
+        setEditable(false);
+      }
     };
-  }, [setEditable]);
+  }, [location.pathname, setEditable]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -40,11 +49,7 @@ export default function MyTccPage() {
         </CardHeader>
         <div className="flex flex-col-reverse md:flex-row gap-4">
           {!editable && (
-            <Button
-              variant="primary"
-              className="w-full"
-              onClick={handleEditTCC}
-            >
+            <Button variant="primary" className="w-full" onClick={openEditTCC}>
               Editar TCC
             </Button>
           )}
@@ -52,14 +57,14 @@ export default function MyTccPage() {
             <>
               <Button
                 variant="default"
-                onClick={handleEditTCC}
+                onClick={closeEditTCC}
                 className="flex items-center gap-2"
               >
                 <CgClose className="size-6" />
                 Cancelar Edição
               </Button>
-              <Submit form="edit-tcc-form">
-                <Save className="size-6" />
+              <Submit type="submit" form="edit-tcc-form" disabled={isPending}>
+                {!isPending && <Save className="size-4" />}
                 Salvar Alterações
               </Submit>
             </>
