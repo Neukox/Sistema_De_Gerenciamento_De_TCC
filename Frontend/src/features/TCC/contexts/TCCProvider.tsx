@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "@/features/auth/context/useAuth";
 import { getAlunoTCC } from "@/services/tcc/getAlunoTCC";
-import { type TCCData, statusTCC } from "@/types/tcc";
+import { type TCCData } from "@/types/tcc";
 import TCCContext from "./TCCContext";
 import formatDate from "@/utils/format-date";
 import { useQuery } from "@tanstack/react-query";
@@ -20,6 +20,7 @@ interface TCCProviderProps {
  */
 
 export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
+  const [editable, setEditable] = useState<boolean>(false);
   const { user } = useAuth();
 
   const { data, isLoading, refetch } = useQuery<
@@ -33,58 +34,42 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
     retry: 1,
   });
 
-  console.log("=== INÍCIO FETCH TCC DATA ===");
-  console.log("Dados do usuário:", user);
-  console.log("Token no localStorage:", localStorage.getItem("token"));
-  console.log("UserData no localStorage:", localStorage.getItem("userData"));
-
-  console.log("Buscando TCC do aluno...");
-
-  console.log("Resposta COMPLETA do TCC:", data);
-
-  if (data?.success) {
-    console.log("TCC encontrado, atualizando dados...");
-    console.log("ID do TCC:", data.tcc.id);
-    console.log("Título:", data.tcc.titulo);
-    console.log("Orientador:", data.tcc.orientador);
-    console.log("Coorientador:", data.tcc.coorientador);
-  }
-
   const tccData: TCCData = data?.tcc
     ? {
         id: data.tcc.id,
-        title: data.tcc.titulo,
+        titulo: data.tcc.titulo,
+        resumo: data.tcc.resumo,
+        tema: data.tcc.tema,
+        area_conhecimento: data.tcc.areaConhecimento ?? "",
         aluno: data.tcc.aluno.nome,
         curso: data.tcc.aluno.curso,
         orientador:
           typeof data.tcc.orientador === "string"
             ? data.tcc.orientador
-            : data.tcc.orientador?.nome || "Não definido",
+            : data.tcc.orientador?.nome || "",
         coorientador:
           typeof data.tcc.coorientador === "string"
             ? data.tcc.coorientador
-            : data.tcc.coorientador?.nome || "Não definido",
-        data_inicio: data.tcc.dataInicio
-          ? formatDate(data.tcc.dataInicio)
-          : null,
+            : data.tcc.coorientador?.nome || "",
+        data_inicio: data.tcc.dataInicio ? formatDate(data.tcc.dataInicio) : "",
         prazo_entrega: data.tcc.dataConclusao
           ? formatDate(data.tcc.dataConclusao)
-          : null,
-        status:
-          statusTCC[
-            data.tcc.statusAtual as unknown as keyof typeof statusTCC
-          ] || "Planejamento",
+          : "",
+        status: data.tcc.statusAtual as unknown as string,
       }
     : {
         id: 0,
-        title: "",
+        titulo: "",
+        tema: "",
+        resumo: "",
         aluno: "",
         curso: "",
-        orientador: "Não definido",
-        coorientador: "Não definido",
-        data_inicio: null,
-        prazo_entrega: null,
-        status: "Planejamento",
+        area_conhecimento: "",
+        orientador: "",
+        coorientador: "",
+        data_inicio: "",
+        prazo_entrega: "",
+        status: "PLANEJAMENTO",
       };
 
   return (
@@ -95,6 +80,8 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
         refreshTCCData: async () => {
           await refetch();
         },
+        editable,
+        setEditable,
       }}
     >
       {children}
