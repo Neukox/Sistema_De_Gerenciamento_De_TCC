@@ -47,3 +47,15 @@ export interface CreateTCCServicePayload {
       }
     | "Não definido";
 }
+
+export interface IUpdateTCCService {
+  titulo?: string;
+  tema?: string;
+  resumo?: string;
+  dataInicio?: Date | null;
+  dataConclusao?: Date | null;
+  statusAtual?: $Enums.StatusTCC;
+  areaConhecimento?: string; // Nome da área de conhecimento
+  orientadorNome?: string; // Nome que será buscado no banco de dados
+  coorientadorNome?: string; // Nome que será buscado no banco de dados
+}

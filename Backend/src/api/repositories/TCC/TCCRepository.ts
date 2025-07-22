@@ -5,8 +5,9 @@ import {
   calculateScheduledMeetings,
 } from "../../utils/calculate";
 import prisma from "../../config/prisma";
-import { GetTCCQuery, ICreateTCC } from "./interfaces";
+import { GetTCCQuery, ICreateTCC, IUpdateTCC } from "./interfaces";
 import { CreateTCCPayload } from "./interfaces";
+import { TCC } from "@prisma/client";
 
 /**
  * Cria um novo TCC no banco de dados.
@@ -473,4 +474,46 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
       agendadas: calculateScheduledMeetings(tcc.Reunioes || []),
     },
   };
+}
+
+/**
+ * Atualiza um TCC no banco de dados.
+ * @param id - ID do TCC a ser atualizado.
+ * @param data - Dados atualizados do TCC.
+ * @returns O TCC atualizado.
+ */
+export async function updateTCC(
+  id: number,
+  data: Partial<IUpdateTCC>
+): Promise<TCC | null> {
+  const tcc = await prisma.tCC.update({
+    where: { id },
+    data: {
+      titulo: data.titulo,
+      tema: data.tema,
+      resumo: data.resumo,
+      dataInicio: data.dataInicio,
+      dataConclusao: data.dataConclusao,
+      status_atual: data.statusAtual,
+      ...(data.areaConhecimentoId && {
+        AreaConhecimento: {
+          connect: { id: data.areaConhecimentoId },
+        },
+      }),
+      ...(data.orientadorId && {
+        Orientador: {
+          connect: { Usuario_id: data.orientadorId },
+        },
+      }),
+      ...(data.coorientadorId && {
+        Coorientador: {
+          connect: { Usuario_id: data.coorientadorId },
+        },
+      }),
+    },
+  });
+
+  if (!tcc) return null;
+
+  return tcc;
 }

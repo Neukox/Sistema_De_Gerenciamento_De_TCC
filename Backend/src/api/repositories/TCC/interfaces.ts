@@ -37,7 +37,7 @@ export interface GetTCCQuery {
   tarefas: {
     total: number;
     concluidas: number;
-  }
+  };
   etapas: {
     total: number;
     concluidas: number;
@@ -63,6 +63,18 @@ export interface ICreateTCC {
   areaConhecimentoId: number;
   orientadorId: number;
   coorientadorId?: number;
+}
+
+export interface IUpdateTCC {
+  titulo?: string;
+  tema?: string;
+  resumo?: string;
+  dataInicio?: Date | null;
+  dataConclusao?: Date | null;
+  statusAtual?: $Enums.StatusTCC;
+  orientadorId?: number;
+  coorientadorId?: number;
+  areaConhecimentoId?: number;
 }
 
 export interface CreateTCCPayload {
