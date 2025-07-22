@@ -1,12 +1,15 @@
 import Button from "@/components/ui/Button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Submit } from "@/components/ui/form";
-import EditTCC from "@/features/TCC/edit-tcc/EditTCC";
+import EditTCCLoading from "@/features/TCC/edit-tcc/EditTCCLoading";
 import { useTCCContext } from "@/hooks/useTCCContext";
 import useTitle from "@/hooks/useTitle";
 import { GraduationCapIcon, Save } from "lucide-react";
+import React, { Suspense } from "react";
 import { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
+
+const EditTCC = React.lazy(() => import("@/features/TCC/edit-tcc/EditTCC"));
 
 /**
  * Página do TCC do Aluno
@@ -63,7 +66,9 @@ export default function MyTccPage() {
           )}
         </div>
       </Card>
-      <EditTCC />
+      <Suspense fallback={<EditTCCLoading />}>
+        <EditTCC />
+      </Suspense>
     </div>
   );
 }

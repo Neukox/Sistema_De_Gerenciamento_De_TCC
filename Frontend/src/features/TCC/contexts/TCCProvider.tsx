@@ -3,7 +3,6 @@ import useAuth from "@/features/auth/context/useAuth";
 import { getAlunoTCC } from "@/services/tcc/getAlunoTCC";
 import { type TCCData } from "@/types/tcc";
 import TCCContext from "./TCCContext";
-import formatDate from "@/utils/format-date";
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import type { ApiResponse } from "@/types/response/base";
@@ -51,9 +50,11 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
           typeof data.tcc.coorientador === "string"
             ? data.tcc.coorientador
             : data.tcc.coorientador?.nome || "",
-        data_inicio: data.tcc.dataInicio ? formatDate(data.tcc.dataInicio) : "",
+        data_inicio: data.tcc.dataInicio
+          ? new Date(data.tcc.dataInicio).toISOString().slice(0, 10)
+          : "",
         prazo_entrega: data.tcc.dataConclusao
-          ? formatDate(data.tcc.dataConclusao)
+          ? new Date(data.tcc.dataConclusao).toISOString().slice(0, 10)
           : "",
         status: data.tcc.statusAtual as unknown as string,
       }
