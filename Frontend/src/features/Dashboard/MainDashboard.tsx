@@ -19,19 +19,32 @@ import { useTCCContext } from "@/hooks/useTCCContext";
 
 function MainDashboard() {
   // Navegação
- 
-
   const { tccData } = useTCCContext();
 
+  // Verificação se tccData existe antes de chamar o hook
   const { data, loading } = useTCCDashboard(tccData?.id as number);
 
-  console.log(data);
+  console.log("TCC Data:", tccData);
+  console.log("Dashboard Data:", data);
+  console.log("Loading:", loading);
 
-  // Loading
-  if (loading) {
+  // Loading state - mostra carregando enquanto dados estão sendo buscados
+  if (loading || !data) {
     return (
       <div className="flex justify-center items-center h-screen bg-secondary">
-        <div className="text-2xl font-bold">Carregando...</div>
+        <div className="text-2xl font-bold">Carregando Dashboard...</div>
+      </div>
+    );
+  }
+
+  // Se não há dados do TCC, mostra estado vazio
+  if (!data.tcc) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-secondary">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Nenhum TCC Encontrado</h2>
+          <p className="text-gray-600">Cadastre um TCC para ver o dashboard.</p>
+        </div>
       </div>
     );
   }

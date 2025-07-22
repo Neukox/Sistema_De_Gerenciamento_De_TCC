@@ -18,6 +18,7 @@ import RequireAuthRoute from "./pages/RequireAuthRoute";
 import TasksPage from "./pages/tcc/TasksPage";
 import NotesPage from "./pages/tcc/NotesPage";
 import DashboardPage from "./pages/tcc/DashboardPage";
+import AssistentTCC from "./features/AssistentTCC/AssistentTCC";
 
 export default function App() {
   return (
@@ -44,6 +45,8 @@ export default function App() {
               <Route path="tarefas" element={<TasksPage />} />
               <Route path="anotacoes" element={<NotesPage />} />
               <Route path="agendar-reuniao" element={<AgendarReuniao />} />
+              <Route path="assistente-tcc" element={<AssistentTCC />} />
+
               {/* Outras rotas do TCC */}
             </Route>
           </Route>

@@ -5,5 +5,6 @@ export const pagesTitles = {
     "agendar-reuniao": "Agendar Reunião",
     anotacoes: "Anotações",
     tarefas: "Tarefas",
+    "assistente-tcc": "Assistente FocoTCC",
   },
 };

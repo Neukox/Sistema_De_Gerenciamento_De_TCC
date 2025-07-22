@@ -7,6 +7,8 @@ import { FaTasks } from "react-icons/fa";
 import { IoCalendarClearOutline } from "react-icons/io5";
 import { LuHistory } from "react-icons/lu";
 import { useLocation, Outlet } from "react-router-dom";
+import { RiRobot2Line } from "react-icons/ri";
+
 import { pagesTitles } from "@/lib/pages";
 
 type AlunoPage = keyof typeof pagesTitles.aluno;
@@ -50,6 +52,12 @@ export default function TCCLayout() {
             <GraduationCap className="size-6" />
             Meu TCC
           </NavbarLink>
+         
+          <NavbarLink to="/assistente-tcc">
+          <RiRobot2Line className="size-6" />
+            Assistente FocoTCC
+          </NavbarLink>
+
         </nav>
       </SideBar>
       <main className="overflow-y-auto min-h-screen flex-1">
