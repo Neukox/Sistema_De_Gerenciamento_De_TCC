@@ -14,6 +14,7 @@ export interface GetTCCResponse extends ApiResponse {
     dataConclusao: Date | null;
     statusAtual: StatusTCC;
     criado_em: Date;
+    atualizado_em: Date;
     aluno: {
       id: number;
       nome: string;

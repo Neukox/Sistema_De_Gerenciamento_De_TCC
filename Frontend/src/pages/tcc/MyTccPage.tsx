@@ -3,14 +3,20 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Submit } from "@/components/ui/form";
 import { useEditTCC } from "@/features/TCC/edit-tcc/edit-tcc";
 import EditTCCLoading from "@/features/TCC/edit-tcc/EditTCCLoading";
+import useTccInfo from "@/features/TCC/hooks/useTccInfo";
+import TccCompleteProgress from "@/features/TCC/progress/TccCompleteProgress";
 import { useTCCContext } from "@/hooks/useTCCContext";
 import useTitle from "@/hooks/useTitle";
+import formatDate from "@/utils/format-date";
 import { GraduationCapIcon, Save } from "lucide-react";
 import React, { Suspense } from "react";
 import { useEffect } from "react";
 import { CgClose } from "react-icons/cg";
 
 const EditTCC = React.lazy(() => import("@/features/TCC/edit-tcc/EditTCC"));
+const TccCompleteProgressLoading = React.lazy(
+  () => import("@/features/TCC/progress/TccCompleteProgressLoading")
+);
 
 /**
  * Página do TCC do Aluno
@@ -20,9 +26,11 @@ const EditTCC = React.lazy(() => import("@/features/TCC/edit-tcc/EditTCC"));
 export default function MyTccPage() {
   useTitle("Meu TCC | FocoTCC");
 
-  const { editable, setEditable } = useTCCContext();
+  const { editable, setEditable, tccData } = useTCCContext();
 
   const { isPending } = useEditTCC();
+
+  const { data } = useTccInfo(tccData?.id as number);
 
   const openEditTCC = () => {
     setEditable(true);
@@ -41,7 +49,7 @@ export default function MyTccPage() {
   }, [location.pathname, setEditable]);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col -center gap-6 w-full max-w-8xl">
       <Card className="p-6 shadow-md flex flex-col sm:flex-row justify-between items-center gap-4">
         <CardHeader className="p-0">
           <GraduationCapIcon className="text-primary size-8" />
@@ -74,6 +82,25 @@ export default function MyTccPage() {
       <Suspense fallback={<EditTCCLoading />}>
         <EditTCC />
       </Suspense>
+      <Suspense fallback={<TccCompleteProgressLoading />}>
+        <TccCompleteProgress data={data.progresso} />
+      </Suspense>
+      <Card className="p-6 flex flex-col gap-6">
+        <h3 className="text-2xl font-semibold">Informações adiconais</h3>
+        <div>
+          <h4 className="text-lg font-semibold">Criado em</h4>
+          <p className="text-gray-600">
+            {formatDate(data.tcc?.criado_em as Date) || "Data não disponível"}
+          </p>
+        </div>
+        <div>
+          <h4 className="text-lg font-semibold">Atualizado em</h4>
+          <p className="text-gray-600">
+            {formatDate(data.tcc?.atualizado_em as Date) ||
+              "Data não disponível"}
+          </p>
+        </div>
+      </Card>
     </div>
   );
 }
