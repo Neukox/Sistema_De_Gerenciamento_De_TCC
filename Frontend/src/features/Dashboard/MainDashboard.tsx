@@ -1,6 +1,6 @@
 // Hooks e bibliotecas
 import { calculatePercentage } from "@/utils/calculate";
-import { useTCCDashboard } from "./dashboard-fetch";
+import useTCCInfo from "../TCC/hooks/useTccInfo";
 // Ícones
 import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
@@ -15,6 +15,8 @@ import Button from "@/components/ui/Button";
 import TCCInfo from "../TCC/info/TCCInfo";
 import TCCProgress from "../TCC/progress/TCCProgress";
 import TCCTimeline from "../TCC/timeline/TCCTimeline";
+
+// Contexto do TCC
 import { useTCCContext } from "@/hooks/useTCCContext";
 import { useNavigate } from "react-router-dom";
 
@@ -24,22 +26,12 @@ function MainDashboard() {
 
   const { tccData, setEditable } = useTCCContext();
 
-  // Verificação se tccData existe antes de chamar o hook
-  const { data, loading } = useTCCDashboard(tccData?.id as number);
+  const { data } = useTCCInfo(tccData?.id as number);
 
   const handleEditTCC = () => {
     setEditable(true);
     navigate("/meu-tcc");
   };
-
-  // Loading state - mostra carregando enquanto dados estão sendo buscados
-  if (loading || !data) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-secondary">
-        <div className="text-2xl font-bold">Carregando Dashboard...</div>
-      </div>
-    );
-  }
 
   // Se não há dados do TCC, mostra estado vazio
   if (!data.tcc) {

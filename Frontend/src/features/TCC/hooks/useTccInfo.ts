@@ -11,7 +11,7 @@ import type { TccProgressResponse } from "@/types/response/progresso";
  * Utiliza o contexto do TCC para acessar os dados do usuário.
  * @returns {Object} Objeto contendo os dados do TCC, progresso e estados de carregamento e erro.
  */
-export function useTCCDashboard(tccId: number) {
+export default function useTccInfo(tccId: number) {
   const {
     data: tccData,
     isLoading: isTccLoading,
