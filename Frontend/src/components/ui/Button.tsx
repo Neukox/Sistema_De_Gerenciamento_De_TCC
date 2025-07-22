@@ -17,7 +17,7 @@ type Variants = {
 // Define as variantes de estilo para o botão
 const variants: Variants = {
   default:
-    "text-black border border-gray-300 hover:bg-gray-100 shadow-sm transition-colors duration-300",
+    "bg-white text-black border border-gray-300 hover:bg-gray-100 shadow-sm transition-colors duration-300",
   primary:
     "bg-primary hover:bg-primary/80 text-white shadow-lg transition-colors duration-300",
   secondary:
