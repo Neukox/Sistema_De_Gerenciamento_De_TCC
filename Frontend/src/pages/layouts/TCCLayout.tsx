@@ -10,6 +10,7 @@ import { useLocation, Outlet } from "react-router-dom";
 import { RiRobot2Line } from "react-icons/ri";
 
 import { pagesTitles } from "@/lib/pages";
+import { useEffect } from "react";
 
 type AlunoPage = keyof typeof pagesTitles.aluno;
 
@@ -23,6 +24,10 @@ export default function TCCLayout() {
 
   const location = useLocation();
   const page = (location.pathname.split("/").pop() as AlunoPage) || "dashboard";
+
+  useEffect(() => {
+    close(); // Fecha a sidebar ao mudar de página
+  }, [location]);
 
   return (
     <div className="flex h-screen">
