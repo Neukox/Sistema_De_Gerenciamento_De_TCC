@@ -19,6 +19,7 @@ import TasksPage from "./pages/tcc/TasksPage";
 import NotesPage from "./pages/tcc/NotesPage";
 import DashboardPage from "./pages/tcc/DashboardPage";
 import AssistentTCC from "./features/AssistentTCC/AssistentTCC";
+import MyTccPage from "./pages/tcc/MyTccPage";
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
               <Route path="dashboard" element={<DashboardPage />} />
               <Route path="historico" element={<HistoricoAtividades />} />
               <Route path="tarefas" element={<TasksPage />} />
+              <Route path="meu-tcc" element={<MyTccPage />} />
               <Route path="anotacoes" element={<NotesPage />} />
               <Route path="agendar-reuniao" element={<AgendarReuniao />} />
               <Route path="assistente-tcc" element={<AssistentTCC />} />
