@@ -13,6 +13,10 @@ export default function formatDate(
     date = new Date(date);
   }
 
+  if (!date || date.toString() === "Invalid Date") {
+    return "--/--/----";
+  }
+
   if (isNaN(date.getTime())) return "--/--/----";
 
   const options: Intl.DateTimeFormatOptions = {
