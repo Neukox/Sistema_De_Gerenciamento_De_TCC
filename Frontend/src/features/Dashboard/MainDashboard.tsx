@@ -15,6 +15,7 @@ import Button from "@/components/ui/Button";
 import TCCInfo from "../TCC/info/TCCInfo";
 import TCCProgress from "../TCC/progress/TCCProgress";
 import TCCTimeline from "../TCC/timeline/TCCTimeline";
+import CreateTask from "../tasks/create-task/CreateTask";
 
 // Contexto do TCC
 import { useTCCContext } from "@/hooks/useTCCContext";
@@ -175,19 +176,7 @@ function MainDashboard() {
                   setContent({
                     title: "Nova Tarefa",
                     description: "Preencha os detalhes da nova tarefa.",
-                    children: (
-                      <div className="flex flex-col gap-4">
-                        <input
-                          type="text"
-                          placeholder="Título da tarefa"
-                          className="p-2 border rounded"
-                        />
-                        <textarea
-                          placeholder="Descrição da tarefa"
-                          className="p-2 border rounded"
-                        />
-                      </div>
-                    ),
+                    children: <CreateTask />,
                   })
                 }
               >
