@@ -19,12 +19,15 @@ import TCCTimeline from "../TCC/timeline/TCCTimeline";
 // Contexto do TCC
 import { useTCCContext } from "@/hooks/useTCCContext";
 import { useNavigate } from "react-router-dom";
+import useModal from "@/context/modal/useModal";
 
 function MainDashboard() {
   // Navegação
   const navigate = useNavigate();
 
   const { tccData, setEditable } = useTCCContext();
+
+  const { setContent } = useModal();
 
   const { data } = useTCCInfo(tccData?.id as number);
 
@@ -33,7 +36,7 @@ function MainDashboard() {
     navigate("/meu-tcc");
   };
 
-  // Se não há dados do TCC, mostra estado vazio
+  /* // Se não há dados do TCC, mostra estado vazio
   if (!data.tcc) {
     return (
       <div className="flex justify-center items-center h-screen bg-secondary">
@@ -43,7 +46,7 @@ function MainDashboard() {
         </div>
       </div>
     );
-  }
+  } */
 
   // Renderiza o dashboard
   return (
@@ -165,7 +168,29 @@ function MainDashboard() {
                 <CiEdit className="size-6" />
                 Editar TCC
               </Button>
-              <Button variant="quicks" className="flex items-center gap-2">
+              <Button
+                variant="quicks"
+                className="flex items-center gap-2"
+                onClick={() =>
+                  setContent({
+                    title: "Nova Tarefa",
+                    description: "Preencha os detalhes da nova tarefa.",
+                    children: (
+                      <div className="flex flex-col gap-4">
+                        <input
+                          type="text"
+                          placeholder="Título da tarefa"
+                          className="p-2 border rounded"
+                        />
+                        <textarea
+                          placeholder="Descrição da tarefa"
+                          className="p-2 border rounded"
+                        />
+                      </div>
+                    ),
+                  })
+                }
+              >
                 <FaPlus className="size-6" />
                 Nova tarefa
               </Button>
