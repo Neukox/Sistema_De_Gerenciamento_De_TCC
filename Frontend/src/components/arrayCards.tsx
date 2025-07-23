@@ -1,12 +1,12 @@
+import type { Atividade } from "@/types/atividade";
 
-
-export const arrayCards = [
-    {
-  id: 1,
-  title: "Definição de metodologia",
-  description: "Estabelecer metodos e tecnicas a serem utilizadas",
-  prazo: "31-09-2025",
-  stats: "Desenvolvimento", // lembrar que tem q fazer um fetch para atualizar o status sempre que for mudado no frontend para que o backend receba a informação atualizada
+export const arrayCards: Atividade[] = [
+  {
+    id: 1,
+    nome: "Definição de metodologia",
+    descricao: "Estabelecer metodos e tecnicas a serem utilizadas",
+    data_entrega: new Date("2025-09-01"),
+    status: "PENDENTE",
+    concluido_em: null,
   },
- 
-]
+];

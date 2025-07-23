@@ -1,18 +1,10 @@
 import { useState } from "react"
 import  { arrayCards } from '../components/arrayCards'
-
-// Interface que define o formato dos dados de cada card/tarefa
-export interface CardInfos {
-    id: number;
-    title: string;
-    description: string;
-    prazo: string;
-    stats: string;
-}
+import type { Atividade } from "@/types/atividade";
 
 // Hook customizado que mantém o estado da lista de tarefas
 export function useCard () {
-   const [tarefas, setTarefas] = useState<CardInfos[]>(arrayCards)
+   const [tarefas, setTarefas] = useState<Atividade[]>(arrayCards)
    // Retorna o estado e função para atualizar as tarefas
    return {tarefas, setTarefas};
 };

@@ -1,4 +1,5 @@
 import TasksLayout from "@/features/tasks/TasksLayout";
+import { useTCCContext } from "@/hooks/useTCCContext";
 import useTitle from "@/hooks/useTitle";
 
 /**
@@ -9,9 +10,11 @@ import useTitle from "@/hooks/useTitle";
 export default function TasksPage() {
   useTitle("Tarefas | Foco TCC");
 
+  const { tccData } = useTCCContext();
+
   return (
-    <div className="flex">
-      <TasksLayout />
+    <div className="w-full max-w-8xl">
+      <TasksLayout tccId={tccData.id} />
     </div>
   );
 }

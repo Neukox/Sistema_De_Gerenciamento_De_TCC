@@ -1,7 +1,7 @@
-type StatusAtividade = "PENDENTE" | "CONCLUIDA";
+export type StatusAtividade = "PENDENTE" | "CONCLUIDA" | "ATRASADA";
 
 export interface Atividade {
-  id: string;
+  id: number;
   nome: string;
   descricao: string;
   data_entrega: Date;
