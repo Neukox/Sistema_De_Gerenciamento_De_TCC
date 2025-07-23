@@ -12,6 +12,7 @@ type Variants = {
   edit: string;
   quicks: string;
   DropProf: string;
+  danger: string;
 };
 
 // Define as variantes de estilo para o botão
@@ -32,6 +33,7 @@ const variants: Variants = {
   quicks:
     "border border-gray-400 rounded-md shadow-lg cursor-pointer hover:translate-y-1 hover:bg-slate-300 transition-all",
   DropProf: "text-black hover:text-gray-400 transition-colors duration-300",
+  danger: "bg-red-600 hover:bg-red-700 text-white transition-colors duration-300",
 };
 
 export type ButtonProps = {
