@@ -31,6 +31,12 @@ export const API_CONFIG = {
     PROGRESS: {
       GET_TCC_PROGRESS: "/progress/tcc/", // id do TCC deve ser concatenado
     },
+    ATIVIDADES: {
+      CREATE: "/atividades",
+      GET_BY_TCC: "/atividades/tcc/", // id do TCC deve ser concatenado
+      UPDATE: "/atividades/", // id da atividade deve ser concatenado
+      DELETE: "/atividades/", // id da atividade deve ser concatenado
+    },
   },
   HEADERS: {
     "Content-Type": "application/json",
