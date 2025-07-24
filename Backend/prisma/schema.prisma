@@ -85,6 +85,22 @@ enum CategoriasAreasConhecimento {
   OUTROS
 }
 
+enum AcoesHistorico {
+  CRIAR
+  EDITAR
+  EXCLUIR
+}
+
+enum EntidadesHistorico {
+  TCC
+  ATIVIDADE
+  COMENTARIO
+  ANOTACAO
+  ETAPA_TCC
+  REUNIAO
+  DEFESA
+}
+
 model AreaConhecimento {
   id        Int                         @id @default(autoincrement())
   categoria CategoriasAreasConhecimento
@@ -106,6 +122,8 @@ model Usuario {
   Professor        Professor?
   Comentarios      Comentario[]
   RecuperacaoSenha RecuperacaoSenha[]
+
+  HistoricoTcc HistoricoTcc[]
 }
 
 model Aluno {
@@ -156,6 +174,8 @@ model TCC {
   EtapasTCC        EtapaTCC[]
   Reunioes         Reuniao[]
   Defesas          Defesa[]
+
+  HistoricoTcc HistoricoTcc[]
 }
 
 model Banca {
@@ -185,7 +205,7 @@ model Atividade {
 }
 
 model Comentario {
-  id                 Int      @id @default(autoincrement())
+  id                 Int              @id @default(autoincrement())
   topico             TopicoComentario
   texto              String
   titulo             String
@@ -270,3 +290,16 @@ model Defesa {
   @@unique([TCC_id, tipo])
 }
 
+model HistoricoTcc {
+  id         Int                @id @default(autoincrement())
+  acao       AcoesHistorico
+  entidade   EntidadesHistorico
+  entidadeId Int
+  usuarioId  Int
+  detalhes   String?
+  tccId      Int // opcional, se a entidade for TCC
+  feito_em   DateTime           @default(now())
+
+  Usuario Usuario @relation(fields: [usuarioId], references: [id])
+  TCC     TCC     @relation(fields: [tccId], references: [id])
+}
