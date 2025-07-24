@@ -3,6 +3,7 @@ import { createAtividade } from "../../repositories/atividades/atividadesReposit
 import { $Enums } from "@prisma/client";
 import { ResponseError } from "../../helpers/ResponseError";
 import { findTCCById } from "../../repositories/TCC/TCCRepository";
+import { createHistoricoTcc } from "../../repositories/historico/historicoRepository";
 
 export default async function createAtividadeService(data: ICreateAtividade) {
   // Validação de status
@@ -28,6 +29,18 @@ export default async function createAtividadeService(data: ICreateAtividade) {
 
   // Criar a atividade
   const atividade = await createAtividade(data);
+
+  if (atividade) {
+    // Registrar no histórico
+    await createHistoricoTcc({
+      acao: "CRIAR",
+      entidade: "ATIVIDADE",
+      entidadeId: atividade.id,
+      usuarioId: tccExistente.aluno.id, // ID do aluno associado ao TCC
+      tccId: data.tccId,
+      detalhes: `Criou atividade: ${atividade.nome}.`,
+    });
+  }
 
   return atividade;
 }

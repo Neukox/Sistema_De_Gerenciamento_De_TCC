@@ -24,3 +24,11 @@ export interface TCCAtividades extends Omit<Atividade, "TCC_id"> {
   arquivo_url: string | null;
   concluido_em: Date | null;
 }
+
+/**
+ * Interface para os parâmetros de busca de atividades.
+ */
+
+export interface IAtividade extends Atividade {
+  Aluno_id: number;
+}

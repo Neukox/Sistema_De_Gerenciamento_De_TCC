@@ -4,6 +4,7 @@ import {
   updateAtividade,
 } from "../../repositories/atividades/atividadesRepository";
 import { ResponseError } from "../../helpers/ResponseError";
+import { createHistoricoTcc } from "../../repositories/historico/historicoRepository";
 
 /**
  * Serviço para atualizar uma atividade existente.
@@ -29,6 +30,18 @@ export default async function updateAtividadeService(
 
   // Atualiza a atividade com os novos dados
   const atividadeAtualizada = await updateAtividade(id, data);
+
+  if (atividadeAtualizada) {
+    // Registra a ação no histórico
+    await createHistoricoTcc({
+      acao: "ALTERAR",
+      entidade: "ATIVIDADE",
+      entidadeId: atividadeAtualizada.id,
+      usuarioId: atividadeAtualizada.Aluno_id, // ID do aluno associado à atividade
+      tccId: atividadeAtualizada.TCC_id,
+      detalhes: `Atualizou atividade: ${atividadeAtualizada.nome}.`,
+    });
+  }
 
   return atividadeAtualizada;
 }

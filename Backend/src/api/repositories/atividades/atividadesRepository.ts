@@ -1,6 +1,6 @@
 import { Atividade } from "@prisma/client";
 import prisma from "../../config/prisma";
-import { ICreateAtividade, TCCAtividades } from "./interfaces";
+import { IAtividade, ICreateAtividade, TCCAtividades } from "./interfaces";
 
 /**
  * Função para criar uma nova atividade no banco de dados.
@@ -9,7 +9,7 @@ import { ICreateAtividade, TCCAtividades } from "./interfaces";
  */
 export async function createAtividade(
   data: ICreateAtividade
-): Promise<Atividade | null> {
+): Promise<IAtividade | null> {
   const atividades = await prisma.atividade.create({
     data: {
       nome: data.nome,
@@ -18,9 +18,23 @@ export async function createAtividade(
       status: data.status,
       TCC_id: data.tccId,
     },
+    include: {
+      TCC: {
+        select: {
+          Aluno_id: true,
+        },
+      },
+    },
   });
 
-  return atividades;
+  if (!atividades) {
+    return null;
+  }
+
+  return {
+    ...atividades,
+    Aluno_id: atividades.TCC.Aluno_id,
+  };
 }
 
 /**
@@ -70,7 +84,7 @@ export async function getAtividadeById(id: number): Promise<Atividade | null> {
 export async function updateAtividade(
   id: number,
   data: Partial<Atividade>
-): Promise<Atividade | null> {
+): Promise<IAtividade | null> {
   const atividade = await prisma.atividade.update({
     where: {
       id: id,
@@ -83,9 +97,23 @@ export async function updateAtividade(
       arquivo_url: data.arquivo_url,
       ...(data.status === "CONCLUIDA" && { concluido_em: new Date() }),
     },
+    include: {
+      TCC: {
+        select: {
+          Aluno_id: true,
+        },
+      },
+    },
   });
 
-  return atividade;
+  if (!atividade) {
+    return null;
+  }
+
+  return {
+    ...atividade,
+    Aluno_id: atividade.TCC.Aluno_id, // Inclui o ID do aluno associado
+  };
 }
 
 /**
@@ -94,7 +122,9 @@ export async function updateAtividade(
  * @returns A atividade atualizada ou null se falhar.
  */
 
-export async function concluirAtividade(id: number): Promise<Atividade | null> {
+export async function concluirAtividade(
+  id: number
+): Promise<IAtividade | null> {
   const atividade = await prisma.atividade.update({
     where: {
       id: id,
@@ -103,9 +133,23 @@ export async function concluirAtividade(id: number): Promise<Atividade | null> {
       status: "CONCLUIDA",
       concluido_em: new Date(), // Define a data de conclusão como a data atual
     },
+    include: {
+      TCC: {
+        select: {
+          Aluno_id: true,
+        },
+      },
+    },
   });
 
-  return atividade;
+  if (!atividade) {
+    return null;
+  }
+
+  return {
+    ...atividade,
+    Aluno_id: atividade.TCC.Aluno_id, // Inclui o ID do aluno associado
+  };
 }
 
 /**
@@ -114,12 +158,26 @@ export async function concluirAtividade(id: number): Promise<Atividade | null> {
  * @returns A atividade deletada ou null se não existir.
  */
 
-export async function deleteAtividade(id: number): Promise<Atividade | null> {
+export async function deleteAtividade(id: number): Promise<IAtividade | null> {
   const atividade = await prisma.atividade.delete({
     where: {
       id: id,
     },
+    include: {
+      TCC: {
+        select: {
+          Aluno_id: true,
+        },
+      },
+    },
   });
 
-  return atividade;
+  if (!atividade) {
+    return null;
+  }
+
+  return {
+    ...atividade,
+    Aluno_id: atividade.TCC.Aluno_id, // Inclui o ID do aluno associado
+  };
 }
