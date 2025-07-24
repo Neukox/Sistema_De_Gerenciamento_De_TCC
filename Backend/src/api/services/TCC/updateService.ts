@@ -4,6 +4,7 @@ import { TCC } from "@prisma/client";
 import { IUpdateTCCService } from "./contracts";
 import { updateTCC } from "../../repositories/TCC/TCCRepository";
 import { findAreaConhecimentoByName } from "../../repositories/area-conhecimento/areaConhecimentoRepository";
+import { createHistoricoTcc } from "../../repositories/historico/historicoRepository";
 
 /**
  * Serviço para atualizar um TCC.
@@ -79,5 +80,18 @@ export default async function updateTCCService(
     orientadorId: orientador ? orientador.Usuario_id : undefined,
     coorientadorId: coorientador ? coorientador.Usuario_id : undefined,
   });
+
+  if (updatedTCC) {
+    // Registrar no histórico de ações do TCC
+    await createHistoricoTcc({
+      acao: "ALTERAR",
+      entidade: "TCC",
+      entidadeId: updatedTCC.id,
+      usuarioId: updatedTCC.Aluno_id, // ID do aluno associado ao TCC
+      tccId: updatedTCC.id,
+      detalhes: `Atualizou TCC: ${updatedTCC.titulo}.`,
+    });
+  }
+  
   return updatedTCC;
 }
