@@ -10,6 +10,7 @@ export interface ICreateHistoricoTcc {
   entidadeId: number;
   usuarioId: number;
   tccId: number;
+  descricao: string;
   detalhes?: string;
 }
 
@@ -22,6 +23,7 @@ export interface IHistoricoTcc {
   entidade: $Enums.EntidadesHistorico;
   entidadeId: number;
   tccId: number;
+  descricao: string;
   detalhes?: string;
   feito_em: Date;
   Usuario: {

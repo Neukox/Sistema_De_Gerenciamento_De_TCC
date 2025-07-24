@@ -39,6 +39,7 @@ export default async function updateAtividadeService(
       entidadeId: atividadeAtualizada.id,
       usuarioId: atividadeAtualizada.Aluno_id, // ID do aluno associado à atividade
       tccId: atividadeAtualizada.TCC_id,
+      descricao: `Atividade atualizada`,
       detalhes: `Atualizou atividade: ${atividadeAtualizada.nome}.`,
     });
   }

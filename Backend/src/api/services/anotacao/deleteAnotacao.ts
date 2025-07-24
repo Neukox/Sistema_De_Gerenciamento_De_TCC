@@ -13,11 +13,12 @@ export default async function deleteAnotacaoService(id: number): Promise<void> {
   if (anotacao) {
     // registra a ação no histórico
     await createHistoricoTcc({
-      acao: "REMOVER",
+      acao: "EXCLUIR",
       entidade: "ANOTACAO",
       entidadeId: id,
       usuarioId: anotacao.Aluno_id, // ID do aluno associado à anotação
       tccId: anotacao.TCC_id,
+      descricao: `Anotação excluída`,
       detalhes: `Anotação ${anotacao.conteudo} foi removida.`,
     });
   }

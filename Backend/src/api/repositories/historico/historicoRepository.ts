@@ -1,7 +1,7 @@
 import prisma from "../../config/prisma";
 import { HistoricoTcc } from "@prisma/client";
 import { ICreateHistoricoTcc, IHistoricoTccParams } from "./intefaces";
-import { getDateRange } from "api/utils/date";
+import { getDateRange } from "../../utils/date";
 
 /**
  * Função para criar um histórico de ações no TCC.
@@ -19,6 +19,7 @@ export async function createHistoricoTcc(
       entidadeId: data.entidadeId,
       usuarioId: data.usuarioId,
       tccId: data.tccId,
+      descricao: data.descricao,
       detalhes: data.detalhes,
     },
   });

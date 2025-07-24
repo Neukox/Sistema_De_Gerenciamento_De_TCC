@@ -87,11 +87,8 @@ enum CategoriasAreasConhecimento {
 
 enum AcoesHistorico {
   CRIAR
-  ADICIONAR
   ALTERAR
   ATUALIZAR
-  CONCLUIR
-  REMOVER
   EXCLUIR
 }
 
@@ -300,6 +297,7 @@ model HistoricoTcc {
   entidade   EntidadesHistorico
   entidadeId Int
   usuarioId  Int
+  descricao  String
   detalhes   String?
   tccId      Int
   feito_em   DateTime           @default(now())

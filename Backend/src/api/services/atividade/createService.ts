@@ -38,6 +38,7 @@ export default async function createAtividadeService(data: ICreateAtividade) {
       entidadeId: atividade.id,
       usuarioId: tccExistente.aluno.id, // ID do aluno associado ao TCC
       tccId: data.tccId,
+      descricao: `Atividade criada`,
       detalhes: `Criou atividade: ${atividade.nome}.`,
     });
   }

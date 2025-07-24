@@ -27,11 +27,12 @@ export async function createAnotacaoService(
   }
 
   await createHistoricoTcc({
-    acao: "ADICIONAR",
+    acao: "CRIAR",
     entidade: "ANOTACAO",
     entidadeId: anotacao.id,
     usuarioId: existingTCC.aluno.id,
     tccId: tccId,
+    descricao: `Anotação criada`,
     detalhes: `Adicionou anotação: ${anotacao.conteudo}.`,
   });
 
