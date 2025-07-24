@@ -87,7 +87,11 @@ enum CategoriasAreasConhecimento {
 
 enum AcoesHistorico {
   CRIAR
-  EDITAR
+  ADICIONAR
+  ALTERAR
+  ATUALIZAR
+  CONCLUIR
+  REMOVER
   EXCLUIR
 }
 

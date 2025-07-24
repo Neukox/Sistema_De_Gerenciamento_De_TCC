@@ -2,6 +2,7 @@ import { Anotacao } from "@prisma/client";
 import { createAnotacao } from "../../repositories/anotacoes/anotacoesRepository";
 import { findTCCById } from "../../repositories/TCC/TCCRepository";
 import { ResponseError } from "../../helpers/ResponseError";
+import { createHistoricoTcc } from "../../repositories/historico/historicoRepository";
 
 /**
  * Serviço para criar uma nova anotação associada a um TCC.
@@ -24,6 +25,15 @@ export async function createAnotacaoService(
   if (!anotacao) {
     throw new Error("Falha ao criar anotação");
   }
+
+  await createHistoricoTcc({
+    acao: "ADICIONAR",
+    entidade: "ANOTACAO",
+    entidadeId: anotacao.id,
+    usuarioId: existingTCC.aluno.id,
+    tccId: tccId,
+    detalhes: `Adicionou anotação: ${anotacao.conteudo}.`,
+  });
 
   return anotacao;
 }

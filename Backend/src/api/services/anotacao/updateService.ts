@@ -1,3 +1,4 @@
+import { createHistoricoTcc } from "../../repositories/historico/historicoRepository";
 import { updateAnotacao } from "../../repositories/anotacoes/anotacoesRepository";
 import { Anotacao } from "@prisma/client";
 
@@ -13,6 +14,18 @@ export default async function updateAnotacaoService(
 ): Promise<Anotacao | null> {
   // Atualiza a anotação com os novos dados
   const updatedAnotacao = await updateAnotacao(id, conteudo);
+
+  if (updatedAnotacao) {
+    // Registra a ação no histórico
+    await createHistoricoTcc({
+      acao: "ALTERAR",
+      entidade: "ANOTACAO",
+      entidadeId: updatedAnotacao.id,
+      usuarioId: updatedAnotacao.Aluno_id, // ID do aluno associado à anotação
+      tccId: updatedAnotacao.TCC_id,
+      detalhes: `Alterou anotação para: ${updatedAnotacao.conteudo}.`,
+    });
+  }
 
   return updatedAnotacao;
 }

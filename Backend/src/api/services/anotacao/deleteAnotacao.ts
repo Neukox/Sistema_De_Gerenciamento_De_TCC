@@ -1,3 +1,4 @@
+import { createHistoricoTcc } from "../../repositories/historico/historicoRepository";
 import { deleteAnotacao } from "../../repositories/anotacoes/anotacoesRepository";
 
 /**
@@ -7,5 +8,17 @@ import { deleteAnotacao } from "../../repositories/anotacoes/anotacoesRepository
 
 export default async function deleteAnotacaoService(id: number): Promise<void> {
   // Chama o repositório para deletar a anotação
-  await deleteAnotacao(id);
+  const anotacao = await deleteAnotacao(id);
+
+  if (anotacao) {
+    // registra a ação no histórico
+    await createHistoricoTcc({
+      acao: "REMOVER",
+      entidade: "ANOTACAO",
+      entidadeId: id,
+      usuarioId: anotacao.Aluno_id, // ID do aluno associado à anotação
+      tccId: anotacao.TCC_id,
+      detalhes: `Anotação ${anotacao.conteudo} foi removida.`,
+    });
+  }
 }

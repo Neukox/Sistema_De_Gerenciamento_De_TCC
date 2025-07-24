@@ -1,5 +1,6 @@
 import { Anotacao } from "@prisma/client";
 import prisma from "../../config/prisma";
+import { IAnotacao } from "./interfaces";
 
 /**
  * Funcão para criar uma nova anotação associada a um TCC.
@@ -10,13 +11,29 @@ import prisma from "../../config/prisma";
 export async function createAnotacao(data: {
   conteudo: string;
   tccId: number;
-}): Promise<Anotacao | null> {
-  return await prisma.anotacao.create({
+}): Promise<IAnotacao | null> {
+  const anotacao = await prisma.anotacao.create({
     data: {
       conteudo: data.conteudo,
       TCC_id: data.tccId,
     },
+    include: {
+      TCC: {
+        select: {
+          Aluno_id: true, // Inclui o ID do aluno associado à anotação
+        },
+      },
+    },
   });
+
+  if (!anotacao) {
+    return null;
+  }
+  
+  return {
+    ...anotacao,
+    Aluno_id: anotacao.TCC.Aluno_id, // Inclui o ID do aluno associado à anotação
+  };
 }
 
 /**
@@ -43,11 +60,27 @@ export async function findAnotacoesByTCCId(tccId: number): Promise<Anotacao[]> {
 export async function updateAnotacao(
   id: number,
   conteudo: string
-): Promise<Anotacao | null> {
-  return await prisma.anotacao.update({
+): Promise<IAnotacao | null> {
+  const anotacao = await prisma.anotacao.update({
     where: { id },
     data: { conteudo },
+    include: {
+      TCC: {
+        select: {
+          Aluno_id: true, // Inclui o ID do aluno associado à anotação
+        },
+      },
+    },
   });
+
+  if (!anotacao) {
+    return null;
+  }
+
+  return {
+    ...anotacao,
+    Aluno_id: anotacao.TCC.Aluno_id, // Inclui o ID do aluno associado à anotação
+  };
 }
 
 /**
@@ -56,8 +89,24 @@ export async function updateAnotacao(
  * @returns A anotação deletada ou null se não encontrada
  */
 
-export async function deleteAnotacao(id: number): Promise<Anotacao | null> {
-  return await prisma.anotacao.delete({
+export async function deleteAnotacao(id: number): Promise<IAnotacao | null> {
+  const anotacao = await prisma.anotacao.delete({
     where: { id },
+    include: {
+      TCC: {
+        select: {
+          Aluno_id: true,
+        },
+      },
+    },
   });
+
+  if (!anotacao) {
+    return null;
+  }
+
+  return {
+    ...anotacao,
+    Aluno_id: anotacao.TCC.Aluno_id, // Inclui o ID do aluno associado à anotação
+  };
 }
