@@ -297,7 +297,7 @@ model HistoricoTcc {
   entidadeId Int
   usuarioId  Int
   detalhes   String?
-  tccId      Int // opcional, se a entidade for TCC
+  tccId      Int
   feito_em   DateTime           @default(now())
 
   Usuario Usuario @relation(fields: [usuarioId], references: [id])
