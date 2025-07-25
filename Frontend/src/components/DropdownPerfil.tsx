@@ -37,9 +37,11 @@ export function DropdownPerfil() {
       >
         <DropdownMenuLabel>
           <div className="flex flex-col items-start gap-1 border-b border-gray-300 pb-3">
-            <span className="font-medium">Davi Leal</span>
+            <span className="font-medium">
+              {user?.nome_completo ?? "Usuário"}
+            </span>
             <span className="text-xs text-gray-500 font-semibold  ">
-              davi.leal@example.com
+              {user?.email ?? "Email não disponível"}
             </span>
             <span className="text-xs text-gray-500">
               <span className="font-semibold ">Curso: {tccData?.curso}</span>
