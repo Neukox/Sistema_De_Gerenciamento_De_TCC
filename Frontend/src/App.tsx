@@ -4,7 +4,6 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
-import { HistoricoAtividades } from "../src/features/Historico/HistoricoAtividades";
 import UserProfile from "./features/Profile/UserProfile";
 import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
@@ -20,6 +19,8 @@ import NotesPage from "./pages/tcc/NotesPage";
 import DashboardPage from "./pages/tcc/DashboardPage";
 import AssistentTCC from "./features/AssistentTCC/AssistentTCC";
 import MyTccPage from "./pages/tcc/MyTccPage";
+import { ReunioesProvider } from "./context/ReunioesContext";
+import ApplyHistoryPage from "./pages/tcc/ApplyHistoryPage";
 
 export default function App() {
   return (
@@ -42,11 +43,18 @@ export default function App() {
             <Route path="cadastrar-tcc" element={<CadastrarTcc />} />
             <Route element={<TCCLayout />}>
               <Route path="dashboard" element={<DashboardPage />} />
-              <Route path="historico" element={<HistoricoAtividades />} />
+              <Route path="historico" element={<ApplyHistoryPage />} />
               <Route path="tarefas" element={<TasksPage />} />
               <Route path="meu-tcc" element={<MyTccPage />} />
               <Route path="anotacoes" element={<NotesPage />} />
-              <Route path="agendar-reuniao" element={<AgendarReuniao />} />
+              <Route
+                path="agendar-reuniao"
+                element={
+                  <ReunioesProvider>
+                    <AgendarReuniao />
+                  </ReunioesProvider>
+                }
+              />
               <Route path="assistente-tcc" element={<AssistentTCC />} />
 
               {/* Outras rotas do TCC */}
