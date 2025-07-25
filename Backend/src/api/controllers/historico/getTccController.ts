@@ -14,7 +14,13 @@ export default async function getTccController(
   const tccId = Number(req.params.id);
   const params = req.query as IHistoricoTccParams;
 
-  const historico = await getTccHistoricoService(tccId, params);
+  const historico = await getTccHistoricoService(tccId, {
+    page: Number(params.page) || 1,
+    limit: Number(params.limit) || 10,
+    acao: params.acao,
+    entidade: params.entidade,
+    data: params.data,
+  });
 
   return res.status(200).json({
     message: "Histórico encontrado com sucesso.",

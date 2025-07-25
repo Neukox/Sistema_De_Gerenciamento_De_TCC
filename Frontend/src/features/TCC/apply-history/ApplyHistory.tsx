@@ -1,11 +1,24 @@
 import Pagination from "@/components/ui/Pagination";
-import ApplyHistoryContainer from "./ApplyHistoryContainer";
-import { ArrowDown, Clock, Search } from "lucide-react";
+import { ArrowDown, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import Button from "@/components/ui/Button";
-import { Input, Select } from "@/components/ui/form";
+import { Select } from "@/components/ui/form";
+import ApplyHistoryLoading from "./ApplyHistoryLoading";
+import { Suspense } from "react";
+import useTccApplyHistory from "../hooks/useTccApplyHistory";
+import React from "react";
+import type { AcoesHistorico, EntidadesHistorico } from "@/types/historico";
 
-export function HistoricoAtividades() {
+const ApplyHistoryContainer = React.lazy(() =>
+  import("./ApplyHistoryContainer").then((module) => ({
+    default: module.default,
+  }))
+);
+
+export function HistoricoAtividades({ tccId }: { tccId: number }) {
+  const { data, page, acao, entidade, periodo, setQueryParams } =
+    useTccApplyHistory(tccId);
+
   return (
     <div className="flex flex-col gap-8">
       <Card className="bg-neutral w-full p-6 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4">
@@ -19,27 +32,59 @@ export function HistoricoAtividades() {
           Exportar
         </Button>
       </Card>
-      <Card className="p-4 flex flex-wrap items-center gap-4">
-        <div className="bg-white flex items-center flex-1 basis-60 text-gray-700 rounded-lg px-2 shadow-sm gap-3 border-[1.5px] border-gray-400 has-[input]:hover:border-blue-700 has-[input:focus]:border-blue-700 has-[input:focus]:ring-2 has-[input:focus]:ring-blue-300">
-          <Search className="size-5" />
-          <Input
-            type="search"
-            placeholder="Buscar no histórico..."
-            className="w-full border-none focus:ring-0 px-0"
-          />
-        </div>
+      <Card className="p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <span className="text-lg font-semibold flex items-center gap-2">
+          Filtros
+        </span>
 
-        <div className="flex gap-4 basis-60 flex-wrap flex-1">
-          <Select variant="primary" className="flex-1" defaultValue="">
-            <option value="">Todos os tipos</option>
-            <option value="tarefas">Tarefas</option>
-            <option value="sistema">Sistema</option>
+        <div className="flex sm:basis-96 shrink flex-wrap sm:flex-nowrap gap-4">
+          <Select
+            variant="primary"
+            placeholder="Todas as Acões"
+            className="flex-1"
+            value={acao}
+            onChange={(e) => {
+              setQueryParams({ acao: e.target.value as AcoesHistorico });
+            }}
+          >
+            <option value="">Todas as ações</option>
+            <option value="CRIAR">Criação</option>
+            <option value="ALTERAR">Alteração</option>
+            <option value="ATUALIZAR">Atualização</option>
+            <option value="EXCLUIR">Exclusão</option>
           </Select>
-          <Select className="flex-1" defaultValue="">
-            <option value="">Todas as datas</option>
+          <Select
+            variant="primary"
+            className="flex-1"
+            value={entidade}
+            onChange={(e) => {
+              setQueryParams({
+                entidade: e.target.value as EntidadesHistorico,
+              });
+            }}
+          >
+            <option value="">Todos os tipos</option>
+            <option value="TCC">TCC</option>
+            <option value="ATIVIDADE">Tarefas</option>
+            <option value="ANOTACAO">Anotações</option>
+            <option value="ETAPA_TCC">Etapas do TCC</option>
+            <option value="REUNIAO">Reuniões</option>
+            <option value="DEFESA">Defesas</option>
+          </Select>
+          <Select
+            className="flex-1"
+            variant="primary"
+            value={periodo}
+            onChange={(e) => {
+              setQueryParams({
+                data: e.target.value as "hoje" | "semana" | "mes",
+              });
+            }}
+          >
+            <option value="">Todos os períodos</option>
             <option value="hoje">Hoje</option>
-            <option value="ultima_semana">Última semana</option>
-            <option value="ultimo_mes">Último mês</option>
+            <option value="semana">Esta semana</option>
+            <option value="mes">Este mês</option>
           </Select>
         </div>
       </Card>
@@ -49,11 +94,13 @@ export function HistoricoAtividades() {
         <h2 className="flex font-semibold ml-3 text-2xl">
           Atividades Recentes
         </h2>
-        <ApplyHistoryContainer />
+        <Suspense fallback={<ApplyHistoryLoading />}>
+          <ApplyHistoryContainer data={data?.items || []} />
+        </Suspense>
         <Pagination
-          page={1}
-          totalPages={2}
-          onPageChange={(page) => console.log("Mudar para a página:", page)}
+          page={page}
+          totalPages={data?.totalPages || 1}
+          onPageChange={(page) => setQueryParams({ page })}
         />
       </div>
     </div>
