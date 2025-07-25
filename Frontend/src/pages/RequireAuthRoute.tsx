@@ -8,8 +8,6 @@ import useAuth from "@/features/auth/context/useAuth";
 export default function RequireAuthRoute() {
   const { isAuthenticated, loading } = useAuth();
 
-  console.log("ProtectedRoute - isAuthenticated:", isAuthenticated);
-
   if (loading) {
     return null;
   }
