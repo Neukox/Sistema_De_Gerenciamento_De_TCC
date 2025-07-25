@@ -37,6 +37,9 @@ export const API_CONFIG = {
       UPDATE: "/atividades/", // id da atividade deve ser concatenado
       DELETE: "/atividades/", // id da atividade deve ser concatenado
     },
+    HISTORICO: {
+      GET_TCC_HISTORICO: "/historico/tcc/", // id do TCC deve ser concatenado
+    },
   },
   HEADERS: {
     "Content-Type": "application/json",
