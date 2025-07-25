@@ -87,11 +87,11 @@ export default async function updateTCCService(
       acao: "ALTERAR",
       entidade: "TCC",
       entidadeId: updatedTCC.id,
-      usuarioId: updatedTCC.Aluno_id, // ID do aluno associado ao TCC
+      usuarioId: updatedTCC.Aluno_id,
       tccId: updatedTCC.id,
-      detalhes: `Atualizou TCC: ${updatedTCC.titulo}.`,
+      descricao: "Informações do TCC atualizadas",
     });
   }
-  
+
   return updatedTCC;
 }

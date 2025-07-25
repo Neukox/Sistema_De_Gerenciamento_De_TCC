@@ -1,6 +1,9 @@
 import prisma from "../../config/prisma";
-import { HistoricoTcc } from "@prisma/client";
-import { ICreateHistoricoTcc, IHistoricoTccParams } from "./intefaces";
+import {
+  ICreateHistoricoTcc,
+  IHistoricoTccParams,
+  IHistoricoTccResponse,
+} from "./intefaces";
 import { getDateRange } from "../../utils/date";
 
 /**
@@ -33,10 +36,12 @@ export async function createHistoricoTcc(
 export async function getHistoricoTcc(
   tccId: number,
   params: IHistoricoTccParams
-): Promise<HistoricoTcc[] | null> {
+): Promise<IHistoricoTccResponse> {
   const where: any = { tccId };
   let skip: number | undefined;
   let take: number | undefined;
+
+  const totalCount = await prisma.historicoTcc.count({ where });
 
   if (params.acao) {
     where.acao = params.acao;
@@ -59,11 +64,34 @@ export async function getHistoricoTcc(
     take = params.limit;
   }
 
-  return await prisma.historicoTcc.findMany({
+  const historico = await prisma.historicoTcc.findMany({
     where,
     orderBy: { feito_em: "desc" },
     include: { Usuario: true },
     skip,
     take,
   });
+
+  return {
+    items: historico.map((item) => ({
+      id: item.id,
+      acao: item.acao,
+      entidade: item.entidade,
+      entidadeId: item.entidadeId,
+      descricao: item.descricao,
+      detalhes: item.detalhes ? item.detalhes : undefined,
+      feito_em: item.feito_em,
+      Usuario: {
+        id: item.Usuario.id,
+        nome: item.Usuario.nome_completo,
+      },
+    })),
+    total: totalCount,
+    page: params.page || 1,
+    limit: params.limit || historico.length,
+    hasNext:
+      totalCount > (params.page || 1) * (params.limit || historico.length),
+    hasPrevious: (params.page || 1) > 1,
+    totalPages: Math.ceil(totalCount / (params.limit || historico.length)),
+  };
 }

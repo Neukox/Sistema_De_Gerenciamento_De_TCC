@@ -8,6 +8,7 @@ import atividadesRoutes from "./atividadesRoutes";
 import anotacaoRoutes from "./anotacaoRoutes";
 import progressRoutes from "./progressRoutes";
 import reunioesRoutes from "./reunioesRoutes";
+import historicoRoutes from "./historicoRoutes";
 
 // Arquivo de centralização das rotas da API
 // Este arquivo importa e agrupa todas as rotas da API.
@@ -32,5 +33,7 @@ routes.use("/anotacoes", anotacaoRoutes);
 routes.use("/progress", progressRoutes);
 // Usando as rotas de reuniões
 routes.use("/reunioes", reunioesRoutes);
+// Importando as rotas de histórico
+routes.use("/historico", historicoRoutes);
 
 export default routes;

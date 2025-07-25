@@ -22,14 +22,23 @@ export interface IHistoricoTcc {
   acao: $Enums.AcoesHistorico;
   entidade: $Enums.EntidadesHistorico;
   entidadeId: number;
-  tccId: number;
   descricao: string;
   detalhes?: string;
   feito_em: Date;
   Usuario: {
     id: number;
-    nome_completo: string;
+    nome: string;
   };
+}
+
+export interface IHistoricoTccResponse {
+  items: IHistoricoTcc[];
+  total: number;
+  page: number;
+  limit: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+  totalPages: number;
 }
 
 /**
