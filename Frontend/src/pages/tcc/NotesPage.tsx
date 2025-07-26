@@ -1,4 +1,5 @@
 import NotesLayout from "@/features/notes/NotesLayout";
+import { useTCCContext } from "@/hooks/useTCCContext";
 import useTitle from "@/hooks/useTitle";
 
 /**
@@ -9,9 +10,11 @@ import useTitle from "@/hooks/useTitle";
 export default function NotesPage() {
   useTitle("Anotações | Foco TCC");
 
+  const { tccData } = useTCCContext();
+
   return (
-    <div className="flex">
-      <NotesLayout />
+    <div className="w-full max-w-8xl">
+      <NotesLayout tcc={tccData.id} />
     </div>
   );
 }

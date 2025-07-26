@@ -4,13 +4,17 @@ import { FaPlus } from "react-icons/fa";
 
 type NotesFormProps = {
   onSubmit: (data: NoteFormData) => void;
+  loading?: boolean;
 };
 
 type NoteFormData = {
   nota: string;
 };
 
-export default function NotesForm({ onSubmit }: NotesFormProps) {
+export default function NotesForm({
+  onSubmit,
+  loading = false,
+}: NotesFormProps) {
   const {
     register,
     handleSubmit,
@@ -45,8 +49,9 @@ export default function NotesForm({ onSubmit }: NotesFormProps) {
         <Submit
           variant="primary"
           className="flex items-center gap-2 absolute bottom-2 right-3 rounded-full"
+          disabled={loading}
         >
-          <FaPlus className="size-4" />
+          {!loading && <FaPlus className="size-5" />}
         </Submit>
       </form>
       {errors.nota && <FormError>{errors.nota.message}</FormError>}

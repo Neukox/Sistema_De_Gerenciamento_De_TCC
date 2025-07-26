@@ -13,6 +13,7 @@ type Variants = {
   quicks: string;
   DropProf: string;
   danger: string;
+  ghost: string;
 };
 
 // Define as variantes de estilo para o botão
@@ -26,6 +27,7 @@ const variants: Variants = {
   neutral:
     "bg-neutral hover:bg-neutral/80 text-white shadow-lg transition-colors duration-300",
   transparent: "bg-transparent text-black",
+  ghost: "bg-transparent text-black hover:bg-gray-300/30",
   logout: " text-red-500 hover:text-red-700 transition-colors duration-300",
   select:
     "font-medium text-[#252525] hover:text-gray-400 cursor-pointer transition-colors duration-300",
