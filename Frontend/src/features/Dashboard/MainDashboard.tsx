@@ -49,6 +49,8 @@ function MainDashboard() {
     );
   } */
 
+  console.log("Dados do dashboard:", data);
+
   // Renderiza o dashboard
   return (
     <div className="flex flex-col gap-8 min-h-screen w-full max-w-8xl">
@@ -146,7 +148,7 @@ function MainDashboard() {
       {/* Progresso, Cronograma do TCC e ações rápidas */}
       <div className="w-full flex flex-col md:flex-row md:items-start gap-4">
         {/* Progressp do TCC */}
-        <TCCProgress />
+        <TCCProgress progress={data.progresso} />
         <div className="flex flex-col gap-4 w-full md:w-2/3">
           {/* Cronograma */}
           <TCCTimeline

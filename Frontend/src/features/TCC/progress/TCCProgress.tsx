@@ -63,7 +63,20 @@ export default function TCCProgress({ className, progress }: TCCProgressProps) {
           icon={() => <PresentationIcon className="text-red-500 size-4" />}
         >
           <span className="text-sm text-gray-500">
-            Defesas pré-banca e final realizadas
+            {!progress?.detalhamento.defesas.preBanca &&
+              !progress?.detalhamento.defesas.bancaFinal &&
+              "Defesas não realizadas"}
+            {progress?.detalhamento.defesas.preBanca &&
+            !progress?.detalhamento.defesas.bancaFinal
+              ? "Pré-banca realizada"
+              : ""}
+            {progress?.detalhamento.defesas.bancaFinal &&
+            !progress?.detalhamento.defesas.preBanca
+              ? "Banca final realizada"
+              : ""}
+            {progress?.detalhamento.defesas.preBanca &&
+              progress?.detalhamento.defesas.bancaFinal &&
+              "Pré-banca e banca final realizadas"}
           </span>
         </ProgressBar>
       </div>
