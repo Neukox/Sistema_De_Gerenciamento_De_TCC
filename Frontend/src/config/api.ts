@@ -45,6 +45,10 @@ export const API_CONFIG = {
       CREATE: "anotacoes",
       DELETE: "anotacoes/", // id da anotação deve ser concatenado
     },
+    REUNIOES: {
+      GET_BY_TCC: "reunioes/tcc/", // id do TCC deve ser concatenado
+      CREATE: "reunioes",
+    },
   },
   HEADERS: {
     "Content-Type": "application/json",
