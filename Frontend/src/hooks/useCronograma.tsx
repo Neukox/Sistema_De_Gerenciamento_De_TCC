@@ -7,34 +7,40 @@ import { useMemo } from "react";
  * @returns {number | null} - Dias restantes ou null se as datas forem inválidas
  */
 
-export function useCronograma(
-  dataInicio: Date | string,
-  dataEntrega: Date | string
-) {
+export function useCronograma(dataEntrega: Date | string) {
   const diasRestantes = useMemo(() => {
-    if (
-      !dataInicio ||
-      !dataEntrega ||
-      dataInicio === "-" ||
-      dataEntrega === "-"
-    ) {
+    if (!dataEntrega || dataEntrega === "-") {
       return null;
     }
 
-    const inicio = new Date(dataInicio);
+    const agora = new Date();
     const entrega = new Date(dataEntrega);
 
     // Verificar se ambas as datas são válidas
-    if (isNaN(inicio.getTime()) || isNaN(entrega.getTime())) {
+    if (isNaN(entrega.getTime())) {
       return null;
     }
 
-    inicio.setHours(0, 0, 0, 0);
-    entrega.setHours(0, 0, 0, 0);
+    const hoje = new Date(
+      agora.getFullYear(),
+      agora.getMonth(),
+      agora.getDate()
+    );
 
-    const diferencaMs = entrega.getTime() - inicio.getTime();
+    const entregaLocal = new Date(
+      entrega.getFullYear(),
+      entrega.getMonth(),
+      entrega.getDate()
+    );
+
+    const diferencaMs = entregaLocal.getTime() - hoje.getTime();
+
+    if (diferencaMs < 0) {
+      return null; // Data de entrega já passou
+    }
+
     return Math.ceil(diferencaMs / (1000 * 60 * 60 * 24));
-  }, [dataInicio, dataEntrega]);
+  }, [dataEntrega]);
 
   return diasRestantes;
 }

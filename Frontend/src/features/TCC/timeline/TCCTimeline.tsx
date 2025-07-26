@@ -25,7 +25,7 @@ export default function TCCTimeline({
   // Cálculos
   const formatedStartDate = formatDate(startDate as string, false);
   const formatedEndDate = formatDate(endDate as string, false);
-  const diasRestantes = useCronograma(startDate as string, endDate as string);
+  const diasRestantes = useCronograma(endDate as string);
   const prazoAtrasado = diasRestantes !== null && diasRestantes < 0;
   const statusKey = prazoAtrasado ? "ATRASADO" : status || "PENDENTE";
   const statusAtual = useStatusTheme(statusKey as keyof Status);
