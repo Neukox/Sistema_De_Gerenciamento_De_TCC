@@ -2,13 +2,14 @@
 import { calculatePercentage } from "@/utils/calculate";
 import useTCCInfo from "../TCC/hooks/useTccInfo";
 // Ícones
-import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
+import { IoMdPeople } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaTasks } from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { HiOutlineNewspaper } from "react-icons/hi2";
 import { BookOpen, TargetIcon } from "lucide-react";
 import { CgNotes } from "react-icons/cg";
+
 // Componentes
 import { Card, CardHeader } from "@/components/ui/card";
 import Button from "@/components/ui/Button";
@@ -48,8 +49,6 @@ function MainDashboard() {
       </div>
     );
   } */
-
-  console.log("Dados do dashboard:", data);
 
   // Renderiza o dashboard
   return (
@@ -111,7 +110,7 @@ function MainDashboard() {
             </span>
           </div>
           <div className="bg-blue-100 size-16 rounded-full p-2 flex items-center justify-center">
-            <IoMdTrendingUp className="size-10 text-blue-400" />
+            <FaTasks className="size-8 text-blue-400" />
           </div>
         </Card>
         {/* Reuniões */}

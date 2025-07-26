@@ -9,7 +9,6 @@ import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import HistoricoReunioes from "./features/meetings/MeetingsLayout";
 import TCCLayout from "./pages/layouts/TCCLayout";
 import RequireAuthRoute from "./pages/RequireAuthRoute";
 import TasksPage from "./pages/tcc/TasksPage";
@@ -30,7 +29,6 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/recuperar-senha" element={<RecuperacaoSenha />} />
         <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
-        <Route path="/historico-reunioes" element={<HistoricoReunioes />} />
 
         {/* Protected Routes */}
         <Route path="/" element={<RequireAuthRoute />}>
