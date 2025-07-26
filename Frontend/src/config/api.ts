@@ -40,6 +40,11 @@ export const API_CONFIG = {
     HISTORICO: {
       GET_TCC_HISTORICO: "/historico/tcc/", // id do TCC deve ser concatenado
     },
+    ANOTACOES: {
+      GET_BY_TCC: "anotacoes/tcc/", // id do TCC deve ser concatenado
+      CREATE: "anotacoes",
+      DELETE: "anotacoes/", // id da anotação deve ser concatenado
+    },
   },
   HEADERS: {
     "Content-Type": "application/json",
