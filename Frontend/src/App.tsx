@@ -9,9 +9,7 @@ import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import { EditarTCC } from "./features/EditarTCC/EditarTCC";
-import HistoricoReunioes from "./features/HistoricoReunio/HistoricoReuniao";
-import CriarAtividade from "./features/CriarAtividade/CriarAtividade";
+import HistoricoReunioes from "./features/meetings/MeetingsLayout";
 import TCCLayout from "./pages/layouts/TCCLayout";
 import RequireAuthRoute from "./pages/RequireAuthRoute";
 import TasksPage from "./pages/tcc/TasksPage";
@@ -21,6 +19,7 @@ import AssistentTCC from "./features/AssistentTCC/AssistentTCC";
 import MyTccPage from "./pages/tcc/MyTccPage";
 import { ReunioesProvider } from "./context/ReunioesContext";
 import ApplyHistoryPage from "./pages/tcc/ApplyHistoryPage";
+import MeetingsPage from "./pages/tcc/MeetingsPage";
 
 export default function App() {
   return (
@@ -31,9 +30,7 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/recuperar-senha" element={<RecuperacaoSenha />} />
         <Route path="/redefinir-senha" element={<ConfirmResetPassword />} />
-        <Route path="/editar-tcc" element={<EditarTCC />} />
         <Route path="/historico-reunioes" element={<HistoricoReunioes />} />
-        <Route path="/criar-atividade" element={<CriarAtividade />} />
 
         {/* Protected Routes */}
         <Route path="/" element={<RequireAuthRoute />}>
@@ -55,6 +52,7 @@ export default function App() {
                   </ReunioesProvider>
                 }
               />
+              <Route path="reunioes" element={<MeetingsPage />} />
               <Route path="assistente-tcc" element={<AssistentTCC />} />
 
               {/* Outras rotas do TCC */}

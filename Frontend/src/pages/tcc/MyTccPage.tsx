@@ -49,7 +49,7 @@ export default function MyTccPage() {
   }, [location.pathname, setEditable]);
 
   return (
-    <div className="flex flex-col -center gap-6 w-full max-w-8xl">
+    <div className="flex flex-col gap-6 w-full max-w-8xl">
       <Card className="p-6 shadow-md flex flex-col sm:flex-row justify-between items-center gap-4">
         <CardHeader className="p-0">
           <GraduationCapIcon className="text-primary size-8" />

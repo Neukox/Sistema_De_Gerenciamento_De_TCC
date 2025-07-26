@@ -4,15 +4,15 @@ import useToogle from "@/hooks/useToogle";
 import NavbarLink from "@/components/ui/NavbarLink";
 import { GraduationCap, LucideLayoutDashboard, Notebook } from "lucide-react";
 import { FaTasks } from "react-icons/fa";
-import { IoCalendarClearOutline } from "react-icons/io5";
+import { IoPeopleOutline } from "react-icons/io5";
 import { LuHistory } from "react-icons/lu";
 import { useLocation, Outlet } from "react-router-dom";
 import { RiRobot2Line } from "react-icons/ri";
 
-import { pagesTitles } from "@/lib/pages";
+import { pages } from "@/lib/pages";
 import { useEffect } from "react";
 
-type AlunoPage = keyof typeof pagesTitles.aluno;
+type AlunoPage = keyof typeof pages.aluno;
 
 /**
  * Layout principal do TCC
@@ -45,9 +45,9 @@ export default function TCCLayout() {
             <Notebook className="size-6" />
             Anotações
           </NavbarLink>
-          <NavbarLink to="/">
-            <IoCalendarClearOutline className="size-6" />
-            Agendamentos
+          <NavbarLink to="/reunioes">
+            <IoPeopleOutline className="size-6" />
+            Reuniões
           </NavbarLink>
           <NavbarLink to="/historico">
             <LuHistory className="size-6" />
@@ -57,16 +57,14 @@ export default function TCCLayout() {
             <GraduationCap className="size-6" />
             Meu TCC
           </NavbarLink>
-         
           <NavbarLink to="/assistente-tcc">
           <RiRobot2Line className="size-6" />
             Assistente FocoTCC
           </NavbarLink>
-
         </nav>
       </SideBar>
       <div className="overflow-y-auto min-h-screen flex-1">
-        <Header title={pagesTitles.aluno[page]} onMenuClick={open} />
+        <Header title={pages.aluno[page]} onMenuClick={open} />
         <main className="p-4 md:p-6 lg:p-8 bg-secondary min-h-[calc(100vh_-_5rem)] flex justify-center">
           <Outlet />
         </main>

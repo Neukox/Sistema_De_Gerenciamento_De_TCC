@@ -1,4 +1,4 @@
-export const pagesTitles = {
+export const pages = {
   aluno: {
     dashboard: "Dashboard",
     historico: "Histórico de Atividades",
@@ -7,5 +7,6 @@ export const pagesTitles = {
     tarefas: "Tarefas",
     "assistente-tcc": "Assistente FocoTCC",
     "meu-tcc": "Meu TCC",
+    reunioes: "Reuniões",
   },
 };
