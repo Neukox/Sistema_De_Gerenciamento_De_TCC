@@ -1,4 +1,3 @@
-import Pagination from "@/components/ui/Pagination";
 import { ArrowDown, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import Button from "@/components/ui/Button";
@@ -8,6 +7,7 @@ import { Suspense } from "react";
 import useTccApplyHistory from "../hooks/useTccApplyHistory";
 import React from "react";
 import type { AcoesHistorico, EntidadesHistorico } from "@/types/historico";
+import Pagination from "@/components/ui/Pagination";
 
 const ApplyHistoryContainer = React.lazy(() =>
   import("./ApplyHistoryContainer").then((module) => ({
@@ -51,6 +51,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
             <option value="CRIAR">Criação</option>
             <option value="ALTERAR">Alteração</option>
             <option value="ATUALIZAR">Atualização</option>
+            <option value="CANCELAR">Cancelamento</option>
             <option value="EXCLUIR">Exclusão</option>
           </Select>
           <Select
@@ -77,7 +78,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
             value={periodo}
             onChange={(e) => {
               setQueryParams({
-                data: e.target.value as "hoje" | "semana" | "mes",
+                periodo: e.target.value as "hoje" | "semana" | "mes",
               });
             }}
           >
@@ -95,7 +96,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
           Atividades Recentes
         </h2>
         <Suspense fallback={<ApplyHistoryLoading />}>
-          <ApplyHistoryContainer data={data?.items || []} />
+          <ApplyHistoryContainer items={data?.items || []} />
         </Suspense>
         <Pagination
           page={page}

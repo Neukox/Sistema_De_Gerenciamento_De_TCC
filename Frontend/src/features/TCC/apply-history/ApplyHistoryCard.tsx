@@ -23,6 +23,7 @@ const actionColors = {
   ALTERAR: { text: "text-yellow-600", bg: "bg-yellow-200" },
   ATUALIZAR: { text: "text-blue-600", bg: "bg-blue-200" },
   EXCLUIR: { text: "text-red-600", bg: "bg-red-200" },
+  CANCELAR: { text: "text-orange-600", bg: "bg-orange-200" },
 } satisfies Record<string, { text: string; bg: string }>;
 
 type ApplyHistoryCardProps = {

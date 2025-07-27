@@ -1,4 +1,4 @@
-export type AcoesHistorico = "CRIAR" | "ALTERAR" | "EXCLUIR" | "ATUALIZAR";
+export type AcoesHistorico = "CRIAR" | "ALTERAR" | "EXCLUIR" | "ATUALIZAR" | "CANCELAR";
 
 export type EntidadesHistorico =
   | "TCC"

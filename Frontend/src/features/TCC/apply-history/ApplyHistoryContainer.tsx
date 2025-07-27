@@ -1,19 +1,20 @@
-import type { HistoricoTCC } from "@/types/historico";
 import ApplyHistoryCard from "./ApplyHistoryCard";
+import type { HistoricoTCC } from "@/types/historico";
 
 type ApplyHistoryContainerProps = {
-  data: HistoricoTCC[];
+  items?: HistoricoTCC[];
 };
 
 export default function ApplyHistoryContainer({
-  data,
+  items,
 }: ApplyHistoryContainerProps) {
+
   return (
     <div className="flex flex-col gap-6">
-      {data.map((item) => (
+      {items?.map((item) => (
         <ApplyHistoryCard key={item.id} historico={item} />
       ))}
-      {data.length === 0 && (
+      {items?.length === 0 && (
         <div className="text-center text-gray-500 text-xl flex justify-center items-center h-80">
           Nenhuma atividade recente encontrada.
         </div>

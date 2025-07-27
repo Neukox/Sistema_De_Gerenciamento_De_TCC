@@ -20,14 +20,14 @@ export default function useTccApplyHistory(
   const [limit, setLimit] = useState(params?.limit || 10);
   const [acao, setAcao] = useState(params?.acao || undefined);
   const [entidade, setEntidade] = useState(params?.entidade || undefined);
-  const [periodo, setPeriodo] = useState(params?.data || undefined);
+  const [periodo, setPeriodo] = useState(params?.periodo || undefined);
 
   const queryParams: GetTCCHistoricoParams = {
     page,
     limit,
     acao,
     entidade,
-    data: periodo,
+    periodo,
   };
 
   const setQueryParams = (newParams: Partial<GetTCCHistoricoParams>) => {
@@ -35,7 +35,7 @@ export default function useTccApplyHistory(
     setLimit(newParams.limit ?? limit);
     setAcao(newParams.acao ?? acao);
     setEntidade(newParams.entidade ?? entidade);
-    setPeriodo(newParams.data ?? periodo);
+    setPeriodo(newParams.periodo ?? periodo);
   };
 
   const query = useQuery<
