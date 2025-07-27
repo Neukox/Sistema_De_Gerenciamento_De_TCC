@@ -1,6 +1,9 @@
 // Hooks e bibliotecas
 import { calculatePercentage } from "@/utils/calculate";
 import useTCCInfo from "../TCC/hooks/useTccInfo";
+import useModal from "@/context/modal/useModal";
+import { useNavigate } from "react-router-dom";
+
 // Ícones
 import { IoMdPeople } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
@@ -17,11 +20,10 @@ import TCCInfo from "../TCC/info/TCCInfo";
 import TCCProgress from "../TCC/progress/TCCProgress";
 import TCCTimeline from "../TCC/timeline/TCCTimeline";
 import CreateTask from "../tasks/create-task/CreateTask";
+import CreateMeeting from "../meetings/CreateMeeting";
 
 // Contexto do TCC
 import { useTCCContext } from "@/hooks/useTCCContext";
-import { useNavigate } from "react-router-dom";
-import useModal from "@/context/modal/useModal";
 
 function MainDashboard() {
   // Navegação
@@ -184,7 +186,17 @@ function MainDashboard() {
                 <FaPlus className="size-6" />
                 Nova tarefa
               </Button>
-              <Button variant="quicks" className="flex items-center gap-2">
+              <Button
+                variant="quicks"
+                className="flex items-center gap-2"
+                onClick={() =>
+                  setContent({
+                    title: "Nova Reunião",
+                    description: "Preencha os campos para agendar uma reunião",
+                    children: <CreateMeeting />,
+                  })
+                }
+              >
                 <RiCalendarScheduleLine className="size-6" />
                 Agendar Reunião
               </Button>

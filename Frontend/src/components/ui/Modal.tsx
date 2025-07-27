@@ -10,7 +10,7 @@ export default function Modal() {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50 data-[state='open]:animate-overlayShow" />
         <Dialog.Content
-          className="fixed top-1/2 left-1/2 w-[90vw] max-w-screen-sm bg-neutral rounded-lg shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-50 data-[state='open']:animate-contentShow max-h-[90vh]"
+          className="fixed top-1/2 left-1/2 w-[90vw] max-w-screen-sm bg-gray-50 rounded-lg shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-50 data-[state='open']:animate-contentShow max-h-[90vh]"
           aria-describedby="modal-title"
         >
           <div className="relative flex flex-col border-b px-6 py-4">
