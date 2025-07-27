@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { RequestWithUser } from "../../types/auth";
-import deleteReuniaoService from "../../services/reuniao/deleteReuniao";
+import deleteReuniaoService from "../../services/reuniao/deleteService";
 
 /**
  * Controller para deletar/cancelar uma reunião
@@ -17,8 +17,25 @@ export const deleteReuniao = async (
 
   const userId = Number(req.user?.id);
   const reuniaoId = parseInt(req.params.id, 10);
+  const { forceDelete } = req.query;
 
-  await deleteReuniaoService(reuniaoId, userId);
+  console.log("Force Delete:", Boolean(forceDelete));
+
+  const deletedReuniao = await deleteReuniaoService(
+    reuniaoId,
+    userId,
+    Boolean(forceDelete)
+  );
+
+  if (deletedReuniao?.status === "CANCELADA") {
+    res.status(200).json({
+      success: true,
+      message: "Reunião cancelada com sucesso.",
+    });
+
+    console.log("Reunião cancelada com sucesso:", reuniaoId);
+    return;
+  }
 
   res.status(200).json({
     success: true,

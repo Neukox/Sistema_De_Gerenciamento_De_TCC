@@ -1,4 +1,4 @@
-import { Reuniao } from "@prisma/client";
+import { $Enums, Reuniao } from "@prisma/client";
 import prisma from "../../config/prisma";
 import { ICreateReuniao, IGetReuniao, IUpdateReuniao } from "./interfaces";
 
@@ -124,6 +124,31 @@ export async function updateReuniao(
       observacoes: data.observacoes,
       status: data.status,
       ...(data.status === "REALIZADA" && { data_realizada: new Date() }),
+    },
+  });
+
+  if (!updatedReuniao) {
+    return null;
+  }
+
+  return updatedReuniao;
+}
+
+export async function updateStatusReunião(
+  id: number,
+  status: $Enums.StatusReuniao
+): Promise<Reuniao | null> {
+  let observacao: string | undefined;
+
+  if (status === "CANCELADA") {
+    observacao = "Cancelada em: " + new Date().toLocaleString("pt-BR");
+  }
+
+  const updatedReuniao = await prisma.reuniao.update({
+    where: { id },
+    data: {
+      status,
+      observacoes: observacao,
     },
   });
 
