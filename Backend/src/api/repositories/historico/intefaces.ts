@@ -48,7 +48,7 @@ export interface IHistoricoTccResponse {
 export interface IHistoricoTccParams {
   acao?: $Enums.AcoesHistorico;
   entidade?: $Enums.EntidadesHistorico;
-  data?: "hoje" | "semana" | "mes";
+  periodo?: "hoje" | "semana" | "mes";
   page?: number;
   limit?: number;
 }

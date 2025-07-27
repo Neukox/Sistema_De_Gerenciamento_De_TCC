@@ -41,8 +41,6 @@ export async function getHistoricoTcc(
   let skip: number | undefined;
   let take: number | undefined;
 
-  const totalCount = await prisma.historicoTcc.count({ where });
-
   if (params.acao) {
     where.acao = params.acao;
   }
@@ -51,13 +49,17 @@ export async function getHistoricoTcc(
     where.entidade = params.entidade;
   }
 
-  if (params.data) {
-    const filtroData = getDateRange(params.data);
+  if (params.periodo) {
+    const filtroData = getDateRange(params.periodo);
     where.feito_em = {
       gte: filtroData.gte,
       lte: filtroData.lte,
     };
   }
+
+  const totalCount = await prisma.historicoTcc.count({
+    where,
+  });
 
   if (params.page && params.limit) {
     skip = (params.page - 1) * params.limit;

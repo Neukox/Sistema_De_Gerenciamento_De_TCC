@@ -19,7 +19,7 @@ export default async function getTccController(
     limit: Number(params.limit) || 10,
     acao: params.acao,
     entidade: params.entidade,
-    data: params.data,
+    periodo: params.periodo,
   });
 
   return res.status(200).json({
