@@ -59,13 +59,13 @@ export default async function updateReuniaoService(
 
   const updatedReuniao = await updateReuniao({
     ...data,
-    data_agendada: dataAgendada
+    data_agendada: dataAgendada,
   });
 
   if (updatedReuniao) {
     // Registrar histórico de atualização de reunião
     await createHistoricoTcc({
-      acao: "ALTERAR",
+      acao: "ATUALIZAR",
       entidade: "REUNIAO",
       entidadeId: updatedReuniao.id,
       usuarioId: userId,

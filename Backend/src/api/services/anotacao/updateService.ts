@@ -23,7 +23,7 @@ export default async function updateAnotacaoService(
       entidadeId: updatedAnotacao.id,
       usuarioId: updatedAnotacao.Aluno_id, // ID do aluno associado à anotação
       tccId: updatedAnotacao.TCC_id,
-      descricao: `Anotação atualizada`,
+      descricao: `Anotação alterada`,
       detalhes: `Alterou anotação para: ${updatedAnotacao.conteudo}.`,
     });
   }

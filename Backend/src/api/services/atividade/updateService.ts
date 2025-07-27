@@ -34,7 +34,7 @@ export default async function updateAtividadeService(
   if (atividadeAtualizada) {
     // Registra a ação no histórico
     await createHistoricoTcc({
-      acao: "ALTERAR",
+      acao: "ATUALIZAR",
       entidade: "ATIVIDADE",
       entidadeId: atividadeAtualizada.id,
       usuarioId: atividadeAtualizada.Aluno_id, // ID do aluno associado à atividade
