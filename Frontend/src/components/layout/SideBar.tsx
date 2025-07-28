@@ -37,6 +37,8 @@ export default function SideBar({ children, isOpen, onClose }: SideBarProps) {
             onClick={onClose}
             variant="transparent"
             className="lg:hidden rounded-full p-0"
+            aria-label="close-sidebar"
+            aria-hidden={isOpen}
           >
             <Menu className="size-8" />
           </Button>

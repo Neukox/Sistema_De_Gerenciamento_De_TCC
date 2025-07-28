@@ -23,12 +23,17 @@ export default function Pagination({
   className,
 }: PaginationProps) {
   return (
-    <div className={cn("flex items-center justify-center gap-4", className)}>
+    <div
+      className={cn("flex items-center justify-center gap-4", className)}
+      aria-label="pagination"
+    >
       <Button
         variant="default"
         className="py-1 px-3 font-normal disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-200"
         disabled={page === 1}
         onClick={() => onPageChange(page - 1)}
+        aria-label="previous-page"
+        aria-disabled={page === 1}
       >
         <BiSkipPrevious className="size-6" />
       </Button>
@@ -40,6 +45,8 @@ export default function Pagination({
         className="px-3 py-1 font-normal disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-200"
         disabled={page === totalPages}
         onClick={() => onPageChange(page + 1)}
+        aria-label="next-page"
+        aria-disabled={page === totalPages}
       >
         <BiSkipNext className="size-6" />
       </Button>

@@ -37,8 +37,13 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
           Filtros
         </span>
 
-        <div className="flex sm:basis-96 shrink flex-wrap sm:flex-nowrap gap-4">
+        <div
+          className="flex sm:basis-96 shrink flex-wrap sm:flex-nowrap gap-4"
+          id="historico-filtros"
+        >
           <Select
+            id="acoes"
+            name="acoes"
             variant="primary"
             placeholder="Todas as Acões"
             className="flex-1"
@@ -46,6 +51,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
             onChange={(e) => {
               setQueryParams({ acao: e.target.value as AcoesHistorico });
             }}
+            aria-labelledby="historico-filtros"
           >
             <option value="">Todas as ações</option>
             <option value="CRIAR">Criação</option>
@@ -55,6 +61,8 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
             <option value="EXCLUIR">Exclusão</option>
           </Select>
           <Select
+            id="entidade"
+            name="entidade"
             variant="primary"
             className="flex-1"
             value={entidade}
@@ -63,6 +71,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
                 entidade: e.target.value as EntidadesHistorico,
               });
             }}
+            aria-labelledby="historico-filtros"
           >
             <option value="">Todos os tipos</option>
             <option value="TCC">TCC</option>
@@ -73,6 +82,8 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
             <option value="DEFESA">Defesas</option>
           </Select>
           <Select
+            id="periodo"
+            name="periodo"
             className="flex-1"
             variant="primary"
             value={periodo}
@@ -81,6 +92,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
                 periodo: e.target.value as "hoje" | "semana" | "mes",
               });
             }}
+            aria-labelledby="historico-filtros"
           >
             <option value="">Todos os períodos</option>
             <option value="hoje">Hoje</option>

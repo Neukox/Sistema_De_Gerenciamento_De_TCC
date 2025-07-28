@@ -16,6 +16,7 @@ export default function Header({ title, onMenuClick }: HeaderProps) {
           variant="transparent"
           className="p-0 lg:hidden"
           onClick={onMenuClick}
+          aria-label="open-menu"
         >
           <Menu className="size-8 text-black" />
         </Button>
