@@ -103,7 +103,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
       </Card>
 
       {/* Seção de Atividades Recentes */}
-      <div className="bg-historicoatividades w-full h-full max-w-6xl p-6 rounded-2xl flex flex-col gap-6">
+      <Card className="p-6 flex flex-col gap-6">
         <h2 className="flex font-semibold ml-3 text-2xl">
           Atividades Recentes
         </h2>
@@ -115,7 +115,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
           totalPages={data?.totalPages || 1}
           onPageChange={(page) => setQueryParams({ page })}
         />
-      </div>
+      </Card>
     </div>
   );
 }

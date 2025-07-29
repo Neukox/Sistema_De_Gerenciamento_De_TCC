@@ -10,7 +10,7 @@ export default function ApplyHistoryContainer({
 }: ApplyHistoryContainerProps) {
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="w-full flex flex-col gap-6">
       {items?.map((item) => (
         <ApplyHistoryCard key={item.id} historico={item} />
       ))}
