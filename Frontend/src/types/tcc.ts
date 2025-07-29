@@ -3,24 +3,23 @@ import type React from "react";
 /**
  * Define os possíveis status de um TCC
  */
-export type StatusTCC = {
-  PLANEJAMENTO: "Planejamento";
-  DESENVOLVIMENTO: "Desenvolvimento";
-  REVISAO: "Revisão";
-  FINALIZACAO: "Finalização";
-  CONCLUIDO: "Concluído";
-};
+export type StatusTCC =
+  | "PLANEJAMENTO"
+  | "DESENVOLVIMENTO"
+  | "REVISAO"
+  | "FINALIZACAO"
+  | "CONCLUIDO";
 
 /**
  * Define os status de TCC disponíveis
  */
-export const statusTCC: StatusTCC = {
+export const statusTCC = {
   PLANEJAMENTO: "Planejamento",
   DESENVOLVIMENTO: "Desenvolvimento",
   REVISAO: "Revisão",
   FINALIZACAO: "Finalização",
   CONCLUIDO: "Concluído",
-};
+} satisfies Record<StatusTCC, string>;
 
 /**
  * Tipagem de dados do TCC
@@ -35,7 +34,7 @@ export interface TCCData {
   area_conhecimento: string;
   orientador: string;
   coorientador: string;
-  data_inicio: string ;
+  data_inicio: string;
   prazo_entrega: string;
   status: string;
 }

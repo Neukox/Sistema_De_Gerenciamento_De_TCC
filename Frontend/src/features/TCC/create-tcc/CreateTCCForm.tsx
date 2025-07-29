@@ -213,7 +213,7 @@ export default function CreateTCCForm({
         >
           {Object.keys(statusTCC).map((status) => (
             <option key={status} value={status}>
-              {status.valueOf()}
+              {statusTCC[status as keyof typeof statusTCC]}
             </option>
           ))}
         </Select>

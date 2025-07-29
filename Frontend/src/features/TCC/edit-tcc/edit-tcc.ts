@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
  * @returns Mutação para editar o TCC
  */
 export function useEditTCC() {
-  const { setEditable } = useTCCContext();
+  const { setEditable, refreshTCCData } = useTCCContext();
 
   return useMutation<
     ApiResponse,
@@ -29,7 +29,7 @@ export function useEditTCC() {
       });
       setEditable(false);
       QueryClient.invalidateQueries({ queryKey: ["tcc"] });
-      QueryClient.invalidateQueries({ queryKey: ["aluno-tcc"] });
+      refreshTCCData();
     },
     onError: (error) => {
       toast.error(

@@ -1,4 +1,4 @@
-import type { statusTCC, StatusTCC } from "../tcc";
+import type { StatusTCC } from "../tcc";
 import type { ApiResponse } from "./base";
 
 /**
@@ -63,7 +63,7 @@ export interface RegisterTCCRequest {
   resumo: string;
   dataInicio: string;
   dataConclusao?: string;
-  statusAtual: keyof typeof statusTCC;
+  statusAtual: StatusTCC;
   areaConhecimento: string;
   orientadorNome: string;
   coorientadorNome?: string;
@@ -75,7 +75,7 @@ export interface UpdateTCCRequest {
   resumo: string;
   dataInicio: string;
   dataConclusao?: string;
-  statusAtual: keyof typeof statusTCC;
+  statusAtual: StatusTCC;
   areaConhecimento: string;
   orientadorNome: string;
   coorientadorNome?: string;

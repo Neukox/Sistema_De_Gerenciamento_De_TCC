@@ -4,7 +4,7 @@ import { useTCCContext } from "@/hooks/useTCCContext";
 import useAreaConhecimento from "@/hooks/useAreaConhecimento";
 import useProfessores from "@/features/professor/hooks/useProfessores";
 import { useEditTCC } from "./edit-tcc";
-import type { statusTCC } from "@/types/tcc";
+import type { StatusTCC } from "@/types/tcc";
 
 /**
  * Componente para editar informações do TCC
@@ -44,7 +44,7 @@ export default function EditTCC() {
               orientadorNome: data.orientador,
               coorientadorNome: data.coorientador,
               areaConhecimento: data.areaConhecimento,
-              statusAtual: tccData.status as keyof typeof statusTCC,
+              statusAtual: data.status as StatusTCC,
             });
           }}
         />

@@ -4,7 +4,7 @@ import useProfessores from "@/features/professor/hooks/useProfessores";
 import CreateTCCError from "./CreateTCCError";
 import CreateTCCLoading from "./CreateTCCLoading";
 import useCreateTCC from "./create-tcc-fetch";
-import type { statusTCC } from "@/types/tcc";
+import type { StatusTCC } from "@/types/tcc";
 
 /**
  * Componente principal para criar um novo TCC.
@@ -51,7 +51,7 @@ export default function CreateTCC() {
             ...data,
             orientadorNome: data.orientador,
             coorientadorNome: data.coorientador,
-            statusAtual: data.status as keyof typeof statusTCC,
+            statusAtual: data.status as StatusTCC,
           })
         }
         isLoading={isLoading}

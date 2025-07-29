@@ -1,10 +1,7 @@
 import type { StatusTCC } from "@/types/tcc";
 import { useState, useEffect } from "react";
 
-export interface Status extends StatusTCC {
-  PENDENTE: "Pendente";
-  ATRASADO: "Atrasado";
-}
+export type Status = StatusTCC | "PENDENTE" | "ATRASADO";
 
 // Define o tipo do objeto que armazena as cores e nome do status
 interface StatusInfo {
@@ -16,48 +13,48 @@ interface StatusInfo {
 // Objeto que mapeia os nomes dos status para suas cores
 const StatusColor = {
   PLANEJAMENTO: {
-    cor: "text-[#4D7281]",
-    colorBackground: "bg-[#BCD6FD]",
+    cor: "text-blue-900",
+    colorBackground: "bg-blue-200",
     nome: "Planejamento",
   },
   DESENVOLVIMENTO: {
-    cor: "text-[#1D3A56]",
-    colorBackground: "bg-[#BBDEFB]",
+    cor: "text-blue-900",
+    colorBackground: "bg-blue-200",
     nome: "Desenvolvimento",
   },
   REVISAO: {
-    cor: "text-[#716C49]",
-    colorBackground: "bg-[#FBEB93]",
+    cor: "text-orange-800",
+    colorBackground: "bg-orange-300",
     nome: "Revisão",
   },
   FINALIZACAO: {
-    cor: "text-[#672D15]",
-    colorBackground: "bg-[#FFE0B2]",
+    cor: "text-amber-900",
+    colorBackground: "bg-amber-200",
     nome: "Finalização",
   },
   CONCLUIDO: {
-    cor: "text-[#202D21]",
-    colorBackground: "bg-[#C8E6C9]",
+    cor: "text-green-800",
+    colorBackground: "bg-green-300",
     nome: "Concluído",
   },
   PENDENTE: {
-    cor: "text-[#343534]",
-    colorBackground: "bg-[#E0E0E0]",
+    cor: "text-neutral-700",
+    colorBackground: "bg-neutral-200",
     nome: "Pendente",
   },
   ATRASADO: {
-    cor: "text-[#3F2C2C]",
-    colorBackground: "bg-[#FFCDD2]",
+    cor: "text-red-700",
+    colorBackground: "bg-red-400",
     nome: "Atrasado",
   },
-} satisfies Record<keyof Status, StatusInfo>;
+} satisfies Record<Status, StatusInfo>;
 
 /**
  * Hook para obter o tema de status baseado no status recebido
  * @param {string} statusKey - Chave do status para buscar as cores e nome
  * @returns {StatusInfo | null} - Objeto com as cores e nome do status
  */
-export function useStatusTheme(statusKey: keyof Status) {
+export function useStatusTheme(statusKey: Status) {
   // Estado local para armazenar o status atual com cores e nome
   const [stats, setStats] = useState<StatusInfo | null>(null);
 
