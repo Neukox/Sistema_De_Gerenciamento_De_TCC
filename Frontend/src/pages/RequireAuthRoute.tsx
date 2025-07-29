@@ -12,7 +12,7 @@ export default function RequireAuthRoute() {
     return null;
   }
 
-  if (!isAuthenticated && import.meta.env.VITE_DEV_PROTECT_ROUTES === "true") {
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
