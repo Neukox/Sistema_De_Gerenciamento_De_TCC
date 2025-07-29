@@ -1,15 +1,20 @@
+import React from "react";
 import Button from "@/components/ui/Button";
 import { Card } from "@/components/ui/card";
 import { FaPlus } from "react-icons/fa";
 import { GrTask } from "react-icons/gr";
-import TaskCard from "./TaskCard";
-import { useTccTasks } from "./hooks/tcc-tasks.hook";
 import useModal from "@/context/modal/useModal";
 import CreateTask from "./create-task/CreateTask";
+import { Suspense } from "react";
+import TasksLoading from "./TasksLoading";
+
+const TasksContainer = React.lazy(() =>
+  import("./TasksContainer").then((module) => ({
+    default: module.default,
+  }))
+);
 
 export default function TasksLayout({ tccId }: { tccId: number }) {
-  const { data, error } = useTccTasks(tccId);
-
   const { setContent } = useModal();
 
   const handleCreateTask = () => {
@@ -39,16 +44,9 @@ export default function TasksLayout({ tccId }: { tccId: number }) {
           Nova Tarefa
         </Button>
       </div>
-      {data?.atividades.length === 0 ||
-        (error && (
-          <p className="text-gray-400 flex items-center mt-12 justify-center text-sm sm:text-base">
-            Nenhuma tarefa cadastrada.
-          </p>
-        ))}
-      {data?.atividades &&
-        data.atividades.map((task) => (
-          <TaskCard key={task.id} task={task} mostrarEditar={true} />
-        ))}
+      <Suspense fallback={<TasksLoading />}>
+        <TasksContainer tccId={tccId} />
+      </Suspense>
     </Card>
   );
 }
