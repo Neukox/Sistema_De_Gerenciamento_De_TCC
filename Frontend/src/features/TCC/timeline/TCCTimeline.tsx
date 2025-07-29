@@ -28,7 +28,7 @@ export default function TCCTimeline({
   const diasRestantes = useCronograma(endDate as string);
   const prazoAtrasado = diasRestantes !== null && diasRestantes < 0;
   const statusKey = prazoAtrasado ? "ATRASADO" : status || "PENDENTE";
-  const statusAtual = useStatusTheme(statusKey as keyof Status);
+  const statusAtual = useStatusTheme(statusKey as Status);
 
   return (
     <Card className="flex flex-col gap-6 min-h-60 p-6">
