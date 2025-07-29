@@ -16,7 +16,7 @@ interface TarefaCardProps {
 // Componente principal - Renderiza um card de tarefa com controles interativos
 const TaskCard = ({ task, mostrarEditar }: TarefaCardProps) => {
   return (
-    <Card className="border border-gray-300 w-full min-h-40 rounded-md p-6 shadow-lg">
+    <Card className="bg-stone-100 border border-gray-300 w-full min-h-40 rounded-md p-6 shadow-lg">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="flex gap-1">
           <h1 className="text-gray-600 text-lg sm:text-xl">#{task.id}</h1>

@@ -15,7 +15,10 @@ export function useTccTasks(tccId: number) {
         atividades: data.atividades.map((task) => {
           return {
             ...task,
-            status: task.data_entrega < new Date() ? "ATRASADA" : task.status,
+            status:
+              new Date(task.data_entrega).getTime() < new Date().getTime()
+                ? "ATRASADA"
+                : task.status,
           };
         }),
       };

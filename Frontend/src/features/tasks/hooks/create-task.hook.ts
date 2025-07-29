@@ -4,6 +4,7 @@ import createTask from "@/services/atividades/create";
 import type { ApiResponse } from "@/types/response/base";
 import type { AxiosError } from "axios";
 import type { CreateTaskRequest } from "@/types/response/atividade";
+import queryClient from "@/lib/api/react-query";
 
 /**
  * Hook para criar uma nova tarefa.
@@ -16,6 +17,9 @@ export default function useCreateTask() {
     mutationFn: createTask,
     onSuccess: () => {
       toast.success("Tarefa criada com sucesso!");
+      queryClient.invalidateQueries({
+        queryKey: ["tcc-tasks"],
+      });
     },
     onError: (error) => {
       toast.error(

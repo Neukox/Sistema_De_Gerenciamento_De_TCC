@@ -4,9 +4,21 @@ import { FaPlus } from "react-icons/fa";
 import { GrTask } from "react-icons/gr";
 import TaskCard from "./TaskCard";
 import { useTccTasks } from "./hooks/tcc-tasks.hook";
+import useModal from "@/context/modal/useModal";
+import CreateTask from "./create-task/CreateTask";
 
 export default function TasksLayout({ tccId }: { tccId: number }) {
   const { data, error } = useTccTasks(tccId);
+
+  const { setContent } = useModal();
+
+  const handleCreateTask = () => {
+    setContent({
+      title: "Nova Tarefa",
+      description: "Preencha os detalhes da nova tarefa.",
+      children: <CreateTask />,
+    });
+  };
 
   return (
     <Card className="flex flex-col flex-1 gap-8 w-full shadow-lg p-6 min-h-screen">
@@ -21,6 +33,7 @@ export default function TasksLayout({ tccId }: { tccId: number }) {
         <Button
           variant="primary"
           className="flex items-center justify-center gap-2"
+          onClick={handleCreateTask}
         >
           <FaPlus className="size-4" />
           Nova Tarefa
