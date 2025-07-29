@@ -7,7 +7,6 @@ import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
 import UserProfile from "./features/Profile/UserProfile";
 import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
-import { AgendarReuniao } from "./pages/AgendarReuniao";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import TCCLayout from "./pages/layouts/TCCLayout";
 import RequireAuthRoute from "./pages/RequireAuthRoute";
@@ -16,7 +15,6 @@ import NotesPage from "./pages/tcc/NotesPage";
 import DashboardPage from "./pages/tcc/DashboardPage";
 import AssistentTCC from "./features/AssistentTCC/AssistentTCC";
 import MyTccPage from "./pages/tcc/MyTccPage";
-import { ReunioesProvider } from "./context/ReunioesContext";
 import ApplyHistoryPage from "./pages/tcc/ApplyHistoryPage";
 import MeetingsPage from "./pages/tcc/MeetingsPage";
 
@@ -42,14 +40,6 @@ export default function App() {
               <Route path="tarefas" element={<TasksPage />} />
               <Route path="meu-tcc" element={<MyTccPage />} />
               <Route path="anotacoes" element={<NotesPage />} />
-              <Route
-                path="agendar-reuniao"
-                element={
-                  <ReunioesProvider>
-                    <AgendarReuniao />
-                  </ReunioesProvider>
-                }
-              />
               <Route path="reunioes" element={<MeetingsPage />} />
               <Route path="assistente-tcc" element={<AssistentTCC />} />
 
