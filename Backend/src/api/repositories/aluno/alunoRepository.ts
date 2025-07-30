@@ -1,10 +1,10 @@
 import { Aluno } from "@prisma/client";
 import prisma from "../../config/prisma";
-import { GetAlunos } from "./interfaces";
+import { GetAlunos, IAluno } from "./interfaces";
 
 /**
  * Função para buscar todos os alunos no banco de dados
- * @returns {Promise<Aluno | null>} Retorna o aluno encontrado ou null se não existir
+ * @returns {Promise<GetAluno | null>} Retorna o aluno encontrado ou null se não existir
  */
 export async function findAllAlunos(): Promise<GetAlunos[]> {
   const alunos = await prisma.aluno.findMany({
@@ -45,9 +45,9 @@ export async function createAluno(data: Aluno): Promise<Aluno | null> {
 /**
  * Função para buscar um aluno pelo ID
  * @param {number} id - ID do aluno a ser buscado
- * @returns {Promise<Aluno | null>} Retorna o aluno encontrado ou null se não existir
+ * @returns {Promise<IAluno | null>} Retorna o aluno encontrado ou null se não existir
  */
-export async function findAlunoById(id: number): Promise<GetAlunos | null> {
+export async function findAlunoById(id: number): Promise<IAluno | null> {
   const aluno = await prisma.aluno.findUnique({
     where: { Usuario_id: id },
     include: {
@@ -55,6 +55,8 @@ export async function findAlunoById(id: number): Promise<GetAlunos | null> {
         select: {
           email: true,
           nome_completo: true,
+          criado_em: true,
+          atualizado_em: true,
         },
       },
     },
@@ -69,5 +71,7 @@ export async function findAlunoById(id: number): Promise<GetAlunos | null> {
     nome_completo: aluno.Usuario.nome_completo,
     email: aluno.Usuario.email,
     curso: aluno.curso,
+    criado_em: aluno.Usuario.criado_em,
+    atualizado_em: aluno.Usuario.atualizado_em,
   };
 }

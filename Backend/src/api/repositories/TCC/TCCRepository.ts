@@ -1,6 +1,7 @@
 import {
   calculateCompletedStages,
   calculateCompletedTasks,
+  calculateCompleteProgress,
   calculateNotesThisWeek,
   calculateScheduledMeetings,
 } from "../../utils/calculate";
@@ -196,6 +197,7 @@ export async function findAllTCCs(): Promise<GetTCCQuery[]> {
     criado_em: tcc.criado_em,
     atualizado_em: tcc.ultima_atualizacao,
     finalizado_em: tcc.finalizado_em || null,
+    progresso_geral: calculateCompleteProgress(tcc).progresso_total,
     aluno: {
       id: tcc.Aluno.Usuario.id,
       nome: tcc.Aluno.Usuario.nome_completo,
@@ -317,6 +319,7 @@ export async function findTCCByAlunoId(
     criado_em: tcc.criado_em,
     atualizado_em: tcc.ultima_atualizacao,
     finalizado_em: tcc.finalizado_em || null,
+    progresso_geral: calculateCompleteProgress(tcc).progresso_total,
     aluno: {
       id: tcc.Aluno.Usuario_id,
       nome: tcc.Aluno.Usuario.nome_completo,
@@ -434,6 +437,7 @@ export async function findTCCById(id: number): Promise<GetTCCQuery | null> {
     criado_em: tcc.criado_em,
     atualizado_em: tcc.ultima_atualizacao,
     finalizado_em: tcc.finalizado_em || null,
+    progresso_geral: calculateCompleteProgress(tcc).progresso_total,
     aluno: {
       id: tcc.Aluno.Usuario.id,
       nome: tcc.Aluno.Usuario.nome_completo,

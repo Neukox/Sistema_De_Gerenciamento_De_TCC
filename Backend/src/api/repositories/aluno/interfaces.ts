@@ -6,3 +6,8 @@ export interface GetAlunos {
   email: string;
   curso: string;
 }
+
+export interface IAluno extends GetAlunos {
+  criado_em: Date;
+  atualizado_em: Date;
+}

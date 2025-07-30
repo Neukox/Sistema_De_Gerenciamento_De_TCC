@@ -1,6 +1,6 @@
 import { Usuario } from "@prisma/client";
 import prisma from "../../config/prisma";
-import { ICreateUser } from "./interfaces";
+import { ICreateUser, IUsuario } from "./interfaces";
 
 /**
  * Função para buscar um usuário pelo email no banco de dados
@@ -13,6 +13,29 @@ export async function findUserByEmail(email: string): Promise<Usuario> {
   });
 
   return usuario as Usuario;
+}
+
+/**
+ * Função para buscar um usuário pelo ID no banco de dados
+ * @param {number} id - O ID do usuário a ser buscado
+ * @returns {Promise<Usuario | null>} Retorna o usuário encontrado ou null se não existir
+ */
+export async function findUserById(id: number): Promise<IUsuario | null> {
+  const usuario = await prisma.usuario.findUnique({
+    where: { id: id },
+  });
+
+  if (!usuario) {
+    return null;
+  }
+
+  return {
+    id: usuario.id,
+    nome_completo: usuario.nome_completo,
+    email: usuario.email,
+    criado_em: usuario.criado_em,
+    atualizado_em: usuario.atualizado_em,
+  };
 }
 
 /**

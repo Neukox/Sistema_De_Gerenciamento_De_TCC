@@ -11,6 +11,7 @@ export interface GetTCCQuery {
   criado_em: Date;
   atualizado_em: Date;
   finalizado_em?: Date | null;
+  progresso_geral: number;
   aluno: {
     id: number;
     nome: string;
