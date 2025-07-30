@@ -6,5 +6,3 @@ export interface Professor {
   area_atuacao: string;
   disponibilidade: boolean;
 }
-
-

@@ -46,5 +46,8 @@ export const API_CONFIG = {
       GET_BY_TCC: "reunioes/tcc/", // id do TCC deve ser concatenado
       CREATE: "reunioes",
     },
+    ALUNOS: {
+      GET_BY_ID: "/alunos/", // id do aluno deve ser concatenado
+    },
   },
 };

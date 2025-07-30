@@ -37,6 +37,9 @@ export interface TCCData {
   data_inicio: string;
   prazo_entrega: string;
   status: string;
+  progresso: number;
+  marcos_completos: number;
+  tarefas_completas: number;
 }
 
 export interface TCCContextType {

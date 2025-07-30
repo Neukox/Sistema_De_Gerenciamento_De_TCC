@@ -57,6 +57,9 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
           ? new Date(data.tcc.dataConclusao).toISOString().slice(0, 10)
           : "",
         status: data.tcc.statusAtual as unknown as string,
+        progresso: data.tcc.progresso_geral,
+        marcos_completos: data.tcc.etapas.concluidas,
+        tarefas_completas: data.tcc.tarefas.concluidas,
       }
     : {
         id: 0,
@@ -71,6 +74,9 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
         data_inicio: "",
         prazo_entrega: "",
         status: "PLANEJAMENTO",
+        progresso: 0,
+        marcos_completos: 0,
+        tarefas_completas: 0,
       };
 
   return (
