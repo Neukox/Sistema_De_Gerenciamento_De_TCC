@@ -22,7 +22,7 @@ export default function ProgressBar({
     <div className={cn("w-full flex flex-col gap-2", className)}>
       <div className="flex justify-between mb-1">
         <div className="flex items-center gap-2">
-          {Icon && <Icon className="size-6"/>}
+          {Icon && <Icon className="size-6" />}
           <span className="text-md font-semibold">{title}</span>
         </div>
         <span className="text-sm font-medium text-gray-700">
@@ -32,13 +32,7 @@ export default function ProgressBar({
       <div className="w-full bg-gray-200 rounded-full h-4">
         <div
           className={cn(
-            "h-4 rounded-full transition-all duration-300 ease-in-out",
-            {
-              "bg-green-500": progressPercentage >= 75,
-              "bg-yellow-500":
-                progressPercentage >= 50 && progressPercentage < 75,
-              "bg-red-500": progressPercentage < 50,
-            }
+            "h-4 rounded-full transition-all duration-300 ease-in-out bg-primary"
           )}
           style={{ width: `${progressPercentage}%` }}
         />
