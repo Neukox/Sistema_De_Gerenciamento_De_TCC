@@ -17,6 +17,7 @@ export default function parseTemplates(
 ): string {
   const templatePath = path.join(
     __dirname,
+    "..",
     "templates",
     `${templateName}.html`
   );
