@@ -11,14 +11,17 @@ export default function Modal() {
         <Dialog.Overlay className="fixed inset-0 bg-black/50 z-50 data-[state='open]:animate-overlayShow" />
         <Dialog.Content
           className="fixed top-1/2 left-1/2 w-[90vw] max-w-screen-sm bg-gray-50 rounded-lg shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-50 data-[state='open']:animate-contentShow max-h-[90vh]"
-          aria-describedby="modal-title"
+          aria-describedby={
+            content?.description ? "modal-description" : undefined
+          }
         >
           <div className="relative flex flex-col border-b px-6 py-4">
-            {content?.title && (
-              <Dialog.Title className="text-lg font-semibold" id="modal-title">
-                {content?.title || "Título Padrão"}
-              </Dialog.Title>
-            )}
+            <Dialog.Title
+              className={content?.title ? "text-lg font-semibold" : "sr-only"}
+              id="modal-title"
+            >
+              {content?.title || "Título do Modal"}
+            </Dialog.Title>
             {content?.description && (
               <Dialog.Description className="text-sm text-gray-600">
                 {content.description}
