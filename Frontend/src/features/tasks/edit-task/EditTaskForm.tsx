@@ -1,11 +1,11 @@
 import * as Form from "@/components/ui/form";
 import { DialogClose } from "@radix-ui/react-dialog";
-import type { TaskFormData } from "./task-form.schema";
-import { useTaskForm } from "./task-form.hook";
+import type { EditTaskFormData } from "./edit-task-form.schema";
+import { useEditTaskForm } from "./edit-task-form.hook";
 
 type TaskFormProps = {
-  initialValues?: Partial<TaskFormData>;
-  onSubmit: (data: TaskFormData) => void;
+  previousValues?: Partial<EditTaskFormData>;
+  onSubmit: (data: EditTaskFormData) => void;
   isSubmitting?: boolean;
 };
 
@@ -16,7 +16,7 @@ type TaskFormProps = {
  */
 
 export default function TaskForm({
-  initialValues,
+  previousValues,
   onSubmit,
   isSubmitting,
 }: TaskFormProps) {
@@ -24,7 +24,7 @@ export default function TaskForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useTaskForm(initialValues);
+  } = useEditTaskForm(previousValues);
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -84,7 +84,7 @@ export default function TaskForm({
           {...register("status")}
         >
           <option value="PENDENTE">Pendente</option>
-          <option value="CONCLUIDO">Concluído</option>
+          <option value="CONCLUIDA">Concluído</option>
         </Form.Select>
         {errors.status && (
           <Form.FormError>{errors.status.message}</Form.FormError>
@@ -98,7 +98,7 @@ export default function TaskForm({
           </Form.Button>
         </DialogClose>
         <Form.Submit className="w-full" disabled={isSubmitting}>
-          Salvar Tarefa
+          Salvar alterações
         </Form.Submit>
       </div>
     </form>
