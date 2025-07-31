@@ -9,7 +9,15 @@ export default function formatDate(
   date: Date | string,
   withTime: boolean = true
 ): string {
-  if (typeof date === "string") {
+  if (
+    typeof date === "string" &&
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(date)
+  ) {
+    const [year, month, day, hour, minute, second] = date
+      .split(/[-T:.Z]/)
+      .map(Number);
+    date = new Date(year, month - 1, day, hour, minute, second);
+  } else if (typeof date === "string") {
     date = new Date(date);
   }
 

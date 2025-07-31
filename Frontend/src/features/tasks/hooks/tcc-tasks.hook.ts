@@ -16,6 +16,7 @@ export function useTccTasks(tccId: number) {
           return {
             ...task,
             status:
+              task.status !== "CONCLUIDA" &&
               new Date(task.data_entrega).getTime() < new Date().getTime()
                 ? "ATRASADA"
                 : task.status,

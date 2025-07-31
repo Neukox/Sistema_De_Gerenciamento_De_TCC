@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import type { Atividade, StatusAtividade } from "@/types/atividade";
 import formatDate from "@/utils/format-date";
 import StatusTask from "./StatusTask";
+import useModal from "@/context/modal/useModal";
+import EditTask from "./edit-task/EditTask";
 
 // Interface de propriedades - Define os dados que o componente recebe do pai
 interface TarefaCardProps {
@@ -15,6 +17,15 @@ interface TarefaCardProps {
 
 // Componente principal - Renderiza um card de tarefa com controles interativos
 const TaskCard = ({ task, mostrarEditar }: TarefaCardProps) => {
+  const { setContent } = useModal();
+
+  const handleEdit = () => {
+    setContent({
+      title: "Editar Tarefa",
+      children: <EditTask id={task.id} previousData={task} />,
+    });
+  };
+
   return (
     <Card className="bg-stone-100 border border-gray-300 w-full min-h-40 rounded-md p-6 shadow-lg">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
@@ -33,7 +44,7 @@ const TaskCard = ({ task, mostrarEditar }: TarefaCardProps) => {
             }
           />
           {mostrarEditar && (
-            <Button className="p-2" variant="transparent">
+            <Button className="p-2" variant="transparent" onClick={handleEdit}>
               <LuPencilLine className="size-6 hover:text-primary" />
             </Button>
           )}
