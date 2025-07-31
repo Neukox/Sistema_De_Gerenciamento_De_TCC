@@ -4,7 +4,6 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import RecuperacaoSenha from "./pages/auth/ResetPassword";
 import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
-import UserProfile from "./features/Profile/UserProfile";
 import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import ProtectedRoute from "./pages/ProtectedRoute";
@@ -17,6 +16,8 @@ import AssistentTCC from "./features/AssistentTCC/AssistentTCC";
 import MyTccPage from "./pages/tcc/MyTccPage";
 import ApplyHistoryPage from "./pages/tcc/ApplyHistoryPage";
 import MeetingsPage from "./pages/tcc/MeetingsPage";
+import ProfileLayout from "./pages/layouts/ProfileLayout";
+import UserProfilePage from "./pages/profile/UserProfilePage";
 
 export default function App() {
   return (
@@ -31,7 +32,9 @@ export default function App() {
         {/* Protected Routes */}
         <Route path="/" element={<RequireAuthRoute />}>
           <Route path="boas-vindas" element={<BoasVindas />} />
-          <Route path="perfil" element={<UserProfile />} />
+          <Route element={<ProfileLayout />}>
+            <Route path="perfil" element={<UserProfilePage />} />
+          </Route>
           <Route element={<ProtectedRoute roles={["ALUNO"]} />}>
             <Route path="cadastrar-tcc" element={<CadastrarTcc />} />
             <Route element={<TCCLayout />}>
