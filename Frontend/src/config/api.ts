@@ -49,5 +49,10 @@ export const API_CONFIG = {
     ALUNOS: {
       GET_BY_ID: "/alunos/", // id do aluno deve ser concatenado
     },
+    USUARIO: {
+      GET_PROFILE: "/usuario/perfil",
+      UPDATE_PASSWORD: "/usuario/alterar-senha",
+      UPDATE_NAME: "/usuario/alterar-nome",
+    },
   },
 };
