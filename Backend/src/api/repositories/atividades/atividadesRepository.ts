@@ -1,6 +1,11 @@
 import { Atividade } from "@prisma/client";
 import prisma from "../../config/prisma";
-import { IAtividade, ICreateAtividade, TCCAtividades } from "./interfaces";
+import {
+  IAtividade,
+  ICreateAtividade,
+  IUpdateAtividade,
+  TCCAtividades,
+} from "./interfaces";
 
 /**
  * Função para criar uma nova atividade no banco de dados.
@@ -83,7 +88,7 @@ export async function getAtividadeById(id: number): Promise<Atividade | null> {
 
 export async function updateAtividade(
   id: number,
-  data: Partial<Atividade>
+  data: IUpdateAtividade
 ): Promise<IAtividade | null> {
   const atividade = await prisma.atividade.update({
     where: {
@@ -92,9 +97,8 @@ export async function updateAtividade(
     data: {
       nome: data.nome,
       descricao: data.descricao,
-      data_entrega: data.data_entrega,
+      data_entrega: data.dataEntrega,
       status: data.status,
-      arquivo_url: data.arquivo_url,
       ...(data.status === "CONCLUIDA" && { concluido_em: new Date() }),
     },
     include: {

@@ -5,6 +5,7 @@ import {
 } from "../../repositories/atividades/atividadesRepository";
 import { ResponseError } from "../../helpers/ResponseError";
 import { createHistoricoTcc } from "../../repositories/historico/historicoRepository";
+import { IUpdateAtividade } from "api/repositories/atividades/interfaces";
 
 /**
  * Serviço para atualizar uma atividade existente.
@@ -14,7 +15,7 @@ import { createHistoricoTcc } from "../../repositories/historico/historicoReposi
  */
 export default async function updateAtividadeService(
   id: number,
-  data: Partial<Atividade>
+  data: IUpdateAtividade
 ): Promise<Atividade | null> {
   // Verifica se a atividade existe
   const atividadeExistente = await getAtividadeById(id);

@@ -32,3 +32,10 @@ export interface TCCAtividades extends Omit<Atividade, "TCC_id"> {
 export interface IAtividade extends Atividade {
   Aluno_id: number;
 }
+
+export interface IUpdateAtividade {
+  nome?: string;
+  descricao?: string;
+  dataEntrega?: Date;
+  status?: $Enums.StatusAtividade;
+}
