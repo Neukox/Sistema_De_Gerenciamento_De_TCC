@@ -1,7 +1,7 @@
 import { Menu } from "lucide-react";
 import Button from "../ui/Button";
 import Logo from "../common/Logo";
-import { DropdownPerfil } from "../DropdownPerfil";
+import { DropdownProfile } from "@/features/Profile/DropdownProfile";
 
 type HeaderProps = {
   title?: string;
@@ -23,7 +23,7 @@ export default function Header({ title, onMenuClick }: HeaderProps) {
         <Logo className="lg:hidden" size="medium" />
         <span className="text-3xl font-">{title}</span>
       </div>
-      <DropdownPerfil />
+      <DropdownProfile />
     </header>
   );
 }
