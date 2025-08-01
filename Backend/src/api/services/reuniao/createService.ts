@@ -31,26 +31,6 @@ export async function createReuniaoService(
     );
   }
 
-  const reuniaoConflitante = await prisma.reuniao.findFirst({
-    where: {
-      TCC_id: data.TCC_id,
-      data_agendada: {
-        gte: startOfDay(dataAgendada),
-        lte: endOfDay(dataAgendada),
-      },
-      status: {
-        in: ["AGENDADA"],
-      },
-    },
-  });
-
-  if (reuniaoConflitante) {
-    throw new ResponseError(
-      400,
-      "Já existe uma reunião agendada para este TCC no mesmo dia."
-    );
-  }
-
   const reuniao = await createReuniao(data);
 
   if (reuniao) {
