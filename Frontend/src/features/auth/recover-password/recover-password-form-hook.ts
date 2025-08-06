@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import z from "zod";
+import * as z from "zod/mini";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 /**
@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const recoverPasswordSchema = z.object({
   email: z
     .email("Insira um e-mail válido.")
-    .nonempty("O e-mail é obrigatório."),
+    .check(z.minLength(1, "O email é obrigatório")),
 });
 
 export type RecoverPasswordFormData = z.infer<typeof recoverPasswordSchema>;

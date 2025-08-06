@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import z from "zod";
+import * as z from "zod/mini";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 /**
@@ -8,13 +8,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
  */
 const resetPasswordSchema = z
   .object({
-    novaSenha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+    novaSenha: z.string().check(z.minLength(1, "A nova senha é obrigatória")),
     confirmarNovaSenha: z.string(),
   })
-  .refine((data) => data.novaSenha === data.confirmarNovaSenha, {
-    message: "As senhas não coincidem",
-    path: ["confirmarNovaSenha"],
-  });
+  .check(
+    z.refine((data) => data.novaSenha === data.confirmarNovaSenha, {
+      message: "As senhas não coincidem.",
+      path: ["confirmarNovaSenha"],
+    })
+  );
 
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 

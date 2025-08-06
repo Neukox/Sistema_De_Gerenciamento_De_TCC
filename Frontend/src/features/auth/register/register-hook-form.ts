@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import * as z from "zod/mini";
 
 /**
  * Schema de validação para o formulário de registro.
@@ -10,25 +10,23 @@ const registerSchema = z
   .object({
     nome_completo: z
       .string()
-      .nonempty("O nome é obrigatório")
-      .min(3, "O nome completo deve ter pelo menos 3 caracteres."),
+      .check(z.minLength(1, "O nome completo é obrigatório")),
     email: z
       .email("Email inválido.")
-      .nonempty("O email é obrigatório."),
-    curso: z.string().nonempty("O curso é obrigatório."),
-    senha: z
-      .string()
-      .nonempty("A senha é obrigatória.")
-      .min(6, "A senha deve ter pelo menos 6 caracteres."),
+      .check(z.minLength(1, "O email é obrigatório")),
+    curso: z.string().check(z.minLength(1, "O curso é obrigatório.")),
+    senha: z.string().check(z.minLength(1, "A senha é obrigatória")),
     confirmar_senha: z.string(),
     tipo: z.enum(["aluno", "professor"], {
       message: "Tipo de usuário inválido. Deve ser 'aluno' ou 'professor'.",
     }),
   })
-  .refine((data) => data.senha === data.confirmar_senha, {
-    message: "As senhas não coincidem.",
-    path: ["confirmar_senha"],
-  });
+  .check(
+    z.refine((data) => data.senha === data.confirmar_senha, {
+      message: "As senhas não coincidem.",
+      path: ["confirmar_senha"],
+    })
+  );
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
 

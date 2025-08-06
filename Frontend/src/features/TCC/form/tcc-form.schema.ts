@@ -1,4 +1,4 @@
-import z from "zod";
+import * as z from "zod/mini";
 import { statusTCC } from "@/types/tcc";
 
 /**
@@ -7,12 +7,14 @@ import { statusTCC } from "@/types/tcc";
  */
 export const TCCFormSchema = z
   .object({
-    titulo: z.string().min(1, "Título é obrigatório"),
-    tema: z.string().min(1, "Tema é obrigatório"),
-    areaConhecimento: z.string().min(1, "Área do conhecimento é obrigatória"),
-    orientador: z.string().min(1, "Orientador é obrigatório"),
-    coorientador: z.string().optional(),
-    resumo: z.string().min(1, "Resumo é obrigatório"),
+    titulo: z.string().check(z.minLength(1, "Título é obrigatório")),
+    tema: z.string().check(z.minLength(1, "Tema é obrigatório")),
+    areaConhecimento: z
+      .string()
+      .check(z.minLength(1, "Área de conhecimento é obrigatória")),
+    orientador: z.string().check(z.minLength(1, "Orientador é obrigatório")),
+    coorientador: z.optional(z.string()),
+    resumo: z.string().check(z.minLength(1, "Resumo é obrigatório")),
     dataInicio: z.string({
       message: "Data de início é obrigatória",
     }),
@@ -23,20 +25,27 @@ export const TCCFormSchema = z
       .enum(Object.keys(statusTCC) as [string, ...string[]], {
         message: "Status é obrigatório",
       })
-      .refine((val) => {
-        return Object.keys(statusTCC).includes(val);
-      }),
+      .check(
+        z.refine(
+          (val) => {
+            return Object.keys(statusTCC).includes(val);
+          },
+          { message: "Status inválido" }
+        ),
+      ),
   })
-  .refine(
-    (data) => {
-      const dateInicio = new Date(data.dataInicio);
-      const dateConclusao = new Date(data.dataConclusao);
-      return dateInicio < dateConclusao;
-    },
-    {
-      message: "A data de início deve ser anterior à data de término",
-      path: ["dataInicio"],
-    }
+  .check(
+    z.refine(
+      (data) => {
+        const dateInicio = new Date(data.dataInicio);
+        const dateConclusao = new Date(data.dataConclusao);
+        return dateInicio < dateConclusao;
+      },
+      {
+        message: "A data de início deve ser anterior à data de término",
+        path: ["dataInicio"],
+      }
+    )
   );
 
 export type TCCFormData = z.infer<typeof TCCFormSchema>;

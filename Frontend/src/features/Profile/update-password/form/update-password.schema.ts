@@ -1,4 +1,4 @@
-import z from "zod";
+import * as z from "zod/mini";
 
 /**
  * Schema de validação para o formulário de atualização de senha.
@@ -6,15 +6,15 @@ import z from "zod";
  */
 const updatePasswordSchema = z
   .object({
-    novaSenha: z
-      .string()
-      .min(6, "A nova senha deve ter pelo menos 6 caracteres"),
+    novaSenha: z.string().check(z.minLength(1, "A nova senha é obrigatória")),
     confirmarNovaSenha: z.string(),
   })
-  .refine((data) => data.novaSenha === data.confirmarNovaSenha, {
-    message: "As senhas não coincidem",
-    path: ["confirmarNovaSenha"],
-  });
+  .check(
+    z.refine((data) => data.novaSenha === data.confirmarNovaSenha, {
+      message: "As senhas não coincidem",
+      path: ["confirmarNovaSenha"],
+    })
+  );
 
 export type UpdatePasswordFormData = z.infer<typeof updatePasswordSchema>;
 export default updatePasswordSchema;
