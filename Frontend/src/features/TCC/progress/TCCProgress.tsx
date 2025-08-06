@@ -2,7 +2,7 @@ import ProgressBar from "@/components/common/ProgressBar";
 import { Card, CardHeader } from "@/components/ui/card";
 import type { TCCProgress } from "@/types/progresso";
 import { cn } from "@/utils/cn";
-import { PresentationIcon, Target } from "lucide-react";
+import { PresentationIcon } from "lucide-react";
 import { FaTasks } from "react-icons/fa";
 import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
 
@@ -24,17 +24,6 @@ export default function TCCProgress({ className, progress }: TCCProgressProps) {
         <h2 className="text-2xl font-semibold">Progresso Detalhado</h2>
       </CardHeader>
       <div className="flex flex-col flex-1 justify-between gap-6">
-        <ProgressBar
-          title="Marcos"
-          progress={progress?.detalhamento.etapas.pontuacao ?? 0}
-          icon={() => <Target className="text-green-500 size-5" />}
-        >
-          <span className="text-sm text-gray-500">
-            {`${progress?.detalhamento.etapas.concluidas ?? 0} de ${
-              progress?.detalhamento.etapas.total ?? 0
-            } etapas concluídas`}
-          </span>
-        </ProgressBar>
         <ProgressBar
           title="Tarefas"
           progress={progress?.detalhamento.tarefas.pontuacao ?? 0}

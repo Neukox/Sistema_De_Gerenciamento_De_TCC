@@ -10,7 +10,7 @@ import { CiEdit } from "react-icons/ci";
 import { FaPlus, FaTasks } from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { HiOutlineNewspaper } from "react-icons/hi2";
-import { BookOpen, TargetIcon } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { CgNotes } from "react-icons/cg";
 
 // Componentes
@@ -40,18 +40,6 @@ function MainDashboard() {
     navigate("/meu-tcc");
   };
 
-  /* // Se não há dados do TCC, mostra estado vazio
-  if (!data.tcc) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-secondary">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Nenhum TCC Encontrado</h2>
-          <p className="text-gray-600">Cadastre um TCC para ver o dashboard.</p>
-        </div>
-      </div>
-    );
-  } */
-
   // Renderiza o dashboard
   return (
     <div className="flex flex-col gap-8 min-h-screen w-full max-w-8xl">
@@ -79,25 +67,8 @@ function MainDashboard() {
         }}
       />
       {/* Cartões de resumo */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-4">
-        {/* Tarefas */}
-        <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
-          <div className="flex flex-col">
-            <h3 className="text-md font-semibold">Marcos</h3>
-            <span className="flex gap-1 items-center text-3xl font-semibold">
-              {data.tcc?.etapas.concluidas ?? 0}/{data.tcc?.etapas.total ?? 0}
-            </span>
-            <span className="text-green-500 font-medium">
-              {`${calculatePercentage(
-                data.tcc?.etapas.concluidas as number,
-                data.tcc?.etapas.total as number
-              )}% Concluídas`}
-            </span>
-          </div>
-          <div className="bg-green-100 size-16 rounded-full p-2 flex items-center justify-center">
-            <TargetIcon className="size-10 text-green-400" />
-          </div>
-        </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-3 w-full gap-4">
+        
         <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
           <div className="flex flex-col">
             <h3 className="text-md font-semibold">Tarefas</h3>

@@ -1,6 +1,6 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import ProgressBar from "@/components/common/ProgressBar";
-import { PresentationIcon, Target } from "lucide-react";
+import { PresentationIcon } from "lucide-react";
 import { IoMdPeople, IoMdTrendingUp } from "react-icons/io";
 import { FaTasks } from "react-icons/fa";
 import type { TCCProgress } from "@/types/progresso";
@@ -28,11 +28,6 @@ export default function TccCompleteProgress({
           icon={() => <IoMdTrendingUp className="text-gray-800 size-5" />}
         />
         <ProgressBar
-          progress={data?.detalhamento.etapas.pontuacao ?? 0}
-          title="Marcos"
-          icon={() => <Target className="text-green-500 size-5" />}
-        />
-        <ProgressBar
           title="Tarefas"
           progress={data?.detalhamento.tarefas.pontuacao ?? 0}
           icon={() => <FaTasks className="text-blue-500" />}
@@ -49,7 +44,7 @@ export default function TccCompleteProgress({
           icon={() => <PresentationIcon className="text-red-500 size-4" />}
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div className="flex flex-col gap-4">
           <h3 className="font-semibold text-xl">Marcos</h3>
           <div className="grid grid-cols-2 grid-row-3 gap-x-8 gap-y-2">
@@ -59,17 +54,6 @@ export default function TccCompleteProgress({
             <span>{data?.detalhamento.etapas.total ?? 0}</span>
             <span>Concluídas</span>
             <span>{data?.detalhamento.etapas.concluidas ?? 0}</span>
-          </div>
-        </div>
-        <div className="flex flex-col gap-4">
-          <h3 className="font-semibold text-xl">Etapas</h3>
-          <div className="grid grid-cols-2 grid-row-3 gap-x-8 gap-y-2">
-            <span>Peso</span>
-            <span>{`${data?.detalhamento.tarefas.peso ?? 30}%`}</span>
-            <span>Total</span>
-            <span>{data?.detalhamento.tarefas.total ?? 0}</span>
-            <span>Concluídas</span>
-            <span>{data?.detalhamento.tarefas.concluidas ?? 0}</span>
           </div>
         </div>
         <div className="flex flex-col gap-4">
