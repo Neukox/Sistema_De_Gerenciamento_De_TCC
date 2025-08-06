@@ -1,24 +1,34 @@
 // src/App.tsx
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/auth/LoginPage";
-import RegisterPage from "./pages/auth/RegisterPage";
-import RecuperacaoSenha from "./pages/auth/ResetPassword";
-import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
-import { CadastrarTcc } from "./pages/CadastrarTcc";
-import { BoasVindas } from "./pages/BoasVindas";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import RequireAuthRoute from "./pages/RequireAuthRoute";
-import TasksPage from "./pages/tcc/TasksPage";
-import NotesPage from "./pages/tcc/NotesPage";
-import DashboardPage from "./pages/tcc/DashboardPage";
-import AssistentTCC from "./features/AssistentTCC/AssistentTCC";
-import MyTccPage from "./pages/tcc/MyTccPage";
-import ApplyHistoryPage from "./pages/tcc/ApplyHistoryPage";
-import MeetingsPage from "./pages/tcc/MeetingsPage";
 import ProfileLayout from "./pages/layouts/ProfileLayout";
-import UserProfilePage from "./pages/profile/UserProfilePage";
 import ProtectedTccRoute from "./pages/ProtectedTccRoute";
 import TCCLayout from "./pages/layouts/TCCLayout";
+
+const LoginPage = React.lazy(() => import("./pages/auth/LoginPage"));
+const RegisterPage = React.lazy(() => import("./pages/auth/RegisterPage"));
+const RecuperacaoSenha = React.lazy(() => import("./pages/auth/ResetPassword"));
+const ConfirmResetPassword = React.lazy(
+  () => import("./pages/auth/ConfirmResetPassword")
+);
+const BoasVindas = React.lazy(() => import("./pages/BoasVindas"));
+const CadastrarTcc = React.lazy(() => import("./pages/CadastrarTcc"));
+const DashboardPage = React.lazy(() => import("./pages/tcc/DashboardPage"));
+const ApplyHistoryPage = React.lazy(
+  () => import("./pages/tcc/ApplyHistoryPage")
+);
+const TasksPage = React.lazy(() => import("./pages/tcc/TasksPage"));
+const MyTccPage = React.lazy(() => import("./pages/tcc/MyTccPage"));
+const NotesPage = React.lazy(() => import("./pages/tcc/NotesPage"));
+const MeetingsPage = React.lazy(() => import("./pages/tcc/MeetingsPage"));
+const AssistentTCC = React.lazy(
+  () => import("./features/AssistentTCC/AssistentTCC")
+);
+const UserProfilePage = React.lazy(
+  () => import("./pages/profile/UserProfilePage")
+);
 
 export default function App() {
   return (

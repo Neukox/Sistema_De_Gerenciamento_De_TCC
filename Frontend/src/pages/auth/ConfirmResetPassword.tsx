@@ -7,7 +7,7 @@ import useTitle from "@/hooks/useTitle";
  * Exibe um formulário para o usuário definir uma nova senha após solicitar a redefinição.
  */
 
-export function ConfirmResetPassword() {
+export default function ConfirmResetPassword() {
   useTitle("Redefinir Senha | FocoTCC");
 
   return (

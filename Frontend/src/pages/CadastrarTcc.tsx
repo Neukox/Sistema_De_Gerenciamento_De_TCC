@@ -6,7 +6,7 @@ import ContainerWithLogo from "@/components/common/ContainerWithLogo";
  * Página para cadastrar um novo TCC
  */
 
-export function CadastrarTcc() {
+export default function CadastrarTcc() {
   useTitle("Cadastrar TCC | FocoTCC");
 
   return (
