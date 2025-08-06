@@ -9,7 +9,7 @@ export default function ApplyHistoryPage() {
 
   return (
     <div className="flex flex-col -center gap-6 w-full max-w-8xl">
-      <HistoricoAtividades tccId={tccData.id} />
+      <HistoricoAtividades tccId={tccData?.id as number} />
     </div>
   );
 }

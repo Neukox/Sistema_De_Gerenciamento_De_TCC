@@ -7,7 +7,6 @@ import { ConfirmResetPassword } from "./pages/auth/ConfirmResetPassword";
 import { CadastrarTcc } from "./pages/CadastrarTcc";
 import { BoasVindas } from "./pages/BoasVindas";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import TCCLayout from "./pages/layouts/TCCLayout";
 import RequireAuthRoute from "./pages/RequireAuthRoute";
 import TasksPage from "./pages/tcc/TasksPage";
 import NotesPage from "./pages/tcc/NotesPage";
@@ -18,6 +17,8 @@ import ApplyHistoryPage from "./pages/tcc/ApplyHistoryPage";
 import MeetingsPage from "./pages/tcc/MeetingsPage";
 import ProfileLayout from "./pages/layouts/ProfileLayout";
 import UserProfilePage from "./pages/profile/UserProfilePage";
+import ProtectedTccRoute from "./pages/ProtectedTccRoute";
+import TCCLayout from "./pages/layouts/TCCLayout";
 
 export default function App() {
   return (
@@ -37,16 +38,17 @@ export default function App() {
           </Route>
           <Route element={<ProtectedRoute roles={["ALUNO"]} />}>
             <Route path="cadastrar-tcc" element={<CadastrarTcc />} />
-            <Route element={<TCCLayout />}>
-              <Route path="dashboard" element={<DashboardPage />} />
-              <Route path="historico" element={<ApplyHistoryPage />} />
-              <Route path="tarefas" element={<TasksPage />} />
-              <Route path="meu-tcc" element={<MyTccPage />} />
-              <Route path="anotacoes" element={<NotesPage />} />
-              <Route path="reunioes" element={<MeetingsPage />} />
-              <Route path="assistente-tcc" element={<AssistentTCC />} />
-
-              {/* Outras rotas do TCC */}
+            <Route element={<ProtectedTccRoute />}>
+              <Route element={<TCCLayout />}>
+                <Route path="dashboard" element={<DashboardPage />} />
+                <Route path="historico" element={<ApplyHistoryPage />} />
+                <Route path="tarefas" element={<TasksPage />} />
+                <Route path="meu-tcc" element={<MyTccPage />} />
+                <Route path="anotacoes" element={<NotesPage />} />
+                <Route path="reunioes" element={<MeetingsPage />} />
+                <Route path="assistente-tcc" element={<AssistentTCC />} />
+                {/* Outras rotas do TCC */}
+              </Route>
             </Route>
           </Route>
         </Route>

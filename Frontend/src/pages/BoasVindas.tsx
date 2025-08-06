@@ -128,10 +128,10 @@ export function BoasVindas() {
           <p className="text-sm sm:text-base text-gray-600">
             Já tem um TCC cadastrado?{" "}
             <Link
-              to="/login"
+              to="/dashboard"
               className="text-primary hover:text-primary/75 font-medium underline transition-colors bg-transparent border-none cursor-pointer"
             >
-              Fazer Login
+              Ir para o TCC
             </Link>
           </p>
         </div>

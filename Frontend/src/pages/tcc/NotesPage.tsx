@@ -14,7 +14,7 @@ export default function NotesPage() {
 
   return (
     <div className="w-full max-w-8xl">
-      <NotesLayout tcc={tccData.id} />
+      <NotesLayout tcc={tccData?.id as number} />
     </div>
   );
 }

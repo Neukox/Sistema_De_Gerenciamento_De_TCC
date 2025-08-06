@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import useAuth from "@/features/auth/context/useAuth";
 import { getAlunoTCC } from "@/services/tcc/getAlunoTCC";
-import { type TCCData } from "@/types/tcc";
 import TCCContext from "./TCCContext";
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
@@ -33,7 +32,7 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
     retry: 1,
   });
 
-  const tccData: TCCData = data?.tcc
+  const tccData = data?.tcc
     ? {
         id: data.tcc.id,
         titulo: data.tcc.titulo,
@@ -61,23 +60,7 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
         marcos_completos: data.tcc.etapas.concluidas,
         tarefas_completas: data.tcc.tarefas.concluidas,
       }
-    : {
-        id: 0,
-        titulo: "",
-        tema: "",
-        resumo: "",
-        aluno: "",
-        curso: "",
-        area_conhecimento: "",
-        orientador: "",
-        coorientador: "",
-        data_inicio: "",
-        prazo_entrega: "",
-        status: "PLANEJAMENTO",
-        progresso: 0,
-        marcos_completos: 0,
-        tarefas_completas: 0,
-      };
+    : null;
 
   return (
     <TCCContext.Provider

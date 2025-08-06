@@ -9,7 +9,7 @@ export default function MeetingsPage() {
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-8xl">
-      <MeetingsLayout tcc={tccData?.id} />
+      <MeetingsLayout tcc={tccData?.id as number} />
     </div>
   );
 }
