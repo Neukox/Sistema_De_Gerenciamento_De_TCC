@@ -43,6 +43,7 @@ export default function RecoverPasswordForm() {
             className="w-full"
             placeholder="Digite seu email"
             {...register("email")}
+            aria-invalid={!!errors.email}
           />
           {errors.email && <FormError>{errors.email.message}</FormError>}
         </div>

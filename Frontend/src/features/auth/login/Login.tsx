@@ -1,9 +1,9 @@
 import {
   Input,
-  Button,
   Label,
   InputPassword,
   FormError,
+  Submit,
 } from "@/components/ui/form";
 import { Link } from "react-router-dom";
 import { useLoginForm, type LoginFormData } from "./login-form-hook";
@@ -43,6 +43,7 @@ function Login() {
               placeholder="Digite seu email"
               className="w-full"
               {...register("email")}
+              aria-invalid={!!errors.email}
             />
             {errors.email && <FormError>{errors.email.message}</FormError>}
           </div>
@@ -53,6 +54,7 @@ function Login() {
               placeholder="Digite sua senha"
               className="w-full"
               {...register("password")}
+              aria-invalid={!!errors.password}
             />
             {errors.password && (
               <FormError>{errors.password.message}</FormError>
@@ -67,10 +69,9 @@ function Login() {
           Esqueci a senha
         </Link>
 
-        <Button type="submit" variant="primary" className="w-full">
-          {loading && <span className="animate-spin"></span>}
+        <Submit variant="primary" className="w-full" disabled={loading}>
           Entrar
-        </Button>
+        </Submit>
       </form>
     </>
   );

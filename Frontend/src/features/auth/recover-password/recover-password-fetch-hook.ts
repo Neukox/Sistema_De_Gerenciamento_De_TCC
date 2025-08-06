@@ -1,7 +1,8 @@
-import { useState } from "react";
 import requestPasswordReset from "@/services/auth/recover-password";
 import { toast } from "react-toastify";
-import { isAxiosError } from "axios";
+import { AxiosError, isAxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
+import type { ApiResponse } from "@/types/response/base";
 
 /**
  * Hook para gerenciar a recuperação de senha.
@@ -11,29 +12,28 @@ import { isAxiosError } from "axios";
  */
 
 export default function useRecoverPassword() {
-  const [loading, setLoading] = useState(false);
-
-  const recoverPassword = async (email: string): Promise<void> => {
-    setLoading(true);
-    try {
-      const response = await requestPasswordReset(email);
-
-      if (response.success) {
-        toast.success("Email de recuperação enviado com sucesso!");
-      }
-    } catch (error) {
+  const mutation = useMutation<ApiResponse, AxiosError<ApiResponse>, string>({
+    mutationFn: requestPasswordReset,
+    onSuccess: () => {
+      toast.success(
+        "Instruções de recuperação de senha enviadas para o email.",
+        {
+          autoClose: 3000,
+        }
+      );
+    },
+    onError: (error) => {
       if (isAxiosError(error)) {
-        toast.error(
-          error.response?.data.message ||
-            "Erro ao solicitar recuperação de senha"
-        );
+        toast.error(error.response?.data.message || "Erro ao enviar email", {
+          autoClose: 3000,
+        });
       } else {
-        toast.error("Erro desconhecido ao solicitar recuperação de senha");
+        toast.error("Erro desconhecido ao enviar email", {
+          autoClose: 3000,
+        });
       }
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+  });
 
-  return { recoverPassword, loading };
+  return { recoverPassword: mutation.mutate, loading: mutation.isPending };
 }

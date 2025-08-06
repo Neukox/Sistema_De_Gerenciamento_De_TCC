@@ -1,11 +1,12 @@
-import type { RegisterRequest } from "@/types/response/auth";
-import register from "../../../services/auth/register";
+import type { AuthResponse, RegisterRequest } from "@/types/response/auth";
+import register from "@/services/auth/register";
 import { useNavigate } from "react-router-dom";
-import { isAxiosError } from "axios";
-import { useState } from "react";
+import { AxiosError, isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import useAuth from "../context/useAuth";
 import type { UserData } from "@/types/user";
+import { useMutation } from "@tanstack/react-query";
+import type { ApiResponse } from "@/types/response/base";
 
 /**
  * Hook para registrar um novo usuário.
@@ -15,35 +16,37 @@ import type { UserData } from "@/types/user";
  */
 
 export default function useRegister() {
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const { setSession } = useAuth();
 
-  const registerUser = async (data: RegisterRequest): Promise<void> => {
-    setLoading(true);
-
-    try {
-      const response = await register(data);
-
-      if (response.success) {
-        setSession(response.usuario as UserData, response.token as string);
-        navigate("/boas-vindas");
-      }
-
-      console.log("Usuário registrado com sucesso");
-    } catch (error) {
+  const mutation = useMutation<
+    AuthResponse,
+    AxiosError<ApiResponse>,
+    RegisterRequest
+  >({
+    mutationFn: register,
+    onSuccess: (data) => {
+      setSession(data.usuario as UserData, data.token as string);
+      toast.success("Registro realizado com sucesso!", {
+        autoClose: 3000,
+      });
+      navigate("/dashboard");
+    },
+    onError: (error) => {
       if (isAxiosError(error)) {
         toast.error(
-          error.response?.data.message || "Erro ao registrar usuário"
+          error.response?.data.message || "Erro ao registrar usuário",
+          {
+            autoClose: 3000,
+          }
         );
       } else {
-        toast.error("Erro desconhecido ao registrar usuário");
+        toast.error("Erro desconhecido ao registrar usuário", {
+          autoClose: 3000,
+        });
       }
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+  });
 
-  return { registerUser, loading };
+  return { registerUser: mutation.mutate, loading: mutation.isPending };
 }

@@ -46,6 +46,7 @@ export default function ResetPasswordForm() {
             className="w-full"
             placeholder="Digite sua nova senha"
             {...register("novaSenha")}
+            aria-invalid={!!errors.novaSenha}
           />
           {errors.novaSenha && (
             <FormError>{errors.novaSenha.message}</FormError>
@@ -59,6 +60,7 @@ export default function ResetPasswordForm() {
             className="w-full"
             placeholder="Confirme sua nova senha"
             {...register("confirmarNovaSenha")}
+            aria-invalid={!!errors.confirmarNovaSenha}
           />
           {errors.confirmarNovaSenha && (
             <FormError>{errors.confirmarNovaSenha.message}</FormError>

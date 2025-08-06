@@ -1,9 +1,9 @@
 import {
-  Button,
   FormError,
   Input,
   InputPassword,
   Label,
+  Submit,
 } from "@/components/ui/form";
 import useRegister from "./fetchRegisterAPI";
 import { useRegisterForm, type RegisterFormData } from "./register-hook-form";
@@ -12,13 +12,13 @@ function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useRegisterForm();
 
-  const { registerUser } = useRegister();
+  const { registerUser, loading } = useRegister();
 
-  const onHandleRegister = async (data: RegisterFormData) => {
-    await registerUser({
+  const onHandleRegister = (data: RegisterFormData) => {
+    registerUser({
       nome_completo: data.nome_completo,
       email: data.email,
       curso: data.curso,
@@ -42,6 +42,7 @@ function Register() {
             placeholder="Digite seu nome completo"
             className="w-full"
             {...register("nome_completo")}
+            aria-invalid={!!errors.nome_completo}
           />
           {errors.nome_completo && (
             <FormError>{errors.nome_completo.message}</FormError>
@@ -56,6 +57,7 @@ function Register() {
             placeholder="Digite seu email"
             className="w-full"
             {...register("email")}
+            aria-invalid={!!errors.email}
           />
           {errors.email && <FormError>{errors.email.message}</FormError>}
         </div>
@@ -68,6 +70,7 @@ function Register() {
             placeholder="Digite seu Curso"
             className="w-full"
             {...register("curso")}
+            aria-invalid={!!errors.curso}
           />
           {errors.curso && <FormError>{errors.curso.message}</FormError>}
         </div>
@@ -79,6 +82,7 @@ function Register() {
             placeholder="Digite sua senha"
             className="w-full"
             {...register("senha")}
+            aria-invalid={!!errors.senha}
           />
           {errors.senha && <FormError>{errors.senha.message}</FormError>}
         </div>
@@ -90,6 +94,7 @@ function Register() {
             placeholder="Confirme sua senha"
             className="w-full"
             {...register("confirmar_senha")}
+            aria-invalid={!!errors.confirmar_senha}
           />
           {errors.confirmar_senha && (
             <FormError>{errors.confirmar_senha.message}</FormError>
@@ -103,10 +108,9 @@ function Register() {
           {...register("tipo")}
         />
 
-        <Button type="submit" variant="primary" className="flex-1 mt-3">
-          {isSubmitting ? <span className="animate-spin"></span> : null}
+        <Submit variant="primary" className="flex-1 mt-3" disabled={loading}>
           Criar Conta
-        </Button>
+        </Submit>
       </form>
     </>
   );
