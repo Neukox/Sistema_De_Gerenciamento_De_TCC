@@ -60,7 +60,23 @@ export const TCCProvider: React.FC<TCCProviderProps> = ({ children }) => {
         marcos_completos: data.tcc.etapas.concluidas,
         tarefas_completas: data.tcc.tarefas.concluidas,
       }
-    : null;
+    : {
+        id: 0,
+        titulo: "",
+        resumo: "",
+        tema: "",
+        area_conhecimento: "",
+        aluno: "",
+        curso: "",
+        orientador: "",
+        coorientador: "",
+        data_inicio: "",
+        prazo_entrega: "",
+        status: "",
+        progresso: 0,
+        marcos_completos: 0,
+        tarefas_completas: 0,
+      };
 
   return (
     <TCCContext.Provider

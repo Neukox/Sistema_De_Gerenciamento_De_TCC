@@ -43,7 +43,7 @@ export interface TCCData {
 }
 
 export interface TCCContextType {
-  tccData: TCCData | null;
+  tccData: TCCData;
   loading: boolean;
   editable: boolean;
   setEditable: React.Dispatch<React.SetStateAction<boolean>>;

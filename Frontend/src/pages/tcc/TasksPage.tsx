@@ -14,7 +14,7 @@ export default function TasksPage() {
 
   return (
     <div className="w-full max-w-8xl">
-      <TasksLayout tccId={tccData?.id as number} />
+      <TasksLayout tccId={tccData?.id} />
     </div>
   );
 }

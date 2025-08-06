@@ -33,7 +33,7 @@ function MainDashboard() {
 
   const { setContent } = useModal();
 
-  const { data } = useTCCInfo(tccData?.id as number);
+  const { data } = useTCCInfo(tccData?.id);
 
   const handleEditTCC = () => {
     setEditable(true);

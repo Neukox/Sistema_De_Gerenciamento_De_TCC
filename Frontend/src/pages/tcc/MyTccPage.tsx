@@ -30,7 +30,7 @@ export default function MyTccPage() {
 
   const { isPending } = useEditTCC();
 
-  const { data } = useTccInfo(tccData?.id as number);
+  const { data } = useTccInfo(tccData?.id);
 
   const openEditTCC = () => {
     setEditable(true);
