@@ -8,10 +8,13 @@ import UpdateNameForm from "./update-name/UpdateNameForm";
 import ProfileCard from "./ProfileCard";
 import { useUserProfile } from "./hooks/profile.hook";
 import type { User } from "@/types/user";
+import UserProfileLoading from "./UserProfileLoading";
 
 function UserProfile() {
-  const { data } = useUserProfile();
-  const { tccData } = useTCCContext();
+  const { data, isLoading: userDataLoading } = useUserProfile();
+  const { tccData, loading: tccDataLoading } = useTCCContext();
+
+  if (userDataLoading || tccDataLoading) return <UserProfileLoading />;
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">

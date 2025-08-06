@@ -1,16 +1,9 @@
 import Button from "@/components/ui/Button";
-import React, { Suspense } from "react";
 import { FaPlus } from "react-icons/fa";
 import { IoPeopleSharp } from "react-icons/io5";
-import MeetingsLoading from "./MeetingsLoading";
 import useModal from "@/context/modal/useModal";
 import CreateMeeting from "./CreateMeeting";
-
-const MeetingsContainer = React.lazy(() =>
-  import("./MeetingsContainer").then((module) => ({
-    default: module.default,
-  }))
-);
+import MeetingsContainer from "./MeetingsContainer";
 
 type MeetingsLayoutProps = {
   tcc: number;
@@ -47,9 +40,7 @@ export default function MeetingsLayout({ tcc }: MeetingsLayoutProps) {
         </Button>
       </div>
 
-      <Suspense fallback={<MeetingsLoading />}>
-        <MeetingsContainer tcc={tcc} />
-      </Suspense>
+      <MeetingsContainer tcc={tcc} />
     </div>
   );
 }

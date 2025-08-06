@@ -1,18 +1,10 @@
-import React from "react";
 import Button from "@/components/ui/Button";
 import { Card } from "@/components/ui/card";
 import { FaPlus } from "react-icons/fa";
 import { GrTask } from "react-icons/gr";
 import useModal from "@/context/modal/useModal";
 import CreateTask from "./create-task/CreateTask";
-import { Suspense } from "react";
-import TasksLoading from "./TasksLoading";
-
-const TasksContainer = React.lazy(() =>
-  import("./TasksContainer").then((module) => ({
-    default: module.default,
-  }))
-);
+import TasksContainer from "./TasksContainer";
 
 export default function TasksLayout({ tccId }: { tccId: number }) {
   const { setContent } = useModal();
@@ -26,7 +18,7 @@ export default function TasksLayout({ tccId }: { tccId: number }) {
   };
 
   return (
-    <Card className="flex flex-col flex-1 gap-8 w-full shadow-lg p-6 min-h-screen">
+    <Card className="flex flex-col flex-1 gap-8 w-full shadow-lg p-6 min-h-96">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <GrTask className="size-10" />
@@ -44,9 +36,7 @@ export default function TasksLayout({ tccId }: { tccId: number }) {
           Nova Tarefa
         </Button>
       </div>
-      <Suspense fallback={<TasksLoading />}>
-        <TasksContainer tccId={tccId} />
-      </Suspense>
+      <TasksContainer tccId={tccId} />
     </Card>
   );
 }

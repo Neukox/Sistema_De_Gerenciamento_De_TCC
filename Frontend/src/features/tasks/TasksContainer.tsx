@@ -1,8 +1,12 @@
 import { useTccTasks } from "./hooks/tcc-tasks.hook";
 import TaskCard from "./TaskCard";
+import TasksLoading from "./TasksLoading";
 
 export default function TasksContainer({ tccId }: { tccId: number }) {
-  const { data } = useTccTasks(tccId);
+  const { data, isLoading } = useTccTasks(tccId);
+
+  // Exibe o carregamento das tarefas
+  if (isLoading) return <TasksLoading />;
 
   return (
     <div className="flex flex-col gap-4">

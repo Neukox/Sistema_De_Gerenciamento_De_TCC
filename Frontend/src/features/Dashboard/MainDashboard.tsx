@@ -24,6 +24,7 @@ import CreateMeeting from "../meetings/CreateMeeting";
 
 // Contexto do TCC
 import { useTCCContext } from "@/hooks/useTCCContext";
+import DashboardLoading from "./DashboardLoading";
 
 function MainDashboard() {
   // Navegação
@@ -33,12 +34,15 @@ function MainDashboard() {
 
   const { setContent } = useModal();
 
-  const { data } = useTCCInfo(tccData?.id);
+  const { data, loading } = useTCCInfo(tccData?.id);
 
   const handleEditTCC = () => {
     setEditable(true);
     navigate("/meu-tcc");
   };
+
+  // Exibe o carregamento do dashboard
+  if (loading) return <DashboardLoading />;
 
   // Renderiza o dashboard
   return (
@@ -68,7 +72,6 @@ function MainDashboard() {
       />
       {/* Cartões de resumo */}
       <div className="grid grid-cols-1 sm:grid-cols-3 w-full gap-4">
-        
         <Card className="flex items-center justify-between shadow-lg p-6 min-h-32">
           <div className="flex flex-col">
             <h3 className="text-md font-semibold">Tarefas</h3>

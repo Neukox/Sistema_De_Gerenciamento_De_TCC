@@ -1,8 +1,5 @@
-import React, { Suspense } from "react";
 import useTitle from "@/hooks/useTitle";
-import UserProfileLoading from "@/features/Profile/UserProfileLoading";
-
-const UserProfile = React.lazy(() => import("@/features/Profile/UserProfile"));
+import UserProfile from "@/features/Profile/UserProfile";
 
 /**
  * Página de perfil do usuário.
@@ -14,9 +11,5 @@ const UserProfile = React.lazy(() => import("@/features/Profile/UserProfile"));
 export default function UserProfilePage() {
   useTitle("Perfil de Usuário | FocoTCC");
 
-  return (
-    <Suspense fallback={<UserProfileLoading />}>
-      <UserProfile />
-    </Suspense>
-  );
+  return <UserProfile />;
 }

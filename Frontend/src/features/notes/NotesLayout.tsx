@@ -1,14 +1,8 @@
-import React from "react";
 import { Card } from "@/components/ui/card";
 import { CgNotes } from "react-icons/cg";
 import NotesForm from "./NotesForm";
-import { Suspense } from "react";
-import NotesLoading from "./NotesLoading";
 import useCreateNote from "./hooks/create-note.hook";
-
-const NotesContainer = React.lazy(() =>
-  import("./NotesContainer").then((module) => ({ default: module.default }))
-);
+import NotesContainer from "./NotesContainer";
 
 type NotesLayoutProps = {
   tcc: number;
@@ -45,9 +39,8 @@ export default function NotesLayout({ tcc }: NotesLayoutProps) {
         }
         loading={isPending}
       />
-      <Suspense fallback={<NotesLoading />}>
-        <NotesContainer tcc={tcc} />
-      </Suspense>
+
+      <NotesContainer tcc={tcc} />
     </Card>
   );
 }

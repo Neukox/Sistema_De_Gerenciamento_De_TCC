@@ -1,4 +1,5 @@
 import MeetingCard from "./MeetingCard";
+import MeetingsLoading from "./MeetingsLoading";
 import useMeetings from "./hooks/meetings.hook";
 
 type MeetingsContainerProps = {
@@ -6,7 +7,9 @@ type MeetingsContainerProps = {
 };
 
 export default function MeetingsContainer({ tcc }: MeetingsContainerProps) {
-  const { data } = useMeetings(tcc);
+  const { data, isLoading } = useMeetings(tcc);
+
+  if (isLoading) return <MeetingsLoading />;
 
   return (
     <div className="flex flex-col gap-6">

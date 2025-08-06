@@ -2,21 +2,13 @@ import { ArrowDown, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import Button from "@/components/ui/Button";
 import { Select } from "@/components/ui/form";
-import ApplyHistoryLoading from "./ApplyHistoryLoading";
-import { Suspense } from "react";
 import useTccApplyHistory from "../hooks/useTccApplyHistory";
-import React from "react";
 import type { AcoesHistorico, EntidadesHistorico } from "@/types/historico";
 import Pagination from "@/components/ui/Pagination";
-
-const ApplyHistoryContainer = React.lazy(() =>
-  import("./ApplyHistoryContainer").then((module) => ({
-    default: module.default,
-  }))
-);
+import ApplyHistoryContainer from "./ApplyHistoryContainer";
 
 export function HistoricoAtividades({ tccId }: { tccId: number }) {
-  const { data, page, acao, entidade, periodo, setQueryParams } =
+  const { data, page, acao, entidade, periodo, setQueryParams, isLoading } =
     useTccApplyHistory(tccId);
 
   return (
@@ -107,9 +99,7 @@ export function HistoricoAtividades({ tccId }: { tccId: number }) {
         <h2 className="flex font-semibold ml-3 text-2xl">
           Atividades Recentes
         </h2>
-        <Suspense fallback={<ApplyHistoryLoading />}>
-          <ApplyHistoryContainer items={data?.items || []} />
-        </Suspense>
+        <ApplyHistoryContainer items={data?.items || []} loading={isLoading} />
         <Pagination
           page={page}
           totalPages={data?.totalPages || 1}

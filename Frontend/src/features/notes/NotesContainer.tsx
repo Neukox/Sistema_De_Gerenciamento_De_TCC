@@ -1,19 +1,20 @@
 import useNotes from "./hooks/get-notes.hook";
 import NoteCard from "./NoteCard";
+import NotesLoading from "./NotesLoading";
 
 type NotesContainerProps = {
   tcc: number;
 };
 
 export default function NotesContainer({ tcc }: NotesContainerProps) {
-  const { data } = useNotes(tcc);
+  const { data, isLoading } = useNotes(tcc);
 
-  console.log("Dados das anotações:", data);
+  if (isLoading) return <NotesLoading />;
 
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="flex flex-col gap-4">
-        {data?.anotacoes.length === 0 && (
+        {(data === undefined || data?.anotacoes.length === 0) && (
           <div className="text-gray-400 flex items-center justify-center h-60">
             <p>Nenhuma anotação cadastrada.</p>
           </div>

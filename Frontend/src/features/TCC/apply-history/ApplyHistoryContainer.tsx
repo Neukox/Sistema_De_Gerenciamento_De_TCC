@@ -1,13 +1,18 @@
 import ApplyHistoryCard from "./ApplyHistoryCard";
 import type { HistoricoTCC } from "@/types/historico";
+import ApplyHistoryLoading from "./ApplyHistoryLoading";
 
 type ApplyHistoryContainerProps = {
   items?: HistoricoTCC[];
+  loading?: boolean;
 };
 
 export default function ApplyHistoryContainer({
   items,
+  loading = false,
 }: ApplyHistoryContainerProps) {
+  // Exibe o carregamento do histórico de aplicações
+  if (loading) return <ApplyHistoryLoading />;
 
   return (
     <div className="w-full flex flex-col gap-6">
