@@ -16,12 +16,11 @@ export default function useTccInfo(tccId: number) {
     data: tccData,
     isLoading: isTccLoading,
     isError: isTccError,
-    error: tccError,
   } = useQuery<GetTCCResponse, AxiosError<ApiResponse>>({
     queryKey: ["tcc", tccId],
     queryFn: () => getTCCById(tccId),
     enabled: !!tccId, // Habilita a query apenas se o tccId estiver definido
-    staleTime: 1000 * 60 * 5, // cache por 5 minutos
+    staleTime: Infinity, // Não expira o cache
     retry: 1,
   });
 
@@ -30,12 +29,11 @@ export default function useTccInfo(tccId: number) {
     data: progressoData,
     isLoading: isProgressoLoading,
     isError: isProgressoError,
-    error: progressoError,
   } = useQuery<TccProgressResponse, AxiosError<ApiResponse>>({
     queryKey: ["tcc-progress", tccId],
     queryFn: () => getTccProgress(tccId),
     enabled: !!tccId,
-    staleTime: 1000 * 60 * 5, // cache por 5 minutos
+    staleTime: Infinity, // Não expira o cache
     retry: 1,
   });
 
@@ -46,10 +44,5 @@ export default function useTccInfo(tccId: number) {
     },
     loading: isTccLoading || isProgressoLoading,
     error: isTccError || isProgressoError,
-    tccError: tccError
-      ? progressoError
-      : progressoError
-      ? progressoError.message
-      : null,
   };
 }
