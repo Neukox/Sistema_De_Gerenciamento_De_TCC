@@ -40,6 +40,6 @@ routes.use("/historico", historicoRoutes);
 // Importando as rotas de usuários
 routes.use("/usuario", usuarioRoutes);
 // Usando as rotas do chat/assistente
-routes.use("/", chatRoutes);
+routes.use("/chat", chatRoutes);
 
 export default routes;

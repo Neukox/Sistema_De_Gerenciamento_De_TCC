@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import Card from '@/components/ui/card/Card';
 import Button from '@/components/ui/Button';
-import assistenteService, { type ChatMessage } from '@/services/assistente/assistenteService';
 
 import { RiRobot2Line } from "react-icons/ri";
 import { BsStars } from "react-icons/bs";
@@ -12,6 +12,26 @@ interface Message {
   isUser: boolean;
   timestamp: Date;
 }
+
+// Contexto específico para TCC
+const TCC_CONTEXT = `Você é um assistente especializado em Trabalhos de Conclusão de Curso (TCC) chamado FocoTCC Assistant. 
+
+SUAS FUNÇÕES PRINCIPAIS:
+- Auxiliar na organização e planejamento de TCCs
+- Sugerir cronogramas e metodologias
+- Ajudar com estruturação de capítulos
+- Orientar sobre normas ABNT
+- Dar dicas de pesquisa acadêmica
+- Auxiliar na definição de objetivos e metodologia
+
+DIRETRIZES:
+- Seja sempre objetivo e prático
+- Foque em soluções aplicáveis
+- Use linguagem acadêmica mas acessível
+- Sugira ferramentas e recursos úteis
+- Incentive a organização e disciplina
+
+Responda de forma concisa e útil, priorizando ações práticas que o usuário pode implementar imediatamente.`;
 
 // Sugestões rápidas para TCC
 const QUICK_SUGGESTIONS = [
@@ -55,29 +75,38 @@ function AssistantTCC() {
     setIsTyping(true);
 
     try {
-      // Detecta o tipo de ajuda baseado na mensagem
-      const helpType = assistenteService.detectHelpType(messageText);
-      const systemContext = assistenteService.generateTCCContext(helpType);
-
-      // Prepara o histórico de conversa (últimas 4 mensagens)
-      const conversationHistory: ChatMessage[] = messages.slice(-4).map(msg => ({
+      // Contexto otimizado com histórico das últimas 3 mensagens
+      const conversationHistory = messages.slice(-3).map(msg => ({
         role: msg.isUser ? 'user' : 'assistant',
         content: msg.text
       }));
 
-      // Monta as mensagens para a API
-      const apiMessages: ChatMessage[] = [
-        { role: 'system', content: systemContext },
-        ...conversationHistory,
-        { role: 'user', content: messageText }
-      ];
+      const response = await axios.post(
+        'https://openrouter.ai/api/v1/chat/completions',
+        {
+          model: 'openai/gpt-4o-mini',
+          messages: [
+            { role: 'system', content: TCC_CONTEXT },
+            ...conversationHistory,
+            { role: 'user', content: messageText }
+          ],
+          max_tokens: 500,
+          temperature: 0.7,
+          top_p: 0.9,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      // Chama o service
-      const response = await assistenteService.sendMessage(apiMessages);
+      const aiText = response.data.choices[0].message.content;
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: response.content,
+        text: aiText,
         isUser: false,
         timestamp: new Date(),
       };
@@ -87,7 +116,7 @@ function AssistantTCC() {
       console.error('Erro ao chamar IA:', error);
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
-        text: error instanceof Error ? error.message : 'Desculpe, ocorreu um erro. Tente novamente ou reformule sua pergunta.',
+        text: 'Desculpe, ocorreu um erro. Tente novamente ou reformule sua pergunta.',
         isUser: false,
         timestamp: new Date(),
       };
