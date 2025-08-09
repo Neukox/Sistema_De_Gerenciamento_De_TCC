@@ -1,6 +1,6 @@
 // src/App.tsx
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import RequireAuthRoute from "./pages/RequireAuthRoute";
 import ProfileLayout from "./pages/layouts/ProfileLayout";

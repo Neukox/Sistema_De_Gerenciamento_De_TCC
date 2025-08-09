@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import Card from '@/components/ui/card/Card';
 import Button from '@/components/ui/Button';
 
@@ -41,7 +40,7 @@ function AssistantTCC() {
       },
       {
         headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
+          Authorization: `Bearer SUA_API_KEY_AQUI`,
           'Content-Type': 'application/json',
         },
       }

@@ -16,7 +16,6 @@ app.use(express.json());
 
 // Usar rotas externas com prefixo /api
 app.use("/api", routes);
-app.use('/chat', chatRouter);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

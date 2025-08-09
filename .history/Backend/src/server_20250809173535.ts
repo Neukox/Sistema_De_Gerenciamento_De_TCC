@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import routes from "./api/routes";
 import { errorHandler } from './api/middlewares/errorHandler';
-import chatRouter from "./api/routes/chatRoutes"
+import chatRoute
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +16,6 @@ app.use(express.json());
 
 // Usar rotas externas com prefixo /api
 app.use("/api", routes);
-app.use('/chat', chatRouter);
 
 // Middleware de tratamento de erros
 app.use(errorHandler);

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import Card from '@/components/ui/card/Card';
 import Button from '@/components/ui/Button';
 
@@ -19,58 +18,31 @@ function AssistantTCC() {
   const [isTyping, setIsTyping] = useState(false);
 
   const handleSendMessage = async () => {
-  if (!inputText.trim()) return;
+    if (!inputText.trim()) return;
 
-  const userMessage: Message = {
-    id: Date.now().toString(),
-    text: inputText,
-    isUser: true,
-    timestamp: new Date(),
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      text: inputText,
+      isUser: true,
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInputText('');
+    setIsTyping(true);
+
+    // Simular resposta da IA (aqui você integraria com sua API real)
+    setTimeout(() => {
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: 'Olá! Como posso ajudar você hoje? Digite sua mensagem abaixo para começar nossa conversa.',
+        isUser: false,
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, aiMessage]);
+      setIsTyping(false);
+    }, 1000);
   };
-
-  setMessages(prev => [...prev, userMessage]);
-  setInputText('');
-  setIsTyping(true);
-
-  try {
-    const response = await axios.post(
-      'https://openrouter.ai/api/v1/chat/completions',
-      {
-        model: 'openai/gpt-oss-20b:free',
-        messages: [{ role: 'user', content: inputText }],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_OPENROUTER_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    const aiText = response.data.choices[0].message.content;
-
-    const aiMessage: Message = {
-      id: (Date.now() + 1).toString(),
-      text: aiText,
-      isUser: false,
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, aiMessage]);
-  } catch (error) {
-    console.error('Erro ao chamar IA:', error);
-    const aiMessage: Message = {
-      id: (Date.now() + 2).toString(),
-      text: 'Erro ao obter resposta da IA. Tente novamente.',
-      isUser: false,
-      timestamp: new Date(),
-    };
-    setMessages(prev => [...prev, aiMessage]);
-  } finally {
-    setIsTyping(false);
-  }
-};
-
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
