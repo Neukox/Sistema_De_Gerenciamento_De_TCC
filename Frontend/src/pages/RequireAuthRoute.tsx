@@ -15,7 +15,7 @@ export default function RequireAuthRoute() {
 
   if (isAuthenticated) {
     if (user?.role === "ALUNO" && location.pathname === "/") {
-      return <Navigate to="/boas-vindas" replace />;
+      return <Navigate to="/dashboard" replace />;
     }
 
     return <Outlet />;
