@@ -15,7 +15,7 @@ export interface ChatResponse {
 }
 
 class AssistenteService {
-  private readonly baseURL: string = 'http://localhost:3000/api/chat'; // Usar endpoint do backend
+  private readonly baseURL: string = `${import.meta.env.VITE_API_URL}chat`;
 
   constructor() {
     // Não precisamos da chave de API no frontend
