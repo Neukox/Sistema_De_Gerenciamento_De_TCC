@@ -130,7 +130,7 @@ O dashboard reúne a visão do TCC e de seu andamento. A tela de atividades perm
 
 Na tela do assistente, o usuário envia uma dúvida relacionada ao desenvolvimento do TCC e recebe a resposta na própria conversa. A interface encaminha o contexto ao backend, que intermedeia a chamada à OpenRouter e mantém a chave da API no servidor. Esse desenho integra um serviço externo sem transferir a credencial sensível para o navegador.
 
-![Assistente de IA do FocoTCC](docs/images/assistencia.jpg)
+![Assistente de IA do FocoTCC](./docs/images/assistencia.jpg)
 
 **O que este fluxo demonstra:**
 
