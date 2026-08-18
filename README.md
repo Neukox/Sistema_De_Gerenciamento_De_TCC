@@ -1,254 +1,242 @@
-# 🎓 Sistema de Gerenciamento de TCC
+# FocoTCC — Sistema de Gerenciamento de TCC
 
----
+## TL;DR
 
-## 📌 TL;DR (Resumo Executivo)
+**O que é:** plataforma educacional colaborativa para gerenciamento e acompanhamento de TCCs.<br>
+**Stack:** React + TypeScript no frontend, Node.js/Express no backend e PostgreSQL/Prisma nos dados.<br>
+**Diferencial:** assistente conversacional integrado à OpenRouter por meio do backend.<br>
+**Contexto profissional:** projeto desenvolvido em equipe na Neukox, com liderança técnica e atuação full stack.
 
-**O que é:** Plataforma modular de gerenciamento de Trabalhos de Conclusão de Curso (TCC) com arquitetura containerizada para instituições de ensino.
+## Visão rápida
 
-**Problema Resolvido:** Centraliza e otimiza o processo de acompanhamento e avaliação de TCCs, eliminando silos de informação e reduzindo tempo administrativo.
+| Área | Implementação confirmada |
+| --- | --- |
+| Frontend | React, TypeScript, Vite, Tailwind CSS, React Router, React Hook Form, Zod, TanStack React Query e Axios |
+| Backend | Node.js, Express e TypeScript |
+| Dados | PostgreSQL, Prisma ORM e modelos relacionais para usuários, TCCs, atividades, reuniões, anotações, bancas e histórico |
+| Segurança | Autenticação JWT, autorização por perfil e hash de senhas com BCrypt |
+| IA | Assistente conversacional com fluxo frontend → backend → OpenRouter |
+| Ambiente local | Aplicações executadas com npm e PostgreSQL local via Docker Compose |
 
-**Stack e Tecnologias:** Node.js | React | PostgreSQL | Docker | Prisma | TailwindCSS
+Plataforma educacional colaborativa para acompanhamento e gerenciamento de Trabalhos de Conclusão de Curso, desenvolvida na Neukox como ambiente prático de desenvolvimento full-stack em equipe.
 
-**Resultado Prático:** 100% de paridade entre ambientes e redução de 40% no tempo de gestão acadêmica.
+## Contexto educacional e equipe
 
----
+O FocoTCC organiza em um único ambiente informações que normalmente ficam distribuídas entre mensagens, documentos e ferramentas distintas. A aplicação atende ao contexto acadêmico de alunos e professores e foi construída como projeto colaborativo — não como um SaaS comercial em produção.
 
-Bem-vindo(a)! Este projeto foi cuidadosamente desenvolvido para simplificar e otimizar o processo de acompanhamento e avaliação de Trabalhos de Conclusão de Curso.  
-O objetivo é **facilitar a jornada de alunos, orientadores e bancas**, promovendo organização, transparência e eficiência.
+### Equipe
 
----
+- **Gabriel Falcão da Cruz** — Líder Técnico e Desenvolvedor Full Stack;
+- **Davi Leal** — Desenvolvedor Frontend;
+- **Israel Soares** — Desenvolvedor Full Stack;
+- **Matheus Flores** — Desenvolvedor Frontend.
 
-## ✨ Visão Geral
+Gabriel atuou na liderança técnica, organização e acompanhamento das demandas, frontend, backend, integração entre camadas e apoio técnico à equipe.
 
-Imagine uma plataforma onde cada etapa do TCC — da submissão do tema à defesa final — é centralizada e gerenciada com facilidade.  
-É exatamente isso que estamos construindo: **um sistema robusto, intuitivo e modular para instituições de ensino**.
+## Problema
 
----
+O acompanhamento de um TCC envolve prazos, atividades, orientações, registros e mudanças de status. Quando essas informações ficam dispersas, o aluno perde visibilidade do andamento e a colaboração acadêmica se torna mais difícil. O FocoTCC busca centralizar esse fluxo e tornar o progresso consultável.
 
-## 🚀 Tecnologias Utilizadas
+## Funcionalidades
 
-### 🔧 Backend
+- cadastro e autenticação de alunos, professores e administradores;
+- criação e atualização de TCC, com orientador, coorientador, área de conhecimento e status;
+- acompanhamento de progresso e etapas;
+- cadastro e atualização de atividades com prazo e situação;
+- organização de reuniões, anotações e histórico de alterações;
+- perfil do usuário e alteração de nome e senha;
+- recuperação de senha por e-mail com SendGrid;
+- assistente conversacional voltado a cronograma, metodologia, estrutura e normas acadêmicas.
 
-| Categoria  | Tecnologia | Descrição                             |
-| ---------- | ---------- | ------------------------------------- |
-| Linguagem  | TypeScript | JavaScript com tipagem estática       |
-| Framework  | Node.js    | Ambiente de execução JavaScript       |
-| ORM        | Prisma     | Mapeamento objeto-relacional moderno  |
-| Container  | Docker     | Isolamento e orquestração de ambientes|
+## Arquitetura
 
-### 🎨 Frontend
-
-| Categoria  | Tecnologia  | Descrição                                      |
-| ---------- | ----------- | ---------------------------------------------- |
-| Linguagem  | TypeScript  | JavaScript com tipagem estática                |
-| Framework  | React       | Biblioteca reativa para construção de UI       |
-| Bundler    | Vite        | Ferramenta de build rápida e moderna           |
-| Estilo     | TailwindCSS | Utilitário CSS para estilização                |
-| Linter     | ESLint      | Padronização e qualidade de código             |
-| Container  | Docker      | Isolamento e orquestração de ambientes         |
-
----
-
-## 📂 Estrutura do Projeto
-
-```bash
-.
-├── backend/
-│   ├── prisma/              # Schema, migrations e seed do banco
-│   ├── src/                 # Código-fonte da API
-│   ├── templates/           # Templates de e-mail
-│   ├── .env.example         # Exemplo de variáveis de ambiente
-│   ├── Dockerfile.backend   # Dockerfile da API
-│   ├── Dockerfile.postgres  # Dockerfile do banco de dados
-│   ├── *.md                 # Exemplos, algoritmos e documentação
-│   ├── package.json         # Dependências e scripts
-│   └── tsconfig.json        # Configuração TypeScript
-│
-├── frontend/
-│   ├── public/              # Assets públicos
-│   ├── src/                 # Código-fonte React
-│   ├── .env.example         # Exemplo de variáveis de ambiente
-│   ├── README.md            # Documentação do Frontend
-│   ├── tailwind.config.js   # Configuração do Tailwind
-│   ├── vite.config.ts       # Configuração do Vite
-│   └── tsconfig.*.json      # Configurações TS específicas
-│
-├── docker-compose.yml       # Orquestração dos serviços
-└── README.md                # Este arquivo
+```text
+React + TypeScript + Vite
+          |
+          | HTTP/JSON (Axios)
+          v
+Node.js + Express + TypeScript
+       |                 |
+       | Prisma          | HTTPS
+       v                 v
+   PostgreSQL        OpenRouter
 ```
 
----
+O frontend concentra a interface, a navegação e o consumo da API. O backend expõe rotas sob `/api`, aplica regras de autenticação e acesso e utiliza o Prisma para persistir os dados no PostgreSQL. React Query apoia o gerenciamento das requisições e do estado assíncrono no cliente.
 
-## ⚙ Como Executar Localmente
+## Assistente de IA
 
-### 🔧 Pré-requisitos
+Ao enviar uma pergunta, o frontend identifica o tipo de ajuda, monta um contexto especializado e inclui parte do histórico recente. A mensagem é enviada para `POST /api/chat`; o backend então chama a API de chat completions da OpenRouter e devolve a resposta à interface.
 
-- [Node.js (versão LTS)](https://nodejs.org)  
-- npm (ou yarn)  
-- Git  
-- Docker & Docker Compose (opcional, mas recomendado)  
+A variável `OPENROUTER_API_KEY` é lida somente no servidor, evitando expor a credencial no bundle do frontend. O fluxo também trata chave inválida, limite de uso, timeout e falhas gerais; no cliente, há mensagens alternativas para indisponibilidade. Trata-se de uma integração com um modelo acessado via OpenRouter, não de um agente autônomo ou modelo treinado pelo projeto.
 
----
+## Autenticação e persistência
 
-### 1️⃣ Clonar o Repositório
+A API emite tokens JWT no cadastro e no login. Rotas protegidas validam o cabeçalho `Authorization: Bearer <token>` e, quando necessário, restringem operações conforme o perfil do usuário. As senhas são armazenadas com hash BCrypt.
+
+O Prisma representa as relações entre usuários, alunos, professores, TCCs, bancas, atividades, comentários, anotações, etapas, reuniões, defesas e histórico. O PostgreSQL é configurado por `DATABASE_URL`.
+
+## Docker no estado atual
+
+O `docker-compose.yml` possui apenas o serviço do PostgreSQL, construído com `Backend/Dockerfile.postgres` e persistido no volume `pgdata`.
+
+> PostgreSQL local via Docker Compose.
+
+Frontend e backend são executados diretamente com Node.js/npm. Portanto, o repositório não oferece containerização completa da aplicação.
+
+## Stack
+
+### Frontend
+
+- React 19 e TypeScript;
+- Vite;
+- Tailwind CSS;
+- React Router;
+- React Hook Form e Zod;
+- TanStack React Query;
+- Axios.
+
+### Backend e dados
+
+- Node.js como runtime;
+- Express como framework web;
+- TypeScript;
+- PostgreSQL;
+- Prisma ORM;
+- JSON Web Token e BCrypt;
+- SendGrid e Handlebars para recuperação de senha por e-mail;
+- OpenRouter para o assistente conversacional.
+
+## Demonstração visual
+
+> As capturas registram funcionalidades da interface e são complementadas pelo código do repositório. Elementos visuais não são tratados como prova de funcionalidades que não estejam implementadas.
+
+### Fluxo 1 — Acompanhamento acadêmico
+
+O dashboard reúne a visão do TCC e de seu andamento. A tela de atividades permite consultar entregas, prazos e situações, conectando o planejamento acadêmico aos registros de atividades e progresso mantidos pela API.
+
+![Dashboard do FocoTCC](docs/images/dashboard.jpg)
+
+![Lista de atividades e status](docs/images/tarefas.jpg)
+
+**O que este conjunto demonstra:**
+
+- centralização do acompanhamento do TCC;
+- visualização de progresso, prazos e status;
+- integração da interface com os modelos de TCC e atividade;
+- navegação orientada ao fluxo acadêmico do aluno.
+
+### Fluxo 2 — Assistente de IA
+
+Na tela do assistente, o usuário envia uma dúvida relacionada ao desenvolvimento do TCC e recebe a resposta na própria conversa. A interface encaminha o contexto ao backend, que intermedeia a chamada à OpenRouter e mantém a chave da API no servidor. Esse desenho integra um serviço externo sem transferir a credencial sensível para o navegador.
+
+![Assistente de IA do FocoTCC](docs/images/assistencia.jpg)
+
+**O que este fluxo demonstra:**
+
+- experiência conversacional integrada à aplicação;
+- especialização de contexto conforme o tema da pergunta;
+- separação de responsabilidades entre frontend, backend e provedor de IA;
+- tratamento de indisponibilidade e erros conhecidos.
+
+## Como executar localmente
+
+### Pré-requisitos
+
+- Node.js em versão LTS e npm;
+- Git;
+- Docker com Docker Compose, para o PostgreSQL.
+
+### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/Sistema_De_Gerenciamento_De_TCC.git
+git clone https://github.com/Neukox/Sistema_De_Gerenciamento_De_TCC.git
 cd Sistema_De_Gerenciamento_De_TCC
 ```
 
----
-
-### 2️⃣ Instalar as Dependências
+### 2. Inicie o PostgreSQL
 
 ```bash
-# Frontend
-cd frontend
-npm install
-
-# Backend
-cd ../backend
-npm install
+docker compose up -d postgres
 ```
 
----
+### 3. Configure as variáveis de ambiente
 
-### 3️⃣ Configurar Variáveis de Ambiente
-
-Crie um arquivo `.env` em **backend/** e outro em **frontend/** com base nos respectivos `.env.example`.
-
-#### 📁 backend/.env
+Copie `Backend/.env.example` para `Backend/.env` e `Frontend/.env.example` para `Frontend/.env`. Preencha, no mínimo, as credenciais locais do banco, `JWT_SECRET` e `OPENROUTER_API_KEY`. Para recuperação de senha, configure também `SENDGRID_API_KEY` e `CLIENT_URL`.
 
 ```env
+# Backend/.env
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/meu_banco
 PORT=3000
-NODE_ENV=development
-JWT_SECRET=sua_chave_jwt
-SENDGRID_API_KEY=sua_chave_sendgrid
+JWT_SECRET=troque_por_um_segredo_seguro
 CLIENT_URL=http://localhost:5173
+SENDGRID_API_KEY=sua_chave_sendgrid
+OPENROUTER_API_KEY=sua_chave_openrouter
 ```
 
-#### 📁 frontend/.env
-
 ```env
+# Frontend/.env
 VITE_API_URL=http://localhost:3000/api/
 ```
 
----
-
-### 4️⃣ Rodar Prisma
-
-No diretório `backend`:
+### 4. Instale e prepare o backend
 
 ```bash
+cd Backend
+npm install
 npx prisma generate
-npx prisma migrate dev --name initial_setup
-npx tsx prisma/seed.ts
-```
-
----
-
-### 5️⃣ Iniciar os Servidores
-
-```bash
-# Backend
-cd backend
-npm run dev
-
-# Frontend
-cd frontend
+npx prisma db push
 npm run dev
 ```
 
----
+Em outro terminal, opcionalmente carregue os dados iniciais com `npx prisma db seed`.
 
-## 🐳 Executar com Docker
-
-Na raiz do projeto:
+### 5. Inicie o frontend
 
 ```bash
-docker-compose build
-docker-compose up
+cd Frontend
+npm install
+npm run dev
 ```
 
-> Isso irá subir automaticamente o banco de dados, a API e a interface web.
+Por padrão, o frontend fica disponível em `http://localhost:5173` e a API em `http://localhost:3000/api`.
 
----
+## Limitações atuais
 
-## 🤝 Contribuindo
+- não há suíte automatizada de testes configurada;
+- a containerização está restrita ao PostgreSQL;
+- a documentação dos endpoints está distribuída em arquivos do backend, sem especificação OpenAPI central;
+- o repositório mantém a pasta `.history`, que é artefato de ambiente/editor e aumenta o ruído do versionamento;
+- o backend declara simultaneamente as dependências `bcrypt` e `bcryptjs`, usadas em pontos diferentes;
+- o fluxo do assistente depende da disponibilidade e dos limites da OpenRouter.
 
-1. Faça um fork do projeto  
-2. Crie uma nova branch:  
+## Roadmap
 
-```bash
-git checkout -b feature/nova-funcionalidade
-```
+1. **Testes:** adicionar testes unitários, de integração e de interface para os fluxos críticos.
+2. **Qualidade e higiene:** padronizar dependências de hash, revisar artefatos versionados e automatizar lint e build.
+3. **Documentação da API:** consolidar rotas, contratos e exemplos em uma especificação OpenAPI.
+4. **Containerização:** criar imagens para backend e frontend e ampliar o Compose para o ambiente completo.
+5. **Segurança e observabilidade:** fortalecer validação, logs estruturados, monitoramento e políticas de segredos.
+6. **Assistente:** ampliar contexto, testes de respostas e controles de custo e disponibilidade.
 
-3. Faça commits claros e objetivos:  
+## O que o projeto demonstra profissionalmente
 
-```bash
-git commit -m "feat: adiciona nova funcionalidade"
-```
+- liderança técnica e coordenação de trabalho em equipe;
+- desenvolvimento full stack com separação clara entre interface, API e dados;
+- modelagem relacional de um domínio acadêmico com Prisma e PostgreSQL;
+- autenticação, autorização por perfil e integração de recuperação de senha;
+- integração segura de um provedor de IA por meio do backend;
+- capacidade de reconhecer limitações técnicas e organizar uma evolução incremental.
 
-4. Envie para seu fork:  
+## Contato e licença
 
-```bash
-git push origin feature/nova-funcionalidade
-```
+**Gabriel Falcão da Cruz**
 
-5. Crie um Pull Request 🚀  
+- [Portfólio](https://www.gabrielfalcaodacruz.tech/)
+- [LinkedIn](https://www.linkedin.com/in/gabrielfalcaodev/)
+- [GitHub](https://github.com/GabrielF0900)
+- [E-mail](mailto:falcaocruz.tech@gmail.com)
 
----
+O pacote do backend declara licença MIT. Para formalizar a licença de todo o repositório, ainda é necessário adicionar um arquivo `LICENSE` na raiz.
 
-## 🛠️ Resolvendo Conflitos de Merge
-
-Caso ocorra um conflito de merge ao integrar sua branch, siga os passos:
-
-```bash
-git status
-# Edite os arquivos conflitantes e resolva os conflitos
-git add <arquivo_resolvido>
-git commit
-```
-
-Se precisar de ajuda, consulte a [documentação oficial do Git](https://git-scm.com/docs/git-merge).
-
----
-
-## 📸 Layouts e Funcionalidades
-
-### 1️⃣ Layout do Dashboard - FocoTCC
-![Dashboard](docs/images/dashboard.jpg)
-
----
-
-### 2️⃣ Layout assistente de IA do FocoTCC
-![Assistente de IA](docs/images/assistencia.jpg)
-
----
-
-### 3️⃣ Lista de Atividades e Status
-![Tarefas](docs/images/tarefas.jpg)
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença **MIT**.
-
----
-
-## 📬 Contato
-
-Desenvolvido por Gabriel Falcão da Cruz:  
-
-[![Portfólio](https://img.shields.io/badge/🌐%20Portfólio-gabrielfalcaodacruz.tech-blue?style=flat-square&logo=world&logoColor=white)](https://www.gabrielfalcaodacruz.tech/)  
-[![LinkedIn](https://img.shields.io/badge/💼%20LinkedIn-gabrielfalcaodev-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gabrielfalcaodev/)  
-[![GitHub](https://img.shields.io/badge/🐙%20GitHub-GabrielF0900-333333?style=flat-square&logo=github&logoColor=white)](https://github.com/GabrielF0900)  
-[![Email](https://img.shields.io/badge/📧%20Email-falcaocruz.tech@gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:falcaocruz.tech@gmail.com)
-
----
-
-Feito com 💙 pela equipe **Neukox**.
-````
+Desenvolvido pela equipe **Neukox**.
