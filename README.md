@@ -206,7 +206,6 @@ Por padrão, o frontend fica disponível em `http://localhost:5173` e a API em `
 - não há suíte automatizada de testes configurada;
 - a containerização está restrita ao PostgreSQL;
 - a documentação dos endpoints está distribuída em arquivos do backend, sem especificação OpenAPI central;
-- o repositório mantém a pasta `.history`, que é artefato de ambiente/editor e aumenta o ruído do versionamento;
 - o backend declara simultaneamente as dependências `bcrypt` e `bcryptjs`, usadas em pontos diferentes;
 - o fluxo do assistente depende da disponibilidade e dos limites da OpenRouter.
 
